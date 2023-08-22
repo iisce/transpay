@@ -2,7 +2,6 @@ import { ThemeProvider } from '@/components/ui/theme-provider';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Lato } from 'next/font/google';
-import NavBar from '@/components/layout/navbar';
 
 const lato = Lato({
 	weight: '300',
@@ -31,10 +30,7 @@ export default function RootLayout({
 					defaultTheme='system'
 					enableSystem
 				>
-					<div className='flex flex-col w-full'>
-						<NavBar />
-						{children}
-					</div>
+					<div className='flex flex-col w-full'>{children}</div>
 				</ThemeProvider>
 			</body>
 		</html>

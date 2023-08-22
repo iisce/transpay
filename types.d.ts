@@ -14,3 +14,11 @@ interface Framework {
 	value: string;
 	label: string;
 }
+interface DashboardCardI {
+	name: string;
+	description: string;
+	href: Url;
+	number?: string;
+	icon?: React.ReactNode;
+	image?: string;
+}

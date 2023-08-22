@@ -1,9 +1,9 @@
 {
-	"name": "striferral",
+	"name": "transpay",
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"dev": "next dev -p 7874",
+		"dev": "next dev -p 8726",
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint"

@@ -1,20 +1,13 @@
 'use client';
 import React from 'react';
-import { ModeToggle } from '../dark-mode-toggle';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import Link from 'next/link';
-import {
-	NavigationMenu,
-	NavigationMenuContent,
-	NavigationMenuItem,
-	NavigationMenuList,
-	NavigationMenuTrigger,
-	navigationMenuTriggerStyle,
-} from '../ui/navigation-menu';
 import { NavigationMenuLink } from '@radix-ui/react-navigation-menu';
-import { Header } from '../notification/bell';
 import { cn } from '@/lib/utils';
-import { COMPONENTS } from '../../../data';
+import Image from 'next/image';
+import { Input } from '../ui/input';
+import { Button } from '../ui/button';
+import { notificationIcon, searchIcon } from '@/lib/icons';
 
 const ListItem = React.forwardRef<
 	React.ElementRef<'a'>,
@@ -46,78 +39,41 @@ ListItem.displayName = 'ListItem';
 
 export default function NavBar() {
 	return (
-		<div className='bg-primary h-16 fixed w-full'>
-			<div className='flex items-center justify-between max-w-5xl w-full mx-auto h-full'>
-				<div>
-					<Link href={'/'}>Striferral</Link>
+		<div className='h-16 w-full bg-secondary px-5'>
+			<div className='flex items-center justify-between gap-5 h-full'>
+				<Link
+					href={'/'}
+					className='min-w-[180px] '
+				>
+					<Image
+						src={'/logo.png'}
+						height={30}
+						width={150}
+						className='shrink-0'
+						alt='Transpay Logo'
+					/>
+				</Link>
+				<div className='w-full'>
+					<div className='max-w-[500px] relative flex  items-center justify-start'>
+						<div className='h-6 w-6 left-2 opacity-60 shrink-0 absolute'>
+							{searchIcon}
+						</div>
+						<Input
+							className='pl-10'
+							placeholder='Search anything here'
+						/>
+					</div>
 				</div>
-				<div>
-					<NavigationMenu>
-						<NavigationMenuList>
-							<NavigationMenuItem>
-								<Link
-									href='/about'
-									legacyBehavior
-									passHref
-								>
-									<NavigationMenuLink
-										className={navigationMenuTriggerStyle()}
-									>
-										ABOUT
-									</NavigationMenuLink>
-								</Link>
-							</NavigationMenuItem>
-							<NavigationMenuItem>
-								<NavigationMenuTrigger>
-									COMPONENTS
-								</NavigationMenuTrigger>
-								<NavigationMenuContent>
-									<ul className='grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] '>
-										{COMPONENTS.map(
-											(component) => (
-												<ListItem
-													key={
-														component.title
-													}
-													title={
-														component.title
-													}
-													href={
-														component.href
-													}
-												>
-													{
-														component.description
-													}
-												</ListItem>
-											)
-										)}
-									</ul>
-								</NavigationMenuContent>
-							</NavigationMenuItem>
-							<NavigationMenuItem>
-								<Link
-									href='/docs'
-									legacyBehavior
-									passHref
-								>
-									<NavigationMenuLink
-										className={navigationMenuTriggerStyle()}
-									>
-										BLOG
-									</NavigationMenuLink>
-								</Link>
-							</NavigationMenuItem>
-						</NavigationMenuList>
-					</NavigationMenu>
-				</div>
-				<div className='flex gap-4'>
+				<div className='flex'>
+					<Button variant='ghost'>
+						<div className='h-6 w-6 text-primary'>
+							{notificationIcon}
+						</div>
+					</Button>
 					<Avatar>
 						<AvatarImage src='https://github.com/shadcn.png' />
 						<AvatarFallback>SR</AvatarFallback>
 					</Avatar>
-					<ModeToggle />
-					{/* <Header /> */}
 				</div>
 			</div>
 		</div>

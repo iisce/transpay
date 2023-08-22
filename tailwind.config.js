@@ -51,6 +51,152 @@ module.exports = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+      fontSize: {
+        captionBold: [
+          '11px',
+          {
+            lineHeight: '140%',
+            letterSpacing: '0.22px',
+            fontWeight: '700',
+          },
+        ],
+        caption: [
+          '11px',
+          {
+            lineHeight: '140%',
+            letterSpacing: '0.22px',
+            fontWeight: '400',
+          },
+        ],
+        bodyBold: [
+          '13px',
+          {
+            lineHeight: '140%',
+            letterSpacing: '0.26px',
+            fontWeight: '700',
+          },
+        ],
+        body: [
+          '13px',
+          {
+            lineHeight: '140%',
+            letterSpacing: '0.26px',
+            fontWeight: '400',
+          },
+        ],
+        title2Bold: [
+          '16px',
+          {
+            lineHeight: '140%',
+            letterSpacing: '0.32px',
+            fontWeight: '700',
+          },
+        ],
+        title2: [
+          '16px',
+          {
+            lineHeight: '140%',
+            letterSpacing: '0.32px',
+            fontWeight: '400',
+          },
+        ],
+        title1Bold: [
+          '19px',
+          {
+            lineHeight: '140%',
+            letterSpacing: '0.38px',
+            fontWeight: '700',
+          },
+        ],
+        title1: [
+          '19px',
+          {
+            lineHeight: '140%',
+            letterSpacing: '0.38px',
+            fontWeight: '400',
+          },
+        ],
+        h5: [
+          '23px',
+          {
+            lineHeight: '140%',
+            letterSpacing: '0.46px',
+            fontWeight: '400',
+          },
+        ],
+        h5Bold: [
+          '23px',
+          {
+            lineHeight: '140%',
+            letterSpacing: '0.46px',
+            fontWeight: '700',
+          },
+        ],
+        h4: [
+          '28px',
+          {
+            lineHeight: '140%',
+            letterSpacing: '0.56px',
+            fontWeight: '400',
+          },
+        ],
+        h4Bold: [
+          '28px',
+          {
+            lineHeight: '140%',
+            letterSpacing: '0.56px',
+            fontWeight: '700',
+          },
+        ],
+        h3: [
+          '33px',
+          {
+            lineHeight: '140%',
+            letterSpacing: '0.66px',
+            fontWeight: '400',
+          },
+        ],
+        h3Bold: [
+          '33px',
+          {
+            lineHeight: '140%',
+            letterSpacing: '0.66px',
+            fontWeight: '700',
+          },
+        ],
+        h2: [
+          '40px',
+          {
+            lineHeight: '140%',
+            letterSpacing: '0.8px',
+            fontWeight: '400',
+          },
+        ],
+        h2Bold: [
+          '40px',
+          {
+            lineHeight: '140%',
+            letterSpacing: '0.8px',
+            fontWeight: '700',
+          },
+        ],
+        h1: [
+          '48px',
+          {
+            lineHeight: '140%',
+            letterSpacing: '0.96px',
+            fontWeight: '400',
+          },
+        ],
+        h1Bold: [
+          '48px',
+          {
+            lineHeight: '140%',
+            letterSpacing: '0.96px',
+            fontWeight: '700',
+          },
+        ],
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
