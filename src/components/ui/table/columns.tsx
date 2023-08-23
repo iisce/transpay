@@ -13,8 +13,10 @@ import {
 	DropdownMenuTrigger,
 } from '@radix-ui/react-dropdown-menu';
 import { ColumnDef } from '@tanstack/react-table';
-import { MoreHorizontal } from 'lucide-react';
+import { MoreHorizontal, MoreVertical } from 'lucide-react';
 import { DataTableColumnHeader } from './data-column-table-header';
+import { deleteIcon, editIcon } from '@/lib/icons';
+import Pill from '../pill';
 
 export const paymentColumns: ColumnDef<Payment>[] = [
 	{
@@ -96,6 +98,68 @@ export const paymentColumns: ColumnDef<Payment>[] = [
 						<DropdownMenuItem>View customer</DropdownMenuItem>
 						<DropdownMenuItem>
 							View payment details
+						</DropdownMenuItem>
+					</DropdownMenuContent>
+				</DropdownMenu>
+			);
+		},
+	},
+];
+
+export const agentsColumns: ColumnDef<AgentT>[] = [
+	{
+		accessorKey: 'name',
+		header: 'Name',
+	},
+	{
+		accessorKey: 'area',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Area'
+			/>
+		),
+	},
+	{
+		accessorKey: 'phone',
+		header: 'Phone',
+	},
+	{
+		accessorKey: 'status',
+		header: 'Status',
+		cell: ({ row }) => (
+			<Pill
+				status={row.getValue('status')}
+				text={row.getValue('status')}
+			/>
+		),
+	},
+	{
+		id: 'actions',
+		cell: () => {
+			return (
+				<DropdownMenu>
+					<DropdownMenuTrigger asChild>
+						<Button
+							variant='ghost'
+							className='h-8 w-8 p-0'
+						>
+							<span className='sr-only'>Open menu</span>
+							<MoreVertical className='h-4 w-4' />
+						</Button>
+					</DropdownMenuTrigger>
+					<DropdownMenuContent align='end'>
+						<DropdownMenuItem>
+							<span className='h-4 w-4 mr-3'>
+								{editIcon}
+							</span>
+							View Agent
+						</DropdownMenuItem>
+						<DropdownMenuItem className='text-destructive'>
+							<span className='h-4 w-4 mr-3'>
+								{deleteIcon}
+							</span>
+							Delete Agent
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>

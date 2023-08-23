@@ -5,6 +5,14 @@ interface Payment {
 	email: string;
 }
 
+interface AgentT {
+	id: string;
+	name: string;
+	phone: string;
+	status: 'active' | 'inactive';
+	area: string;
+}
+
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];

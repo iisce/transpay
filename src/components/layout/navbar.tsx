@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { notificationIcon, searchIcon } from '@/lib/icons';
+import { UserNav } from './user-nav-bar';
 
 const ListItem = React.forwardRef<
 	React.ElementRef<'a'>,
@@ -70,10 +71,7 @@ export default function NavBar() {
 							{notificationIcon}
 						</div>
 					</Button>
-					<Avatar>
-						<AvatarImage src='https://github.com/shadcn.png' />
-						<AvatarFallback>SR</AvatarFallback>
-					</Avatar>
+					<UserNav />
 				</div>
 			</div>
 		</div>

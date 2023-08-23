@@ -222,3 +222,35 @@ export const peopleIcon = (
 		/>
 	</svg>
 );
+export const deleteIcon = (
+	<svg
+		width='26'
+		height='25'
+		viewBox='0 0 26 25'
+		fill='none'
+		xmlns='http://www.w3.org/2000/svg'
+		className='h-full w-full object-contain'
+	>
+		<path
+			d='M18.6667 1.33333H14L12.6667 0H6L4.66667 1.33333H0V4H18.6667M1.33333 21.3333C1.33333 22.0406 1.61429 22.7189 2.11438 23.219C2.61448 23.719 3.29276 24 4 24H14.6667C15.3739 24 16.0522 23.719 16.5523 23.219C17.0524 22.7189 17.3333 22.0406 17.3333 21.3333V5.33333H1.33333V21.3333Z'
+			fill='currentColor'
+		/>
+	</svg>
+);
+export const editIcon = (
+	<svg
+		width='26'
+		height='25'
+		viewBox='0 0 26 25'
+		fill='none'
+		xmlns='http://www.w3.org/2000/svg'
+		className='h-full w-full object-contain'
+	>
+		<path
+			fillRule='evenodd'
+			clipRule='evenodd'
+			d='M1.2 21.6H18C18.3183 21.6 18.6235 21.7264 18.8485 21.9515C19.0736 22.1765 19.2 22.4817 19.2 22.8C19.2 23.1183 19.0736 23.4235 18.8485 23.6485C18.6235 23.8736 18.3183 24 18 24H1.2C0.88174 24 0.576516 23.8736 0.351472 23.6485C0.126428 23.4235 0 23.1183 0 22.8C0 22.4817 0.126428 22.1765 0.351472 21.9515C0.576516 21.7264 0.88174 21.6 1.2 21.6ZM0 15.6L12 3.6L15.6 7.2L3.6 19.2H0V15.6ZM13.2 2.4L15.6 0L19.2 3.6L16.7988 6.0012L13.2 2.4Z'
+			fill='currentColor'
+		/>
+	</svg>
+);

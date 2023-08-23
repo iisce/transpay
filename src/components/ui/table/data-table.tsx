@@ -29,6 +29,8 @@ import {
 	DropdownMenuContent,
 	DropdownMenuTrigger,
 } from '../dropdown-menu';
+import { searchIcon } from '@/lib/icons';
+import { DataTablePagination } from './data-table-pagination';
 
 export function DataTable<TData, TValue>({
 	columns,
@@ -63,20 +65,25 @@ export function DataTable<TData, TValue>({
 	return (
 		<div>
 			<div className='flex items-center py-4'>
-				<Input
-					placeholder='Filter emails...'
-					value={
-						(table
-							.getColumn('email')
-							?.getFilterValue() as string) ?? ''
-					}
-					onChange={(event) =>
-						table
-							.getColumn('email')
-							?.setFilterValue(event.target.value)
-					}
-					className='max-w-sm'
-				/>
+				<div className='relative flex  items-center w-full'>
+					<div className='h-6 w-6 left-2 opacity-60 shrink-0 absolute'>
+						{searchIcon}
+					</div>
+					<Input
+						placeholder='Search agents'
+						value={
+							(table
+								.getColumn('name')
+								?.getFilterValue() as string) ?? ''
+						}
+						onChange={(event) =>
+							table
+								.getColumn('name')
+								?.setFilterValue(event.target.value)
+						}
+						className='pl-10 mr-5'
+					/>
+				</div>
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
 						<Button
@@ -109,7 +116,6 @@ export function DataTable<TData, TValue>({
 					</DropdownMenuContent>
 				</DropdownMenu>
 			</div>
-
 			<div className='rounded-md border'>
 				<Table>
 					<TableHeader>
@@ -170,29 +176,11 @@ export function DataTable<TData, TValue>({
 					</TableBody>
 				</Table>
 			</div>
-
-			<div className='flex items-center justify-end space-x-2 py-4'>
-				<Button
-					variant='outline'
-					size='sm'
-					onClick={() => table.previousPage()}
-					disabled={!table.getCanPreviousPage()}
-				>
-					Previous
-				</Button>
-				<Button
-					variant='outline'
-					size='sm'
-					onClick={() => table.nextPage()}
-					disabled={!table.getCanNextPage()}
-				>
-					Next
-				</Button>
-			</div>
-
-			<div className='flex-1 text-sm text-muted-foreground'>
-				{table.getFilteredSelectedRowModel().rows.length} of{' '}
-				{table.getFilteredRowModel().rows.length} row(s) selected.
+			<div className='flex items-center py-4'>
+				<DataTablePagination
+					rowsPerPage
+					table={table}
+				/>
 			</div>
 		</div>
 	);

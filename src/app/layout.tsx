@@ -24,13 +24,15 @@ export default function RootLayout({
 			lang='en'
 			suppressHydrationWarning
 		>
-			<body className={`${lato.className} `}>
+			<body className={`${lato.className} h-screen overflow-hidden`}>
 				<ThemeProvider
 					attribute='class'
 					defaultTheme='system'
 					enableSystem
 				>
-					<div className='flex flex-col w-full'>{children}</div>
+					<div className='h-full overflow-hidden'>
+						{children}
+					</div>
 				</ThemeProvider>
 			</body>
 		</html>
