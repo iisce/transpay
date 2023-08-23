@@ -54,7 +54,7 @@ export default function NavBar() {
 						alt='Transpay Logo'
 					/>
 				</Link>
-				<div className='w-full'>
+				<div className='w-full hidden sm:block'>
 					<div className='max-w-[500px] relative flex  items-center justify-start'>
 						<div className='h-6 w-6 left-2 opacity-60 shrink-0 absolute'>
 							{searchIcon}
