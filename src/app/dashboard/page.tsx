@@ -1,7 +1,6 @@
 import DashboardCard from '@/components/layout/dashboard-card';
 import { Charts } from '@/components/shared/charts';
 import { DASHBOARD_CARD } from '@/lib/consts';
-import Image from 'next/image';
 import React from 'react';
 
 export default function DashboardPage() {

@@ -15,8 +15,11 @@ import {
 import { ColumnDef } from '@tanstack/react-table';
 import { MoreHorizontal, MoreVertical } from 'lucide-react';
 import { DataTableColumnHeader } from './data-column-table-header';
-import { deleteIcon, editIcon } from '@/lib/icons';
+import { deleteIcon, editIcon, paymentIcon } from '@/lib/icons';
 import Pill from '../pill';
+import Link from 'next/link';
+import { Badge } from '../badge';
+import Cbadge from '../category-badge';
 
 export const paymentColumns: ColumnDef<Payment>[] = [
 	{
@@ -136,7 +139,7 @@ export const agentsColumns: ColumnDef<AgentT>[] = [
 	},
 	{
 		id: 'actions',
-		cell: () => {
+		cell: ({ row }) => {
 			return (
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
@@ -149,17 +152,100 @@ export const agentsColumns: ColumnDef<AgentT>[] = [
 						</Button>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align='end'>
-						<DropdownMenuItem>
-							<span className='h-4 w-4 mr-3'>
-								{editIcon}
-							</span>
-							View Agent
+						<DropdownMenuItem asChild>
+							<Link href={`/dashboard/agents/${row.id}`}>
+								<span className='h-4 w-4 mr-3'>
+									{editIcon}
+								</span>
+								View Agent
+							</Link>
 						</DropdownMenuItem>
 						<DropdownMenuItem className='text-destructive'>
 							<span className='h-4 w-4 mr-3'>
 								{deleteIcon}
 							</span>
 							Delete Agent
+						</DropdownMenuItem>
+					</DropdownMenuContent>
+				</DropdownMenu>
+			);
+		},
+	},
+];
+export const driversColumns: ColumnDef<AgentT>[] = [
+	{
+		accessorKey: 'name',
+		header: 'Name',
+	},
+	{
+		accessorKey: 'plate',
+		header: 'Vehicle Plate Number',
+		cell: ({ row }) => (
+			<span className='uppercase'>{row.getValue('plate')}</span>
+		),
+	},
+	{
+		accessorKey: 'status',
+		header: 'Today Status',
+		cell: ({ row }) => (
+			<Pill
+				status={row.getValue('status')}
+				text={row.getValue('status')}
+			/>
+		),
+	},
+	{
+		accessorKey: 'category',
+		header: 'Category',
+		cell: ({ row }) => <Cbadge variant={row.getValue('category')} />,
+	},
+	{
+		id: 'actions',
+		cell: ({ row }) => {
+			return (
+				<DropdownMenu>
+					<DropdownMenuTrigger asChild>
+						<Button
+							variant='ghost'
+							className='h-8 w-8 p-0'
+						>
+							<span className='sr-only'>Open menu</span>
+							<MoreVertical className='h-4 w-4' />
+						</Button>
+					</DropdownMenuTrigger>
+					<DropdownMenuContent
+						className='border border-black'
+						align='end'
+					>
+						<DropdownMenuItem
+							className='border-b border-black rounded-none'
+							asChild
+						>
+							<Link href={`/dashboard/drivers/${row.id}`}>
+								<span className='h-4 w-4 mr-3'>
+									{editIcon}
+								</span>
+								View Driver
+							</Link>
+						</DropdownMenuItem>
+						<DropdownMenuItem
+							className='border-b border-black rounded-none'
+							asChild
+						>
+							<Link
+								href={`/dashboard/drivers/payment/${row.id}`}
+							>
+								<span className='h-4 w-4 mr-3'>
+									{paymentIcon}
+								</span>
+								Make Payment
+							</Link>
+						</DropdownMenuItem>
+						<DropdownMenuItem className='text-destructive'>
+							<span className='h-4 w-4 mr-3'>
+								{deleteIcon}
+							</span>
+							Delete Driver
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>

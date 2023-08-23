@@ -1,6 +1,5 @@
 'use client';
 import React from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import Link from 'next/link';
 import { NavigationMenuLink } from '@radix-ui/react-navigation-menu';
 import { cn } from '@/lib/utils';

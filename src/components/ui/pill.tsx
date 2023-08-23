@@ -7,9 +7,24 @@ export default function Pill({
 	status: string;
 	text: string;
 }) {
-	const dot = status === 'active' ? 'bg-[#086400]' : 'bg-destructive';
-	const bg = status === 'active' ? 'bg-[#086400]/30' : 'bg-destructive/30';
-	const color = status === 'active' ? 'text-[#086400]' : 'text-destructive';
+	const dot =
+		status === 'active'
+			? 'bg-[#086400]'
+			: status === 'inactive'
+			? 'bg-destructive'
+			: 'bg-gray-500';
+	const bg =
+		status === 'active'
+			? 'bg-[#086400]/30'
+			: status === 'inactive'
+			? 'bg-destructive/30'
+			: 'bg-gray-500/30';
+	const color =
+		status === 'active'
+			? 'text-[#086400]'
+			: status === 'inactive'
+			? 'bg-destructive'
+			: 'text-gray-500';
 
 	return (
 		<div

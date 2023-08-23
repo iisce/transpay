@@ -49,6 +49,7 @@ export default function Agents() {
 					</TabsList>
 					<TabsContent value='all'>
 						<DataTable
+							showSearch
 							columns={agentsColumns}
 							data={AGENT_TABLE}
 						/>

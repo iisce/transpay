@@ -458,3 +458,30 @@ export const AGENT_TABLE = [
 		status: 'inactive',
 	},
 ];
+
+export const DRIVER_TABLE = [
+	{
+		name: 'Emeka Ignatius',
+		plate: 'tfgh-ilt',
+		status: 'active',
+		category: 'cleared',
+	},
+	{
+		name: 'Emmanuel Ozigbo',
+		plate: 'trhb6-9jw',
+		status: 'inactive',
+		category: 'debtors',
+	},
+	{
+		name: 'Divine Onyekachukwu',
+		plate: 'gtw8-owg',
+		status: 'waived',
+		category: 'debtors',
+	},
+	{
+		name: 'Oyeniran Ayobami',
+		plate: '97yy-kjy',
+		status: 'active',
+		category: 'cleared',
+	},
+];

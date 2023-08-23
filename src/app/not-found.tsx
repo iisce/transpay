@@ -36,13 +36,13 @@ const NotFound = () => {
 							className=''
 							href={'/'}
 						>
-							Start Earning Money
+							Create an Account
 						</Link>
 					</Button>
 					<Button asChild>
 						<Link
 							className=''
-							href={'/'}
+							href={'/faqs'}
 						>
 							Faqs
 						</Link>
