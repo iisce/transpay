@@ -253,10 +253,9 @@ export const driversColumns: ColumnDef<AgentT>[] = [
 		},
 	},
 ];
-
 export const viewDriversColumns: ColumnDef<AgentT>[] = [
 	{
-		accessorKey: 'date',
+		accessorKey: 'Date',
 		header: 'Date',
 	},
 	{
@@ -269,17 +268,12 @@ export const viewDriversColumns: ColumnDef<AgentT>[] = [
 	{
 		accessorKey: 'payment_type',
 		header: 'Payment',
-		cell: ({ row }) => (
-			<Pill
-				status={row.getValue('status')}
-				text={row.getValue('status')}
-			/>
-		),
+		
 	},
 	{
 		accessorKey: 'handled_by',
 		header: 'Handled By',
-		cell: ({ row }) => <Cbadge variant={row.getValue('handled_by')} />,
+		
 	},
 	
 ];

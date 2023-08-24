@@ -1,7 +1,7 @@
 import DashboardCard from "@/components/layout/dashboard-card";
-import { agentsColumns } from "@/components/ui/table/columns";
+import { agentsColumns, viewDriversColumns } from "@/components/ui/table/columns";
 import { DataTable } from "@/components/ui/table/data-table";
-import { AGENT_TABLE, DRIVERS_CARD } from "@/lib/consts";
+import { AGENT_TABLE, DRIVERS_CARD, VIEWDRIVER_TABLE } from "@/lib/consts";
 import Link from "next/link";
 
 import React from "react";
@@ -37,8 +37,8 @@ export default function ViewDriverDetails() {
 					</div>
 					<div className=''>
 						<DataTable
-							columns={agentsColumns}
-							data={AGENT_TABLE}
+							columns={viewDriversColumns}
+							data={VIEWDRIVER_TABLE}
 						/>
 					</div>
 				</div>
