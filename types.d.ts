@@ -31,3 +31,12 @@ interface DashboardCardI {
 	icon?: React.ReactNode;
 	image?: string;
 }
+interface ButtonD{
+	text: string;
+	icon?: React.ReactNode;
+	variant: 'primary' | 'secondary';
+	hasIcon?: boolean;
+	onClick?: () => void;
+	className?: string;
+	
+}
