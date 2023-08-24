@@ -330,6 +330,7 @@ export const driversProgressIcon1 = (
 		className="  text-neutral-progress"
 	  />
 	  <path
+
 		d="M340 40C340 62.0914 322.091 80 300 80C277.909 80 260 62.0914 260 40C260 17.9086 277.909 0 300 0C322.091 0 340 17.9086 340 40ZM270.054 40C270.054 56.5388 283.461 69.9462 300 69.9462C316.539 69.9462 329.946 56.5388 329.946 40C329.946 23.4612 316.539 10.0538 300 10.0538C283.461 10.0538 270.054 23.4612 270.054 40Z"
 		fill="currentColor"
 		className="  text-neutral-progress"
@@ -340,8 +341,8 @@ export const driversProgressIcon1 = (
 		className="  text-neutral-progress"
 	  />
 	</svg>
-  );
-  export const driversProgressIcon2 = (
+);
+export const driversProgressIcon2 = (
 	<svg
 	  width="340"
 	  height="82"
@@ -409,8 +410,8 @@ export const driversProgressIcon1 = (
 		className="  text-neutral-progress"
 	  />
 	</svg>
-  );
-  export const driversProgressIcon3 = (
+);
+export const driversProgressIcon3 = (
 	<svg
 	  width="340"
 	  height="82"
@@ -475,4 +476,4 @@ export const driversProgressIcon1 = (
 		fill="currentColor"
 	  />
 	</svg>
-  );
+);

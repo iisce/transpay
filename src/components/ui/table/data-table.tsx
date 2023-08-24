@@ -66,7 +66,7 @@ export function DataTable<TData, TValue>({
 	return (
 		<div>
 			{showSearch && (
-				<div className='flex items-center py-4'>
+				<div className='flex items-center py-4 text-title2'>
 					<div className='relative flex  items-center w-full'>
 						<div className='h-6 w-6 left-2 opacity-60 shrink-0 absolute'>
 							{searchIcon}

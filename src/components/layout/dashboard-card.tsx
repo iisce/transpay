@@ -13,7 +13,7 @@ export default function DashboardCard({
 }: DashboardCardI) {
 	return (
 		<Link href={href}>
-			<Card className='w-[278px] h-[280px] bg-secondary overflow-hidden'>
+			<Card className='w-[278px] h-[280px] bg-primary-50 overflow-hidden'>
 				<CardHeader className='p-0 h-[160px] w-full overflow-hidden'>
 					<Image
 						src={image || '/tricycle.jpg'}

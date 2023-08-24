@@ -15,7 +15,7 @@ export default function AddNewAgent() {
 				<div className='shrink-0 grow-0'>Agent Name</div>
 				<div className='shrink-0 grow-0'>
 					<Button
-						className='justify-start rounded-xl'
+						className='justify-start text-white rounded-xl bg-primary-800'
 						asChild
 						variant={'default'}
 					>

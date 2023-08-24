@@ -10,7 +10,7 @@ import { Separator } from '../ui/separator';
 export default function Sidebar() {
 	const pathname = usePathname();
 	return (
-		<div className='h-full flex-col px-5 min-w-min bg-secondary hidden sm:flex justify-between'>
+		<div className='h-full flex-col px-5 min-w-min bg-primary-50 hidden sm:flex justify-between'>
 			<div className='flex flex-col gap-3 pt-10'>
 				{SIDEBAR_LINKS.map((link, i) => (
 					<Button

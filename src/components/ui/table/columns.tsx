@@ -253,3 +253,33 @@ export const driversColumns: ColumnDef<AgentT>[] = [
 		},
 	},
 ];
+
+export const viewDriversColumns: ColumnDef<AgentT>[] = [
+	{
+		accessorKey: 'date',
+		header: 'Date',
+	},
+	{
+		accessorKey: 'amount_NGN',
+		header: 'Amount (NGN)',
+		cell: ({ row }) => (
+			<span className='uppercase'>{row.getValue('amount_NGN')}</span>
+		),
+	},
+	{
+		accessorKey: 'payment_type',
+		header: 'Payment',
+		cell: ({ row }) => (
+			<Pill
+				status={row.getValue('status')}
+				text={row.getValue('status')}
+			/>
+		),
+	},
+	{
+		accessorKey: 'handled_by',
+		header: 'Handled By',
+		cell: ({ row }) => <Cbadge variant={row.getValue('handled_by')} />,
+	},
+	
+];

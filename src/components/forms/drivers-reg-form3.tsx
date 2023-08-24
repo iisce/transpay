@@ -84,7 +84,7 @@ export default function DriverForm3() {
             size="lg"
             type="button"
             asChild
-            className="p-4 py-2 rounded-normal "
+            className="p-4 w-28 rounded-normal text-body "
           >
             <Link href={"/dashboard/drivers/add-new2"}>Back</Link>
           </Button>
@@ -93,7 +93,7 @@ export default function DriverForm3() {
             size="lg"
             type="button"
             asChild
-            className="p-4 py-2 rounded-normal"
+            className="p-4 w-28 rounded-normal text-body bg-primary-800 text-white"
           >
             <Link href={"/dashboard/drivers"}>Add Driver</Link>
           </Button>

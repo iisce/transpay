@@ -40,7 +40,27 @@ export const SIDEBAR_LINKS = [
 		icon: revenueIcon,
 	},
 ];
+export const DRIVERS_CARD=[
+	{
+		name: 'Personal Information',
+		description:'Edit Drivers information',
+		href: '/dashboard/drivers',
+		image: '/personalinfo.png',
+	},
+	{
+		name: 'Payment',
+		description:"Make Payment & Check Payment History",
+		href: '/dashboard/revenue',
+		image: '/payment.png',
+	},
+	{
+		name: 'Fines & Penalties',
+		description:"Fine Driver & Check Fine Payment",
+		href: '/dashboard/fines',
+		image: '/fineandpenal.png',
+	}
 
+]
 export const DASHBOARD_CARD = [
 	{
 		name: 'Drivers',
@@ -485,3 +505,119 @@ export const DRIVER_TABLE = [
 		category: 'cleared',
 	},
 ];
+export const VIEWDRIVER_TABLE = [
+	{
+		Date: '23-08-2023',
+		amount_NGN: '#15000',
+		payment_type: 'Cash',
+		handled_by: 'Agent john',
+	},
+	{
+		Date: '22-08-2023',
+		amount_NGN: '#10000',
+		payment_type: 'Bank Transfer',
+		handled_by: 'Agent James',
+	},
+	{
+		Date: '24-08-2023',
+		amount_NGN: '#25000',
+		payment_type: 'Cash',
+		handled_by: 'Agent Jane',
+	},
+	{
+		Date: '21-08-2023',
+		amount_NGN: '#60,000',
+		payment_type: 'Mobile Transfer',
+		handled_by: 'Agent Janet',
+	},
+	{
+		Date: '23-08-2023',
+		amount_NGN: '#5000',
+		payment_type: 'Cash',
+		handled_by: 'Agent Jonathan',
+	},
+	{
+		Date: '25-08-2023',
+		amount_NGN: '#19000',
+		payment_type: 'Cash',
+		handled_by: 'Agent Helen',
+	},
+	{
+		name: 'Agent 39',
+		area: 'Lekki',
+		phone: '08061234567',
+		status: 'active',
+	},
+	{
+		name: 'Agent 40',
+		area: 'Surulere',
+		phone: '08067654321',
+		status: 'inactive',
+	},
+	{
+		name: 'Agent A',
+		area: 'Ikeja',
+		phone: '08061234567',
+		status: 'active',
+	},
+	{
+		name: 'Agent B',
+		area: 'Yaba',
+		phone: '08064321987',
+		status: 'inactive',
+	},
+	{
+		name: 'Agent C',
+		area: 'Surulere',
+		phone: '08063456781',
+		status: 'active',
+	},
+	{
+		name: 'Agent D',
+		area: 'Oshodi',
+		phone: '08067654321',
+		status: 'inactive',
+	},
+	{
+		name: 'Agent E',
+		area: 'Lekki',
+		phone: '08061234567',
+		status: 'active',
+	},
+	{
+		name: 'Agent F',
+		area: 'Ikoyi',
+		phone: '08064321987',
+		status: 'inactive',
+	},
+	{
+		name: 'Agent G',
+		area: 'Ajao Estate',
+		phone: '08063456781',
+		status: 'active',
+	},
+	{
+		name: 'Agent H',
+		area: 'Festac',
+		phone: '08067654321',
+		status: 'inactive',
+	},
+	{
+		name: 'Agent I',
+		area: 'Victoria Island',
+		phone: '08061234567',
+		status: 'active',
+	},
+	{
+		name: 'Agent J',
+		area: 'Agege',
+		phone: '08064321987',
+		status: 'inactive',
+	},
+	{
+		name: 'Agent K',
+		area: 'Ikorodu',
+		phone: '08063456781',
+		status: 'active',
+	},
+]
