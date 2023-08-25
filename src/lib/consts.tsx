@@ -485,3 +485,43 @@ export const DRIVER_TABLE = [
 		category: 'cleared',
 	},
 ];
+
+export const FINE_CARDS: FinesCardP[] = [
+	{
+		title: 'Overload',
+		description: 'Long description',
+		type: 'fine',
+		href: '/dashboard',
+		amount: '7000'
+	},{
+		title: 'Overload',
+		description: 'Long description',
+		type: 'fine',
+		href: '/dashboard',
+		amount: '25000'
+	},{
+		title: 'Overload',
+		description: 'Long description',
+		type: 'fine',
+		href: '/dashboard',
+		amount: '50000'
+	},{
+		title: 'Overload',
+		description: 'Long description',
+		type: 'fine',
+		href: '/dashboard',
+		amount: '5000'
+	},{
+		title: 'Overload',
+		description: 'Long description',
+		type: 'fine',
+		href: '/dashboard',
+		amount: '5000'
+	},{
+		title: 'Overload',
+		description: 'Long description',
+		type: 'fine',
+		href: '/dashboard',
+		amount: '5000'
+	}
+]

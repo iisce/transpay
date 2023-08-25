@@ -31,3 +31,20 @@ interface DashboardCardI {
 	icon?: React.ReactNode;
 	image?: string;
 }
+
+interface FinesCardP{
+	title: string;
+	description: string;
+	type: 'fine'| 'penalty';
+	href: string;
+	amount: string|number
+}
+
+interface ButtonF{
+	text: string;
+	icon?: React.ReactNode;
+	variant: 'primary' | 'secondary';
+	hasIcon?: boolean;
+	onClick?: () => void;
+	className?: string;
+}
