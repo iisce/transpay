@@ -14,6 +14,7 @@ import { addIcon, filterIcon } from '@/lib/icons';
 import React from 'react';
 import { DailyFeesCharts } from '@/components/shared/chats/daily-fees';
 import { FinesPaymentCharts } from '@/components/shared/chats/fines-and-penalties';
+import StatsCard from '@/components/shared/statistics-card';
 
 export default function Revenue() {
 	return (
@@ -61,41 +62,29 @@ export default function Revenue() {
 			</div>
 			<div className='flex flex-col gap-5 overflow-y-scroll'>
 				<div className=' py-5 flex flex-row flex-wrap'>
-					<div className='p-2 w-1/3'>
-						<Card className=' overflow-hidden p-5'>
-							<div className=''>Total Revenue</div>
-							<div className='flex text-lg font-bold'>
-								₦1,500,278
-							</div>
-							<div className='w-full h-[130px] object-cover'>
-								<TotalRevenueCharts />
-							</div>
-						</Card>
-					</div>
-					<div className='p-2 w-1/3'>
-						<Card className=' overflow-hidden p-5'>
-							<div className=''>Daily Fees Payment</div>
-							<div className='flex text-lg font-bold'>
-								₦1,500,278
-							</div>
-							<div className='w-full h-[130px] object-cover'>
-								<DailyFeesCharts />
-							</div>
-						</Card>
-					</div>
-					<div className='p-2 w-1/3'>
-						<Card className=' overflow-hidden p-5'>
-							<div className=''>
-								Fines & Penalties Payment
-							</div>
-							<div className='flex text-lg font-bold'>
-								₦1,500,278
-							</div>
-							<div className='w-full h-[130px] object-cover'>
-								<FinesPaymentCharts />
-							</div>
-						</Card>
-					</div>
+					<StatsCard
+						percentage={9.26}
+						type='up'
+						title='Total Revenue'
+						amount='21,974,278'
+					>
+						<TotalRevenueCharts />
+					</StatsCard>
+					<StatsCard
+						percentage={4.72}
+						type='down'
+						title='Daily Fees Payment'
+						amount='7,500,278'
+					>
+						<DailyFeesCharts />
+					</StatsCard>
+					<StatsCard
+						percentage={0}
+						title='Fines & Penalties Payment'
+						amount='9,090,278'
+					>
+						<FinesPaymentCharts />
+					</StatsCard>
 				</div>
 				<div className='w-96'>
 					<RevenueCharts />

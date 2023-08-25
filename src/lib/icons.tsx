@@ -284,3 +284,63 @@ export const filterIcon = (
 		/>
 	</svg>
 );
+export const upIcon = (
+	<svg
+		width='9'
+		height='9'
+		viewBox='0 0 9 9'
+		fill='none'
+		xmlns='http://www.w3.org/2000/svg'
+		className='h-full w-full object-contain'
+	>
+		<path
+			d='M4.15 1L7.3 4L4.15 1ZM4.15 1L1 4L4.15 1ZM4.15 1V8V1Z'
+			fill='currentColor'
+		/>
+		<path
+			d='M4.15 1L7.3 4M4.15 1L1 4M4.15 1V8'
+			stroke='currentColor'
+			strokeWidth='2'
+			strokeLinecap='round'
+			strokeLinejoin='round'
+		/>
+	</svg>
+);
+export const downIcon = (
+	<svg
+		width='9'
+		height='9'
+		viewBox='0 0 9 9'
+		fill='none'
+		xmlns='http://www.w3.org/2000/svg'
+		className='h-full w-full object-contain'
+	>
+		<path
+			d='M4.15078 8L1.00078 5L4.15078 8ZM4.15078 8L7.30078 5L4.15078 8ZM4.15078 8L4.15078 1L4.15078 8Z'
+			fill='currentColor'
+		/>
+		<path
+			d='M4.15078 8L1.00078 5M4.15078 8L7.30078 5M4.15078 8L4.15078 1'
+			stroke='currentColor'
+			strokeWidth='2'
+			strokeLinecap='round'
+			strokeLinejoin='round'
+		/>
+	</svg>
+);
+export const dashIcon = (
+	<svg
+		xmlns='http://www.w3.org/2000/svg'
+		fill='none'
+		viewBox='0 0 24 24'
+		strokeWidth={1.5}
+		stroke='currentColor'
+		className='h-full w-full object-contain'
+	>
+		<path
+			strokeLinecap='round'
+			strokeLinejoin='round'
+			d='M18 12H6'
+		/>
+	</svg>
+);

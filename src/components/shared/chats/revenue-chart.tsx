@@ -127,7 +127,7 @@ export function RevenueCharts() {
 				<YAxis
 					tickLine={false}
 					axisLine={false}
-					tickFormatter={(value) => `$${value}`}
+					tickFormatter={(value) => `₦${value}`}
 				/>
 				<Tooltip content={<CustomTooltip />} />
 				<Legend />
