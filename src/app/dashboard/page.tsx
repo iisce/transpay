@@ -1,5 +1,5 @@
 import DashboardCard from '@/components/layout/dashboard-card';
-import { Charts } from '@/components/shared/charts';
+import { Charts } from '@/components/shared/chats/charts';
 import { DASHBOARD_CARD } from '@/lib/consts';
 import React from 'react';
 

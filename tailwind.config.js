@@ -47,6 +47,10 @@ module.exports = {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
+        awesome: {
+          DEFAULT: "hsl(var(--awesome))",
+          foreground: "hsl(var(--awesome-foreground))",
+        },
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",

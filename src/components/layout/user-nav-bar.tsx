@@ -10,8 +10,6 @@ import {
 	DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
 import { Button } from '../ui/button';
-import { ModeToggle } from '../dark-mode-toggle';
-import { agentsIcon } from '@/lib/icons';
 import Link from 'next/link';
 import { SIDEBAR_LINKS } from '@/lib/consts';
 
