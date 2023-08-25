@@ -31,6 +31,7 @@ interface DashboardCardI {
 	icon?: React.ReactNode;
 	image?: string;
 }
+<<<<<<< HEAD
 
 interface FinesCardP{
 	title: string;
@@ -41,10 +42,17 @@ interface FinesCardP{
 }
 
 interface ButtonF{
+=======
+interface ButtonD{
+>>>>>>> 1c8482753dce764f99b40e5f2dd8d5e73f9ebe75
 	text: string;
 	icon?: React.ReactNode;
 	variant: 'primary' | 'secondary';
 	hasIcon?: boolean;
 	onClick?: () => void;
 	className?: string;
+<<<<<<< HEAD
+=======
+	
+>>>>>>> 1c8482753dce764f99b40e5f2dd8d5e73f9ebe75
 }

@@ -1,3 +1,4 @@
+import DriverForm from "@/components/forms/drivers-registration-form";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import FinesCardP from "@/components/ui/fines-card";

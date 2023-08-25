@@ -19,7 +19,7 @@ export default function Drivers() {
 						variant={'default'}
 					>
 						<Link
-							href={'/dashboard/drivers/add-new'}
+							href={'/dashboard/drivers/new-driver'}
 							className='shrink-0 whitespace-nowrap'
 						>
 							<div className='mr-2 h-4 w-4 shrink-0'>
