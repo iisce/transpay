@@ -12,8 +12,11 @@ export default function DashboardCard({
 	image,
 }: DashboardCardI) {
 	return (
-		<Link href={href}>
-			<Card className='w-[278px] h-[280px] bg-primary-50 overflow-hidden'>
+		<Link
+			href={href}
+			className='w-full xs:w-1/2 sm:w-1/2 lg:w-1/3 xl:w-1/4 h-[300px] p-1.5 sm:p-2.5'
+		>
+			<Card className='bg-secondary overflow-hidden h-full shadow-md hover:shadow-xl transition-all'>
 				<CardHeader className='p-0 h-[160px] w-full overflow-hidden'>
 					<Image
 						src={image || '/tricycle.jpg'}
@@ -25,8 +28,12 @@ export default function DashboardCard({
 				</CardHeader>
 				<CardContent className='p-3'>
 					<div className='flex flex-col gap-1.5'>
-						<div className='text-h5 '>{name}</div>
-						<div className='text-title2'>{description}</div>
+						<div className=' text-bodyBold uppercase'>
+							{name}
+						</div>
+						<div className=' text-captionBold sm:text-bodyBold'>
+							{description}
+						</div>
 						{number && (
 							<div className='flex justify-start gap-1.5 items-center text-title '>
 								<div className='h-4 w-4'>{icon}</div>

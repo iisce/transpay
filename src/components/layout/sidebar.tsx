@@ -18,6 +18,7 @@ export default function Sidebar() {
 						className='justify-start rounded-xl'
 						asChild
 						variant={
+							// pathname.startsWith(link.href)
 							pathname === link.href ? 'default' : 'ghost'
 						}
 					>

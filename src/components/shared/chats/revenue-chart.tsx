@@ -72,12 +72,9 @@ export const CustomTooltip = ({
 }) => {
 	if (active && payload && payload.length) {
 		return (
-			<div className='custom-tooltip'>
+			<div className='w-40 h-16 flex flex-col text-primary border-2 rounded-xl border-primary bg-secondary p-2'>
 				<p className='label'>{`${label} : ${payload[0].value}`}</p>
 				<p className='intro'>{label}</p>
-				<p className='desc'>
-					Anything you want can be displayed here.
-				</p>
 			</div>
 		);
 	}
@@ -89,11 +86,11 @@ export function RevenueCharts() {
 	return (
 		<ResponsiveContainer
 			width='100%'
-			height={350}
+			height={400}
 		>
 			<AreaChart
 				width={500}
-				height={300}
+				height={350}
 				data={data}
 				margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
 			>
@@ -122,7 +119,6 @@ export function RevenueCharts() {
 					stroke='#888888'
 					tickLine={false}
 					axisLine={false}
-					tickFormatter={(value) => `${value}`}
 				/>
 				<YAxis
 					tickLine={false}
@@ -130,7 +126,6 @@ export function RevenueCharts() {
 					tickFormatter={(value) => `₦${value}`}
 				/>
 				<Tooltip content={<CustomTooltip />} />
-				<Legend />
 				<Area
 					type='monotone'
 					dataKey='total'

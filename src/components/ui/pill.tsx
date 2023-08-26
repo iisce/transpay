@@ -9,21 +9,21 @@ export default function Pill({
 }) {
 	const dot =
 		status === 'active'
-			? 'bg-[#086400]'
+			? 'bg-awesome'
 			: status === 'inactive'
-			? 'bg-destructive'
+			? 'bg-destructive-foreground'
 			: 'bg-gray-500';
 	const bg =
 		status === 'active'
-			? 'bg-[#086400]/30'
+			? 'bg-awesome/30'
 			: status === 'inactive'
-			? 'bg-destructive/30'
+			? 'bg-destructive-foreground/30'
 			: 'bg-gray-500/30';
 	const color =
 		status === 'active'
-			? 'text-[#086400]'
+			? 'text-awesome-foreground'
 			: status === 'inactive'
-			? 'bg-destructive'
+			? 'bg-destructive-foreground'
 			: 'text-gray-500';
 
 	return (
