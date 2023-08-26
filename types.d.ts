@@ -4,6 +4,21 @@ interface Payment {
 	status: 'pending' | 'processing' | 'success' | 'failed';
 	email: string;
 }
+interface AgentPayment {
+	id: string;
+	driver: string;
+	amount: number;
+	date: string;
+	status: 'pending' | 'processing' | 'successful' | 'failed';
+}
+
+interface AgentT {
+	id: string;
+	name: string;
+	phone: string;
+	status: 'active' | 'inactive';
+	area: string;
+}
 
 interface AgentT {
 	id: string;
@@ -31,12 +46,11 @@ interface DashboardCardI {
 	icon?: React.ReactNode;
 	image?: string;
 }
-interface ButtonD{
+interface ButtonD {
 	text: string;
 	icon?: React.ReactNode;
 	variant: 'primary' | 'secondary';
 	hasIcon?: boolean;
 	onClick?: () => void;
 	className?: string;
-	
 }

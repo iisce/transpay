@@ -1,10 +1,9 @@
 import ViewAgentDetails from '@/components/pages/agents/view-agent-details';
 import { Button } from '@/components/ui/button';
-import { agentsColumns } from '@/components/ui/table/columns';
+import { Checkbox } from '@/components/ui/checkbox';
+import { agentPaymentColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
-import { AGENT_TABLE } from '@/lib/consts';
-import { addIcon } from '@/lib/icons';
-import Link from 'next/link';
+import { PAYMENT_TABLE } from '@/lib/consts';
 import React from 'react';
 
 export default function SingularAgent() {
@@ -14,19 +13,13 @@ export default function SingularAgent() {
 				<div className='shrink-0 grow-0'>Agent Name</div>
 				<div className='shrink-0 grow-0'>
 					<Button
-						className='justify-start rounded-xl'
 						asChild
 						variant={'default'}
 					>
-						<Link
-							href={'/dashboard/agents/add-new'}
-							className='shrink-0 whitespace-nowrap'
-						>
-							<div className='mr-2 h-4 w-4 shrink-0'>
-								{addIcon}
-							</div>
+						<div className='justify-start rounded-xl flex gap-2'>
+							<Checkbox className='border-secondary text-primary bg-secondary' />
 							Make an Admin
-						</Link>
+						</div>
 					</Button>
 				</div>
 			</div>
@@ -44,12 +37,12 @@ export default function SingularAgent() {
 						<div className='shrink-0 grow-0'>
 							Total Payments
 						</div>
-						<div className='shrink-0 grow-0'>N200,000</div>
+						<div className='shrink-0 grow-0'>₦200,000</div>
 					</div>
-					<div className=''>
+					<div>
 						<DataTable
-							columns={agentsColumns}
-							data={AGENT_TABLE}
+							columns={agentPaymentColumns}
+							data={PAYMENT_TABLE}
 						/>
 					</div>
 				</div>

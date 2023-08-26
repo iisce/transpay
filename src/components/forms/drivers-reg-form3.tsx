@@ -12,7 +12,6 @@ import {
 	AlertDialogAction,
 	AlertDialogCancel,
 	AlertDialogContent,
-	AlertDialogDescription,
 	AlertDialogFooter,
 	AlertDialogHeader,
 	AlertDialogTitle,
@@ -30,6 +29,7 @@ const driverFormSchema = z.object({
 type DriverFormValues = z.infer<typeof driverFormSchema>;
 
 export default function DriverForm3() {
+	const [open, setOpen] = React.useState(false);
 	const form = useForm<DriverFormValues>({
 		resolver: zodResolver(driverFormSchema),
 		mode: 'onChange',
@@ -106,7 +106,10 @@ export default function DriverForm3() {
 								Back
 							</Link>
 						</Button>
-						<AlertDialog>
+						<AlertDialog
+							open={open}
+							onOpenChange={setOpen}
+						>
 							<AlertDialogTrigger asChild>
 								<Button
 									variant='default'
@@ -139,7 +142,7 @@ export default function DriverForm3() {
 										className='w-64 rounded-2xl'
 									>
 										<Link
-											href={`/dashboard/drivers/driver`}
+											href={`/dashboard/drivers/d6784`}
 										>
 											Dashboard
 										</Link>

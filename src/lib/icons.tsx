@@ -570,3 +570,18 @@ export const dashIcon = (
 		/>
 	</svg>
 );
+export const printIcon = (
+	<svg
+		width='20'
+		height='19'
+		viewBox='0 0 20 19'
+		fill='none'
+		xmlns='http://www.w3.org/2000/svg'
+		className='h-full w-full object-contain'
+	>
+		<path
+			d='M1.501 5.5H18.501C19.071 5.5 18.978 4.892 18.694 4.793C18.409 4.694 15.251 3.5 14.7 3.5H14V0.5H6V3.5H5.301C4.751 3.5 1.592 4.694 1.308 4.793C1.024 4.892 0.931 5.5 1.501 5.5ZM19 6.5H1C0.45 6.5 0 6.95 0 7.5V12.5C0 13.051 0.45 13.5 1 13.5H3.283L2.401 18.5H17.6L16.717 13.5H19C19.551 13.5 20 13.051 20 12.5V7.5C20 6.95 19.551 6.5 19 6.5ZM4.603 16.5L5.801 9.497H14.2L15.399 16.5H4.603Z'
+			fill='currentColor'
+		/>
+	</svg>
+);

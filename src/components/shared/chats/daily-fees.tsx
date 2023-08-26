@@ -1,14 +1,6 @@
 'use client';
 
-import {
-	Area,
-	AreaChart,
-	Legend,
-	ResponsiveContainer,
-	Tooltip,
-	XAxis,
-	YAxis,
-} from 'recharts';
+import { Area, AreaChart, ResponsiveContainer, Tooltip } from 'recharts';
 
 const data = [
 	{
