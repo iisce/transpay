@@ -9,6 +9,15 @@ interface AgentPayment {
 	driver: string;
 	amount: number;
 	date: string;
+	payment_type: 'Cash' | 'Transfer' | 'Bank Transfer' | 'Mobile Transfer';
+	status: 'pending' | 'processing' | 'successful' | 'failed';
+}
+interface DriverPayment {
+	id: string;
+	driver: string;
+	amount: number;
+	date: string;
+	payment_type: 'Cash' | 'Transfer' | 'Bank Transfer' | 'Mobile Transfer';
 	status: 'pending' | 'processing' | 'successful' | 'failed';
 }
 
@@ -44,7 +53,8 @@ interface DashboardCardI {
 	href: Url;
 	number?: string;
 	icon?: React.ReactNode;
-	image?: string;
+	image?: string; 
+	className?: string;
 }
 interface ButtonD {
 	text: string;

@@ -48,6 +48,10 @@ export const paymentColumns: ColumnDef<Payment>[] = [
 		header: 'Status',
 	},
 	{
+		accessorKey: 'payment_type',
+		header: 'Payment Type',
+	},
+	{
 		accessorKey: 'email',
 		header: ({ column }) => (
 			<DataTableColumnHeader
@@ -197,6 +201,7 @@ export const driversColumns: ColumnDef<AgentT>[] = [
 		header: 'Category',
 		cell: ({ row }) => <Cbadge variant={row.getValue('category')} />,
 	},
+	
 	{
 		id: 'actions',
 		cell: ({ row }) => {
@@ -285,6 +290,60 @@ export const agentPaymentColumns: ColumnDef<AgentPayment>[] = [
 					: 'text-primary';
 			return <div className={`uppercase ${style}`}>{status}</div>;
 		},
+	},
+	{
+		id: 'actions',
+		cell: ({ row }) => {
+			const payment = row.original;
+			return (
+				<Button
+					className='gap-2'
+					onClick={() =>
+						navigator.clipboard.writeText(payment.driver)
+					}
+				>
+					<div className='h-4 w-4'>{printIcon}</div>Print
+				</Button>
+			);
+		},
+	},
+];
+export const viewDriversColumns: ColumnDef<DriverPayment>[] = [
+	{
+		accessorKey: 'Date',
+		header: 'Date',
+	},
+	{
+		accessorKey: 'amount_NGN',
+		header: () => <div className='text-right'>Amount</div>,
+		cell: ({ row }) => {
+			const amount = row.getValue('amount_NGN');
+			return (
+				<div className='text-right font-medium'>{`₦${amount}`}</div>
+			);
+		},
+	},
+	{
+		accessorKey: 'payment_type',
+		header: 'Payment Type',
+		cell: ({ row }) => {
+			const payment_type = row.original. payment_type;
+			const style =
+				payment_type === 'Cash'
+					? 'text-destructive-foreground'
+					: payment_type === 'Mobile Transfer'
+					? 'text-awesome-foreground'
+					: payment_type === 'Transfer'
+					
+					? 'text-orange-300'
+					: 'text-primary';
+			return <div className={`uppercase ${style}`}>{ payment_type}</div>;
+		}
+	},
+	
+	{
+		accessorKey: 'handled_by',
+		header: 'Handled By',
 	},
 	{
 		id: 'actions',

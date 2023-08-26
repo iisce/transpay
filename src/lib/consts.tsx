@@ -1,11 +1,14 @@
 import {
+	agentdriverIcon,
 	agentsIcon,
 	dashboardIcon,
 	driverIcon,
 	finesIcon,
 	heavyVehiclesIcon,
 	peopleIcon,
+	refundIcon,
 	revenueIcon,
+	scanIcon,
 } from './icons';
 
 export const SIDEBAR_LINKS = [
@@ -84,7 +87,7 @@ export const DASHBOARD_CARD = [
 		icon: '',
 		number: '',
 		href: '/dashboard/heavy-vehicles',
-		image: '/tricycle.jpg',
+		image: '/tricycle.jpg' ,
 	},
 	{
 		name: 'Fines & Penalties',
@@ -750,116 +753,91 @@ export const PAYMENT_TABLE = [
 export const VIEWDRIVER_TABLE = [
 	{
 		Date: '23-08-2023',
-		amount_NGN: '#15000',
+		amount_NGN: '15000',
 		payment_type: 'Cash',
 		handled_by: 'Agent john',
 	},
 	{
 		Date: '22-08-2023',
-		amount_NGN: '#10000',
+		amount_NGN: '10000',
 		payment_type: 'Bank Transfer',
 		handled_by: 'Agent James',
 	},
 	{
 		Date: '24-08-2023',
-		amount_NGN: '#25000',
+		amount_NGN: '25000',
 		payment_type: 'Cash',
 		handled_by: 'Agent Jane',
 	},
 	{
 		Date: '21-08-2023',
-		amount_NGN: '#60,000',
+		amount_NGN: '60,000',
 		payment_type: 'Mobile Transfer',
 		handled_by: 'Agent Janet',
 	},
 	{
 		Date: '23-08-2023',
-		amount_NGN: '#5000',
+		amount_NGN: '5000',
 		payment_type: 'Cash',
 		handled_by: 'Agent Jonathan',
 	},
 	{
 		Date: '25-08-2023',
-		amount_NGN: '#19000',
+		amount_NGN: '19000',
 		payment_type: 'Cash',
 		handled_by: 'Agent Helen',
 	},
-	{
-		name: 'Agent 39',
-		area: 'Lekki',
-		phone: '08061234567',
-		status: 'active',
-	},
-	{
-		name: 'Agent 40',
-		area: 'Surulere',
-		phone: '08067654321',
-		status: 'inactive',
-	},
-	{
-		name: 'Agent A',
-		area: 'Ikeja',
-		phone: '08061234567',
-		status: 'active',
-	},
-	{
-		name: 'Agent B',
-		area: 'Yaba',
-		phone: '08064321987',
-		status: 'inactive',
-	},
-	{
-		name: 'Agent C',
-		area: 'Surulere',
-		phone: '08063456781',
-		status: 'active',
-	},
-	{
-		name: 'Agent D',
-		area: 'Oshodi',
-		phone: '08067654321',
-		status: 'inactive',
-	},
-	{
-		name: 'Agent E',
-		area: 'Lekki',
-		phone: '08061234567',
-		status: 'active',
-	},
-	{
-		name: 'Agent F',
-		area: 'Ikoyi',
-		phone: '08064321987',
-		status: 'inactive',
-	},
-	{
-		name: 'Agent G',
-		area: 'Ajao Estate',
-		phone: '08063456781',
-		status: 'active',
-	},
-	{
-		name: 'Agent H',
-		area: 'Festac',
-		phone: '08067654321',
-		status: 'inactive',
-	},
-	{
-		name: 'Agent I',
-		area: 'Victoria Island',
-		phone: '08061234567',
-		status: 'active',
-	},
-	{
-		name: 'Agent J',
-		area: 'Agege',
-		phone: '08064321987',
-		status: 'inactive',
-	},
-	{
-		name: 'Agent K',
-		area: 'Ikorodu',
-		phone: '08063456781',
-		status: 'active',
-	},
+
 ]
+
+// WEB AGENT
+
+export const WEBAGENTSIDEBAR_LINKS = [
+	{
+		name: 'Dashboard',
+		href: '/web-agent',
+		icon: dashboardIcon,
+	},
+	{
+		name: 'Scan',
+		href: '/web-agent/scan',
+		icon: scanIcon,
+	},
+	{
+		name: 'Driver',
+		href: '/web-agent/driver',
+		icon: agentdriverIcon,
+	},
+	{
+		name: 'Refunds',
+		href: '/web-agent/refunds',
+		icon: refundIcon,
+	},
+];
+export const WEBAGENT_CARD = [
+	{
+		name: 'Scan Plate',
+		description: 'Scan Driver Plate to retrieve drivers information plate',
+		icon: '',
+		number: '',
+		href: '/web-agent/scan',
+		image: '/scanplate.png',
+		
+	},
+	
+	{
+		name: 'Drivers',
+		description: 'Drivers list & Update',
+		icon: peopleIcon,
+		number: '2,500',
+		href: '/web-agent/driver',
+		image: '/drivers.png',
+		
+	},
+	{
+		name: 'Refunds',
+		description: 'Return Drivers Money',
+		href: '/web-agent/refunds',
+		image: '/refunds.png',
+	},
+];
