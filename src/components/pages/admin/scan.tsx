@@ -55,7 +55,6 @@ export default function QRScan() {
 			'video'
 		) as HTMLVideoElement;
 
-		// Initialize the scanner using the ref
 		scannerRef.current = new QrScanner(videoElement, handleScanResult);
 
 		if (scanning) {
@@ -63,14 +62,13 @@ export default function QRScan() {
 		}
 
 		return () => {
-			// Clean up using the ref
 			scannerRef.current?.destroy();
 		};
 	}, [scanning]);
 
 	return (
 		<>
-			<div className='flex'>
+			<div className='flex gap-5 flex-col sm:flex-row'>
 				<Card className='h-[250px] aspect-square overflow-hidden'>
 					<video
 						className='h-full w-full object-cover'
@@ -78,12 +76,13 @@ export default function QRScan() {
 					/>
 				</Card>
 				{result && (
-					<div className='ml-4'>
+					<Card className='p-3 border border-primary aspect-square overflow-hidden'>
 						<QRCode
 							value={result}
-							size={200}
+							size={224}
+							className='m-auto'
 						/>
-					</div>
+					</Card>
 				)}
 			</div>
 			<Button
