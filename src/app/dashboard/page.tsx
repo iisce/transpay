@@ -1,13 +1,15 @@
 import DashboardCard from '@/components/layout/dashboard-card';
-import { Charts } from '@/components/shared/chats/charts';
+import { RevenueCharts } from '@/components/shared/chats/revenue-chart';
 import { DASHBOARD_CARD } from '@/lib/consts';
 import React from 'react';
 
 export default function DashboardPage() {
 	return (
-		<div className='h-full p-5 flex flex-col gap-5 overflow-y-scroll'>
-			<div className='text-h3Bold'>Welcome Back, Admin ISCE</div>
-			<div className='flex flex-row flex-wrap gap-5'>
+		<div className='h-full p-3 sm:p-5 flex flex-col gap-5 overflow-y-scroll'>
+			<div className=' text-title1Bold sm:text-h4Bold'>
+				Welcome Back, Admin ISCE
+			</div>
+			<div className='flex flex-row flex-wrap'>
 				{DASHBOARD_CARD.map((card: DashboardCardI, i) => (
 					<DashboardCard
 						key={i}
@@ -21,9 +23,11 @@ export default function DashboardPage() {
 				))}
 			</div>
 			<div className='flex flex-col gap-2 mb-20'>
-				<div className='text-h4Bold'>Revenue & Statistics</div>
-				<div className='bg-secondary rounded-3xl p-5'>
-					<Charts />
+				<div className=' text-title1Bold sm:text-h4Bold'>
+					Revenue & Statistics
+				</div>
+				<div className='bg-secondary rounded-3xl p-2 sm:p-5'>
+					<RevenueCharts />
 				</div>
 			</div>
 		</div>

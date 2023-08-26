@@ -162,7 +162,7 @@ export const agentsColumns: ColumnDef<AgentT>[] = [
 								View Agent
 							</Link>
 						</DropdownMenuItem>
-						<DropdownMenuItem className='text-destructive'>
+						<DropdownMenuItem className=' text-destructive-foreground'>
 							<span className='h-4 w-4 mr-3'>
 								{deleteIcon}
 							</span>
