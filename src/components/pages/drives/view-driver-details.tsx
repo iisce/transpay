@@ -1,10 +1,8 @@
 import DashboardCard from "@/components/layout/dashboard-card";
 import { viewDriversColumns } from "@/components/ui/table/columns";
-
 import { DataTable } from "@/components/ui/table/data-table";
 import {  DRIVERS_CARD, VIEWDRIVER_TABLE } from "@/lib/consts";
 import Link from "next/link";
-
 import React from "react";
 
 export default function ViewDriverDetails() {
@@ -28,7 +26,7 @@ export default function ViewDriverDetails() {
       <div className='flex flex-col gap-2 mb-20'>
 					<div className='flex justify-between py-2'>
 						<div className='shrink-0 grow-0 text-title1Bold'>
-            History
+ +-           History
 						</div>
 						<div className='shrink-0 grow-0 text-title1Bold'>
               <Link href={'/'} className="text-primary-800 underline">
