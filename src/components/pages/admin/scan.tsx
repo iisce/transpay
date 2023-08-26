@@ -8,6 +8,7 @@ import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import localforage from 'localforage'; // Import localforage library
+import { Separator } from '@/components/ui/separator';
 
 export default function QRScan() {
 	const { toast } = useToast();
@@ -67,16 +68,16 @@ export default function QRScan() {
 	}, [scanning]);
 
 	return (
-		<>
+		<div className=''>
 			<div className='flex gap-5 flex-col sm:flex-row'>
-				<Card className='h-[250px] aspect-square overflow-hidden'>
+				<Card className='h-[250px] w-[250px] overflow-hidden mx-auto'>
 					<video
 						className='h-full w-full object-cover'
 						id='video'
 					/>
 				</Card>
 				{result && (
-					<Card className='p-3 border border-primary aspect-square overflow-hidden'>
+					<Card className='p-3 border border-primary w-[250px] overflow-hidden mx-auto'>
 						<QRCode
 							value={result}
 							size={224}
@@ -84,14 +85,14 @@ export default function QRScan() {
 						/>
 					</Card>
 				)}
+				<Button
+					className='mt-4 w-full max-w-[250px] mx-auto'
+					onClick={startScan}
+					disabled={scanning || scanCount >= 10}
+				>
+					Start Scan
+				</Button>
 			</div>
-			<Button
-				className='mt-4 w-full max-w-[250px]'
-				onClick={startScan}
-				disabled={scanning || scanCount >= 10}
-			>
-				Start Scan
-			</Button>
 			<Dialog
 				open={open}
 				onOpenChange={setOpen}
@@ -149,14 +150,15 @@ export default function QRScan() {
 					</div>
 				</DialogContent>
 			</Dialog>
-			<div className='mt-8'>
+			<div className='mt-10'>
 				<h2 className='text-lg font-semibold'>Scanned History</h2>
+				<Separator />
 				<ul className='mt-2 space-y-2'>
 					{scannedHistory.map((item, index) => (
 						<li key={index}>{item}</li>
 					))}
 				</ul>
 			</div>
-		</>
+		</div>
 	);
 }
