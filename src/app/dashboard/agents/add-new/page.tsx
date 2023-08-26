@@ -1,4 +1,5 @@
 import { AgentForm } from '@/components/forms/agents-registration-form';
+import { addIcon } from '@/lib/icons';
 import React from 'react';
 
 export default function AddNewAgent() {
@@ -11,6 +12,10 @@ export default function AddNewAgent() {
 						Fill in agent details
 					</p>
 				</div>
+			</div>
+			<div className='h-12 bg-primary w-full rounded-2xl flex overflow-hidden text-white items-center'>
+				<div className='h-12 w-12 bg-black p-3'>{addIcon}</div>
+				<div className='p-3'>PERSONAL INFORMATION</div>
 			</div>
 			<div className='flex flex-col gap-5 overflow-y-scroll px-2'>
 				<AgentForm />

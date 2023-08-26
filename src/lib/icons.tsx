@@ -272,6 +272,7 @@ export const driversProgressIcon1 = (
 		viewBox='0 0 340 82'
 		fill='none'
 		xmlns='http://www.w3.org/2000/svg'
+		className='w-full h-full object-contain'
 	>
 		<line
 			x1='206'
@@ -344,6 +345,7 @@ export const driversProgressIcon2 = (
 		viewBox='0 0 340 82'
 		fill='none'
 		xmlns='http://www.w3.org/2000/svg'
+		className='w-full h-full object-contain'
 	>
 		<line
 			x1='206'
@@ -413,6 +415,7 @@ export const driversProgressIcon3 = (
 		viewBox='0 0 340 82'
 		fill='none'
 		xmlns='http://www.w3.org/2000/svg'
+		className='w-full h-full object-contain'
 	>
 		<line
 			x1='206'
