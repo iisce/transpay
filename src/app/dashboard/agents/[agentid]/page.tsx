@@ -37,11 +37,7 @@ export default function SingularAgent() {
 						<div className='shrink-0 grow-0 text-title1Bold'>
 							Total Payments
 						</div>
-<<<<<<< HEAD
-						<div className='shrink-0 grow-0 text-title1Bold'>N200,000</div>
-=======
 						<div className='shrink-0 grow-0'>₦200,000</div>
->>>>>>> 3caf8b2e9ef553e4a91550801c426a4d5568979b
 					</div>
 					<div>
 						<DataTable

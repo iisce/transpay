@@ -251,31 +251,6 @@ export const driversColumns: ColumnDef<AgentT>[] = [
 		},
 	},
 ];
-<<<<<<< HEAD
-export const viewDriversColumns: ColumnDef<AgentT>[] = [
-	{
-		accessorKey: 'Date',
-		header: 'Date',
-	},
-	{
-		accessorKey: 'amount_NGN',
-		header: 'Amount (NGN)',
-		cell: ({ row }) => (
-			<span className='uppercase'>{row.getValue('amount_NGN')}</span>
-		),
-	},
-	{
-		accessorKey: 'payment_type',
-		header: 'Payment',
-		
-	},
-	{
-		accessorKey: 'handled_by',
-		header: 'Handled By',
-		
-	},
-	
-=======
 export const agentPaymentColumns: ColumnDef<AgentPayment>[] = [
 	{
 		accessorKey: 'driver',
@@ -327,5 +302,4 @@ export const agentPaymentColumns: ColumnDef<AgentPayment>[] = [
 			);
 		},
 	},
->>>>>>> 3caf8b2e9ef553e4a91550801c426a4d5568979b
 ];
