@@ -4,8 +4,8 @@ import Link from 'next/link';
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DataTable } from '@/components/ui/table/data-table';
-import { agentsColumns, driversColumns } from '@/components/ui/table/columns';
-import { AGENT_TABLE, DRIVER_TABLE } from '@/lib/consts';
+import { driversColumns } from '@/components/ui/table/columns';
+import { DRIVER_TABLE } from '@/lib/consts';
 
 export default function Drivers() {
 	return (
@@ -19,7 +19,7 @@ export default function Drivers() {
 						variant={'default'}
 					>
 						<Link
-							href={'/dashboard/drivers/add-new'}
+							href={'/dashboard/drivers/new-driver'}
 							className='shrink-0 whitespace-nowrap'
 						>
 							<div className='mr-2 h-4 w-4 shrink-0'>
@@ -57,7 +57,7 @@ export default function Drivers() {
 						<DataTable
 							columns={driversColumns}
 							data={DRIVER_TABLE.filter(
-								(agent) => agent.status === 'active'
+								(agent) => agent.category === 'cleared'
 							)}
 						/>
 					</TabsContent>
@@ -65,11 +65,18 @@ export default function Drivers() {
 						<DataTable
 							columns={driversColumns}
 							data={DRIVER_TABLE.filter(
-								(agent) => agent.status === 'inactive'
+								(agent) => agent.category === 'debtors'
 							)}
 						/>
 					</TabsContent>
-					<TabsContent value='waived'>Waived</TabsContent>
+					<TabsContent value='waived'>
+						<DataTable
+							columns={driversColumns}
+							data={DRIVER_TABLE.filter(
+								(agent) => agent.status === 'waived'
+							)}
+						/>
+					</TabsContent>
 				</Tabs>
 			</div>
 		</div>

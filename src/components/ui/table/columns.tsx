@@ -15,10 +15,9 @@ import {
 import { ColumnDef } from '@tanstack/react-table';
 import { MoreHorizontal, MoreVertical } from 'lucide-react';
 import { DataTableColumnHeader } from './data-column-table-header';
-import { deleteIcon, editIcon, paymentIcon } from '@/lib/icons';
+import { deleteIcon, editIcon, paymentIcon, printIcon } from '@/lib/icons';
 import Pill from '../pill';
 import Link from 'next/link';
-import { Badge } from '../badge';
 import Cbadge from '../category-badge';
 
 export const paymentColumns: ColumnDef<Payment>[] = [
@@ -108,7 +107,6 @@ export const paymentColumns: ColumnDef<Payment>[] = [
 		},
 	},
 ];
-
 export const agentsColumns: ColumnDef<AgentT>[] = [
 	{
 		accessorKey: 'name',
@@ -253,6 +251,7 @@ export const driversColumns: ColumnDef<AgentT>[] = [
 		},
 	},
 ];
+<<<<<<< HEAD
 export const viewDriversColumns: ColumnDef<AgentT>[] = [
 	{
 		accessorKey: 'Date',
@@ -276,4 +275,57 @@ export const viewDriversColumns: ColumnDef<AgentT>[] = [
 		
 	},
 	
+=======
+export const agentPaymentColumns: ColumnDef<AgentPayment>[] = [
+	{
+		accessorKey: 'driver',
+		header: 'Driver',
+	},
+	{
+		accessorKey: 'amount',
+		header: () => <div className='text-right'>Amount</div>,
+		cell: ({ row }) => {
+			const amount = row.getValue('amount');
+			return (
+				<div className='text-right font-medium'>{`₦${amount}`}</div>
+			);
+		},
+	},
+	{
+		accessorKey: 'date',
+		header: 'Date',
+	},
+	{
+		accessorKey: 'status',
+		header: 'Status',
+		cell: ({ row }) => {
+			const status = row.original.status;
+			const style =
+				status === 'failed'
+					? 'text-destructive-foreground'
+					: status === 'successful'
+					? 'text-awesome-foreground'
+					: status === 'pending'
+					? 'text-orange-300'
+					: 'text-primary';
+			return <div className={`uppercase ${style}`}>{status}</div>;
+		},
+	},
+	{
+		id: 'actions',
+		cell: ({ row }) => {
+			const payment = row.original;
+			return (
+				<Button
+					className='gap-2'
+					onClick={() =>
+						navigator.clipboard.writeText(payment.driver)
+					}
+				>
+					<div className='h-4 w-4'>{printIcon}</div>Print
+				</Button>
+			);
+		},
+	},
+>>>>>>> 3caf8b2e9ef553e4a91550801c426a4d5568979b
 ];

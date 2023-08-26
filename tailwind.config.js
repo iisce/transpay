@@ -22,21 +22,23 @@ module.exports = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-       primary: {
-					50: '#F8F7E6',
-					100: '#EBE5B0',
-					200: '#E1D88A',
-					300: '#D3C654',
-					400: '#CABB33',
-					500: '#BDAA00',
-					600: '#AC9B00',
-					700: '#867900',
-					800: '#685E00',
-					900: '#4F4700',
-				},
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+          50: '#F8F7E6',
+          100: '#EBE5B0',
+          200: '#E1D88A',
+          300: '#D3C654',
+          400: '#CABB33',
+          500: '#BDAA00',
+          600: '#AC9B00',
+          700: '#867900',
+          800: '#685E00',
+          900: '#4F4700',
+        },
         error: '#FF0000',
-				success: '#00FF00',
-        
+        success: '#00FF00',
+
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
@@ -44,6 +46,10 @@ module.exports = {
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
+        },
+        awesome: {
+          DEFAULT: "hsl(var(--awesome))",
+          foreground: "hsl(var(--awesome-foreground))",
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",
@@ -61,9 +67,9 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        neutral:{
-					progress: '#B4B4B4',
-				},
+        neutral: {
+          progress: '#B4B4B4',
+        },
       },
       fontSize: {
         captionBold: [
