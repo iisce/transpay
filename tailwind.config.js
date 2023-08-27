@@ -15,6 +15,14 @@ module.exports = {
         "2xl": "1400px",
       },
     },
+    screens: {
+      'xs': '480px',
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
+    },
     extend: {
       colors: {
         border: "hsl(var(--border))",
@@ -46,6 +54,10 @@ module.exports = {
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
+        },
+        awesome: {
+          DEFAULT: "hsl(var(--awesome))",
+          foreground: "hsl(var(--awesome-foreground))",
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",

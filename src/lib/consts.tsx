@@ -1,11 +1,14 @@
 import {
+	agentdriverIcon,
 	agentsIcon,
 	dashboardIcon,
 	driverIcon,
 	finesIcon,
 	heavyVehiclesIcon,
 	peopleIcon,
+	refundIcon,
 	revenueIcon,
+	scanIcon,
 } from './icons';
 
 export const SIDEBAR_LINKS = [
@@ -40,7 +43,27 @@ export const SIDEBAR_LINKS = [
 		icon: revenueIcon,
 	},
 ];
+export const DRIVERS_CARD=[
+	{
+		name: 'Personal Information',
+		description:'Edit Drivers information',
+		href: '/dashboard/drivers',
+		image: '/personalinfo.png',
+	},
+	{
+		name: 'Payment',
+		description:"Make Payment & Check Payment History",
+		href: '/dashboard/revenue',
+		image: '/payment.png',
+	},
+	{
+		name: 'Fines & Penalties',
+		description:"Fine Driver & Check Fine Payment",
+		href: '/dashboard/fines',
+		image: '/fineandpenal.png',
+	}
 
+]
 export const DASHBOARD_CARD = [
 	{
 		name: 'Drivers',
@@ -64,7 +87,7 @@ export const DASHBOARD_CARD = [
 		icon: '',
 		number: '',
 		href: '/dashboard/heavy-vehicles',
-		image: '/tricycle.jpg',
+		image: '/tricycle.jpg' ,
 	},
 	{
 		name: 'Fines & Penalties',
@@ -483,6 +506,339 @@ export const DRIVER_TABLE = [
 		plate: '97yy-kjy',
 		status: 'active',
 		category: 'cleared',
+	},
+	{
+		name: 'Emeka Ignatius',
+		plate: 'tfgh-ilt',
+		status: 'active',
+		category: 'cleared',
+	},
+	{
+		name: 'Emmanuel Ozigbo',
+		plate: 'trhb6-9jw',
+		status: 'inactive',
+		category: 'debtors',
+	},
+	{
+		name: 'Divine Onyekachukwu',
+		plate: 'gtw8-owg',
+		status: 'waived',
+		category: 'debtors',
+	},
+	{
+		name: 'Oyeniran Ayobami',
+		plate: '97yy-kjy',
+		status: 'active',
+		category: 'cleared',
+	},
+	{
+		name: 'Emeka Ignatius',
+		plate: 'tfgh-ilt',
+		status: 'active',
+		category: 'cleared',
+	},
+	{
+		name: 'Emmanuel Ozigbo',
+		plate: 'trhb6-9jw',
+		status: 'inactive',
+		category: 'debtors',
+	},
+	{
+		name: 'Divine Onyekachukwu',
+		plate: 'gtw8-owg',
+		status: 'waived',
+		category: 'debtors',
+	},
+	{
+		name: 'Oyeniran Ayobami',
+		plate: '97yy-kjy',
+		status: 'active',
+		category: 'cleared',
+	},
+	{
+		name: 'Emeka Ignatius',
+		plate: 'tfgh-ilt',
+		status: 'active',
+		category: 'cleared',
+	},
+	{
+		name: 'Emmanuel Ozigbo',
+		plate: 'trhb6-9jw',
+		status: 'inactive',
+		category: 'debtors',
+	},
+	{
+		name: 'Divine Onyekachukwu',
+		plate: 'gtw8-owg',
+		status: 'waived',
+		category: 'debtors',
+	},
+	{
+		name: 'Oyeniran Ayobami',
+		plate: '97yy-kjy',
+		status: 'active',
+		category: 'cleared',
+	},
+	{
+		name: 'Emeka Ignatius',
+		plate: 'tfgh-ilt',
+		status: 'active',
+		category: 'cleared',
+	},
+	{
+		name: 'Emmanuel Ozigbo',
+		plate: 'trhb6-9jw',
+		status: 'inactive',
+		category: 'debtors',
+	},
+	{
+		name: 'Divine Onyekachukwu',
+		plate: 'gtw8-owg',
+		status: 'waived',
+		category: 'debtors',
+	},
+	{
+		name: 'Oyeniran Ayobami',
+		plate: '97yy-kjy',
+		status: 'active',
+		category: 'cleared',
+	},
+	{
+		name: 'Emeka Ignatius',
+		plate: 'tfgh-ilt',
+		status: 'active',
+		category: 'cleared',
+	},
+	{
+		name: 'Emmanuel Ozigbo',
+		plate: 'trhb6-9jw',
+		status: 'inactive',
+		category: 'debtors',
+	},
+	{
+		name: 'Divine Onyekachukwu',
+		plate: 'gtw8-owg',
+		status: 'waived',
+		category: 'debtors',
+	},
+	{
+		name: 'Oyeniran Ayobami',
+		plate: '97yy-kjy',
+		status: 'active',
+		category: 'cleared',
+	},
+	{
+		name: 'Emeka Ignatius',
+		plate: 'tfgh-ilt',
+		status: 'active',
+		category: 'cleared',
+	},
+	{
+		name: 'Emmanuel Ozigbo',
+		plate: 'trhb6-9jw',
+		status: 'inactive',
+		category: 'debtors',
+	},
+	{
+		name: 'Divine Onyekachukwu',
+		plate: 'gtw8-owg',
+		status: 'waived',
+		category: 'debtors',
+	},
+	{
+		name: 'Oyeniran Ayobami',
+		plate: '97yy-kjy',
+		status: 'active',
+		category: 'cleared',
+	},
+	{
+		name: 'Emeka Ignatius',
+		plate: 'tfgh-ilt',
+		status: 'active',
+		category: 'cleared',
+	},
+	{
+		name: 'Emmanuel Ozigbo',
+		plate: 'trhb6-9jw',
+		status: 'inactive',
+		category: 'debtors',
+	},
+	{
+		name: 'Divine Onyekachukwu',
+		plate: 'gtw8-owg',
+		status: 'waived',
+		category: 'debtors',
+	},
+	{
+		name: 'Oyeniran Ayobami',
+		plate: '97yy-kjy',
+		status: 'active',
+		category: 'cleared',
+	},
+	{
+		name: 'Emeka Ignatius',
+		plate: 'tfgh-ilt',
+		status: 'active',
+		category: 'cleared',
+	},
+	{
+		name: 'Emmanuel Ozigbo',
+		plate: 'trhb6-9jw',
+		status: 'inactive',
+		category: 'debtors',
+	},
+	{
+		name: 'Divine Onyekachukwu',
+		plate: 'gtw8-owg',
+		status: 'waived',
+		category: 'debtors',
+	},
+	{
+		name: 'Oyeniran Ayobami',
+		plate: '97yy-kjy',
+		status: 'active',
+		category: 'cleared',
+	},
+	{
+		name: 'Emeka Ignatius',
+		plate: 'tfgh-ilt',
+		status: 'active',
+		category: 'cleared',
+	},
+	{
+		name: 'Emmanuel Ozigbo',
+		plate: 'trhb6-9jw',
+		status: 'inactive',
+		category: 'debtors',
+	},
+	{
+		name: 'Divine Onyekachukwu',
+		plate: 'gtw8-owg',
+		status: 'waived',
+		category: 'debtors',
+	},
+	{
+		name: 'Oyeniran Ayobami',
+		plate: '97yy-kjy',
+		status: 'active',
+		category: 'cleared',
+	},
+];
+export const PAYMENT_TABLE = [
+	{
+		driver: 'Emeka Ignatius',
+		amount: '1,500',
+		date: '11/08/23',
+		status: 'successful',
+	},
+	{
+		driver: 'Emmanuel Ozigbo',
+		amount: '3,000',
+		date: '11/08/23',
+		status: 'processing',
+	},
+	{
+		driver: 'Divine Onyekachukwu',
+		amount: '8,392',
+		date: '11/08/23',
+		status: 'pending',
+	},
+	{
+		driver: 'Oyeniran Ayobami',
+		amount: '6,793',
+		date: '11/08/23',
+		status: 'failed',
+	},
+];
+export const VIEWDRIVER_TABLE = [
+	{
+		Date: '23-08-2023',
+		amount_NGN: '15000',
+		payment_type: 'Cash',
+		handled_by: 'Agent john',
+	},
+	{
+		Date: '22-08-2023',
+		amount_NGN: '10000',
+		payment_type: 'Bank Transfer',
+		handled_by: 'Agent James',
+	},
+	{
+		Date: '24-08-2023',
+		amount_NGN: '25000',
+		payment_type: 'Cash',
+		handled_by: 'Agent Jane',
+	},
+	{
+		Date: '21-08-2023',
+		amount_NGN: '60,000',
+		payment_type: 'Mobile Transfer',
+		handled_by: 'Agent Janet',
+	},
+	{
+		Date: '23-08-2023',
+		amount_NGN: '5000',
+		payment_type: 'Cash',
+		handled_by: 'Agent Jonathan',
+	},
+	{
+		Date: '25-08-2023',
+		amount_NGN: '19000',
+		payment_type: 'Cash',
+		handled_by: 'Agent Helen',
+	},
+
+]
+
+// WEB AGENT
+
+export const WEBAGENTSIDEBAR_LINKS = [
+	{
+		name: 'Dashboard',
+		href: '/web-agent',
+		icon: dashboardIcon,
+	},
+	{
+		name: 'Scan',
+		href: '/web-agent/scan',
+		icon: scanIcon,
+	},
+	{
+		name: 'Driver',
+		href: '/web-agent/driver',
+		icon: agentdriverIcon,
+	},
+	{
+		name: 'Refunds',
+		href: '/web-agent/refunds',
+		icon: refundIcon,
+	},
+];
+export const WEBAGENT_CARD = [
+	{
+		name: 'Scan Plate',
+		description: 'Scan Driver Plate to retrieve drivers information plate',
+		icon: '',
+		number: '',
+		href: '/web-agent/scan',
+		image: '/scanplate.png',
+		
+	},
+	
+	{
+		name: 'Drivers',
+		description: 'Drivers list & Update',
+		icon: peopleIcon,
+		number: '2,500',
+		href: '/web-agent/driver',
+		image: '/drivers.png',
+		
+	},
+	{
+		name: 'Refunds',
+		description: 'Return Drivers Money',
+		href: '/web-agent/refunds',
+		image: '/refunds.png',
 	},
 ];
 
