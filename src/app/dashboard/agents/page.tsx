@@ -14,7 +14,7 @@ export default function Agents() {
 				<div className='shrink-0 grow-0'>Agent</div>
 				<div className='shrink-0 grow-0'>
 					<Button
-						className='justify-start rounded-xl'
+						className='justify-start text-white rounded-xl bg-primary-800'
 						asChild
 						variant={'default'}
 					>
@@ -56,6 +56,7 @@ export default function Agents() {
 					</TabsContent>
 					<TabsContent value='active'>
 						<DataTable
+							showSearch
 							columns={agentsColumns}
 							data={AGENT_TABLE.filter(
 								(agent) => agent.status === 'active'
@@ -64,6 +65,7 @@ export default function Agents() {
 					</TabsContent>
 					<TabsContent value='inactive'>
 						<DataTable
+							showSearch
 							columns={agentsColumns}
 							data={AGENT_TABLE.filter(
 								(agent) => agent.status === 'inactive'

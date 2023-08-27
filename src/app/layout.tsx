@@ -2,6 +2,7 @@ import { ThemeProvider } from '@/components/ui/theme-provider';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Lato } from 'next/font/google';
+import { Toaster } from '@/components/ui/toaster';
 
 const lato = Lato({
 	weight: '300',
@@ -32,6 +33,7 @@ export default function RootLayout({
 				>
 					<div className='h-full overflow-hidden'>
 						{children}
+						<Toaster />
 					</div>
 				</ThemeProvider>
 			</body>

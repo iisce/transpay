@@ -15,6 +15,14 @@ module.exports = {
         "2xl": "1400px",
       },
     },
+    screens: {
+      'xs': '480px',
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
+    },
     extend: {
       colors: {
         border: "hsl(var(--border))",
@@ -23,19 +31,21 @@ module.exports = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          50: "#F8F7E6",
-          100: "#EBE5B0",
-          200: "#E1D88A",
-          300: "#D3C654",
-          400: "#CABB33",
-          500: "#BDAA00",
-          600: "#AC9B00",
-          700: "#867900",
-          800: "#685E00",
-          900: "#4F4700",
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+          50: '#F8F7E6',
+          100: '#EBE5B0',
+          200: '#E1D88A',
+          300: '#D3C654',
+          400: '#CABB33',
+          500: '#BDAA00',
+          600: '#AC9B00',
+          700: '#867900',
+          800: '#685E00',
+          900: '#4F4700',
         },
-        error: "#FF0000",
-        success: "#00FF00",
+        error: '#FF0000',
+        success: '#00FF00',
 
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -44,6 +54,10 @@ module.exports = {
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
+        },
+        awesome: {
+          DEFAULT: "hsl(var(--awesome))",
+          foreground: "hsl(var(--awesome-foreground))",
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",
@@ -62,7 +76,7 @@ module.exports = {
           foreground: "hsl(var(--card-foreground))",
         },
         neutral: {
-          progress: "#B4B4B4",
+          progress: '#B4B4B4',
         },
       },
       fontSize: {

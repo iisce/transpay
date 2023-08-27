@@ -9,7 +9,7 @@ export const Header = () => {
 	return (
 		<NovuProvider
 			subscriberId={'on-boarding-subscriber-id-123'}
-			applicationIdentifier={'Ey0jJ4-7jZ0V'}
+			applicationIdentifier={'Ey0jJ4-7jZ0V'} 
 		>
 			<PopoverNotificationCenter colorScheme={'light'}>
 				{({ unseenCount }) => (
