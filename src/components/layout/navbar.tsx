@@ -40,10 +40,10 @@ ListItem.displayName = 'ListItem';
 export default function NavBar() {
 	return (
 		<div className='h-16 w-full bg-secondary px-5'>
-			<div className='flex items-center justify-between gap-5 h-full'>
+			<div className='flex items-center justify-between h-full gap-5'>
 				<Link
 					href={'/'}
-					className='min-w-[180px] '
+					className='min-w-[155px] '
 				>
 					<Image
 						src={'/logo.png'}
@@ -59,12 +59,12 @@ export default function NavBar() {
 							{searchIcon}
 						</div>
 						<Input
-							className='pl-10'
+							className='pl-10 bg-background'
 							placeholder='Search anything here'
 						/>
 					</div>
 				</div>
-				<div className='flex'>
+				<div className='flex text-primary-700'>
 					<Button variant='ghost'>
 						<div className='h-6 w-6 text-primary'>
 							{notificationIcon}

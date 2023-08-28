@@ -1,16 +1,12 @@
 'use client';
 
-import Link from 'next/link';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-
-import { cn } from '@/lib/utils';
-import { toast } from '../ui/use-toast';
+import { useToast } from '../ui/use-toast';
 import {
 	Form,
 	FormControl,
-	FormDescription,
 	FormField,
 	FormItem,
 	FormLabel,
@@ -26,9 +22,22 @@ import {
 } from '../ui/select';
 import { Button } from '../ui/button';
 import { Textarea } from '../ui/textarea';
+import Link from 'next/link';
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from '../ui/alert-dialog';
+import React from 'react';
+import { successIcon } from '@/lib/icons';
 
 const agentFormSchema = z.object({
-	username: z
+	name: z
 		.string()
 		.min(2, {
 			message: 'Username must be at least 2 characters.',
@@ -38,45 +47,60 @@ const agentFormSchema = z.object({
 		}),
 	email: z
 		.string({
-			required_error: 'Please select an email to display.',
+			required_error: 'Please enter an email.',
 		})
 		.email(),
-	bio: z.string().max(160).min(4),
-	urls: z
-		.array(
-			z.object({
-				value: z
-					.string()
-					.url({ message: 'Please enter a valid URL.' }),
-			})
-		)
-		.optional(),
+	moi: z.string({
+		required_error: 'Please select a mode of identification',
+	}),
+	phone: z.string({
+		required_error: 'Please enter phone number.',
+	}),
+	idNumber: z
+		.string({
+			required_error: 'Please enter identification number.',
+		})
+		.min(8, {
+			message: 'ID number must be at least 8 characters.',
+		})
+		.max(20, {
+			message: 'Username must not be longer than 20 characters.',
+		}),
+	address: z.string().max(160).min(15),
+	password: z.string().refine((password) => {
+		return (
+			password.length >= 8 &&
+			/[A-Z]/.test(password) &&
+			/\d/.test(password)
+		);
+	}, 'The password must contain at least one uppercase letter and one number and be at least 8 characters long.'),
+	confirmPassword: z.string().min(8),
 });
 
 type AgentFormValues = z.infer<typeof agentFormSchema>;
 
 // This can come from your database or API.
 const defaultValues: Partial<AgentFormValues> = {
-	bio: 'I own a computer.',
-	urls: [
-		{ value: 'https://shadcn.com' },
-		{ value: 'http://twitter.com/shadcn' },
-	],
+	name: '',
+	email: '',
+	phone: '',
+	idNumber: '',
+	address: '',
+	password: '',
+	confirmPassword: '',
 };
 
 export function AgentForm() {
+	const [open, setOpen] = React.useState(false);
+	const { toast } = useToast();
 	const form = useForm<AgentFormValues>({
 		resolver: zodResolver(agentFormSchema),
 		defaultValues,
 		mode: 'onChange',
 	});
 
-	const { fields, append } = useFieldArray({
-		name: 'urls',
-		control: form.control,
-	});
-
 	function onSubmit(data: AgentFormValues) {
+		setOpen(true);
 		toast({
 			title: 'You submitted the following values:',
 			description: (
@@ -93,132 +117,216 @@ export function AgentForm() {
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
-				className='space-y-8'
+				className='mb-20 flex flex-col gap-5'
 			>
-				<FormField
-					control={form.control}
-					name='username'
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Username</FormLabel>
-							<FormControl>
-								<Input
-									placeholder='shadcn'
-									{...field}
-								/>
-							</FormControl>
-							<FormDescription>
-								This is your public display name. It can
-								be your real name or a pseudonym. You
-								can only change this once every 30 days.
-							</FormDescription>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<FormField
-					control={form.control}
-					name='email'
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Email</FormLabel>
-							<Select
-								onValueChange={field.onChange}
-								defaultValue={field.value}
-							>
+				<div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
+					<FormField
+						control={form.control}
+						name='name'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Name</FormLabel>
 								<FormControl>
-									<SelectTrigger>
-										<SelectValue placeholder='Select a verified email to display' />
-									</SelectTrigger>
+									<Input
+										placeholder='Full Name'
+										{...field}
+									/>
 								</FormControl>
-								<SelectContent>
-									<SelectItem value='m@example.com'>
-										m@example.com
-									</SelectItem>
-									<SelectItem value='m@google.com'>
-										m@google.com
-									</SelectItem>
-									<SelectItem value='m@support.com'>
-										m@support.com
-									</SelectItem>
-								</SelectContent>
-							</Select>
-							<FormDescription>
-								You can manage verified email addresses
-								in your{' '}
-								<Link href='/examples/forms'>
-									email settings
-								</Link>
-								.
-							</FormDescription>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<FormField
-					control={form.control}
-					name='bio'
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Bio</FormLabel>
-							<FormControl>
-								<Textarea
-									placeholder='Tell us a little bit about yourself'
-									className='resize-none'
-									{...field}
-								/>
-							</FormControl>
-							<FormDescription>
-								You can <span>@mention</span> other
-								users and organizations to link to them.
-							</FormDescription>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<div>
-					{fields.map((field, index) => (
-						<FormField
-							control={form.control}
-							key={field.id}
-							name={`urls.${index}.value`}
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel
-										className={cn(
-											index !== 0 && 'sr-only'
-										)}
-									>
-										URLs
-									</FormLabel>
-									<FormDescription
-										className={cn(
-											index !== 0 && 'sr-only'
-										)}
-									>
-										Add links to your website,
-										blog, or social media
-										profiles.
-									</FormDescription>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name='moi'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>
+									Means of Identification
+								</FormLabel>
+								<Select
+									onValueChange={field.onChange}
+									defaultValue={field.value}
+								>
 									<FormControl>
-										<Input {...field} />
+										<SelectTrigger className='h-12'>
+											<SelectValue placeholder='Select a mean of Identification' />
+										</SelectTrigger>
 									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-					))}
+									<SelectContent>
+										<SelectItem value='nin'>
+											NIN
+										</SelectItem>
+										<SelectItem value='bvn'>
+											BVN
+										</SelectItem>
+										<SelectItem value='pvc'>
+											Voters Card
+										</SelectItem>
+									</SelectContent>
+								</Select>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name='phone'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Phone Number</FormLabel>
+								<FormControl>
+									<Input
+										placeholder='Enter phone number'
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name='idNumber'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>
+									Identification Number
+								</FormLabel>
+								<FormControl>
+									<Input
+										placeholder='Enter identification number'
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name='email'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Email Address</FormLabel>
+								<FormControl>
+									<Input
+										placeholder='Email'
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name='address'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Address</FormLabel>
+								<FormControl>
+									<Textarea
+										placeholder='Address'
+										className='resize-none'
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name='password'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Password</FormLabel>
+								<FormControl>
+									<Input
+										type='password'
+										placeholder='Enter Password'
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name='confirmPassword'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Password</FormLabel>
+								<FormControl>
+									<Input
+										type='password'
+										placeholder='Confirm Password'
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+				</div>
+				<div className='flex gap-5 justify-center'>
 					<Button
-						type='button'
+						className='w-28 border-primary text-primary'
 						variant='outline'
-						size='sm'
-						className='mt-2'
-						onClick={() => append({ value: '' })}
+						asChild
 					>
-						Add URL
+						<Link href='/dashboard/agents'>Cancel</Link>
+					</Button>
+					<Button
+						className='w-28'
+						type='submit'
+					>
+						Add Agent
 					</Button>
 				</div>
-				<Button type='submit'>Update profile</Button>
+				<AlertDialog
+					open={open}
+					onOpenChange={setOpen}
+				>
+					<AlertDialogContent className='bg-secondary'>
+						<div className='w-60 mx-auto flex-col'>
+							<div className='flex flex-col items-center gap-5 mb-5'>
+								<div className='h-20 w-20 text-awesome-foreground'>
+									{successIcon}
+								</div>
+								<div className='text-xl'>
+									Agent Account Created
+								</div>
+							</div>
+							<div className='flex flex-col text-center mb-5'>
+								<div>E-mail: omoroge24@gmail.com</div>
+								<div>Password: hdfay123454</div>
+							</div>
+							<div className='flex flex-col gap-3'>
+								<AlertDialogAction
+									asChild
+									className='rounded-xl'
+								>
+									<Link
+										href={`/dashboard/agents/agentid`}
+									>
+										View Account
+									</Link>
+								</AlertDialogAction>
+								<AlertDialogCancel
+									asChild
+									className='rounded-xl'
+								>
+									<Link href={`/dashboard/agents`}>
+										Dashboard
+									</Link>
+								</AlertDialogCancel>
+							</div>
+						</div>
+					</AlertDialogContent>
+				</AlertDialog>
 			</form>
 		</Form>
 	);

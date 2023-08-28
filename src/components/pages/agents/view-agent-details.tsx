@@ -13,29 +13,27 @@ import React from 'react';
 
 export default function ViewAgentDetails() {
 	const agentDetails = {
-		name: 'Sample Name',
-		moi: 'nin',
-		phone: '08061719533',
-		id: '22148971790',
-		email: 'ap@example.com',
-		address: '27, LetUsSee Street, Festac, Lagos, Nigeria',
+		name: 'enter your name',
+		moi: 'select your means of identification',
+		phone: 'enter phone number',
+		id: 'enter your ID number',
+		email: 'enter your email',
+		address: 'enter your address',
 	};
 	return (
 		<div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
 			<div className='flex flex-col w-full items-start gap-1.5'>
-				<Label htmlFor='name'>Name</Label>
+				<Label htmlFor='name'  className='text-title2'>Name</Label>
 				<Input
-					disabled
 					type='name'
 					id='name'
 					value={agentDetails.name}
 				/>
 			</div>
 			<div className='flex flex-col w-full items-start gap-1.5'>
-				<Label htmlFor='moi'>Means of Identification</Label>
+				<Label htmlFor='moi'  className='text-title2'>Means of Identification</Label>
 				<Select
 					defaultValue={agentDetails.moi}
-					disabled
 				>
 					<SelectTrigger className=''>
 						<SelectValue placeholder='Select a fruit' />
@@ -52,36 +50,34 @@ export default function ViewAgentDetails() {
 				</Select>
 			</div>
 			<div className='flex flex-col w-full items-start gap-1.5'>
-				<Label htmlFor='phone'>Phone Number</Label>
+				<Label htmlFor='phone'  className='text-title2'>Phone Number</Label>
 				<Input
-					disabled
 					type='tel'
 					id='phone'
 					value={agentDetails.phone}
 				/>
 			</div>
 			<div className='flex flex-col w-full items-start gap-1.5'>
-				<Label htmlFor='id'>Identification Number</Label>
+				<Label htmlFor='id' className='text-title2'>Identification Number</Label>
 				<Input
-					disabled
+				
 					type='text'
 					id='id'
 					value={agentDetails.id}
 				/>
 			</div>
 			<div className='flex flex-col w-full items-start gap-1.5'>
-				<Label htmlFor='email'>Email Address</Label>
+				<Label htmlFor='email' className='text-title2'>Email Address</Label>
 				<Input
-					disabled
+				
 					type='email'
 					id='email'
 					value={agentDetails.email}
 				/>
 			</div>
 			<div className='grid w-full gap-1.5'>
-				<Label htmlFor='address'>Address</Label>
+				<Label htmlFor='address'  className='text-title2'>Address</Label>
 				<Textarea
-					disabled
 					value={agentDetails.address}
 					id='address'
 				/>
