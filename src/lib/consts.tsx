@@ -27,11 +27,11 @@ export const SIDEBAR_LINKS = [
 		href: '/dashboard/drivers',
 		icon: driverIcon,
 	},
-	{
-		name: 'Heavy Vehicles',
-		href: '/dashboard/heavy-vehicles',
-		icon: heavyVehiclesIcon,
-	},
+	// {
+	// 	name: 'Heavy Vehicles',
+	// 	href: '/dashboard/heavy-vehicles',
+	// 	icon: heavyVehiclesIcon,
+	// },
 	{
 		name: 'Fines & Penalties',
 		href: '/dashboard/fines',
@@ -61,7 +61,8 @@ export const DRIVERS_CARD=[
 		description:"Fine Driver & Check Fine Payment",
 		href: '/dashboard/fines',
 		image: '/fineandpenal.png',
-	}
+	},
+	
 
 ]
 export const DASHBOARD_CARD = [
@@ -808,11 +809,6 @@ export const WEBAGENTSIDEBAR_LINKS = [
 		href: '/web-agent/driver',
 		icon: agentdriverIcon,
 	},
-	{
-		name: 'Refunds',
-		href: '/web-agent/refunds',
-		icon: refundIcon,
-	},
 ];
 export const WEBAGENT_CARD = [
 	{
@@ -834,10 +830,32 @@ export const WEBAGENT_CARD = [
 		image: '/drivers.png',
 		
 	},
-	{
-		name: 'Refunds',
-		description: 'Return Drivers Money',
-		href: '/web-agent/refunds',
-		image: '/refunds.png',
-	},
 ];
+export const WEBAGENTDRIVER_CARD=[
+	{
+		name: 'Vehicle Information',
+		description:'View Vehicle information',
+		href: '/web-agent/driver/editinfo',
+		image: '/personalinfo.png',
+	},
+	{
+		name: 'Payment',
+		description:"Make Payment & Check Payment History",
+		href: '/web-agent/driver/payment',
+		image: '/payment.png',
+	},
+	{
+		name: 'Fines & Penalties',
+		description:"Fine Driver & Check Fine Payment",
+		href: '/web-agent/driver/fines',
+		image: '/fineandpenal.png',
+	},
+	{
+		name: 'Waiver Form',
+		description:"Fill waiver form to process driver grace period.",
+		href: '/web-agent',
+		image: '/fineandpenal.png',
+	}
+	
+
+]

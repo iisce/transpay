@@ -1,6 +1,7 @@
-import ViewDriverDetails from '@/components/pages/drives/view-driver-details';
+
+import WebAgentViewDriverDetails from '@/components/pages/webagent-driver/viewdriver';
 import React from 'react';
 
 export default function DriverPage() {
-	return <div><ViewDriverDetails/></div>;
+	return <div> <WebAgentViewDriverDetails/> </div>;
 }

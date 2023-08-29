@@ -15,7 +15,7 @@ export default function AddNewDriver2() {
 			<div className=' text-primary-900 max-h-16 max-w-sm flex justify-start'>
 				{driversProgressIcon2}
 			</div>
-			<div className='py-6 text-h4'>
+			<div className='py-10  text-h4'>
 				<ButtonDrivers
 					text='Vehicle Plate Information'
 					hasIcon
