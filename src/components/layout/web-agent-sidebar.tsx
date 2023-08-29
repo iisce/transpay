@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { Button } from '../ui/button';
-import {  WEBAGENTSIDEBAR_LINKS } from '@/lib/consts';
+import { WEBAGENTSIDEBAR_LINKS } from '@/lib/consts';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ModeToggle } from '../dark-mode-toggle';
@@ -10,7 +10,7 @@ import { Separator } from '../ui/separator';
 export default function WebAgentSidebar() {
 	const pathname = usePathname();
 	return (
-		<div className='h-full flex-col px-5 min-w-min bg-primary-50 hidden sm:flex justify-between'>
+		<div className='h-full flex-col px-5 min-w-min bg-secondary hidden sm:flex justify-between'>
 			<div className='flex flex-col gap-3 pt-10'>
 				{WEBAGENTSIDEBAR_LINKS.map((link, i) => (
 					<Button

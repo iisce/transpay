@@ -18,6 +18,7 @@ export const minusIcon = (
     <path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z" />
   </svg>
 );
+
 export const refreshIcon = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -34,6 +35,7 @@ export const refreshIcon = (
     />
   </svg>
 );
+
 export const eyesOpenIcon = (
   <svg
     width="30"
@@ -54,6 +56,7 @@ export const eyesOpenIcon = (
     />
   </svg>
 );
+
 export const eyesCloseIcon = (
   <svg
     width="30"
@@ -68,6 +71,7 @@ export const eyesCloseIcon = (
     />
   </svg>
 );
+
 export const dashboardIcon = (
   <svg
     width="26"
@@ -87,6 +91,7 @@ export const dashboardIcon = (
     />
   </svg>
 );
+
 export const agentsIcon = (
   <svg
     width="26"
@@ -102,6 +107,7 @@ export const agentsIcon = (
     />
   </svg>
 );
+
 export const driverIcon = (
   <svg
     width="26"
@@ -119,6 +125,7 @@ export const driverIcon = (
     />
   </svg>
 );
+
 export const heavyVehiclesIcon = (
   <svg
     width="26"
@@ -134,6 +141,7 @@ export const heavyVehiclesIcon = (
     />
   </svg>
 );
+
 export const finesIcon = (
   <svg
     width="26"
@@ -149,6 +157,7 @@ export const finesIcon = (
     />
   </svg>
 );
+
 export const revenueIcon = (
   <svg
     width="26"
@@ -164,6 +173,7 @@ export const revenueIcon = (
     />
   </svg>
 );
+
 export const notificationIcon = (
   <svg
     width="27"
@@ -187,6 +197,7 @@ export const notificationIcon = (
     />
   </svg>
 );
+
 export const searchIcon = (
   <svg
     width="26"
@@ -202,6 +213,7 @@ export const searchIcon = (
     />
   </svg>
 );
+
 export const peopleIcon = (
   <svg
     width="26"
@@ -223,6 +235,7 @@ export const peopleIcon = (
     />
   </svg>
 );
+
 export const deleteIcon = (
   <svg
     width="26"
@@ -238,6 +251,7 @@ export const deleteIcon = (
     />
   </svg>
 );
+
 export const editIcon = (
   <svg
     width="26"
@@ -255,6 +269,7 @@ export const editIcon = (
     />
   </svg>
 );
+
 export const paymentIcon = (
   <svg
     width="31"
@@ -270,6 +285,93 @@ export const paymentIcon = (
     />
   </svg>
 );
+
+export const passwordIcon = (
+	<svg
+		width='30'
+		height='24'
+		viewBox='0 0 30 24'
+		fill='none'
+		xmlns='http://www.w3.org/2000/svg'
+	>
+		<path
+			d='M11.625 12C11.625 11.1049 11.9806 10.2465 12.6135 9.61351C13.2465 8.98058 14.1049 8.625 15 8.625C15.8951 8.625 16.7536 8.98058 17.3865 9.61351C18.0194 10.2465 18.375 11.1049 18.375 12C18.375 12.8951 18.0194 13.7536 17.3865 14.3865C16.7536 15.0194 15.8951 15.375 15 15.375C14.1049 15.375 13.2465 15.0194 12.6135 14.3865C11.9806 13.7536 11.625 12.8951 11.625 12Z'
+			fill='#BDAA00'
+		/>
+		<path
+			fill-rule='evenodd'
+			clip-rule='evenodd'
+			d='M0 12C0 14.46 0.6375 15.2865 1.9125 16.944C4.458 20.25 8.727 24 15 24C21.273 24 25.542 20.25 28.0875 16.944C29.3625 15.288 30 14.4585 30 12C30 9.54 29.3625 8.7135 28.0875 7.056C25.542 3.75 21.273 0 15 0C8.727 0 4.458 3.75 1.9125 7.056C0.6375 8.715 0 9.5415 0 12ZM15 6.375C13.5082 6.375 12.0774 6.96763 11.0225 8.02252C9.96763 9.07742 9.375 10.5082 9.375 12C9.375 13.4918 9.96763 14.9226 11.0225 15.9775C12.0774 17.0324 13.5082 17.625 15 17.625C16.4918 17.625 17.9226 17.0324 18.9775 15.9775C20.0324 14.9226 20.625 13.4918 20.625 12C20.625 10.5082 20.0324 9.07742 18.9775 8.02252C17.9226 6.96763 16.4918 6.375 15 6.375Z'
+			fill='#BDAA00'
+		/>
+	</svg>
+);
+
+export const backArrowIcon = (
+	<svg
+		width='18'
+		height='14'
+		viewBox='0 0 18 14'
+		fill='none'
+		xmlns='http://www.w3.org/2000/svg'
+	>
+		<path
+			d='M17 7L1 7L17 7ZM1 7L7 0.999999L1 7ZM1 7L7 13L1 7Z'
+			fill='black'
+			fill-opacity='0.6'
+		/>
+		<path
+			d='M17 7L1 7M1 7L7 0.999999M1 7L7 13'
+			stroke='black'
+			stroke-opacity='0.6'
+			stroke-width='1.5'
+			stroke-linecap='round'
+			stroke-linejoin='round'
+		/>
+	</svg>
+);
+
+export const TickBox = (
+	<svg
+		width='50'
+		height='50'
+		viewBox='0 0 50 50'
+		fill='none'
+		xmlns='http://www.w3.org/2000/svg'
+	>
+		<path
+			d='M44.4444 44.4444H5.55556V5.55556H33.3333V0H5.55556C2.47222 0 0 2.47222 0 5.55556V44.4444C0 45.9179 0.585316 47.3309 1.62718 48.3728C2.66905 49.4147 4.08213 50 5.55556 50H44.4444C45.9179 50 47.3309 49.4147 48.3728 48.3728C49.4147 47.3309 50 45.9179 50 44.4444V22.2222H44.4444M13.6389 19.6667L9.72222 23.6111L22.2222 36.1111L50 8.33333L46.0833 4.38889L22.2222 28.25L13.6389 19.6667Z'
+			fill='#4F4700'
+		/>
+	</svg>
+);
+
+export const dotsIcon = (
+	<svg
+		width='6'
+		height='21'
+		viewBox='0 0 6 21'
+		fill='none'
+		xmlns='http://www.w3.org/2000/svg'
+	>
+		<path
+			d='M3.00007 20.9996C4.65696 20.9996 6.00013 19.6565 6.00013 17.9996C6.00013 16.3427 4.65696 14.9995 3.00007 14.9995C1.34317 14.9995 0 16.3427 0 17.9996C0 19.6565 1.34317 20.9996 3.00007 20.9996Z'
+			fill='currentColor'
+			fillOpacity='0.6'
+		/>
+		<path
+			d='M3.00007 13.5021C4.65696 13.5021 6.00013 12.1589 6.00013 10.502C6.00013 8.84513 4.65696 7.50195 3.00007 7.50195C1.34317 7.50195 0 8.84513 0 10.502C0 12.1589 1.34317 13.5021 3.00007 13.5021Z'
+			fill='currentColor'
+			fillOpacity='0.6'
+		/>
+		<path
+			d='M3.00007 6.00013C4.65696 6.00013 6.00013 4.65696 6.00013 3.00007C6.00013 1.34317 4.65696 0 3.00007 0C1.34317 0 0 1.34317 0 3.00007C0 4.65696 1.34317 6.00013 3.00007 6.00013Z'
+			fill='currentColor'
+			fillOpacity='0.6'
+		/>
+	</svg>
+);
+
 export const driversProgressIcon1 = (
   <svg
     width="340"
@@ -343,6 +445,7 @@ export const driversProgressIcon1 = (
     />
   </svg>
 );
+
 export const driversProgressIcon2 = (
   <svg
     width="340"
@@ -413,6 +516,7 @@ export const driversProgressIcon2 = (
     />
   </svg>
 );
+
 export const driversProgressIcon3 = (
   <svg
     width="340"
@@ -477,6 +581,7 @@ export const driversProgressIcon3 = (
     <path d="M340 40C340 62.0914 322.091 80 300 80C277.909 80 260 62.0914 260 40C260 17.9086 277.909 0 300 0C322.091 0 340 17.9086 340 40ZM270.054 40C270.054 56.5388 283.461 69.9462 300 69.9462C316.539 69.9462 329.946 56.5388 329.946 40C329.946 23.4612 316.539 10.0538 300 10.0538C283.461 10.0538 270.054 23.4612 270.054 40Z" />
   </svg>
 );
+
 export const filterIcon = (
   <svg
     width="16"
@@ -492,6 +597,7 @@ export const filterIcon = (
     />
   </svg>
 );
+
 export const successIcon = (
   <svg
     width="132"
@@ -518,6 +624,7 @@ export const successIcon = (
     />
   </svg>
 );
+
 export const upIcon = (
   <svg
     width="9"
@@ -540,6 +647,7 @@ export const upIcon = (
     />
   </svg>
 );
+
 export const downIcon = (
   <svg
     width="9"
@@ -562,6 +670,7 @@ export const downIcon = (
     />
   </svg>
 );
+
 export const dashIcon = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -574,6 +683,7 @@ export const dashIcon = (
     <path strokeLinecap="round" strokeLinejoin="round" d="M18 12H6" />
   </svg>
 );
+
 export const printIcon = (
   <svg
     width="20"
@@ -590,7 +700,6 @@ export const printIcon = (
   </svg>
 );
 
-// WEBAGENT
 export const scanIcon = (
   <svg
     width="24"
@@ -607,6 +716,7 @@ export const scanIcon = (
     />
   </svg>
 );
+
 export const agentdriverIcon = (
   <svg
     width="32"
@@ -624,6 +734,7 @@ export const agentdriverIcon = (
     />
   </svg>
 );
+
 export const refundIcon = (
   <svg
     width="26"
@@ -654,6 +765,7 @@ export const refundIcon = (
     />
   </svg>
 );
+
 export const copyIcon = (
   <svg
     xmlns="http://www.w3.org/2000/svg"

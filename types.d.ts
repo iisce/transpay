@@ -54,10 +54,17 @@ interface DashboardCardI {
 	href: Url;
 	number?: string;
 	icon?: React.ReactNode;
-	image?: string; 
+	image?: string;
 	className?: string;
 }
-interface ButtonD {
+interface FinesCardP {
+	title: string;
+	description: string;
+	type: 'fine' | 'penalty';
+	href: string;
+	amount: string | number;
+}
+interface ButtonF {
 	text: string;
 	icon?: React.ReactNode;
 	variant: 'primary' | 'secondary';
