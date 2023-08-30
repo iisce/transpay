@@ -100,7 +100,7 @@ export default function DriverForm3() {
 						>
 							<Link
 								href={
-									'/dashboard/drivers/new-driver/plate-info'
+									'/dashboard/driver/new-driver/plate-info'
 								}
 							>
 								Back

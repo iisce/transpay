@@ -28,10 +28,6 @@ import {
 	AlertDialogAction,
 	AlertDialogCancel,
 	AlertDialogContent,
-	AlertDialogFooter,
-	AlertDialogHeader,
-	AlertDialogTitle,
-	AlertDialogTrigger,
 } from '../ui/alert-dialog';
 import React from 'react';
 import { successIcon } from '@/lib/icons';

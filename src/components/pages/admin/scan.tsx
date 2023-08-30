@@ -7,7 +7,7 @@ import { copyIcon, successIcon } from '@/lib/icons';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
-import localforage from 'localforage'; // Import localforage library
+import localforage from 'localforage'; 
 import { Separator } from '@/components/ui/separator';
 
 export default function QRScan() {

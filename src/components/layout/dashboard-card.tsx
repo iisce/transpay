@@ -16,7 +16,7 @@ export default function DashboardCard({
 			href={href}
 			className='w-full xs:w-1/2 sm:w-1/2 lg:w-1/3 xl:w-1/4 h-[300px] p-1.5 sm:p-2.5'
 		>
-			<Card className='bg-secondary overflow-hidden h-full shadow-md hover:shadow-xl transition-all'>
+			<Card className='bg-secondary overflow-hidden h-full  shadow-md hover:shadow-xl transition-all'>
 				<CardHeader className='p-0 h-[160px] w-full overflow-hidden'>
 					<Image
 						src={image || '/tricycle.jpg'}

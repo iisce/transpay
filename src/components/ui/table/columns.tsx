@@ -15,7 +15,13 @@ import {
 import { ColumnDef } from '@tanstack/react-table';
 import { MoreHorizontal, MoreVertical } from 'lucide-react';
 import { DataTableColumnHeader } from './data-column-table-header';
-import { deleteIcon, editIcon, paymentIcon, printIcon } from '@/lib/icons';
+import {
+	deleteIcon,
+	editIcon,
+	finesIcon,
+	paymentIcon,
+	printIcon,
+} from '@/lib/icons';
 import Pill from '../pill';
 import Link from 'next/link';
 import Cbadge from '../category-badge';
@@ -174,7 +180,7 @@ export const agentsColumns: ColumnDef<AgentT>[] = [
 		},
 	},
 ];
-export const driversColumns: ColumnDef<AgentT>[] = [
+export const driversColumns: ColumnDef<DriverT>[] = [
 	{
 		accessorKey: 'name',
 		header: 'Name',
@@ -201,10 +207,11 @@ export const driversColumns: ColumnDef<AgentT>[] = [
 		header: 'Category',
 		cell: ({ row }) => <Cbadge variant={row.getValue('category')} />,
 	},
-	
+
 	{
 		id: 'actions',
 		cell: ({ row }) => {
+			const driver = row.original;
 			return (
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
@@ -224,7 +231,9 @@ export const driversColumns: ColumnDef<AgentT>[] = [
 							className='border-b border-black rounded-none'
 							asChild
 						>
-							<Link href={`/dashboard/drivers/${row.id}`}>
+							<Link
+								href={`/dashboard/drivers/${driver.plate}`}
+							>
 								<span className='h-4 w-4 mr-3'>
 									{editIcon}
 								</span>
@@ -236,12 +245,25 @@ export const driversColumns: ColumnDef<AgentT>[] = [
 							asChild
 						>
 							<Link
-								href={`/dashboard/drivers/payment/${row.id}`}
+								href={`/dashboard/drivers/${driver.plate}/payment`}
 							>
 								<span className='h-4 w-4 mr-3'>
 									{paymentIcon}
 								</span>
-								Make Payment
+								View Payment
+							</Link>
+						</DropdownMenuItem>
+						<DropdownMenuItem
+							className='border-b border-black rounded-none'
+							asChild
+						>
+							<Link
+								href={`/dashboard/drivers/${driver.plate}/fines`}
+							>
+								<span className='h-4 w-4 mr-3'>
+									{finesIcon}
+								</span>
+								View Fines
 							</Link>
 						</DropdownMenuItem>
 						<DropdownMenuItem className='text-destructive'>
@@ -327,20 +349,160 @@ export const viewDriversColumns: ColumnDef<DriverPayment>[] = [
 		accessorKey: 'payment_type',
 		header: 'Payment Type',
 		cell: ({ row }) => {
-			const payment_type = row.original. payment_type;
+			const payment_type = row.original.payment_type;
 			const style =
 				payment_type === 'Cash'
 					? 'text-destructive-foreground'
 					: payment_type === 'Mobile Transfer'
 					? 'text-awesome-foreground'
 					: payment_type === 'Transfer'
-					
 					? 'text-orange-300'
 					: 'text-primary';
-			return <div className={`uppercase ${style}`}>{ payment_type}</div>;
-		}
+			return (
+				<div className={`uppercase ${style}`}>{payment_type}</div>
+			);
+		},
 	},
-	
+
+	{
+		accessorKey: 'handled_by',
+		header: 'Handled By',
+	},
+	{
+		id: 'actions',
+		cell: ({ row }) => {
+			const payment = row.original;
+			return (
+				<Button
+					className='gap-2'
+					onClick={() =>
+						navigator.clipboard.writeText(payment.driver)
+					}
+				>
+					<div className='h-4 w-4'>{printIcon}</div>Print
+				</Button>
+			);
+		},
+	},
+];
+
+// WEBAGENT
+export const webAgentDriversColumns: ColumnDef<AgentT>[] = [
+	{
+		accessorKey: 'name',
+		header: 'Name',
+	},
+	{
+		accessorKey: 'plate',
+		header: 'Vehicle Plate Number',
+		cell: ({ row }) => (
+			<span className='uppercase'>{row.getValue('plate')}</span>
+		),
+	},
+	{
+		accessorKey: 'status',
+		header: 'Today Status',
+		cell: ({ row }) => (
+			<Pill
+				status={row.getValue('status')}
+				text={row.getValue('status')}
+			/>
+		),
+	},
+	{
+		accessorKey: 'category',
+		header: 'Category',
+		cell: ({ row }) => <Cbadge variant={row.getValue('category')} />,
+	},
+
+	{
+		id: 'actions',
+		cell: ({ row }) => {
+			return (
+				<DropdownMenu>
+					<DropdownMenuTrigger asChild>
+						<Button
+							variant='ghost'
+							className='h-8 w-8 p-0'
+						>
+							<span className='sr-only'>Open menu</span>
+							<MoreVertical className='h-4 w-4' />
+						</Button>
+					</DropdownMenuTrigger>
+					<DropdownMenuContent
+						className='border border-black'
+						align='end'
+					>
+						<DropdownMenuItem
+							className='border-b border-black rounded-none'
+							asChild
+						>
+							<Link href={`/web-agent/driver/${row.id}`}>
+								<span className='h-4 w-4 mr-3'>
+									{editIcon}
+								</span>
+								View Driver
+							</Link>
+						</DropdownMenuItem>
+						<DropdownMenuItem
+							className='border-b border-black rounded-none'
+							asChild
+						>
+							<Link
+								href={`/web-agent/driver/payment/${row.id}`}
+							>
+								<span className='h-4 w-4 mr-3'>
+									{paymentIcon}
+								</span>
+								Make Payment
+							</Link>
+						</DropdownMenuItem>
+						<DropdownMenuItem className='text-destructive'>
+							<span className='h-4 w-4 mr-3'>
+								{deleteIcon}
+							</span>
+							Delete Driver
+						</DropdownMenuItem>
+					</DropdownMenuContent>
+				</DropdownMenu>
+			);
+		},
+	},
+];
+export const viewWebAgentDriversColumns: ColumnDef<DriverPayment>[] = [
+	{
+		accessorKey: 'Date',
+		header: 'Date',
+	},
+	{
+		accessorKey: 'amount_NGN',
+		header: () => <div className='text-right'>Amount</div>,
+		cell: ({ row }) => {
+			const amount = row.getValue('amount_NGN');
+			return (
+				<div className='text-right font-medium'>{`₦${amount}`}</div>
+			);
+		},
+	},
+	{
+		accessorKey: 'payment_type',
+		header: 'Payment Type',
+		cell: ({ row }) => {
+			const payment_type = row.original.payment_type;
+			const style =
+				payment_type === 'Cash'
+					? 'text-destructive-foreground'
+					: payment_type === 'Mobile Transfer'
+					? 'text-awesome-foreground'
+					: payment_type === 'Transfer'
+					? 'text-orange-300'
+					: 'text-primary';
+			return (
+				<div className={`uppercase ${style}`}>{payment_type}</div>
+			);
+		},
+	},
+
 	{
 		accessorKey: 'handled_by',
 		header: 'Handled By',

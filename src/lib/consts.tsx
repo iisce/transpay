@@ -1,12 +1,11 @@
 import {
+	adminIcon,
 	agentdriverIcon,
 	agentsIcon,
 	dashboardIcon,
 	driverIcon,
 	finesIcon,
-	heavyVehiclesIcon,
 	peopleIcon,
-	refundIcon,
 	revenueIcon,
 	scanIcon,
 } from './icons';
@@ -16,6 +15,11 @@ export const SIDEBAR_LINKS = [
 		name: 'Dashboard',
 		href: '/dashboard',
 		icon: dashboardIcon,
+	},
+	{
+		name: 'Admins',
+		href: '/dashboard/admins',
+		icon: adminIcon,
 	},
 	{
 		name: 'Agents',
@@ -28,14 +32,14 @@ export const SIDEBAR_LINKS = [
 		icon: driverIcon,
 	},
 	{
-		name: 'Heavy Vehicles',
-		href: '/dashboard/heavy-vehicles',
-		icon: heavyVehiclesIcon,
-	},
-	{
 		name: 'Fines & Penalties',
 		href: '/dashboard/fines',
 		icon: finesIcon,
+	},
+	{
+		name: 'Scan',
+		href: '/dashboard/scan',
+		icon: scanIcon,
 	},
 	{
 		name: 'Revenue',
@@ -43,59 +47,67 @@ export const SIDEBAR_LINKS = [
 		icon: revenueIcon,
 	},
 ];
-export const DRIVERS_CARD=[
+export const DRIVERS_CARD = [
 	{
 		name: 'Personal Information',
-		description:'Edit Drivers information',
+		description: 'Edit Drivers information',
 		href: '/dashboard/drivers',
 		image: '/personalinfo.png',
 	},
 	{
 		name: 'Payment',
-		description:"Make Payment & Check Payment History",
+		description: 'Make Payment & Check Payment History',
 		href: '/dashboard/revenue',
 		image: '/payment.png',
 	},
 	{
 		name: 'Fines & Penalties',
-		description:"Fine Driver & Check Fine Payment",
+		description: 'Fine Driver & Check Fine Payment',
 		href: '/dashboard/fines',
 		image: '/fineandpenal.png',
-	}
-
-]
+	},
+];
 export const DASHBOARD_CARD = [
 	{
-		name: 'Drivers',
-		description: 'Drivers list & Update',
+		name: 'Admins',
+		description: 'List of all the admins',
 		icon: peopleIcon,
-		number: '2,500',
-		href: '/dashboard/drivers',
+		number: '30',
+		href: '/dashboard/admins',
 		image: '/tricycle.jpg',
 	},
 	{
 		name: 'Agents',
 		description: 'Agents List',
 		icon: peopleIcon,
-		number: '1,500',
+		number: '500',
 		href: '/dashboard/agents',
 		image: '/tricycle.jpg',
 	},
 	{
-		name: 'Companies & trucks',
-		description: 'Company Vehicle Registration & Heavy Vehicles',
-		icon: '',
-		number: '',
-		href: '/dashboard/heavy-vehicles',
-		image: '/tricycle.jpg' ,
+		name: 'Drivers',
+		description: 'Drivers list & Update',
+		icon: peopleIcon,
+		number: '9,200',
+		href: '/dashboard/drivers',
+		image: '/tricycle.jpg',
 	},
 	{
 		name: 'Fines & Penalties',
 		description: 'Create fines & penalties',
-		icon: '',
-		number: '',
+		icon: finesIcon,
+		number: '10,000',
 		href: '/dashboard/fines',
 		image: '/tricycle.jpg',
+	},
+	{
+		name: 'Scan Plate',
+		description:
+			'Scan Driver Plate to retrieve drivers information plate',
+		icon: '',
+		number: '',
+		href: '/dashboard/scan',
+		image: '/scanplate.png',
 	},
 	{
 		name: 'Revenue and Stats',
@@ -106,7 +118,6 @@ export const DASHBOARD_CARD = [
 		image: '/tricycle.jpg',
 	},
 ];
-
 export const AGENT_TABLE = [
 	{
 		name: 'Emeka Ignatius',
@@ -481,224 +492,7 @@ export const AGENT_TABLE = [
 		status: 'inactive',
 	},
 ];
-
 export const DRIVER_TABLE = [
-	{
-		name: 'Emeka Ignatius',
-		plate: 'tfgh-ilt',
-		status: 'active',
-		category: 'cleared',
-	},
-	{
-		name: 'Emmanuel Ozigbo',
-		plate: 'trhb6-9jw',
-		status: 'inactive',
-		category: 'debtors',
-	},
-	{
-		name: 'Divine Onyekachukwu',
-		plate: 'gtw8-owg',
-		status: 'waived',
-		category: 'debtors',
-	},
-	{
-		name: 'Oyeniran Ayobami',
-		plate: '97yy-kjy',
-		status: 'active',
-		category: 'cleared',
-	},
-	{
-		name: 'Emeka Ignatius',
-		plate: 'tfgh-ilt',
-		status: 'active',
-		category: 'cleared',
-	},
-	{
-		name: 'Emmanuel Ozigbo',
-		plate: 'trhb6-9jw',
-		status: 'inactive',
-		category: 'debtors',
-	},
-	{
-		name: 'Divine Onyekachukwu',
-		plate: 'gtw8-owg',
-		status: 'waived',
-		category: 'debtors',
-	},
-	{
-		name: 'Oyeniran Ayobami',
-		plate: '97yy-kjy',
-		status: 'active',
-		category: 'cleared',
-	},
-	{
-		name: 'Emeka Ignatius',
-		plate: 'tfgh-ilt',
-		status: 'active',
-		category: 'cleared',
-	},
-	{
-		name: 'Emmanuel Ozigbo',
-		plate: 'trhb6-9jw',
-		status: 'inactive',
-		category: 'debtors',
-	},
-	{
-		name: 'Divine Onyekachukwu',
-		plate: 'gtw8-owg',
-		status: 'waived',
-		category: 'debtors',
-	},
-	{
-		name: 'Oyeniran Ayobami',
-		plate: '97yy-kjy',
-		status: 'active',
-		category: 'cleared',
-	},
-	{
-		name: 'Emeka Ignatius',
-		plate: 'tfgh-ilt',
-		status: 'active',
-		category: 'cleared',
-	},
-	{
-		name: 'Emmanuel Ozigbo',
-		plate: 'trhb6-9jw',
-		status: 'inactive',
-		category: 'debtors',
-	},
-	{
-		name: 'Divine Onyekachukwu',
-		plate: 'gtw8-owg',
-		status: 'waived',
-		category: 'debtors',
-	},
-	{
-		name: 'Oyeniran Ayobami',
-		plate: '97yy-kjy',
-		status: 'active',
-		category: 'cleared',
-	},
-	{
-		name: 'Emeka Ignatius',
-		plate: 'tfgh-ilt',
-		status: 'active',
-		category: 'cleared',
-	},
-	{
-		name: 'Emmanuel Ozigbo',
-		plate: 'trhb6-9jw',
-		status: 'inactive',
-		category: 'debtors',
-	},
-	{
-		name: 'Divine Onyekachukwu',
-		plate: 'gtw8-owg',
-		status: 'waived',
-		category: 'debtors',
-	},
-	{
-		name: 'Oyeniran Ayobami',
-		plate: '97yy-kjy',
-		status: 'active',
-		category: 'cleared',
-	},
-	{
-		name: 'Emeka Ignatius',
-		plate: 'tfgh-ilt',
-		status: 'active',
-		category: 'cleared',
-	},
-	{
-		name: 'Emmanuel Ozigbo',
-		plate: 'trhb6-9jw',
-		status: 'inactive',
-		category: 'debtors',
-	},
-	{
-		name: 'Divine Onyekachukwu',
-		plate: 'gtw8-owg',
-		status: 'waived',
-		category: 'debtors',
-	},
-	{
-		name: 'Oyeniran Ayobami',
-		plate: '97yy-kjy',
-		status: 'active',
-		category: 'cleared',
-	},
-	{
-		name: 'Emeka Ignatius',
-		plate: 'tfgh-ilt',
-		status: 'active',
-		category: 'cleared',
-	},
-	{
-		name: 'Emmanuel Ozigbo',
-		plate: 'trhb6-9jw',
-		status: 'inactive',
-		category: 'debtors',
-	},
-	{
-		name: 'Divine Onyekachukwu',
-		plate: 'gtw8-owg',
-		status: 'waived',
-		category: 'debtors',
-	},
-	{
-		name: 'Oyeniran Ayobami',
-		plate: '97yy-kjy',
-		status: 'active',
-		category: 'cleared',
-	},
-	{
-		name: 'Emeka Ignatius',
-		plate: 'tfgh-ilt',
-		status: 'active',
-		category: 'cleared',
-	},
-	{
-		name: 'Emmanuel Ozigbo',
-		plate: 'trhb6-9jw',
-		status: 'inactive',
-		category: 'debtors',
-	},
-	{
-		name: 'Divine Onyekachukwu',
-		plate: 'gtw8-owg',
-		status: 'waived',
-		category: 'debtors',
-	},
-	{
-		name: 'Oyeniran Ayobami',
-		plate: '97yy-kjy',
-		status: 'active',
-		category: 'cleared',
-	},
-	{
-		name: 'Emeka Ignatius',
-		plate: 'tfgh-ilt',
-		status: 'active',
-		category: 'cleared',
-	},
-	{
-		name: 'Emmanuel Ozigbo',
-		plate: 'trhb6-9jw',
-		status: 'inactive',
-		category: 'debtors',
-	},
-	{
-		name: 'Divine Onyekachukwu',
-		plate: 'gtw8-owg',
-		status: 'waived',
-		category: 'debtors',
-	},
-	{
-		name: 'Oyeniran Ayobami',
-		plate: '97yy-kjy',
-		status: 'active',
-		category: 'cleared',
-	},
 	{
 		name: 'Emeka Ignatius',
 		plate: 'tfgh-ilt',
@@ -787,11 +581,8 @@ export const VIEWDRIVER_TABLE = [
 		payment_type: 'Cash',
 		handled_by: 'Agent Helen',
 	},
-
-]
-
+];
 // WEB AGENT
-
 export const WEBAGENTSIDEBAR_LINKS = [
 	{
 		name: 'Dashboard',
@@ -808,23 +599,18 @@ export const WEBAGENTSIDEBAR_LINKS = [
 		href: '/web-agent/driver',
 		icon: agentdriverIcon,
 	},
-	{
-		name: 'Refunds',
-		href: '/web-agent/refunds',
-		icon: refundIcon,
-	},
 ];
 export const WEBAGENT_CARD = [
 	{
 		name: 'Scan Plate',
-		description: 'Scan Driver Plate to retrieve drivers information plate',
+		description:
+			'Scan Driver Plate to retrieve drivers information plate',
 		icon: '',
 		number: '',
 		href: '/web-agent/scan',
 		image: '/scanplate.png',
-		
 	},
-	
+
 	{
 		name: 'Drivers',
 		description: 'Drivers list & Update',
@@ -832,52 +618,90 @@ export const WEBAGENT_CARD = [
 		number: '2,500',
 		href: '/web-agent/driver',
 		image: '/drivers.png',
-		
-	},
-	{
-		name: 'Refunds',
-		description: 'Return Drivers Money',
-		href: '/web-agent/refunds',
-		image: '/refunds.png',
 	},
 ];
-
+export const WEBAGENTDRIVER_CARD = [
+	{
+		name: 'Vehicle Information',
+		description: 'View Vehicle information',
+		href: '/web-agent/driver/editinfo',
+		image: '/personalinfo.png',
+	},
+	{
+		name: 'Payment',
+		description: 'Make Payment & Check Payment History',
+		href: '/web-agent/driver/payment',
+		image: '/payment.png',
+	},
+	{
+		name: 'Fines & Penalties',
+		description: 'Fine Driver & Check Fine Payment',
+		href: '/web-agent/driver/plate/fines',
+		image: '/fineandpenal.png',
+	},
+	{
+		name: 'Waiver Form',
+		description: 'Fill waiver form to process driver grace period.',
+		href: '/web-agent',
+		image: '/fineandpenal.png',
+	},
+];
 export const FINE_CARDS: FinesCardP[] = [
 	{
-		title: 'Overload',
-		description: 'Long description',
+		id: 0,
+		title: 'Speeding',
+		description: 'Exceeding the speed limit on the highway.',
 		type: 'fine',
-		href: '/dashboard',
-		amount: '7000'
-	},{
-		title: 'Overload',
-		description: 'Long description',
+		amount: 10000, // Amount in Nigerian Naira
+	},
+	{
+		id: 1,
+		title: 'Driving without License',
+		description: "Operating a vehicle without a valid driver's license.",
 		type: 'fine',
-		href: '/dashboard',
-		amount: '25000'
-	},{
-		title: 'Overload',
-		description: 'Long description',
+		amount: 8000,
+	},
+	{
+		id: 2,
+		title: 'Running Red Light',
+		description: 'Passing through a red traffic light signal.',
 		type: 'fine',
-		href: '/dashboard',
-		amount: '50000'
-	},{
-		title: 'Overload',
-		description: 'Long description',
+		amount: 12000,
+	},
+	{
+		id: 3,
+		title: 'Overloading Vehicle',
+		description: 'Carrying more passengers or goods than allowed.',
 		type: 'fine',
-		href: '/dashboard',
-		amount: '5000'
-	},{
-		title: 'Overload',
-		description: 'Long description',
+		amount: 15000,
+	},
+	{
+		id: 4,
+		title: 'Using Mobile While Driving',
+		description:
+			'Using a mobile phone without a hands-free device while driving.',
 		type: 'fine',
-		href: '/dashboard',
-		amount: '5000'
-	},{
-		title: 'Overload',
-		description: 'Long description',
+		amount: 5000,
+	},
+	{
+		id: 5,
+		title: 'Unauthorized Parking',
+		description: 'Parking in a no-parking zone or blocking traffic.',
 		type: 'fine',
-		href: '/dashboard',
-		amount: '5000'
-	}
-]
+		amount: 7000,
+	},
+	{
+		id: 6,
+		title: 'Operating Vehicle without Insurance',
+		description: 'Driving a vehicle without valid insurance coverage.',
+		type: 'fine',
+		amount: 10000,
+	},
+	{
+		id: 7,
+		title: 'Driving Under the Influence',
+		description: 'Driving while intoxicated by alcohol or drugs.',
+		type: 'fine',
+		amount: 20000,
+	},
+];

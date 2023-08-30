@@ -49,12 +49,15 @@ export default function Drivers() {
 					<TabsContent value='all'>
 						<DataTable
 							showSearch
+							searchWith='plate'
 							columns={driversColumns}
 							data={DRIVER_TABLE}
 						/>
 					</TabsContent>
 					<TabsContent value='cleared'>
 						<DataTable
+							showSearch
+							searchWith='plate'
 							columns={driversColumns}
 							data={DRIVER_TABLE.filter(
 								(agent) => agent.category === 'cleared'
@@ -63,6 +66,8 @@ export default function Drivers() {
 					</TabsContent>
 					<TabsContent value='debtors'>
 						<DataTable
+							showSearch
+							searchWith='plate'
 							columns={driversColumns}
 							data={DRIVER_TABLE.filter(
 								(agent) => agent.category === 'debtors'
@@ -71,6 +76,8 @@ export default function Drivers() {
 					</TabsContent>
 					<TabsContent value='waived'>
 						<DataTable
+							showSearch
+							searchWith='plate'
 							columns={driversColumns}
 							data={DRIVER_TABLE.filter(
 								(agent) => agent.status === 'waived'
