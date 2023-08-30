@@ -63,6 +63,20 @@
   }
 }
 
+/* styles/globals.css */
+
+
+.slide.active {
+  display: block;
+  opacity: 1;
+}
+
+.indicator.active {
+  width: 50px;
+  height: 10px;
+  border-radius: 20px;
+}
+
 .spin-button-none::-webkit-inner-spin-button,
 .spin-button-none::-webkit-outer-spin-button {
   appearance: none;

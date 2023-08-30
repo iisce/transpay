@@ -8,7 +8,7 @@ export default function PassWordSet() {
   return (
     <>
       <h2 className="text-h5Bold">Reset Password</h2>
-      <div className="ml-5 mt-1">
+      <div className="mt-1">
         <AuthForm detail="E-mail" type="email" />
         <Link href="/auth/enterverification">
           <button className=" mt-5 w-full bg-primary-900 rounded-[14px] h-10 text-white">

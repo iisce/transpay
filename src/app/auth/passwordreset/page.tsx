@@ -8,7 +8,7 @@ export default function ConfirmPassword() {
   return (
     <>
       <h2 className="text-h5Bold">Reset Password</h2>
-      <div className="ml-5 mt-1">
+      <div className="mt-1">
         <AuthForm detail="Password" type="password" icon={passwordIcon} />
         <AuthForm
           detail="Confirm Password"
