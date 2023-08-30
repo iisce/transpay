@@ -21,7 +21,7 @@ export default function ViewDriverDetails({ plate }: { plate: string }) {
 						variant={'default'}
 					>
 						<Link
-							href={`/dashboard/drivers/${plate}/fine`}
+							href={`/dashboard/drivers/${plate}/fines`}
 							className='shrink-0 whitespace-nowrap'
 						>
 							<div className='mr-2 h-4 w-4 shrink-0'>
