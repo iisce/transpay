@@ -28,7 +28,7 @@ const Carousel: React.FC<CarouselProps> = ({ slides }) => {
           </div>
         ))}
       </div>
-      <div className="text-center mt-0">
+      <div className="text-center">
         {slides.map((_, index) => (
           <div
             key={index}

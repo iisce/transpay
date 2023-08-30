@@ -40,7 +40,7 @@ const AuthComp: React.FC = () => {
 				<h5 className='font-bold lg:text-[30px] xl:text-[45px] md:text-[0px]'>
 					Ensure Drivers are Checked with Maximum Road Safety!!!.
 				</h5>
-				<h2 className='my-[18px] text-base'>
+				<h2 className='my-[11px] text-base'>
 					Where drivers payment are checked and road safety is
 					ensured and money can be tracked
 				</h2>

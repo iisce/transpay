@@ -40,8 +40,8 @@ export default function AuthLayout({
 }) {
 	return (
 		<div className='grid grid-cols-1 lg:grid-cols-2 gap-5 p-3 lg:p-5 min-h-screen bg-background'>
-			<div className='hidden lg:flex justify-center items-center w-full h-full p-3 sm:p-5 bg-gradient-to-b from-primary-900 to-primary-700 text-white rounded-2xl'>
-				<div className='flex flex-col justify-between max-w-[550px] h-full'>
+			<div className='hidden lg:flex justify-center items-center w-full h-[620px] p-3 sm:p-5 bg-gradient-to-b from-primary-900 to-primary-700 text-white rounded-2xl'>
+				<div className='flex flex-col justify-between max-w-[550px]'>
 					<div className='flex flex-col gap-12'>
 						<div className='text-h5'>TRANSPAY</div>
 						<div className='flex flex-col gap-4'>
@@ -88,7 +88,7 @@ export default function AuthLayout({
 							<div className='bg-white w-2 h-2 rounded-sm'></div>
 							<div className='bg-white w-2 h-2 rounded-sm'></div>
 						</div> */}
-						<div className='w-full flex flex-col gap-7 bg-primary-900 p-7 rounded-2xl'>
+						<div className='w-full flex flex-col mt-8 gap-7 bg-primary-900 p-7 rounded-2xl'>
 							<Carousel slides={slides} />
 						</div>
 					</div>
