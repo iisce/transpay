@@ -59,11 +59,11 @@ interface DashboardCardI {
 	className?: string;
 }
 interface FinesCardP {
+	id?: number;
 	title: string;
 	description: string;
 	type: 'fine' | 'penalty';
-	href: string;
-	amount: string | number;
+	amount: number;
 }
 interface ButtonF {
 	text: string;

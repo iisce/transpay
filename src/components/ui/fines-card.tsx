@@ -1,17 +1,27 @@
-import React from "react";
-import { Button } from "./button";
-import Link from "next/link";
-import { addIcon, deleteIcon, dotsIcon, editIcon } from "@/lib/icons";
-import { Card } from "./card";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./dropdown-menu";
-import { MoreVertical } from "lucide-react";
+import React from 'react';
+import { Button } from './button';
+import Link from 'next/link';
+import { addIcon, deleteIcon, dotsIcon, editIcon } from '@/lib/icons';
+import { Card } from './card';
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from './dropdown-menu';
+import { MoreVertical } from 'lucide-react';
 
-
-export default function FinesCardP({title, description, type, href, amount}:FinesCardP) {
-  return (
-      <Card className="px-7 py-6 w-[441px]">
-			<div className=" flex justify-between">
-				<h2 className=" text-title1Bold">{title}</h2>
+export default function FinesCardP({
+	id,
+	title,
+	description,
+	type,
+	amount,
+}: FinesCardP) {
+	return (
+		<Card className='px-7 py-6 w-[441px]'>
+			<div className=' flex justify-between'>
+				<h2 className=' text-title1Bold'>{title}</h2>
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
 						<Button
@@ -24,29 +34,32 @@ export default function FinesCardP({title, description, type, href, amount}:Fine
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align='end'>
 						<DropdownMenuItem asChild>
-							<Link href={`/dashboard/fines/fine`}>
+							<Link href={`/dashboard/fines/${id}`}>
 								<span className='h-4 w-4 mr-3'>
 									{editIcon}
 								</span>
-								View Agent
+								Edit Fine
 							</Link>
 						</DropdownMenuItem>
 						<DropdownMenuItem className='text-destructive'>
 							<span className='h-4 w-4 mr-3'>
 								{deleteIcon}
 							</span>
-							Delete Agent
+							Delete Fine
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
 			</div>
-			<p className=" py-4 text-title1">{description}</p>
-			<div className=" flex items-center justify-between ">
-				<h3 className="text-lg capitalize">{type}</h3>
-				<Button asChild className=" rounded-xl text-base text-white px-4 py-2">
-					<Link href={href}>{amount}</Link>
+			<p className=' py-4 text-title1'>{description}</p>
+			<div className=' flex items-center justify-between '>
+				<h3 className='text-lg capitalize'>{type}</h3>
+				<Button
+					variant='default'
+					className='rounded-xl'
+				>
+					₦{amount}
 				</Button>
 			</div>
 		</Card>
-  );
-};
+	);
+}

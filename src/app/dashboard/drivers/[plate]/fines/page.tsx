@@ -19,10 +19,6 @@ export default function Fines({ params }: { params: { plate: string } }) {
 					Fill in Drivers Offence and Fine
 				</p>
 			</div>
-			{/* <div className='h-12 shrink-0 bg-primary w-full rounded-2xl flex my-8 overflow-hidden text-white items-center'>
-				<div className='h-12 w-12 bg-black p-3'>{addIcon}</div>
-				<div className='p-3'>Fine Charges</div>
-			</div> */}
 			<div className=''>
 				<FineDriverForm />
 			</div>
