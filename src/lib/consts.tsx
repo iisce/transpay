@@ -82,14 +82,14 @@ export const DASHBOARD_CARD = [
 		href: '/dashboard/agents',
 		image: '/tricycle.jpg',
 	},
-	{
-		name: 'Companies & trucks',
-		description: 'Company Vehicle Registration & Heavy Vehicles',
-		icon: '',
-		number: '',
-		href: '/dashboard/heavy-vehicles',
-		image: '/tricycle.jpg' ,
-	},
+	// {
+	// 	name: 'Companies & trucks',
+	// 	description: 'Company Vehicle Registration & Heavy Vehicles',
+	// 	icon: '',
+	// 	number: '',
+	// 	href: '/dashboard/heavy-vehicles',
+	// 	image: '/tricycle.jpg' ,
+	// },
 	{
 		name: 'Fines & Penalties',
 		description: 'Create fines & penalties',
