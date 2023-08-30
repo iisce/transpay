@@ -847,7 +847,7 @@ export const WEBAGENTDRIVER_CARD=[
 	{
 		name: 'Fines & Penalties',
 		description:"Fine Driver & Check Fine Payment",
-		href: '/web-agent/driver/fines',
+		href: '/web-agent/driver/plate/fines',
 		image: '/fineandpenal.png',
 	},
 	{
@@ -866,31 +866,36 @@ export const FINE_CARDS: FinesCardP[] = [
 		type: 'fine',
 		href: '/dashboard',
 		amount: '7000'
-	},{
+	},
+	{
 		title: 'Overload',
 		description: 'Long description',
 		type: 'fine',
 		href: '/dashboard',
 		amount: '25000'
-	},{
+	},
+	{
 		title: 'Overload',
 		description: 'Long description',
 		type: 'fine',
 		href: '/dashboard',
 		amount: '50000'
-	},{
+	},
+	{
 		title: 'Overload',
 		description: 'Long description',
 		type: 'fine',
 		href: '/dashboard',
 		amount: '5000'
-	},{
+	},
+	{
 		title: 'Overload',
 		description: 'Long description',
 		type: 'fine',
 		href: '/dashboard',
 		amount: '5000'
-	},{
+	},
+	{
 		title: 'Overload',
 		description: 'Long description',
 		type: 'fine',
