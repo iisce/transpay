@@ -42,8 +42,6 @@ const fineFormSchema = z.object({
 	amount: z.number(),
 });
 
-// This can come from your database or API.
-
 type FineFormValues = z.infer<typeof fineFormSchema>;
 
 export default function FineForm({

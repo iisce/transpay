@@ -3,6 +3,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Lato } from 'next/font/google';
 import { Toaster } from '@/components/ui/toaster';
+import NextTopLoader from 'nextjs-toploader';
 
 const lato = Lato({
 	weight: '300',
@@ -32,6 +33,10 @@ export default function RootLayout({
 					enableSystem
 				>
 					<div className='h-full overflow-hidden'>
+						<NextTopLoader
+							color='#7F7433'
+							showSpinner={false}
+						/>
 						{children}
 						<Toaster />
 					</div>
