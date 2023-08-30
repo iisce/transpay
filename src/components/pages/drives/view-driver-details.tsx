@@ -2,7 +2,7 @@ import DashboardCard from '@/components/layout/dashboard-card';
 import { Button } from '@/components/ui/button';
 import { viewDriversColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
-import { DRIVERS_CARD, DRIVER_TABLE, VIEWDRIVER_TABLE } from '@/lib/consts';
+import { DRIVER_TABLE, VIEWDRIVER_TABLE } from '@/lib/consts';
 import { addIcon } from '@/lib/icons';
 import Link from 'next/link';
 import React from 'react';
@@ -12,7 +12,7 @@ export default function ViewDriverDetails({ plate }: { plate: string }) {
 
 	if (vehicle) {
 		return (
-			<div className='h-full p-6 flex flex-col gap-6 '>
+			<div className='h-full w-full p-6 flex flex-col gap-6 '>
 				<div className='flex items-center justify-between'>
 					<div className='text-title1Bold'>{vehicle.name}</div>
 					<Button
@@ -32,36 +32,76 @@ export default function ViewDriverDetails({ plate }: { plate: string }) {
 					</Button>
 				</div>
 				<div className='overflow-y-scroll w-full'>
-					<div className='flex flex-row flex-wrap gap-6'>
-						{DRIVERS_CARD.map((card: DashboardCardI, i) => (
-							<DashboardCard
-								key={i}
-								name={card.name}
-								href={card.href}
-								image={card.image}
-								description={card.description}
-							/>
-						))}
+					<div className='flex flex-wrap gap-5 w-full'>
+						<DashboardCard
+							name='Vehicle Information'
+							href={`${plate}/vehicle-info`}
+							image={'/personalinfo.png'}
+							description={'View Vehicle information'}
+						/>
+						<DashboardCard
+							name='Payment'
+							href={`${plate}/payments`}
+							image={'/payment.png'}
+							description={
+								'Make Payment & Check Payment History'
+							}
+						/>
+						<DashboardCard
+							name='Fines & Penalties'
+							href={`${plate}/fines`}
+							image={'/fineandpenal.png'}
+							description='Fine Driver & Check Fine Payment'
+						/>
 					</div>
 					<div className='flex flex-col gap-5'>
-						<div className='flex flex-col gap-2 mb-20'>
+						<div className='flex flex-col gap-2'>
 							<div className='flex justify-between py-2'>
 								<div className='shrink-0 grow-0 text-title1Bold'>
-									History
+									Fine History
 								</div>
 								<div className='shrink-0 grow-0 text-title1Bold'>
-									<Link
-										href={'/'}
-										className='text-primary-800 underline'
+									<Button
+										asChild
+										variant='link'
 									>
-										See all
-									</Link>
+										<Link
+											href={`/dashboard/drivers/${plate}/fines`}
+										>
+											See all
+										</Link>
+									</Button>
 								</div>
 							</div>
 							<div className=''>
 								<DataTable
 									columns={viewDriversColumns}
-									data={VIEWDRIVER_TABLE}
+									data={VIEWDRIVER_TABLE.slice(0, 3)}
+								/>
+							</div>
+						</div>
+						<div className='flex flex-col gap-2 mb-20'>
+							<div className='flex justify-between py-2'>
+								<div className='shrink-0 grow-0 text-title1Bold'>
+									Payment History
+								</div>
+								<div className='shrink-0 grow-0 text-title1Bold'>
+									<Button
+										asChild
+										variant='link'
+									>
+										<Link
+											href={`/dashboard/drivers/${plate}/payments`}
+										>
+											See all
+										</Link>
+									</Button>
+								</div>
+							</div>
+							<div className=''>
+								<DataTable
+									columns={viewDriversColumns}
+									data={VIEWDRIVER_TABLE.slice(0, 3)}
 								/>
 							</div>
 						</div>

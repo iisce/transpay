@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function DriverPage({ params }: { params: { plate: string } }) {
 	return (
-		<div>
+		<div className='w-full'>
 			<ViewDriverDetails plate={params.plate} />
 		</div>
 	);

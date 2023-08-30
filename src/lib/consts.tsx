@@ -4,9 +4,7 @@ import {
 	dashboardIcon,
 	driverIcon,
 	finesIcon,
-	heavyVehiclesIcon,
 	peopleIcon,
-	refundIcon,
 	revenueIcon,
 	scanIcon,
 } from './icons';
@@ -27,11 +25,6 @@ export const SIDEBAR_LINKS = [
 		href: '/dashboard/drivers',
 		icon: driverIcon,
 	},
-	// {
-	// 	name: 'Heavy Vehicles',
-	// 	href: '/dashboard/heavy-vehicles',
-	// 	icon: heavyVehiclesIcon,
-	// },
 	{
 		name: 'Fines & Penalties',
 		href: '/dashboard/fines',
@@ -561,9 +554,7 @@ export const VIEWDRIVER_TABLE = [
 		handled_by: 'Agent Helen',
 	},
 ];
-
 // WEB AGENT
-
 export const WEBAGENTSIDEBAR_LINKS = [
 	{
 		name: 'Dashboard',
