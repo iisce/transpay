@@ -15,7 +15,13 @@ import {
 import { ColumnDef } from '@tanstack/react-table';
 import { MoreHorizontal, MoreVertical } from 'lucide-react';
 import { DataTableColumnHeader } from './data-column-table-header';
-import { deleteIcon, editIcon, paymentIcon, printIcon } from '@/lib/icons';
+import {
+	deleteIcon,
+	editIcon,
+	finesIcon,
+	paymentIcon,
+	printIcon,
+} from '@/lib/icons';
 import Pill from '../pill';
 import Link from 'next/link';
 import Cbadge from '../category-badge';
@@ -239,12 +245,25 @@ export const driversColumns: ColumnDef<DriverT>[] = [
 							asChild
 						>
 							<Link
-								href={`/dashboard/drivers/payment/${row.id}`}
+								href={`/dashboard/drivers/${driver.plate}/payment`}
 							>
 								<span className='h-4 w-4 mr-3'>
 									{paymentIcon}
 								</span>
-								Make Payment
+								View Payment
+							</Link>
+						</DropdownMenuItem>
+						<DropdownMenuItem
+							className='border-b border-black rounded-none'
+							asChild
+						>
+							<Link
+								href={`/dashboard/drivers/${driver.plate}/fines`}
+							>
+								<span className='h-4 w-4 mr-3'>
+									{finesIcon}
+								</span>
+								View Fines
 							</Link>
 						</DropdownMenuItem>
 						<DropdownMenuItem className='text-destructive'>
