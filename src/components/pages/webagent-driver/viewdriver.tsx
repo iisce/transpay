@@ -2,7 +2,11 @@ import DashboardCard from '@/components/layout/dashboard-card';
 import { Button } from '@/components/ui/button';
 import { viewDriversColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
-import { VIEWDRIVER_TABLE, WEBAGENTDRIVER_CARD } from '@/lib/consts';
+import {
+	DRIVER_TABLE,
+	VIEWDRIVER_TABLE,
+	WEBAGENTDRIVER_CARD,
+} from '@/lib/consts';
 import { addIcon } from '@/lib/icons';
 import Link from 'next/link';
 import React from 'react';
@@ -12,11 +16,12 @@ export default function WebAgentViewDriverDetails({
 }: {
 	plate: string;
 }) {
+	const vehicle = DRIVER_TABLE.find((vehicle) => vehicle.plate === plate);
 	return (
 		<div className='h-full p-6 flex flex-col gap-6 '>
 			<div className='flex justify-between'>
 				<div className='text-title1Bold py-6'>
-					<h2>Mr, Owadie Omorogbe with Plate number {plate}</h2>
+					<h2>{vehicle?.name}</h2>
 				</div>
 				<div className='shrink-0 grow-0'>
 					<Button

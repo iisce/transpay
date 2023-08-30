@@ -174,7 +174,7 @@ export const agentsColumns: ColumnDef<AgentT>[] = [
 		},
 	},
 ];
-export const driversColumns: ColumnDef<AgentT>[] = [
+export const driversColumns: ColumnDef<DriverT>[] = [
 	{
 		accessorKey: 'name',
 		header: 'Name',
@@ -201,10 +201,11 @@ export const driversColumns: ColumnDef<AgentT>[] = [
 		header: 'Category',
 		cell: ({ row }) => <Cbadge variant={row.getValue('category')} />,
 	},
-	
+
 	{
 		id: 'actions',
 		cell: ({ row }) => {
+			const driver = row.original;
 			return (
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
@@ -224,7 +225,9 @@ export const driversColumns: ColumnDef<AgentT>[] = [
 							className='border-b border-black rounded-none'
 							asChild
 						>
-							<Link href={`/dashboard/drivers/${row.id}`}>
+							<Link
+								href={`/dashboard/drivers/${driver.plate}`}
+							>
 								<span className='h-4 w-4 mr-3'>
 									{editIcon}
 								</span>
@@ -327,20 +330,21 @@ export const viewDriversColumns: ColumnDef<DriverPayment>[] = [
 		accessorKey: 'payment_type',
 		header: 'Payment Type',
 		cell: ({ row }) => {
-			const payment_type = row.original. payment_type;
+			const payment_type = row.original.payment_type;
 			const style =
 				payment_type === 'Cash'
 					? 'text-destructive-foreground'
 					: payment_type === 'Mobile Transfer'
 					? 'text-awesome-foreground'
 					: payment_type === 'Transfer'
-					
 					? 'text-orange-300'
 					: 'text-primary';
-			return <div className={`uppercase ${style}`}>{ payment_type}</div>;
-		}
+			return (
+				<div className={`uppercase ${style}`}>{payment_type}</div>
+			);
+		},
 	},
-	
+
 	{
 		accessorKey: 'handled_by',
 		header: 'Handled By',
@@ -391,7 +395,7 @@ export const webAgentDriversColumns: ColumnDef<AgentT>[] = [
 		header: 'Category',
 		cell: ({ row }) => <Cbadge variant={row.getValue('category')} />,
 	},
-	
+
 	{
 		id: 'actions',
 		cell: ({ row }) => {
@@ -465,20 +469,21 @@ export const viewWebAgentDriversColumns: ColumnDef<DriverPayment>[] = [
 		accessorKey: 'payment_type',
 		header: 'Payment Type',
 		cell: ({ row }) => {
-			const payment_type = row.original. payment_type;
+			const payment_type = row.original.payment_type;
 			const style =
 				payment_type === 'Cash'
 					? 'text-destructive-foreground'
 					: payment_type === 'Mobile Transfer'
 					? 'text-awesome-foreground'
 					: payment_type === 'Transfer'
-					
 					? 'text-orange-300'
 					: 'text-primary';
-			return <div className={`uppercase ${style}`}>{ payment_type}</div>;
-		}
+			return (
+				<div className={`uppercase ${style}`}>{payment_type}</div>
+			);
+		},
 	},
-	
+
 	{
 		accessorKey: 'handled_by',
 		header: 'Handled By',

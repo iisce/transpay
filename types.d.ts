@@ -29,12 +29,12 @@ interface AgentT {
 	area: string;
 }
 
-interface AgentT {
+interface DriverT {
 	id: string;
 	name: string;
-	phone: string;
+	plate: string;
 	status: 'active' | 'inactive';
-	area: string;
+	category: string;
 }
 
 interface DataTableProps<TData, TValue> {
@@ -42,6 +42,7 @@ interface DataTableProps<TData, TValue> {
 	data: TData[];
 	showSearch?: boolean;
 	showColumns?: boolean;
+	searchWith?: string;
 }
 
 interface Framework {

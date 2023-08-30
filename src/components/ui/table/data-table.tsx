@@ -36,6 +36,7 @@ export function DataTable<TData, TValue>({
 	columns,
 	data,
 	showSearch,
+	searchWith,
 	showColumns,
 }: DataTableProps<TData, TValue>) {
 	const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -76,12 +77,12 @@ export function DataTable<TData, TValue>({
 							placeholder='Search agents'
 							value={
 								(table
-									.getColumn('name')
+									.getColumn(searchWith || 'name')
 									?.getFilterValue() as string) ?? ''
 							}
 							onChange={(event) =>
 								table
-									.getColumn('name')
+									.getColumn(searchWith || 'name')
 									?.setFilterValue(
 										event.target.value
 									)
