@@ -31,7 +31,7 @@ export default function ViewDriverDetails({ plate }: { plate: string }) {
 						</Link>
 					</Button>
 				</div>
-				<div className='overflow-y-scroll w-full'>
+				<div className='overflow-y-scroll  w-full'>
 					<div className='flex flex-wrap gap-5 w-full'>
 						<DashboardCard
 							name='Vehicle Information'
@@ -53,6 +53,13 @@ export default function ViewDriverDetails({ plate }: { plate: string }) {
 							image={'/fineandpenal.png'}
 							description='Fine Driver & Check Fine Payment'
 						/>
+						<DashboardCard
+							name='Waiver Form'
+							href={`${plate}/fines`}
+							image={'/fineandpenal.png'}
+							description='Fill waiver form to process driver grace period'
+						/>
+					
 					</div>
 					<div className='flex flex-col gap-5'>
 						<div className='flex flex-col gap-2'>

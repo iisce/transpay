@@ -24,18 +24,11 @@ export default function Home() {
 						Sign In
 					</Link>
 				</Button>
+				
 				<Button asChild>
 					<Link
 						className='w-full'
-						href={'/web-agent'}
-					>
-						Web Agents
-					</Link>
-				</Button>
-				<Button asChild>
-					<Link
-						className='w-full'
-						href={'/web-agent/scan'}
+						href={'/dashboard/scan'}
 					>
 						Scan
 					</Link>

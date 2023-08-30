@@ -19,7 +19,7 @@ export default function Fines({ params }: { params: { plate: string } }) {
 				</p>
 			</div>
 			<div className=''>
-				<FineDriverForm />
+				<FineDriverForm plate={params.plate}/>
 			</div>
 
 			<div className='flex flex-col gap-2 mb-20'>
