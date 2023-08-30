@@ -2,7 +2,6 @@ import FineDriverForm from '@/components/forms/add-fine-form';
 import { viewDriversColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
 import { DRIVER_TABLE, VIEWDRIVER_TABLE } from '@/lib/consts';
-import { addIcon } from '@/lib/icons';
 import React from 'react';
 
 export default function Fines({ params }: { params: { plate: string } }) {
