@@ -245,7 +245,7 @@ export const driversColumns: ColumnDef<DriverT>[] = [
 							asChild
 						>
 							<Link
-								href={`/dashboard/drivers/${driver.plate}/payment`}
+								href={`/dashboard/drivers/${driver.plate}/payments`}
 							>
 								<span className='h-4 w-4 mr-3'>
 									{paymentIcon}

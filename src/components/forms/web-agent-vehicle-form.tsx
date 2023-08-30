@@ -19,23 +19,24 @@ const driverFormSchema = z.object({
 	colour: z.string({
 		description: 'Enter your vehicle colour.',
 	}),
-	heavyVehicle: z
+	type: z
 		.string()
 		.refine(
 			(value) =>
-				['bus', 'car', 'keke', 'heavyVehicle'].includes(value),
+				['bus', 'car', 'keke'].includes(value),
 			{
 				message: 'Invalid means of identification.',
 			}
 		),
 	vehiclePlateNumber: z.string(),
 
-    vehicletype: z.string(),
+    ownersName: z.string(),
+	ownersPhone: z.string(),
 });
 
 type DriverFormValues = z.infer<typeof driverFormSchema>;
 
-export default function VehicleInfoForm() {
+export default function VehicleInfoForm({plate}:{plate:string}) {
 	const form = useForm<DriverFormValues>({
 		resolver: zodResolver(driverFormSchema),
 		mode: 'onChange',
@@ -54,7 +55,7 @@ export default function VehicleInfoForm() {
 				<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
 					<FormField
 						control={form.control}
-						name='heavyVehicle'
+						name='type'
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel className='text-title1Bold pl-4'>
@@ -133,12 +134,12 @@ export default function VehicleInfoForm() {
 					/>
 
                     <FormField
-						name='vehicletype'
+						name='ownersName'
 						control={form.control}
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel className='text-title1Bold pl-4'>
-									Vehicle Type
+									Owners Name
 								</FormLabel>
 
 								<FormControl>
@@ -146,7 +147,29 @@ export default function VehicleInfoForm() {
 										className='relative text-body flex  items-center h-14 rounded-2xl'
 										{...field}
 										type='text'
-										placeholder='Vehicle type'
+										placeholder='Enter Owners Name'
+										required
+										disabled
+									/>
+								</FormControl>
+							</FormItem>
+						)}
+					/>
+					<FormField
+						name='ownersPhone'
+						control={form.control}
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel className='text-title1Bold pl-4'>
+								Owners Number
+								</FormLabel>
+
+								<FormControl>
+									<Input
+										className='relative text-body flex  items-center h-14 rounded-2xl'
+										{...field}
+										type='text'
+										placeholder='Enter Owners Phone Number'
 										required
 										disabled
 									/>
@@ -163,7 +186,7 @@ export default function VehicleInfoForm() {
 						asChild
 						className='p-4 py-2 rounded-normal w-28'
 					>
-						<Link href={'/web-agent/driver/0'}>
+						<Link href={`/dashboard/driver/${plate}`}>
 							Back
 						</Link>
 					</Button>
