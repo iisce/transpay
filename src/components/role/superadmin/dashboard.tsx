@@ -1,8 +1,11 @@
 import React from 'react';
 import DashboardCard from './dashboard-card';
 import { SuperAdminRevenueCharts } from '@/components/shared/chats/super-admin-revenue-chart';
+import { Calendar } from '@/components/ui/calendar';
 
 export default function DashboardSuperAdmin(user: USERI) {
+	const [date, setDate] = React.useState<Date | undefined>(new Date());
+
 	return (
 		<div className='w-full'>
 			<div className='grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-5'>
@@ -31,7 +34,14 @@ export default function DashboardSuperAdmin(user: USERI) {
 					<div className='text-2xl mb-4'>2023</div>
 					<SuperAdminRevenueCharts />
 				</div>
-				<div className='col-span-3 sm:col-span-2'></div>
+				<div className='col-span-3 sm:col-span-2'>
+					<Calendar
+						mode='single'
+						selected={date}
+						onSelect={setDate}
+						className='rounded-md border'
+					/>
+				</div>
 			</div>
 		</div>
 	);
