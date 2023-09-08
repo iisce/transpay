@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import DashboardCard from './dashboard-card';
 import { SuperAdminRevenueCharts } from '@/components/shared/chats/super-admin-revenue-chart';
@@ -28,13 +29,13 @@ export default function DashboardSuperAdmin(user: USERI) {
 					percent={10}
 				/>
 			</div>
-			<div className='grid grid-cols-1 md:grid-cols-3 gap-5 mt-10'>
-				<div className='w-full aspect-video col-span-3 sm:col-span-2 bg-secondary rounded-xl py-5 px-2'>
+			<div className='flex gap-5 mt-10'>
+				<div className='w-full aspect-video bg-secondary rounded-xl py-5 px-2'>
 					<div className='text-2xl mb-2'>Earning Revenue</div>
 					<div className='text-2xl mb-4'>2023</div>
 					<SuperAdminRevenueCharts />
 				</div>
-				<div className='col-span-3 sm:col-span-2'>
+				<div className='shrink-0 grow-0 hidden md:flex'>
 					<Calendar
 						mode='single'
 						selected={date}
