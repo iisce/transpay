@@ -125,3 +125,20 @@ export const COMPONENTS: {
 			'A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.',
 	},
 ];
+
+export const NOTIFICATIONS = [
+	{
+		id: 1,
+		name: 'Agent Rex scanned a vehicle with plate number ERT-34F',
+		href: '/dashboard',
+	},
+];
+
+export const USER: USERI = {
+	user: {
+		avatar: 'https://avatars.githubusercontent.com/u/62449713?v=4',
+		email: 'ap.oyeniran@gmail.com',
+		name: 'Oyeniran Ayobami',
+		role: 'super admin', // admin, waiver, onboarding, compliance, superadmin
+	},
+};

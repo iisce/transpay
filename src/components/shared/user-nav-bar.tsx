@@ -12,23 +12,38 @@ import {
 import { Button } from '../ui/button';
 import Link from 'next/link';
 import { SIDEBAR_LINKS } from '@/lib/consts';
+import { USER } from '../../../data';
+import { getInitials } from '@/lib/utils';
+import { ModeToggle } from '../dark-mode-toggle';
 
 export function UserNav() {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button
-					variant='destructive'
-					className='relative h-8 w-8 rounded-full'
-				>
-					<Avatar className='h-9 w-9'>
-						<AvatarImage
-							src='https://github.com/shadcn.png'
-							alt='@shadcn'
-						/>
-						<AvatarFallback>SR</AvatarFallback>
-					</Avatar>
-				</Button>
+				<div className='flex gap-3 cursor-pointer'>
+					<Button
+						variant='destructive'
+						className='relative h-8 w-8 rounded-full'
+					>
+						<Avatar className='h-9 w-9'>
+							<AvatarImage
+								src={USER.user.avatar}
+								alt={USER.user.name}
+							/>
+							<AvatarFallback>
+								{getInitials(USER.user.name)}
+							</AvatarFallback>
+						</Avatar>
+					</Button>
+					<div className='hidden sm:flex w-32 flex-col'>
+						<div className='text-xs font-bold'>
+							{USER.user.name}
+						</div>
+						<div className='text-xs text-primary capitalize'>
+							{USER.user.role}
+						</div>
+					</div>
+				</div>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent
 				className='w-56'
@@ -36,14 +51,17 @@ export function UserNav() {
 				forceMount
 			>
 				<DropdownMenuLabel className='font-normal'>
-					<div className='flex flex-col space-y-1'>
+					<Link
+						href='/manage/profile'
+						className='flex flex-col space-y-1'
+					>
 						<p className='text-sm font-medium leading-none'>
-							Oyeniran Ayobami Paul
+							{USER.user.name}
 						</p>
 						<p className='text-xs leading-none text-muted-foreground'>
 							ap.oyeniran@gmail.com
 						</p>
-					</div>
+					</Link>
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
@@ -61,14 +79,19 @@ export function UserNav() {
 							</Link>
 						</DropdownMenuItem>
 					))}
-					<DropdownMenuItem>Settings</DropdownMenuItem>
+					<DropdownMenuItem asChild>
+						<Link href='/manage'>
+							Manage My Account
+							<DropdownMenuShortcut className='h-4 w-4'></DropdownMenuShortcut>
+						</Link>
+					</DropdownMenuItem>
 				</DropdownMenuGroup>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem>Log out</DropdownMenuItem>
-				{/* <DropdownMenuSeparator />
-				<DropdownMenuItem>
+				<div className='sm:hidden'>
+					<DropdownMenuSeparator />
 					<ModeToggle />
-				</DropdownMenuItem> */}
+				</div>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);
