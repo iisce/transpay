@@ -10,8 +10,9 @@ import {
 	DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
 import Link from 'next/link';
-import { SIDEBAR_LINKS } from '@/lib/consts';
 import { notificationIcon } from '@/lib/icons';
+import { ACTIVITIES } from '../../../data';
+import ActivityCard from './activity-card';
 
 export function Notification() {
 	return (
@@ -22,28 +23,36 @@ export function Notification() {
 				</div>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent
-				className='w-56'
+				className='w-72'
 				align='end'
 				forceMount
 			>
 				<DropdownMenuLabel className='font-normal'>
-					<p className='text-sm font-medium leading-none'>
-						All Notifications
-					</p>
+					<Link
+						href={'/dashboard/activities'}
+						className='text-sm font-medium leading-none'
+					>
+						All Activities
+					</Link>
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
-					{SIDEBAR_LINKS.map((link, k) => (
+					{ACTIVITIES.map((activity, k) => (
 						<DropdownMenuItem
-							className='sm:hidden'
+							className=''
 							asChild
 							key={k}
 						>
-							<Link href={link.href}>
-								{link.name}
-								<DropdownMenuShortcut className='h-4 w-4'>
-									{link.icon}
-								</DropdownMenuShortcut>
+							<Link
+								href={`dashboard/activities/${activity.id}`}
+							>
+								<ActivityCard
+									key={k}
+									id={activity.id}
+									name={activity.name}
+									time={activity.time}
+									date={activity.date}
+								/>
 							</Link>
 						</DropdownMenuItem>
 					))}

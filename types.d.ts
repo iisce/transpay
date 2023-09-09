@@ -94,3 +94,10 @@ interface ADBCI {
 	type: 'positive' | 'negative' | 'neutral';
 	percent: number;
 }
+
+interface ACTIVITIESI {
+	id: number;
+	name: string;
+	time: string;
+	date: string;
+}

@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function Scan() {
 	return (
-		<div className='p-3 sm:p-5 overflow-y-scroll w-full'>
+		<div className='p-3 sm:p-5'>
 			<QRScan />
 		</div>
 	);
