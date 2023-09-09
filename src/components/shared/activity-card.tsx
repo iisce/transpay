@@ -5,7 +5,7 @@ export default function ActivityCard({ id, name, time, date }: ACTIVITIESI) {
 	return (
 		<Link
 			href={`activities/${id}`}
-			className='grid '
+			className='grid hover:bg-primary-500/30 px-3 py-1 rounded-lg'
 		>
 			<div className=' truncate text-ellipsis text-sm'>{name}</div>
 			<div className='flex text-xs justify-between'>

@@ -43,6 +43,7 @@ interface DataTableProps<TData, TValue> {
 	showSearch?: boolean;
 	showColumns?: boolean;
 	searchWith?: string;
+	showPagination?: boolean;
 }
 
 interface Framework {

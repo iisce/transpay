@@ -158,6 +158,6 @@ export const USER: USERI = {
 		avatar: 'https://avatars.githubusercontent.com/u/62449713?v=4',
 		email: 'ap.oyeniran@gmail.com',
 		name: 'Oyeniran Ayobami',
-		role: 'super admin', // admin, waiver, onboarding, compliance, superadmin
+		role: 'super admin', // admin, waiver, onboarding, compliance, super admin
 	},
 };
