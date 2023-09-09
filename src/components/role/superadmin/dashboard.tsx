@@ -35,12 +35,12 @@ export default function DashboardSuperAdmin(user: USERI) {
 					<div className='text-2xl mb-4'>2023</div>
 					<SuperAdminRevenueCharts />
 				</div>
-				<div className='shrink-0 grow-0 hidden md:flex'>
+				<div className='shrink-0 grow-0 hidden md:block '>
 					<Calendar
 						mode='single'
 						selected={date}
 						onSelect={setDate}
-						className='rounded-md border'
+						className='rounded-t-xl border bg-secondary'
 					/>
 				</div>
 			</div>
