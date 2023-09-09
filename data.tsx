@@ -125,3 +125,39 @@ export const COMPONENTS: {
 			'A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.',
 	},
 ];
+
+export const ACTIVITIES: ACTIVITIESI[] = [
+	{
+		id: 1,
+		name: 'Agent Rex scanned a vehicle with plate number ERT-34F',
+		date: '17th August, 2023',
+		time: '10:00AM',
+	},
+	{
+		id: 2,
+		name: 'Agent Rex scanned a vehicle with plate number ERT-34F',
+		date: '17th August, 2023',
+		time: '10:00AM',
+	},
+	{
+		id: 3,
+		name: 'Agent Rex scanned a vehicle with plate number ERT-34F',
+		date: '17th August, 2023',
+		time: '10:00AM',
+	},
+	{
+		id: 4,
+		name: 'Agent Rex scanned a vehicle with plate number ERT-34F',
+		date: '17th August, 2023',
+		time: '10:00AM',
+	},
+];
+
+export const USER: USERI = {
+	user: {
+		avatar: 'https://avatars.githubusercontent.com/u/62449713?v=4',
+		email: 'ap.oyeniran@gmail.com',
+		name: 'Oyeniran Ayobami',
+		role: 'super admin', // admin, waiver, onboarding, compliance, super admin
+	},
+};

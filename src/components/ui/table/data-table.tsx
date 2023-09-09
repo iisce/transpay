@@ -38,6 +38,7 @@ export function DataTable<TData, TValue>({
 	showSearch,
 	searchWith,
 	showColumns,
+	showPagination = true,
 }: DataTableProps<TData, TValue>) {
 	const [sorting, setSorting] = React.useState<SortingState>([]);
 	const [columnFilters, setColumnFilters] =
@@ -189,12 +190,14 @@ export function DataTable<TData, TValue>({
 					</TableBody>
 				</Table>
 			</div>
-			<div className='flex items-center py-4 mb-20 sm:mb-0'>
-				<DataTablePagination
-					rowsPerPage
-					table={table}
-				/>
-			</div>
+			{showPagination && (
+				<div className='flex items-center py-4 mb-20 sm:mb-0'>
+					<DataTablePagination
+						rowsPerPage
+						table={table}
+					/>
+				</div>
+			)}
 		</div>
 	);
 }

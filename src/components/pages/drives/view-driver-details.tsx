@@ -55,7 +55,7 @@ export default function ViewDriverDetails({ plate }: { plate: string }) {
 						/>
 						<DashboardCard
 							name='Waiver Form'
-							href={`${plate}/fines`}
+							href={`${plate}/waiver`}
 							image={'/fineandpenal.png'}
 							description='Fill waiver form to process driver grace period'
 						/>
