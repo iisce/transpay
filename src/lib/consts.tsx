@@ -1,51 +1,77 @@
 import {
-	adminIcon,
-	agentdriverIcon,
-	agentsIcon,
-	dashboardIcon,
-	driverIcon,
-	finesIcon,
-	peopleIcon,
-	revenueIcon,
-	scanIcon,
-} from './icons';
+  adminIcon,
+  agentdriverIcon,
+  agentsIcon,
+  dashboardIcon,
+  driverIcon,
+  finesIcon,
+  peopleIcon,
+  revenueIcon,
+  scanIcon,
+  homeIcon,
+  profileIcon,
+  securityIcon,
+  aboutIcon,
+} from "./icons";
 
 export const SIDEBAR_LINKS = [
-	{
-		name: 'Dashboard',
-		href: '/dashboard',
-		icon: dashboardIcon,
-	},
-	{
-		name: 'Admins',
-		href: '/dashboard/admins',
-		icon: adminIcon,
-	},
-	{
-		name: 'Agents',
-		href: '/dashboard/agents',
-		icon: agentsIcon,
-	},
-	{
-		name: 'Drivers',
-		href: '/dashboard/drivers',
-		icon: driverIcon,
-	},
-	{
-		name: 'Fines & Penalties',
-		href: '/dashboard/fines',
-		icon: finesIcon,
-	},
-	{
-		name: 'Scan',
-		href: '/dashboard/scan',
-		icon: scanIcon,
-	},
-	{
-		name: 'Revenue',
-		href: '/dashboard/revenue',
-		icon: revenueIcon,
-	},
+  {
+    name: "Dashboard",
+    href: "/dashboard",
+    icon: dashboardIcon,
+  },
+  {
+    name: "Admins",
+    href: "/dashboard/admins",
+    icon: adminIcon,
+  },
+  {
+    name: "Agents",
+    href: "/dashboard/agents",
+    icon: agentsIcon,
+  },
+  {
+    name: "Drivers",
+    href: "/dashboard/drivers",
+    icon: driverIcon,
+  },
+  {
+    name: "Fines & Penalties",
+    href: "/dashboard/fines",
+    icon: finesIcon,
+  },
+  {
+    name: "Scan",
+    href: "/dashboard/scan",
+    icon: scanIcon,
+  },
+  {
+    name: "Revenue",
+    href: "/dashboard/revenue",
+    icon: revenueIcon,
+  },
+];
+export const MANAGE_SIDEBAR_LINKS = [
+  {
+    name: "Home",
+    href: "/manage",
+    icon: homeIcon,
+  },
+  {
+    name: "My Profile",
+    href: "/manage/profile",
+    icon: profileIcon,
+  },
+  {
+    name: "Security",
+    href: "/manage/security",
+    icon: securityIcon,
+  },
+  {
+    name: "About Us",
+    href: "/manage/about",
+    icon: aboutIcon,
+  },
 ];
 export const DRIVERS_CARD = [
 	{
@@ -704,4 +730,41 @@ export const FINE_CARDS: FinesCardP[] = [
 		type: 'fine',
 		amount: 20000,
 	},
+];
+
+export const PERSONAL_INFORMATION = [
+  {
+    title: "Name",
+    entry: "Isaac Emperor",
+  },
+  {
+    title: "E-mail Address",
+    entry: "IsaacEmperor@gmail.com",
+  },
+  {
+    title: "Phone Number",
+    entry: "080-332-7264",
+  },
+];
+
+export const ADDRESS_INFORMATION = [
+  {
+    title: "Address",
+    entry: "No, 14 Agbero Road, Anambra",
+  },
+  {
+    title: "Area Location",
+    entry: "Mile 1-3",
+  },
+];
+
+export const LOGIN_DETAILS = [
+  {
+    title: "User ID",
+    entry: "AgentISCE",
+  },
+  {
+    title: "Password",
+    entry: "IsaacE2000",
+  },
 ];
