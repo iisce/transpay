@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { viewDriversColumns } from "@/components/ui/table/columns";
 import { DataTable } from "@/components/ui/table/data-table";
 import { DRIVER_TABLE, VIEWDRIVER_TABLE } from "@/lib/consts";
-import { addIcon } from "@/lib/icons";
+import { addIcon, successIcon } from "@/lib/icons";
 import Link from "next/link";
 import React from "react";
 
@@ -34,12 +34,13 @@ export default function Waiver({ params }: { params: { plate: string } }) {
         </Button>
       </div>
 
-      <div className="flex flex-col gap-2 mb-20">
-        <div className="flex justify-between py-2">
+      <div className="flex flex-col p-3 w-full items-center gap-2 mb-20">
+      <div className=" text-green-600">{successIcon}</div>
+        <div className="flex py-2">   
           <div className="shrink-0 grow-0 text-title1Bold">
             Vehicle is on waiver period
           </div>
-        </div>
+        </div> 
 	   <Button asChild>
 		<Link href={'waiver/history'} className="uppercase">View Waiver History</Link>
 	   </Button>

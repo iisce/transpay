@@ -705,3 +705,83 @@ export const FINE_CARDS: FinesCardP[] = [
 		amount: 20000,
 	},
 ];
+
+//Waiver Details
+export const WAIVER_HISTORY = [
+	{
+		timeline: "Jan 31 - Feb 20",
+		reason: 'Car Repair',
+		status: 'active',
+		generated_by: 'Agent Emeka 1',
+	
+	},
+	{
+		timeline: "May 21 - June 1",
+		reason: 'Car Repair',
+		status: 'inactive',
+		generated_by: 'Agent Leo1',
+	
+	},
+	{
+		timeline: "Dec 31 - Jan 20",
+		reason: 'Car Repair',
+		status: 'inactive',
+		generated_by: 'Agent Divine1',
+	},
+	{
+		timeline: "Oct 31 - Nov 20",
+		reason: 'Car Repair',
+		status: 'inactive',
+		generated_by: 'Agent Emeka 1',
+	
+	},
+	{
+		timeline: "Jan 31 - Feb 20",
+		reason: 'Car Repair',
+		status: 'active',
+		generated_by: 'Agent Emeka 1',
+	
+	},
+	{
+		timeline: "Jan 31 - Feb 20",
+		reason: 'Car Repair',
+		status: 'active',
+		generated_by: 'Agent Emeka 1',
+	
+	},
+	{
+		timeline: "Jan 31 - Feb 20",
+		reason: 'Car Repair',
+		status: 'inactive',
+		generated_by: 'Agent Emeka 1',
+	
+	},
+	{
+		timeline: "Jan 31 - Feb 20",
+		reason: 'Car Repair',
+		status: 'inactive',
+		generated_by: 'Agent Emeka 1',
+	
+	},
+	{
+		timeline: "Jan 31 - Feb 20",
+		reason: 'Car Repair',
+		status: 'inactive',
+		generated_by: 'Agent Emeka 1',
+	
+	},
+	{
+		timeline: "Jan 31 - Feb 20",
+		reason: 'Car Repair',
+		status: 'active',
+		generated_by: 'Agent Divine1',
+	
+	},
+	{
+		timeline: "May 15 - June 13",
+		reason: 'Car Repair',
+		status: 'active',
+		generated_by: 'Agent Leo1',
+	
+	},
+];
