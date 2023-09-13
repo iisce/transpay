@@ -5,7 +5,11 @@ import { VIEWDRIVER_TABLE } from '@/lib/consts';
 import { addIcon } from '@/lib/icons';
 import React from 'react';
 
-export default function AddNewDriver() {
+export default function AddNewDriver({
+	params,
+}: {
+	params: { plate: string };
+}) {
 	return (
 		<div className='w-full flex flex-col gap-3 mb-8 p-2 xs:p-5 overflow-y-scroll'>
 			<div className=''>
@@ -20,7 +24,7 @@ export default function AddNewDriver() {
 				<div className='p-3'>Fine Charges</div>
 			</div>
 			<div className=''>
-				<FineDriverForm />
+				<FineDriverForm plate={params.plate} />
 			</div>
 
 			<div className='flex flex-col gap-2 mb-20'>

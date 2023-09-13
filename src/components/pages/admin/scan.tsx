@@ -7,7 +7,7 @@ import { copyIcon, successIcon } from '@/lib/icons';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
-import localforage from 'localforage'; 
+import localforage from 'localforage';
 import { Separator } from '@/components/ui/separator';
 
 export default function QRScan() {
@@ -69,30 +69,28 @@ export default function QRScan() {
 
 	return (
 		<div className=''>
-			<div className='flex gap-5 flex-col sm:flex-row'>
-				<Card className='h-[250px] w-[250px] overflow-hidden mx-auto'>
-					<video
-						className='h-full w-full object-cover'
-						id='video'
+			<Card className='h-[250px] w-[250px] overflow-hidden mb-5'>
+				<video
+					className='h-full w-full object-cover'
+					id='video'
+				/>
+			</Card>
+			{result && (
+				<Card className='p-3 border border-primary w-[250px] overflow-hidden mb-5'>
+					<QRCode
+						value={result}
+						size={224}
+						className='m-auto'
 					/>
 				</Card>
-				{result && (
-					<Card className='p-3 border border-primary w-[250px] overflow-hidden mx-auto'>
-						<QRCode
-							value={result}
-							size={224}
-							className='m-auto'
-						/>
-					</Card>
-				)}
-				<Button
-					className='mt-4 w-full max-w-[250px] mx-auto'
-					onClick={startScan}
-					disabled={scanning || scanCount >= 10}
-				>
-					Start Scan
-				</Button>
-			</div>
+			)}
+			<Button
+				className='mt-4 w-full max-w-[250px] mx-auto'
+				onClick={startScan}
+				disabled={scanning || scanCount >= 10}
+			>
+				Start Scan
+			</Button>
 			<Dialog
 				open={open}
 				onOpenChange={setOpen}

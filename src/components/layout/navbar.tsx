@@ -5,9 +5,9 @@ import { NavigationMenuLink } from '@radix-ui/react-navigation-menu';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { Input } from '../ui/input';
-import { Button } from '../ui/button';
-import { notificationIcon, searchIcon } from '@/lib/icons';
-import { UserNav } from './user-nav-bar';
+import { searchIcon } from '@/lib/icons';
+import { UserNav } from '../shared/user-nav-bar';
+import { Notification } from '../shared/notification';
 
 const ListItem = React.forwardRef<
 	React.ElementRef<'a'>,
@@ -64,12 +64,8 @@ export default function NavBar() {
 						/>
 					</div>
 				</div>
-				<div className='flex text-primary-700'>
-					<Button variant='ghost'>
-						<div className='h-6 w-6 text-primary'>
-							{notificationIcon}
-						</div>
-					</Button>
+				<div className='flex gap-3 items-center text-primary-700'>
+					<Notification />
 					<UserNav />
 				</div>
 			</div>

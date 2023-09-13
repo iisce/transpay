@@ -43,6 +43,7 @@ interface DataTableProps<TData, TValue> {
 	showSearch?: boolean;
 	showColumns?: boolean;
 	searchWith?: string;
+	showPagination?: boolean;
 }
 
 interface Framework {
@@ -72,4 +73,32 @@ interface ButtonF {
 	hasIcon?: boolean;
 	onClick?: () => void;
 	className?: string;
+}
+
+interface USERI {
+	user: {
+		name: string;
+		role:
+			| 'super admin'
+			| 'admin'
+			| 'waiver'
+			| 'onboarding'
+			| 'compliance';
+		avatar: string;
+		email: string;
+	};
+}
+
+interface ADBCI {
+	title: string;
+	amount: number;
+	type: 'positive' | 'negative' | 'neutral';
+	percent: number;
+}
+
+interface ACTIVITIESI {
+	id: number;
+	name: string;
+	time: string;
+	date: string;
 }
