@@ -13,13 +13,13 @@ export default function ManageLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<div className='h-full flex flex-col justify-between'>
-			<Navbar />
-			<div className='flex flex-grow'>
-                <SideBar />
-				{children}
-			</div>
-            <Footer />
-		</div>
-	);
+    <div className="h-full">
+      <Navbar />
+      <div className="flex h-full">
+        <SideBar />
+        {children}
+      </div>
+      <Footer />
+    </div>
+  );
 }
