@@ -11,12 +11,15 @@ import {
 } from '../ui/dropdown-menu';
 import { Button } from '../ui/button';
 import Link from 'next/link';
-import { SIDEBAR_LINKS } from '@/lib/consts';
+import { MANAGE_SIDEBAR_LINKS, SIDEBAR_LINKS } from '@/lib/consts';
 import { USER } from '../../../data';
 import { getInitials } from '@/lib/utils';
 import { ModeToggle } from '../dark-mode-toggle';
+import { usePathname } from 'next/navigation';
 
 export function UserNav() {
+	const pathName = usePathname();
+
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
@@ -65,20 +68,35 @@ export function UserNav() {
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
-					{SIDEBAR_LINKS.map((link, k) => (
-						<DropdownMenuItem
-							className='sm:hidden'
-							asChild
-							key={k}
-						>
-							<Link href={link.href}>
-								{link.name}
-								<DropdownMenuShortcut className='h-4 w-4'>
-									{link.icon}
-								</DropdownMenuShortcut>
-							</Link>
-						</DropdownMenuItem>
-					))}
+					{pathName !== '/manage'
+						? SIDEBAR_LINKS.map((link, k) => (
+								<DropdownMenuItem
+									className='sm:hidden'
+									asChild
+									key={k}
+								>
+									<Link href={link.href}>
+										{link.name}
+										<DropdownMenuShortcut className='h-4 w-4'>
+											{link.icon}
+										</DropdownMenuShortcut>
+									</Link>
+								</DropdownMenuItem>
+						  ))
+						: MANAGE_SIDEBAR_LINKS.map((link, k) => (
+								<DropdownMenuItem
+									className='sm:hidden'
+									asChild
+									key={k}
+								>
+									<Link href={link.href}>
+										{link.name}
+										<DropdownMenuShortcut className='h-4 w-4'>
+											{link.icon}
+										</DropdownMenuShortcut>
+									</Link>
+								</DropdownMenuItem>
+						  ))}
 					<DropdownMenuItem asChild>
 						<Link href='/manage'>
 							Manage My Account
