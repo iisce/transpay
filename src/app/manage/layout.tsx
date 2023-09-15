@@ -13,13 +13,13 @@ export default function ManageLayout({
 	children: React.ReactNode;
 }) {
 	return (
-    <div className="h-full">
-      <Navbar />
-      <div className="flex h-full">
-        <SideBar />
-        {children}
-      </div>
-      <Footer />
-    </div>
-  );
+		<div className='h-screen flex flex-col justify-between'>
+			<Navbar />
+			<div className='flex h-full overflow-y-scroll'>
+				<SideBar />
+				{children}
+			</div>
+			<Footer />
+		</div>
+	);
 }
