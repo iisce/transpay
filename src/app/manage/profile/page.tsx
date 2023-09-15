@@ -8,7 +8,7 @@ import React from "react";
 
 export default function ProfilePage() {
   return (
-    <div className="flex flex-col gap-6 px-5 w-screen overflow-y-scroll pb-20">
+    <div className="flex flex-col gap-6 px-5 w-screen pb-20">
       <div className="mt-[20px]">
         <h3 className="text-h4Bold">My Profile</h3>
         <p className="text-title1 text-gray-500">

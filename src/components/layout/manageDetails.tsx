@@ -18,12 +18,12 @@ export function ManageDetails({
 	return (
 		<>
 			<Link
-				className={`w-full h-[254px] shadow-xl p-[30px] bg-primary-50 hover:bg-primary-900 hover:text-white
+				className={`w-full h-[200px] shadow-xl p-[30px] bg-primary-50 hover:bg-primary-900 hover:text-white
          rounded-[20px] ${className}`}
 				href={link}
 			>
 				<h3 className='text-h4'>{title}</h3>
-				<p className='text-title1 mt-5 line-clamp-3'>
+				<p className='text-title1 mt-5 line-clamp-2'>
 					{description}
 				</p>
 			</Link>
