@@ -13,7 +13,7 @@ import {
 	DropdownMenuTrigger,
 } from '@radix-ui/react-dropdown-menu';
 import { ColumnDef } from '@tanstack/react-table';
-import { MoreHorizontal, MoreVertical } from 'lucide-react';
+import { Contact, MoreHorizontal, MoreVertical } from 'lucide-react';
 import { DataTableColumnHeader } from './data-column-table-header';
 import {
 	deleteIcon,
@@ -118,7 +118,64 @@ export const paymentColumns: ColumnDef<Payment>[] = [
 		},
 	},
 ];
+export const adminsColumns: ColumnDef<AdminT>[] = [
+	{
+		accessorKey: 'name',
+		header: 'Name',
+	},
+	{
+        accessorKey: 'contact', 
+        header: ({ column }) => (
+            <DataTableColumnHeader
+                column={column}
+                title='Contact'
+            />
+        ),
+        cell: ({ row }) => (
+            <div>
+               <div>{row.original.contact.email}</div>
+                <div>{row.original.contact.phone}</div> 
+            </div>
+        ),
+    },
+	{
+		accessorKey: 'status',
+		header: 'Status',
+		cell: ({ row }) => (
+			<Pill
+				status={row.getValue('status')}
+				text={row.getValue('status')}
+			/>
+		),
+	},
+	{
+		accessorKey: 'address',
+		header: 'Address',
+	},
+	{
+		id: 'actions',
+		header: 'Action',
+		cell: ({ row }) => {
+			return (
+				<div className='flex flex-row gap-2 justify-center '>
+					<Link href={`/dashboard/admins/${row.id}`}>
+			 				<span className='h-4 w-4 mr-3 items-center '>
+									{editIcon}
+							</span>
+						</Link>
+						<div className='items-center'>
+						<span className='h-4 w-4 mr-3'>
+				 				{deleteIcon}
+						</span>
+						</div>
+						
+				</div>
+			);
+		},
+	},
+];
 export const agentsColumns: ColumnDef<AgentT>[] = [
+	
 	{
 		accessorKey: 'name',
 		header: 'Name',

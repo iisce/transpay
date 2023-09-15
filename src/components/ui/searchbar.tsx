@@ -16,7 +16,7 @@ export default function Searchbar({
 			: 'bg-primary-900 text-primary-400';
 	return (
 		<div
-			className={`hidden sm:flex relative text-body w-full items-center h-14 rounded-2xl ${variants}`}
+			className={`hidden sm:flex relative text-body w-full items-center h-14 rounded-[40px] ${variants}`}
 		>
 			<div className='absolute h-6 w-6 ml-3 text-black/60'>
 				{searchIcon}

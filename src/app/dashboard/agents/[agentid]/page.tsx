@@ -5,6 +5,7 @@ import { agentPaymentColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
 import { PAYMENT_TABLE } from '@/lib/consts';
 import { addIcon } from '@/lib/icons';
+import Link from 'next/link';
 import React from 'react';
 
 export default function SingularAgent() {
@@ -44,8 +45,15 @@ export default function SingularAgent() {
 					<div>
 						<DataTable
 							columns={agentPaymentColumns}
-							data={PAYMENT_TABLE}
+							data={PAYMENT_TABLE.slice(0, 5)}
 						/>
+						  <Button variant='outline'
+                        asChild
+                        className='justify-center items-center shrink-0 grow-0 w-1/5 rounded-xl flex'>
+                            <Link href={'/web-agent/driver/payment'}>
+                                See More
+                            </Link>
+                        </Button>
 					</div>
 				</div>
 			</div>

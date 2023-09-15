@@ -21,6 +21,16 @@ interface DriverPayment {
 	status: 'pending' | 'processing' | 'successful' | 'failed';
 }
 
+interface AdminT {
+	id: string;
+	name: string;
+	contact: {
+		email: string;
+		phone : string;
+	};
+	status: 'active' | 'inactive';
+	address: string;
+}
 interface AgentT {
 	id: string;
 	name: string;
