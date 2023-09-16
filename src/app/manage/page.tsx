@@ -4,7 +4,7 @@ import React from 'react';
 
 export default function ManageAccount() {
 	return (
-		<div className='w-full flex items-center flex-col gap-4'>
+		<div className='w-full flex items-center flex-col gap-4 '>
 			<Image
 				className='mt-4'
 				src='/avater2.png'
@@ -13,7 +13,7 @@ export default function ManageAccount() {
 				height='150'
 			/>
 			<p className='text-h4Bold'>Welcome, Agent ISCE</p>
-			<p className='text-title1 text-center'>
+			<p className='text-title1 p-3 text-center'>
 				Manage your account, view and edit personal information,
 				change password.
 			</p>
