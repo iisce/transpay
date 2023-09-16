@@ -39,7 +39,7 @@ ListItem.displayName = 'ListItem';
 
 export default function NavBar() {
 	return (
-		<div className='h-16 w-full bg-secondary px-5'>
+		<div className='h-16 w-full bg-secondary px-5 shrink-0'>
 			<div className='flex items-center justify-between h-full gap-5'>
 				<Link
 					href={'/'}
