@@ -19,18 +19,50 @@ export default function Home() {
 				<Button asChild>
 					<Link
 						className='w-full'
+						href={'/dashboard/admins'}
+					>
+						Admin
+					</Link>
+				</Button>
+				<Button asChild>
+					<Link
+						className='w-full'
+						href={'/dashboard/agents'}
+					>
+						Agents
+					</Link>
+				</Button>
+				<Button asChild>
+					<Link
+						className='w-full'
 						href={'/auth/sign-in'}
 					>
 						Sign In
 					</Link>
 				</Button>
-				
+
 				<Button asChild>
 					<Link
 						className='w-full'
 						href={'/dashboard/scan'}
 					>
 						Scan
+					</Link>
+				</Button>
+				<Button asChild>
+					<Link
+						className='w-full'
+						href={'/search'}
+					>
+						Search Vehicle
+					</Link>
+				</Button>
+				<Button asChild>
+					<Link
+						className='w-full'
+						href={'/manage'}
+					>
+						Manage Account
 					</Link>
 				</Button>
 			</div>

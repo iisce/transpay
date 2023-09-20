@@ -1,28 +1,21 @@
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { InformationCardVariant } from "@/components/layout/informationCard";
 import { Button } from "@/components/ui/button";
+import { LOGIN_DETAILS } from "@/lib/consts";
 import React from "react";
 
 export default function Security() {
   return (
-    <div>
-      <AlertDialog>
-        <AlertDialogTrigger asChild>
-          <Button>Change Password</Button>
-        </AlertDialogTrigger>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction>Continue</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+    <div className="flex flex-col gap-6 px-5 w-screen">
+      <div className="mt-[20px]">
+        {" "}
+        <h3 className="text-h4Bold">Security</h3>
+        <p className="text-title1 text-gray-500">
+          View password and change password
+        </p>
+      </div>
+      <div className="">
+        <InformationCardVariant header="Login Details" info={LOGIN_DETAILS} link="" />
+      </div>
     </div>
   );
 }

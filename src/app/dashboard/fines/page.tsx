@@ -1,20 +1,15 @@
-import DriverForm from '@/components/forms/drivers-registration-form';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import FinesCardP from '@/components/ui/fines-card';
 import Searchbar from '@/components/ui/searchbar';
-import { agentsColumns } from '@/components/ui/table/columns';
-import { DataTable } from '@/components/ui/table/data-table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { AGENT_TABLE, FINE_CARDS } from '@/lib/consts';
-import { addIcon, dotsIcon } from '@/lib/icons';
-import { ButtonIcon } from '@radix-ui/react-icons';
+import { FINE_CARDS } from '@/lib/consts';
+import { addIcon } from '@/lib/icons';
 import Link from 'next/link';
 import React from 'react';
 
 export default function Fines() {
 	return (
-		<div className='p-12 w-full flex flex-col gap-6 overflow-y-scroll'>
+		<div className='p-3 lg:p-12 w-full flex flex-col gap-6 overflow-y-scroll'>
 			<div className='flex justify-between'>
 				<div className=' shrink-0 grow-0'>Fines & Penalties</div>
 				<div className=' shrink-0 grow-0'>

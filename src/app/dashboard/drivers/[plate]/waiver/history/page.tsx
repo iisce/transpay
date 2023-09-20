@@ -1,7 +1,7 @@
 import FineDriverForm from '@/components/forms/add-fine-form';
-import { viewDriversColumns } from '@/components/ui/table/columns';
+import { viewDriversColumns, viewWaiverColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
-import { DRIVER_TABLE, VIEWDRIVER_TABLE } from '@/lib/consts';
+import { DRIVER_TABLE, VIEWDRIVER_TABLE, WAIVER_HISTORY } from '@/lib/consts';
 import React from 'react';
 
 export default function WaiverHistory({ params }: { params: { plate: string } }) {
@@ -28,8 +28,8 @@ export default function WaiverHistory({ params }: { params: { plate: string } })
 				</div>
 				<div className=''>
 					<DataTable
-						columns={viewDriversColumns}
-						data={VIEWDRIVER_TABLE}
+						columns={viewWaiverColumns}
+						data={WAIVER_HISTORY}
 					/>
 				</div>
 			</div>
