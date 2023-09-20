@@ -672,6 +672,52 @@ export const VIEWDRIVER_TABLE = [
 		handled_by: 'Agent Helen',
 	},
 ];
+
+export const ADDDRIVER_TABLE = [
+	{
+		Name: 'Okechukwu John',
+		Phone_Number: '09078398045',
+			
+	},
+	{
+		Name: 'Ikechukwu Jonathan',
+		Phone_Number: '09078398048',
+	
+	},
+	{
+		Name: 'Tobechukwu Tony',
+		Phone_Number: '09078398047',
+			},
+	{
+		Name: 'Godson Alfred',
+		Phone_Number: '09078398075',
+		
+	},
+	{
+		Name: 'Godwin Emmanuel',
+		Phone_Number: '09078399045',	
+	},
+	{
+		Name: 'Micheal Thomas',
+		Phone_Number: '09078398065',
+		
+	},
+	{
+		Name: 'Abraham Pius',
+		Phone_Number: '09078398985',
+		
+	},
+	{
+		Name: 'Anthony Wilson',
+		Phone_Number: '09078398095',
+		
+	},
+	{
+		Name: 'Obi Moses',
+		Phone_Number: '09078398105',
+		
+	},
+];
 // WEB AGENT
 export const WEBAGENTSIDEBAR_LINKS = [
 	{

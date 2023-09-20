@@ -20,6 +20,10 @@ interface DriverPayment {
 	payment_type: 'Cash' | 'Transfer' | 'Bank Transfer' | 'Mobile Transfer';
 	status: 'pending' | 'processing' | 'successful' | 'failed';
 }
+interface DriverT{
+	name: string;
+	phone_number: number;
+}
 
 interface AdminT {
 	id: string;

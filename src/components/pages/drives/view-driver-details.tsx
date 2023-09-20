@@ -1,8 +1,8 @@
 import DashboardCard from '@/components/layout/dashboard-card';
 import { Button } from '@/components/ui/button';
-import { viewDriversColumns } from '@/components/ui/table/columns';
+import {  addDriversColumns, viewDriversColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
-import { DRIVER_TABLE, VIEWDRIVER_TABLE } from '@/lib/consts';
+import { ADDDRIVER_TABLE, DRIVER_TABLE, VIEWDRIVER_TABLE } from '@/lib/consts';
 import { addIcon } from '@/lib/icons';
 import Link from 'next/link';
 import React from 'react';
@@ -87,7 +87,7 @@ export default function ViewDriverDetails({ plate }: { plate: string }) {
 								/>
 							</div>
 						</div>
-						<div className='flex flex-col gap-2 mb-20'>
+						<div className='flex flex-col gap-2 '>
 							<div className='flex justify-between py-2'>
 								<div className='shrink-0 grow-0 text-title1Bold'>
 									Payment History
@@ -109,6 +109,33 @@ export default function ViewDriverDetails({ plate }: { plate: string }) {
 								<DataTable
 									columns={viewDriversColumns}
 									data={VIEWDRIVER_TABLE.slice(0, 3)}
+								/>
+							</div>
+						</div>
+
+
+						<div className='flex flex-col gap-2 mb-20'>
+							<div className='flex justify-between py-2'>
+								<div className='shrink-0 grow-0 text-title1Bold'>
+									Driver's
+								</div>
+								<div className='shrink-0 grow-0 text-title1Bold'>
+									<Button
+										asChild
+										variant='link'
+									>
+										<Link
+											href={`/dashboard/drivers/${plate}/add-driver`}
+										>
+											See all
+										</Link>
+									</Button>
+								</div>
+							</div>
+							<div className=''>
+								<DataTable
+									columns={addDriversColumns}
+									data={ADDDRIVER_TABLE.slice(0, 3)}
 								/>
 							</div>
 						</div>
