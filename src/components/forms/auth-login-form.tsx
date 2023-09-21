@@ -21,9 +21,11 @@ import {
 	AlertDialogCancel,
 	AlertDialogContent,
 } from '../ui/alert-dialog';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { successIcon } from '@/lib/icons';
 import { Checkbox } from '../ui/checkbox';
+import { signIn, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 const agentFormSchema = z.object({
 	email: z
@@ -33,9 +35,9 @@ const agentFormSchema = z.object({
 		.email(),
 	password: z.string().refine((password) => {
 		return (
-			password.length >= 8 &&
-			/[A-Z]/.test(password) &&
-			/\d/.test(password)
+			password.length >= 8
+			// && /[A-Z]/.test(password) &&
+			// /\d/.test(password)
 		);
 	}, 'The password must contain at least one uppercase letter and one number and be at least 8 characters long.'),
 });
@@ -49,6 +51,9 @@ const defaultValues: Partial<AgentFormValues> = {
 };
 
 export function AuthLoginForm() {
+	const { status } = useSession();
+	const router = useRouter();
+
 	const [open, setOpen] = React.useState(false);
 	const { toast } = useToast();
 	const form = useForm<AgentFormValues>({
@@ -57,19 +62,37 @@ export function AuthLoginForm() {
 		mode: 'onChange',
 	});
 
-	function onSubmit(data: AgentFormValues) {
-		setOpen(true);
+	async function onSubmit(data: AgentFormValues) {
+		try {
+			const signInResponse = await signIn('credentials', {
+				email: data.email,
+				password: data.password,
+				redirect: false,
+				callbackUrl: '/',
+			});
+
+			if (!signInResponse || signInResponse.ok !== true) {
+				toast({
+					title: 'Invalid Credentials:',
+					description: 'Check your email or password',
+				});
+			} else {
+				router.refresh();
+			}
+		} catch (error) {
+			console.log(error);
+		}
 		toast({
-			title: 'You submitted the following values:',
-			description: (
-				<pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-					<code className='text-white'>
-						{JSON.stringify(data, null, 2)}
-					</code>
-				</pre>
-			),
+			title: 'Successful Sign in',
 		});
 	}
+
+	useEffect(() => {
+		if (status === 'authenticated') {
+			router.refresh();
+			router.push('/');
+		}
+	}, [status]);
 
 	return (
 		<Form {...form}>
@@ -133,7 +156,7 @@ export function AuthLoginForm() {
 							asChild
 							variant='link'
 						>
-							<Link href='/auth/reset-password'>
+							<Link href='/reset-password'>
 								Reset your Password
 							</Link>
 						</Button>

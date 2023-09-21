@@ -73,7 +73,7 @@ export function AuthVerificationCode() {
 				</pre>
 			),
 		});
-		// router.push('/auth/new-password');
+		// router.push('/new-password');
 	};
 
 	return (
@@ -119,7 +119,7 @@ export function AuthVerificationCode() {
 					asChild
 					variant='link'
 				>
-					<Link href='/auth/sign-in'>
+					<Link href='/sign-in'>
 						<div className='h-4 w-4 mr-2'>{backIcon}</div>
 						Back to Login
 					</Link>

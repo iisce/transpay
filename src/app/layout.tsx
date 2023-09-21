@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import { Lato } from 'next/font/google';
 import { Toaster } from '@/components/ui/toaster';
 import NextTopLoader from 'nextjs-toploader';
+import Provider from '@/lib/session-provider';
 
 const lato = Lato({
 	weight: '300',
@@ -26,22 +27,26 @@ export default function RootLayout({
 			lang='en'
 			suppressHydrationWarning
 		>
-			<body className={`${lato.className} h-screen overflow-hidden`}>
-				<ThemeProvider
-					attribute='class'
-					defaultTheme='system'
-					enableSystem
+			<Provider>
+				<body
+					className={`${lato.className} h-screen overflow-hidden`}
 				>
-					<div className='h-full overflow-hidden'>
-						<NextTopLoader
-							color='#7F7433'
-							showSpinner={false}
-						/>
-						{children}
-						<Toaster />
-					</div>
-				</ThemeProvider>
-			</body>
+					<ThemeProvider
+						attribute='class'
+						defaultTheme='system'
+						enableSystem
+					>
+						<div className='h-full overflow-hidden'>
+							<NextTopLoader
+								color='#7F7433'
+								showSpinner={false}
+							/>
+							{children}
+							<Toaster />
+						</div>
+					</ThemeProvider>
+				</body>
+			</Provider>
 		</html>
 	);
 }

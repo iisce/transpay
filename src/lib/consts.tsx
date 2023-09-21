@@ -1494,3 +1494,12 @@ export const WAIVER_HISTORY = [
 		generated_by: 'Agent Leo1',
 	},
 ];
+export const API = 'https://squid-app-ruxoz.ondigitalocean.app';
+
+export const URLS = {
+	auth: {
+		signin: '/api/v1/admins/login',
+	},
+};
+
+export const xApiKey = process.env.X_API_KEY;
