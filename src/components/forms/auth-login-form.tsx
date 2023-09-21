@@ -133,7 +133,7 @@ export function AuthLoginForm() {
 							asChild
 							variant='link'
 						>
-							<Link href='/auth/reset-password'>
+							<Link href='/reset-password'>
 								Reset your Password
 							</Link>
 						</Button>

@@ -35,7 +35,7 @@ export default function Home() {
 				<Button asChild>
 					<Link
 						className='w-full'
-						href={'/auth/sign-in'}
+						href={'/sign-in'}
 					>
 						Sign In
 					</Link>
