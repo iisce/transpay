@@ -1,13 +1,29 @@
 import { Button } from '@/components/ui/button';
+import { getServerSession } from 'next-auth';
 import Link from 'next/link';
+import { options } from '../api/auth/options';
+import SignOutBtn from '../(auth)/_components/sign-out-button';
 
-export default function Home() {
+export default async function Home() {
+	const session = await getServerSession(options);
 	return (
 		<main className='flex gap-5 min-h-screen flex-col items-center justify-start py-12 sm:p-32 overflow-y-scroll'>
 			<div className='text-h4 text-primary font-bold uppercase'>
 				Transpay
 			</div>
 			<div className='grid gap-3 uppercase w-full max-w-sm p-5'>
+				{session ? (
+					<SignOutBtn />
+				) : (
+					<Button asChild>
+						<Link
+							className='w-full'
+							href={'/sign-in'}
+						>
+							Sign In
+						</Link>
+					</Button>
+				)}
 				<Button asChild>
 					<Link
 						className='w-full'
@@ -30,14 +46,6 @@ export default function Home() {
 						href={'/dashboard/agents'}
 					>
 						Agents
-					</Link>
-				</Button>
-				<Button asChild>
-					<Link
-						className='w-full'
-						href={'/sign-in'}
-					>
-						Sign In
 					</Link>
 				</Button>
 

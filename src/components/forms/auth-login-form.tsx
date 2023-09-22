@@ -67,30 +67,32 @@ export function AuthLoginForm() {
 			const signInResponse = await signIn('credentials', {
 				email: data.email,
 				password: data.password,
-				redirect: false,
+				redirect: true,
 				callbackUrl: '/',
 			});
+			console.log(signInResponse);
 
-			if (!signInResponse || signInResponse.ok !== true) {
+			if (!signInResponse || !signInResponse.ok) {
 				toast({
 					title: 'Invalid Credentials:',
 					description: 'Check your email or password',
 				});
+				console.log(signInResponse);
 			} else {
 				router.refresh();
+				toast({
+					title: 'Successful Sign in',
+				});
 			}
 		} catch (error) {
 			console.log(error);
 		}
-		toast({
-			title: 'Successful Sign in',
-		});
 	}
 
 	useEffect(() => {
 		if (status === 'authenticated') {
 			router.refresh();
-			router.push('/');
+			router.push('/dashboard');
 		}
 	}, [status]);
 

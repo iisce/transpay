@@ -1,9 +1,11 @@
 import React from 'react';
-import { USER } from '../../../data';
+import { USER } from '../../../../data';
 import DashboardAdmin from '@/components/role/admin/dashboard';
 import DashboardSuperAdmin from '@/components/role/superadmin/dashboard';
+// import { getDashboard } from '@/lib/get-data';
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+	// const dashboardData = await getDashboard();
 	return (
 		<div className='h-full p-3 sm:p-5 flex flex-col gap-5 overflow-y-scroll w-full'>
 			<div className=' text-title1Bold sm:text-h4Bold'>

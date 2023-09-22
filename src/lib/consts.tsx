@@ -1500,6 +1500,7 @@ export const URLS = {
 	auth: {
 		signin: '/api/v1/admins/login',
 	},
+	dashboard: '/api/v1/dashboard',
 };
 
 export const xApiKey = process.env.X_API_KEY;

@@ -1,7 +1,9 @@
 import { withAuth } from 'next-auth/middleware';
 import { NextResponse } from 'next/server';
 
-// export const config = { matcher: ['/:path*'] };
+export const config = {
+	matcher: ['/dashboard/:path*', '/manage/:path*', '/search/:path*'],
+};
 export default withAuth(
 	function middleware(request) {
 		const response = NextResponse.next();

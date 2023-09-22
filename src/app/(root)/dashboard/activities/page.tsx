@@ -1,5 +1,5 @@
 import React from 'react';
-import { ACTIVITIES } from '../../../../data';
+import { ACTIVITIES } from '../../../../../data';
 import ActivityCard from '@/components/shared/activity-card';
 
 export default function Activities() {

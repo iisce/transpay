@@ -16,6 +16,7 @@ import { USER } from '../../../data';
 import { getInitials } from '@/lib/utils';
 import { ModeToggle } from '../dark-mode-toggle';
 import { usePathname } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 
 export function UserNav() {
 	const pathName = usePathname();
@@ -105,7 +106,9 @@ export function UserNav() {
 					</DropdownMenuItem>
 				</DropdownMenuGroup>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem>Log out</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => signOut()}>
+					Log out
+				</DropdownMenuItem>
 				<div className='sm:hidden'>
 					<DropdownMenuSeparator />
 					<ModeToggle />

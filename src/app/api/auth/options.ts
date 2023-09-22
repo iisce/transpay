@@ -5,7 +5,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 
 const config = {
 	headers: {
-		'x-api-key': process.env.X_API_KEY,
+		'api-secret': process.env.API_SECRET,
 	},
 };
 
@@ -27,23 +27,23 @@ export const options: NextAuthOptions = {
 						},
 						config
 					);
-					if (res.status === 200) {
+					if (res.status >= 200 && res.status < 300) {
 						let user = res?.data?.data;
 						console.log(user);
 						return user;
 					} else {
-						console.log('something went wrong');
+						console.log(res.statusText);
 						return null;
 					}
 				} catch (error) {
 					if (axios.isAxiosError(error)) {
 						throw new Error(
 							error.response?.data?.message ||
-								'An error occurred during authentication.'
+								'An error occurred during api connection.'
 						);
 					} else {
 						throw new Error(
-							'An error occurred during authentication.'
+							'An error occurred during api connection.'
 						);
 					}
 				}
@@ -66,17 +66,11 @@ export const options: NextAuthOptions = {
 	callbacks: {
 		session: ({ session, token }) => {
 			session.user.access_token = token.access_token as string;
-			// session.user.refresh_token = token.refresh_token as string;
-			// session.user.business_id = token.business_id as string;
-			// session.user.member_id = token.member_id as string;
 			// session.user.role = token.role as string;
 			return session;
 		},
 		jwt: ({ token, user }) => {
 			if (user) token.access_token = user.access_token;
-			// if (user) token.refresh_token = user.refresh_token;
-			// if (user) token.business_id = user.business_id;
-			// if (user) token.member_id = user.member_id;
 			// if (user) token.role = user.role;
 			return token;
 		},

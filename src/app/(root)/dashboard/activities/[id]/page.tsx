@@ -1,5 +1,5 @@
 import React from 'react';
-import { ACTIVITIES } from '../../../../../data';
+import { ACTIVITIES } from '../../../../../../data';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 export default function Activity({ params }: { params: { id: string } }) {

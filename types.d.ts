@@ -26,7 +26,7 @@ interface AdminT {
 	name: string;
 	contact: {
 		email: string;
-		phone : string;
+		phone: string;
 	};
 	status: 'active' | 'inactive';
 	address: string;
@@ -111,4 +111,21 @@ interface ACTIVITIESI {
 	name: string;
 	time: string;
 	date: string;
+}
+
+interface IDashboard {
+	data: {
+		pages: {
+			title: string;
+			description: string;
+			total: number;
+		}[];
+		summary: {
+			revenue: {
+				months: any[];
+				names: any[];
+				changes: any[];
+			};
+		};
+	};
 }
