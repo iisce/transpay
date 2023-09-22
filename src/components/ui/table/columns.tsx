@@ -438,6 +438,22 @@ export const viewDriversColumns: ColumnDef<DriverPayment>[] = [
 		},
 	},
 ];
+export const addDriversColumns: ColumnDef<DriverT>[] = [
+	{
+		accessorKey: 'Name',
+		header:()=> <div className='font-bold'>Name</div>,
+	},
+	{
+		accessorKey: 'Phone_Number',
+		header: () => <div className='text-right font-bold'>Phone Number</div>,
+		cell: ({ row }) => {
+			const phone_number = row.getValue('Phone_Number');
+			return (
+				<div className='text-right font-medium'>{`${phone_number}`}</div>
+			);
+		},
+	},
+];
 
 // WEBAGENT
 export const webAgentDriversColumns: ColumnDef<AgentT>[] = [

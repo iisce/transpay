@@ -1,6 +1,6 @@
 import { agentPaymentColumns, viewDriversColumns } from "@/components/ui/table/columns";
 import { DataTable } from "@/components/ui/table/data-table";
-import { PAYMENT_TABLE, VIEWDRIVER_TABLE } from "@/lib/consts";
+import { PAYMENT_TABLE} from "@/lib/consts";
 import React from "react";
 
 export default function Payment() {

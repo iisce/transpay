@@ -20,7 +20,6 @@ export function AuthForm({ detail, type, icon }: AUTH_TYPESI) {
         <div className="absolute top-1/4 right-3 transform-translate-y-1/2 cursor-pointer">
           {icon}
         </div>
-        {/* fix focused border */}
       </div>
     </div>
   );
@@ -46,7 +45,6 @@ export function AuthVerification({ detail, type, icon }: AUTH_TYPESI) {
           type={type}
           className="w-12 h-[50px] no-spinner rounded-[14px] text-[35px] font-bold mt-2 bg-primary-50 border-gray-600"
         />
-        {/* fix focused border */}
       </div>
 
       <div className="absolute -mt-8 ml-48">{icon}</div>
