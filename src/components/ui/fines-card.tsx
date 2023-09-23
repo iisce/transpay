@@ -34,7 +34,7 @@ export default function FinesCardP({
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align='end'>
 						<DropdownMenuItem asChild>
-							<Link href={`/dashboard/fines/${id}`}>
+							<Link href={`/fines/${id}`}>
 								<span className='h-4 w-4 mr-3'>
 									{editIcon}
 								</span>

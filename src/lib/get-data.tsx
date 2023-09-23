@@ -18,7 +18,7 @@ export const getDashboard = async () => {
 	const res = await fetch(url, { headers, cache: 'no-store' });
 	if (!res.ok) return undefined;
 	const data: Promise<IDashboard> = await res.json();
-	console.log('Dashboard Data ...', data);
-	console.log('API URL ...', url);
+	// console.log('Dashboard Data ...', data);
+	// console.log('API URL ...', url); //
 	return data;
 };

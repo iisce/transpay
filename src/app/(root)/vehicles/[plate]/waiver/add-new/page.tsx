@@ -55,9 +55,7 @@ export default function AddNewWaiver({
 					asChild
 					className='p-4 py-2 rounded-normal w-32'
 				>
-					<Link href={'dashboard/drivers/waiver/history'}>
-						Back
-					</Link>
+					<Link href={'/vehicles/waiver/history'}>Back</Link>
 				</Button>
 
 				<AlertDialog
@@ -96,9 +94,7 @@ export default function AddNewWaiver({
 									asChild
 									className='rounded-xl'
 								>
-									<Link
-										href={`/dashboard/drivers/driversid`}
-									>
+									<Link href={`/vehicles/driversid`}>
 										VIEW DRIVER ACCOUNT
 									</Link>
 								</AlertDialogAction>
@@ -106,7 +102,7 @@ export default function AddNewWaiver({
 									asChild
 									className='rounded-xl'
 								>
-									<Link href={`/dashboard/drivers`}>
+									<Link href={`/vehicles`}>
 										DASHBOARD
 									</Link>
 								</AlertDialogCancel>

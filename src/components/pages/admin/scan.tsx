@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import localforage from 'localforage';
 import { Separator } from '@/components/ui/separator';
+import { useRouter } from 'next/navigation';
 
 export default function QRScan() {
 	const { toast } = useToast();
@@ -17,6 +18,7 @@ export default function QRScan() {
 	const [scanning, setScanning] = useState(false);
 	const [scanCount, setScanCount] = useState(0);
 	const scannerRef = useRef<QrScanner | null>(null);
+	const router = useRouter();
 
 	const [scannedHistory, setScannedHistory] = useState<string[]>([]);
 
@@ -37,6 +39,7 @@ export default function QRScan() {
 	};
 
 	const handleScanResult = (result: string) => {
+		router.push(`/vehicles/${result.toLowerCase()}`);
 		setResult(result);
 		setOpen(true);
 		setScanning(false);

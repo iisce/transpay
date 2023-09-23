@@ -21,22 +21,18 @@ const driverFormSchema = z.object({
 	}),
 	type: z
 		.string()
-		.refine(
-			(value) =>
-				['bus', 'car', 'keke'].includes(value),
-			{
-				message: 'Invalid means of identification.',
-			}
-		),
+		.refine((value) => ['bus', 'car', 'keke'].includes(value), {
+			message: 'Invalid means of identification.',
+		}),
 	vehiclePlateNumber: z.string(),
 
-    ownersName: z.string(),
+	ownersName: z.string(),
 	ownersPhone: z.string(),
 });
 
 type DriverFormValues = z.infer<typeof driverFormSchema>;
 
-export default function VehicleInfoForm({plate}:{plate:string}) {
+export default function VehicleInfoForm({ plate }: { plate: string }) {
 	const form = useForm<DriverFormValues>({
 		resolver: zodResolver(driverFormSchema),
 		mode: 'onChange',
@@ -63,7 +59,10 @@ export default function VehicleInfoForm({plate}:{plate:string}) {
 									Vehicle Category
 								</FormLabel>
 
-								<Select defaultValue={field.value} disabled>
+								<Select
+									defaultValue={field.value}
+									disabled
+								>
 									<FormControl>
 										<SelectTrigger className='relative text-body flex  items-center h-14 rounded-2xl'>
 											<SelectValue placeholder='Select a means of identification' />
@@ -133,7 +132,7 @@ export default function VehicleInfoForm({plate}:{plate:string}) {
 						)}
 					/>
 
-                    <FormField
+					<FormField
 						name='ownersName'
 						control={form.control}
 						render={({ field }) => (
@@ -161,7 +160,7 @@ export default function VehicleInfoForm({plate}:{plate:string}) {
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel className='text-title1Bold pl-4'>
-								Owners Number
+									Owners Number
 								</FormLabel>
 
 								<FormControl>
@@ -186,9 +185,7 @@ export default function VehicleInfoForm({plate}:{plate:string}) {
 						asChild
 						className='p-4 py-2 rounded-normal w-28'
 					>
-						<Link href={`/dashboard/driver/${plate}`}>
-							Back
-						</Link>
+						<Link href={`/vehicles/${plate}`}>Back</Link>
 					</Button>
 					{/* <Button
 						variant={'default'}
@@ -199,7 +196,7 @@ export default function VehicleInfoForm({plate}:{plate:string}) {
 					>
 						<Link
 							href={
-								'/dashboard/drivers/new-driver/drivers-license'
+								'/vehicles/new-vehicle/drivers-license'
 							}
 						>
 							Next

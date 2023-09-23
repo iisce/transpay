@@ -19,7 +19,7 @@ export default function Fines() {
 						variant={'default'}
 					>
 						<Link
-							href={'/dashboard/fines/add-new'}
+							href={'/fines/add-new'}
 							className='shrink-0 whitespace-nowrap'
 						>
 							<div className='mr-2 h-4 w-4 shrink-0'>

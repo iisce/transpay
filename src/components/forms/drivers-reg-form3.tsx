@@ -100,7 +100,7 @@ export default function DriverForm3() {
 						>
 							<Link
 								href={
-									'/dashboard/drivers/new-driver/plate-info'
+									'/vehicles/new-vehicle/plate-info'
 								}
 							>
 								Back
@@ -115,7 +115,7 @@ export default function DriverForm3() {
 									variant='default'
 									className='w-28'
 								>
-									Add Driver
+									Add Vehicle
 								</Button>
 							</AlertDialogTrigger>
 							<AlertDialogContent>
@@ -142,7 +142,7 @@ export default function DriverForm3() {
 										className='w-64 rounded-2xl'
 									>
 										<Link
-											href={`/dashboard/drivers/d6784`}
+											href={`/vehicles/d6784`}
 										>
 											Dashboard
 										</Link>
@@ -152,7 +152,7 @@ export default function DriverForm3() {
 										className='w-64 rounded-2xl'
 									>
 										<Link
-											href={`/dashboard/drivers/driver`}
+											href={`/vehicles/driver`}
 										>
 											View Driver
 										</Link>

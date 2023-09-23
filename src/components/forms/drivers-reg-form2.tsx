@@ -136,9 +136,7 @@ export default function DriverForm2() {
 						asChild
 						className='p-4 py-2 rounded-normal w-28'
 					>
-						<Link href={'/dashboard/drivers/new-driver'}>
-							Back
-						</Link>
+						<Link href={'/vehicles/new-vehicle'}>Back</Link>
 					</Button>
 					<Button
 						variant={'default'}
@@ -149,7 +147,7 @@ export default function DriverForm2() {
 					>
 						<Link
 							href={
-								'/dashboard/drivers/new-driver/drivers-license'
+								'/vehicles/new-vehicle/drivers-license'
 							}
 						>
 							Next

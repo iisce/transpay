@@ -20,11 +20,10 @@ interface DriverPayment {
 	payment_type: 'Cash' | 'Transfer' | 'Bank Transfer' | 'Mobile Transfer';
 	status: 'pending' | 'processing' | 'successful' | 'failed';
 }
-interface DriverT{
+interface DriverT {
 	name: string;
 	phone_number: number;
 }
-
 interface AdminT {
 	id: string;
 	name: string;
@@ -42,7 +41,6 @@ interface AgentT {
 	status: 'active' | 'inactive';
 	area: string;
 }
-
 interface DriverT {
 	id: string;
 	name: string;
@@ -50,7 +48,6 @@ interface DriverT {
 	status: 'active' | 'inactive';
 	category: string;
 }
-
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
@@ -59,7 +56,6 @@ interface DataTableProps<TData, TValue> {
 	searchWith?: string;
 	showPagination?: boolean;
 }
-
 interface Framework {
 	value: string;
 	label: string;
@@ -88,7 +84,6 @@ interface ButtonF {
 	onClick?: () => void;
 	className?: string;
 }
-
 interface USERI {
 	user: {
 		name: string;
@@ -102,28 +97,26 @@ interface USERI {
 		email: string;
 	};
 }
-
 interface ADBCI {
 	title: string;
 	amount: number;
 	type: 'positive' | 'negative' | 'neutral';
 	percent: number;
 }
-
 interface ACTIVITIESI {
 	id: number;
 	name: string;
 	time: string;
 	date: string;
 }
-
+interface IPage {
+	name: string;
+	href: string;
+	icon?: React.ReactNode;
+}
 interface IDashboard {
 	data: {
-		pages: {
-			title: string;
-			description: string;
-			total: number;
-		}[];
+		pages: IPage[];
 		summary: {
 			revenue: {
 				months: any[];

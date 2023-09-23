@@ -100,12 +100,8 @@ export function AuthLoginForm() {
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
-				className='mb-20 flex flex-col gap-5'
+				className='mb-5 flex flex-col gap-5'
 			>
-				{' '}
-				<div className=' capitalize text-h4Bold sm:text-h3Bold'>
-					Login to your account
-				</div>
 				<div className='grid gap-5'>
 					<FormField
 						control={form.control}
@@ -192,9 +188,7 @@ export function AuthLoginForm() {
 									asChild
 									className='rounded-xl'
 								>
-									<Link
-										href={`/dashboard/agents/agentid`}
-									>
+									<Link href={`/agents/agentid`}>
 										View Account
 									</Link>
 								</AlertDialogAction>
@@ -202,7 +196,7 @@ export function AuthLoginForm() {
 									asChild
 									className='rounded-xl'
 								>
-									<Link href={`/dashboard/agents`}>
+									<Link href={`/agents`}>
 										Dashboard
 									</Link>
 								</AlertDialogCancel>

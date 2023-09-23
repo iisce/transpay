@@ -1,14 +1,26 @@
+import Navbar from '@/components/layout/navbar';
+import Sidebar from '@/components/layout/sidebar';
+import { getDashboard } from '@/lib/get-data';
 import type { Metadata } from 'next';
-
 export const metadata: Metadata = {
-	title: 'TransPay - Seamless levy payment.',
-	description: 'Powered By ISCE',
+	title: 'Transpay - Dashboard',
+	description: 'Payment system for the government',
 };
 
-export default function RootLayout({
+export default async function DashboardLayout({
 	children,
 }: {
 	children: React.ReactNode;
 }) {
-	return <div className='h-full overflow-hidden'>{children}</div>;
+	const dashboardData = await getDashboard();
+	const pages = dashboardData?.data.pages!;
+	return (
+		<div className='h-screen flex flex-col justify-between'>
+			<Navbar pages={pages} />
+			<div className='flex h-full'>
+				<Sidebar pages={pages} />
+				{children}
+			</div>
+		</div>
+	);
 }

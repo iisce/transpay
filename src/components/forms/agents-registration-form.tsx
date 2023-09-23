@@ -273,7 +273,7 @@ export function AgentForm() {
 						variant='outline'
 						asChild
 					>
-						<Link href='/dashboard/agents'>Cancel</Link>
+						<Link href='/agents'>Cancel</Link>
 					</Button>
 					<Button
 						className='w-28'
@@ -305,9 +305,7 @@ export function AgentForm() {
 									asChild
 									className='rounded-xl'
 								>
-									<Link
-										href={`/dashboard/agents/agentid`}
-									>
+									<Link href={`/agents/agentid`}>
 										View Account
 									</Link>
 								</AlertDialogAction>
@@ -315,7 +313,7 @@ export function AgentForm() {
 									asChild
 									className='rounded-xl'
 								>
-									<Link href={`/dashboard/agents`}>
+									<Link href={`/agents`}>
 										Dashboard
 									</Link>
 								</AlertDialogCancel>

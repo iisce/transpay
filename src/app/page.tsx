@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { getServerSession } from 'next-auth';
 import Link from 'next/link';
-import { options } from '../api/auth/options';
-import SignOutBtn from '../(auth)/_components/sign-out-button';
+import { options } from './api/auth/options';
+import SignOutBtn from './(auth)/_components/sign-out-button';
 
 export default async function Home() {
 	const session = await getServerSession(options);
@@ -15,14 +15,24 @@ export default async function Home() {
 				{session ? (
 					<SignOutBtn />
 				) : (
-					<Button asChild>
-						<Link
-							className='w-full'
-							href={'/sign-in'}
-						>
-							Sign In
-						</Link>
-					</Button>
+					<>
+						<Button asChild>
+							<Link
+								className='w-full'
+								href={'/admin/sign-in'}
+							>
+								Admin Sign In
+							</Link>
+						</Button>
+						<Button asChild>
+							<Link
+								className='w-full'
+								href={'/agent/sign-in'}
+							>
+								Agent Sign In
+							</Link>
+						</Button>
+					</>
 				)}
 				<Button asChild>
 					<Link
@@ -35,7 +45,7 @@ export default async function Home() {
 				<Button asChild>
 					<Link
 						className='w-full'
-						href={'/dashboard/admins'}
+						href={'/admins'}
 					>
 						Admin
 					</Link>
@@ -43,7 +53,7 @@ export default async function Home() {
 				<Button asChild>
 					<Link
 						className='w-full'
-						href={'/dashboard/agents'}
+						href={'/agents'}
 					>
 						Agents
 					</Link>
@@ -52,7 +62,7 @@ export default async function Home() {
 				<Button asChild>
 					<Link
 						className='w-full'
-						href={'/dashboard/scan'}
+						href={'/scan'}
 					>
 						Scan
 					</Link>

@@ -11,7 +11,9 @@ export default function Driver() {
 	return (
 		<div className='p-6 w-full h-full flex flex-col'>
 			<div className='flex justify-between py-8'>
-				<div className='shrink-0 grow-0 text-title1Bold'>Drivers</div>
+				<div className='shrink-0 grow-0 text-title1Bold'>
+					Drivers
+				</div>
 				<div className='shrink-0 grow-0'>
 					<Button
 						className='justify-start text-white rounded-xl bg-primary-800'
@@ -19,7 +21,7 @@ export default function Driver() {
 						variant={'default'}
 					>
 						<Link
-							href={'/web-agent/driver/new-driver'}
+							href={'/web-agent/driver/new-vehicle'}
 							className='shrink-0 whitespace-nowrap text-bodyBold'
 						>
 							<div className='mr-2 h-4 w-4 shrink-0'>

@@ -18,7 +18,8 @@ import { ModeToggle } from '../dark-mode-toggle';
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 
-export function UserNav() {
+export function UserNav({ pages }: { pages: IPage[] }) {
+	console.log('From user Navigation....', pages);
 	const pathName = usePathname();
 
 	return (
@@ -77,7 +78,7 @@ export function UserNav() {
 									key={k}
 								>
 									<Link href={link.href}>
-										{link.name}
+										{link.title}
 										<DropdownMenuShortcut className='h-4 w-4'>
 											{link.icon}
 										</DropdownMenuShortcut>

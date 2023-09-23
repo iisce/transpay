@@ -19,7 +19,7 @@ export default function Drivers() {
 						variant={'default'}
 					>
 						<Link
-							href={'/dashboard/drivers/new-driver'}
+							href={'/vehicles/new-vehicle'}
 							className='shrink-0 whitespace-nowrap'
 						>
 							<div className='mr-2 h-4 w-4 shrink-0'>
@@ -40,7 +40,7 @@ export default function Drivers() {
 							className=''
 							value='all'
 						>
-							All Drivers
+							All Vehicles
 						</TabsTrigger>
 						<TabsTrigger value='cleared'>Cleared</TabsTrigger>
 						<TabsTrigger value='debtors'>Debtors</TabsTrigger>

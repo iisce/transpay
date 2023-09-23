@@ -145,9 +145,7 @@ export function AuthVerificationCode() {
 								asChild
 								className='rounded-xl'
 							>
-								<Link
-									href={`/dashboard/agents/agentid`}
-								>
+								<Link href={`/agents/agentid`}>
 									View Account
 								</Link>
 							</AlertDialogAction>
@@ -155,9 +153,7 @@ export function AuthVerificationCode() {
 								asChild
 								className='rounded-xl'
 							>
-								<Link href={`/dashboard/agents`}>
-									Dashboard
-								</Link>
+								<Link href={`/agents`}>Dashboard</Link>
 							</AlertDialogCancel>
 						</div>
 					</div>

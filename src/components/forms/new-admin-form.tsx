@@ -273,7 +273,7 @@ export function AdminForm() {
 						variant='outline'
 						asChild
 					>
-						<Link href='/dashboard/admins'>Cancel</Link>
+						<Link href='/admins'>Cancel</Link>
 					</Button>
 					<Button
 						className='w-28'
@@ -305,9 +305,7 @@ export function AdminForm() {
 									asChild
 									className='rounded-xl'
 								>
-									<Link
-										href={`/dashboard/admins/adminid`}
-									>
+									<Link href={`/admins/adminid`}>
 										View Account
 									</Link>
 								</AlertDialogAction>
@@ -315,7 +313,7 @@ export function AdminForm() {
 									asChild
 									className='rounded-xl'
 								>
-									<Link href={`/dashboard/admins`}>
+									<Link href={`/admins`}>
 										Dashboard
 									</Link>
 								</AlertDialogCancel>
@@ -323,7 +321,6 @@ export function AdminForm() {
 						</div>
 					</AlertDialogContent>
 				</AlertDialog>
-                
 			</form>
 		</Form>
 	);

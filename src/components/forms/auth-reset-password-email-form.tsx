@@ -132,9 +132,7 @@ export function AuthResetPasswordEmail() {
 									asChild
 									className='rounded-xl'
 								>
-									<Link
-										href={`/dashboard/agents/agentid`}
-									>
+									<Link href={`/agents/agentid`}>
 										View Account
 									</Link>
 								</AlertDialogAction>
@@ -142,7 +140,7 @@ export function AuthResetPasswordEmail() {
 									asChild
 									className='rounded-xl'
 								>
-									<Link href={`/dashboard/agents`}>
+									<Link href={`/agents`}>
 										Dashboard
 									</Link>
 								</AlertDialogCancel>

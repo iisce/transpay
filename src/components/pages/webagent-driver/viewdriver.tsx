@@ -62,7 +62,7 @@ export default function WebAgentViewDriverDetails({
 							</div>
 							<div className='shrink-0 grow-0 text-title1Bold'>
 								<Link
-									href={`/web-agent/driver/${plate}/fines`}
+									href={`/web-agent/vehicle/${plate}/fines`}
 									className='text-primary-800 underline'
 								>
 									See all

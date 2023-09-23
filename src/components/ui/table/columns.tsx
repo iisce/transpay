@@ -157,7 +157,7 @@ export const adminsColumns: ColumnDef<AdminT>[] = [
 		cell: ({ row }) => {
 			return (
 				<div className='flex flex-row gap-2 justify-center '>
-					<Link href={`/dashboard/admins/${row.id}`}>
+					<Link href={`/admins/${row.id}`}>
 						<span className='h-4 w-4 mr-3 items-center '>
 							{editIcon}
 						</span>
@@ -214,7 +214,7 @@ export const agentsColumns: ColumnDef<AgentT>[] = [
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align='end'>
 						<DropdownMenuItem asChild>
-							<Link href={`/dashboard/agents/${row.id}`}>
+							<Link href={`/agents/${row.id}`}>
 								<span className='h-4 w-4 mr-3'>
 									{editIcon}
 								</span>
@@ -284,9 +284,7 @@ export const driversColumns: ColumnDef<DriverT>[] = [
 							className='border-b border-black rounded-none'
 							asChild
 						>
-							<Link
-								href={`/dashboard/drivers/${driver.plate}`}
-							>
+							<Link href={`/vehicles/${driver.plate}`}>
 								<span className='h-4 w-4 mr-3'>
 									{editIcon}
 								</span>
@@ -298,7 +296,7 @@ export const driversColumns: ColumnDef<DriverT>[] = [
 							asChild
 						>
 							<Link
-								href={`/dashboard/drivers/${driver.plate}/payments`}
+								href={`/vehicles/${driver.plate}/payments`}
 							>
 								<span className='h-4 w-4 mr-3'>
 									{paymentIcon}
@@ -311,7 +309,7 @@ export const driversColumns: ColumnDef<DriverT>[] = [
 							asChild
 						>
 							<Link
-								href={`/dashboard/drivers/${driver.plate}/fines`}
+								href={`/vehicles/${driver.plate}/fines`}
 							>
 								<span className='h-4 w-4 mr-3'>
 									{finesIcon}
@@ -441,11 +439,13 @@ export const viewDriversColumns: ColumnDef<DriverPayment>[] = [
 export const addDriversColumns: ColumnDef<DriverT>[] = [
 	{
 		accessorKey: 'Name',
-		header:()=> <div className='font-bold'>Name</div>,
+		header: () => <div className='font-bold'>Name</div>,
 	},
 	{
 		accessorKey: 'Phone_Number',
-		header: () => <div className='text-right font-bold'>Phone Number</div>,
+		header: () => (
+			<div className='text-right font-bold'>Phone Number</div>
+		),
 		cell: ({ row }) => {
 			const phone_number = row.getValue('Phone_Number');
 			return (
@@ -647,7 +647,7 @@ export const viewWaiverColumns: ColumnDef<DriverPayment>[] = [
 							asChild
 						>
 							<Link
-								href={`/dashboard/drivers/${row.id}/waiver/add-new`}
+								href={`/vehicles/${row.id}/waiver/add-new`}
 							>
 								<span className='h-4 w-4 mr-3'>
 									{editIcon}

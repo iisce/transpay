@@ -17,10 +17,16 @@ export const options: NextAuthOptions = {
 				email: { label: 'email', type: 'email' },
 				password: { label: 'Password', type: 'password' },
 			},
-			async authorize(credentials) {
+			async authorize(credentials, req) {
+				const loginUrl = req.headers!.referer; // Get the login URL from the request object.
+				console.log(loginUrl);
+				// Decide which API route to access based on the login URL.
+				const apiRoute = loginUrl.includes('/admin/')
+					? URLS.auth.signin.admin
+					: URLS.auth.signin.agent;
 				try {
 					const res = await axios.post(
-						API + URLS.auth.signin,
+						API + apiRoute,
 						{
 							email: credentials?.email,
 							password: credentials?.password,
@@ -56,8 +62,8 @@ export const options: NextAuthOptions = {
 		maxAge: 60 * 30,
 	},
 	pages: {
-		signIn: '/sign-in',
-		error: '/sign-in',
+		signIn: '/agent/sign-in',
+		error: '/agent/sign-in',
 	},
 	jwt: {
 		// maxAge: 60 * 60 * 24 * 30,  // 30 days
@@ -66,11 +72,13 @@ export const options: NextAuthOptions = {
 	callbacks: {
 		session: ({ session, token }) => {
 			session.user.access_token = token.access_token as string;
+			// session.user.email = token.email as string;
 			// session.user.role = token.role as string;
 			return session;
 		},
 		jwt: ({ token, user }) => {
 			if (user) token.access_token = user.access_token;
+			// if (user) token.email = user.email;
 			// if (user) token.role = user.role;
 			return token;
 		},
