@@ -1,6 +1,6 @@
 import { viewDriversColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
-import { DRIVER_TABLE, VIEWDRIVER_TABLE } from '@/lib/consts';
+import { DRIVER_TABLE, VIEW_DRIVER_TABLE } from '@/lib/consts';
 import React from 'react';
 
 export default function Payments({ params }: { params: { plate: string } }) {
@@ -17,7 +17,7 @@ export default function Payments({ params }: { params: { plate: string } }) {
 				<div className=''>
 					<DataTable
 						columns={viewDriversColumns}
-						data={VIEWDRIVER_TABLE}
+						data={VIEW_DRIVER_TABLE}
 					/>
 				</div>
 			</div>

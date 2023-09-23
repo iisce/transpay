@@ -4,8 +4,8 @@ import { viewDriversColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
 import {
 	DRIVER_TABLE,
-	VIEWDRIVER_TABLE,
-	WEBAGENTDRIVER_CARD,
+	VIEW_DRIVER_TABLE,
+	WEB_AGENT_DRIVER_CARD,
 } from '@/lib/consts';
 import { addIcon } from '@/lib/icons';
 import Link from 'next/link';
@@ -44,15 +44,17 @@ export default function WebAgentViewDriverDetails({
 
 			<div className=' overflow-y-scroll'>
 				<div className='flex flex-row gap-6 rounded-3xl'>
-					{WEBAGENTDRIVER_CARD.map((card: DashboardCardI, i) => (
-						<DashboardCard
-							key={i}
-							name={card.name}
-							href={card.href}
-							image={card.image}
-							description={card.description}
-						/>
-					))}
+					{WEB_AGENT_DRIVER_CARD.map(
+						(card: DashboardCardI, i) => (
+							<DashboardCard
+								key={i}
+								name={card.name}
+								href={card.href}
+								image={card.image}
+								description={card.description}
+							/>
+						)
+					)}
 				</div>
 				<div className='flex flex-col gap-5'>
 					<div className='flex flex-col gap-2 mb-20'>
@@ -72,7 +74,7 @@ export default function WebAgentViewDriverDetails({
 						<div className=''>
 							<DataTable
 								columns={viewDriversColumns}
-								data={VIEWDRIVER_TABLE.slice(0, 5)}
+								data={VIEW_DRIVER_TABLE.slice(0, 5)}
 							/>
 						</div>
 					</div>
@@ -93,7 +95,7 @@ export default function WebAgentViewDriverDetails({
 						<div className=''>
 							<DataTable
 								columns={viewDriversColumns}
-								data={VIEWDRIVER_TABLE.slice(0, 5)}
+								data={VIEW_DRIVER_TABLE.slice(0, 5)}
 							/>
 						</div>
 					</div>

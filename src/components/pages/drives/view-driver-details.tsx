@@ -5,7 +5,11 @@ import {
 	viewDriversColumns,
 } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
-import { ADDDRIVER_TABLE, DRIVER_TABLE, VIEWDRIVER_TABLE } from '@/lib/consts';
+import {
+	ADD_DRIVER_TABLE,
+	DRIVER_TABLE,
+	VIEW_DRIVER_TABLE,
+} from '@/lib/consts';
 import { addIcon } from '@/lib/icons';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -88,7 +92,7 @@ export default function ViewDriverDetails({ plate }: { plate: string }) {
 						<div className=''>
 							<DataTable
 								columns={viewDriversColumns}
-								data={VIEWDRIVER_TABLE.slice(0, 3)}
+								data={VIEW_DRIVER_TABLE.slice(0, 3)}
 							/>
 						</div>
 					</div>
@@ -113,7 +117,7 @@ export default function ViewDriverDetails({ plate }: { plate: string }) {
 						<div className=''>
 							<DataTable
 								columns={viewDriversColumns}
-								data={VIEWDRIVER_TABLE.slice(0, 3)}
+								data={VIEW_DRIVER_TABLE.slice(0, 3)}
 							/>
 						</div>
 					</div>
@@ -139,7 +143,7 @@ export default function ViewDriverDetails({ plate }: { plate: string }) {
 						<div className=''>
 							<DataTable
 								columns={addDriversColumns}
-								data={ADDDRIVER_TABLE.slice(0, 3)}
+								data={ADD_DRIVER_TABLE.slice(0, 3)}
 							/>
 						</div>
 					</div>

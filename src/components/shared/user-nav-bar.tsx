@@ -64,13 +64,13 @@ export function UserNav({ pages }: { pages?: IPage[] }) {
 							{USER.user.name}
 						</p>
 						<p className='text-xs leading-none text-muted-foreground'>
-							ap.oyeniran@gmail.com
+							{USER.user.email}
 						</p>
 					</Link>
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
-					{pathName !== '/manage'
+					{pathName.startsWith('/manage')
 						? SIDEBAR_LINKS.map((link, k) => (
 								<DropdownMenuItem
 									className='sm:hidden'

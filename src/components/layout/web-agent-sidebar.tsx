@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { Button } from '../ui/button';
-import { WEBAGENTSIDEBAR_LINKS } from '@/lib/consts';
+import { WEB_AGENT_SIDEBAR_LINKS } from '@/lib/consts';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ModeToggle } from '../dark-mode-toggle';
@@ -12,7 +12,7 @@ export default function WebAgentSidebar() {
 	return (
 		<div className='h-full flex-col px-5 min-w-min bg-secondary hidden sm:flex justify-between'>
 			<div className='flex flex-col gap-3 pt-10'>
-				{WEBAGENTSIDEBAR_LINKS.map((link, i) => (
+				{WEB_AGENT_SIDEBAR_LINKS.map((link, i) => (
 					<Button
 						key={i}
 						className='justify-start rounded-xl'

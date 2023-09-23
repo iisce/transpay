@@ -1,6 +1,6 @@
 import {
 	adminIcon,
-	agentdriverIcon,
+	agentDriverIcon,
 	agentsIcon,
 	dashboardIcon,
 	driverIcon,
@@ -120,7 +120,7 @@ export const DASHBOARD_CARD = [
 		image: '/tricycle.jpg',
 	},
 	{
-		name: 'Drivers',
+		name: 'Vehicles',
 		description: 'Drivers list & Update',
 		icon: peopleIcon,
 		number: '9,200',
@@ -655,7 +655,7 @@ export const PAYMENT_TABLE = [
 	},
 ];
 
-export const VIEWDRIVER_TABLE = [
+export const VIEW_DRIVER_TABLE = [
 	{
 		Date: '23-08-2023',
 		amount_NGN: '15000',
@@ -712,7 +712,7 @@ export const VIEWDRIVER_TABLE = [
 	},
 ];
 
-export const ADDDRIVER_TABLE = [
+export const ADD_DRIVER_TABLE = [
 	{
 		Name: 'Okechukwu John',
 		Phone_Number: '09078398045',
@@ -752,7 +752,7 @@ export const ADDDRIVER_TABLE = [
 ];
 
 // WEB AGENT
-export const WEBAGENTSIDEBAR_LINKS = [
+export const WEB_AGENT_SIDEBAR_LINKS = [
 	{
 		name: 'Dashboard',
 		href: '/web-agent',
@@ -766,11 +766,11 @@ export const WEBAGENTSIDEBAR_LINKS = [
 	{
 		name: 'Driver',
 		href: '/web-agent/driver',
-		icon: agentdriverIcon,
+		icon: agentDriverIcon,
 	},
 ];
 
-export const WEBAGENT_CARD = [
+export const WEB_AGENT_CARD = [
 	{
 		name: 'Scan Plate',
 		description:
@@ -791,7 +791,7 @@ export const WEBAGENT_CARD = [
 	},
 ];
 
-export const WEBAGENTDRIVER_CARD = [
+export const WEB_AGENT_DRIVER_CARD = [
 	{
 		name: 'Vehicle Information',
 		description: 'View Vehicle information',
@@ -964,7 +964,7 @@ export const ADMINS_TABLE = [
 			email: 'emekaignatius5@gmail.com',
 			phone: '08063456789',
 		},
-		adress: 'Awada, okiki street, flat 3 block 18',
+		address: 'Awada, okiki street, flat 3 block 18',
 		status: 'active',
 	},
 	{
@@ -1108,7 +1108,7 @@ export const ADMINS_TABLE = [
 			email: 'emekaignatius5@gmail.com',
 			phone: '08063456789',
 		},
-		adress: '08061234567',
+		address: '08061234567',
 		status: 'active',
 	},
 	{
@@ -1306,7 +1306,7 @@ export const ADMINS_TABLE = [
 			email: 'emekaignatius5@gmail.com',
 			phone: '08063456789',
 		},
-		ddress: '08061234567',
+		address: '08061234567',
 		status: 'active',
 	},
 	{

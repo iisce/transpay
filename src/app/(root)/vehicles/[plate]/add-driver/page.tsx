@@ -22,7 +22,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { addDriversColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
-import { ADDDRIVER_TABLE, DRIVER_TABLE } from '@/lib/consts';
+import { ADD_DRIVER_TABLE, DRIVER_TABLE } from '@/lib/consts';
 import { addIcon, successIcon } from '@/lib/icons';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
@@ -219,7 +219,7 @@ export default function AddDriver({ params }: { params: { plate: string } }) {
 				<div className=''>
 					<DataTable
 						columns={addDriversColumns}
-						data={ADDDRIVER_TABLE}
+						data={ADD_DRIVER_TABLE}
 					/>
 				</div>
 			</div>

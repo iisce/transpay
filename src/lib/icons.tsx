@@ -725,7 +725,7 @@ export const scanIcon = (
 	</svg>
 );
 
-export const agentdriverIcon = (
+export const agentDriverIcon = (
 	<svg
 		width='32'
 		height='37'
