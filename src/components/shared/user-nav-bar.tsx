@@ -18,7 +18,7 @@ import { ModeToggle } from '../dark-mode-toggle';
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 
-export function UserNav({ pages }: { pages: IPage[] }) {
+export function UserNav({ pages }: { pages?: IPage[] }) {
 	console.log('From user Navigation....', pages);
 	const pathName = usePathname();
 

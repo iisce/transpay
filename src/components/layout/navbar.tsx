@@ -37,7 +37,7 @@ const ListItem = React.forwardRef<
 });
 ListItem.displayName = 'ListItem';
 
-export default function NavBar({ pages }: { pages: IPage[] }) {
+export default function NavBar({ pages }: { pages?: IPage[] }) {
 	return (
 		<div className='h-16 w-full bg-secondary px-5 shrink-0'>
 			<div className='flex items-center justify-between h-full gap-5'>
