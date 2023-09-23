@@ -20,7 +20,9 @@ export default function Sidebar({ pages }: { pages: IPage[] }) {
 						className='justify-start rounded-xl'
 						asChild
 						variant={
-							pathname === link.href ? 'default' : 'ghost'
+							pathname.startsWith(link.href)
+								? 'default'
+								: 'ghost'
 						}
 					>
 						<Link
