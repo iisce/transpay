@@ -84,15 +84,10 @@ interface ButtonF {
 	onClick?: () => void;
 	className?: string;
 }
-interface USERI {
+interface IUser {
 	user: {
 		name: string;
-		role:
-			| 'super admin'
-			| 'admin'
-			| 'waiver'
-			| 'onboarding'
-			| 'compliance';
+		role: 'super-admin' | 'admin' | 'agent';
 		avatar: string;
 		email: string;
 	};
@@ -103,7 +98,7 @@ interface ADBCI {
 	type: 'positive' | 'negative' | 'neutral';
 	percent: number;
 }
-interface ACTIVITIESI {
+interface IActivities {
 	id: number;
 	name: string;
 	time: string;

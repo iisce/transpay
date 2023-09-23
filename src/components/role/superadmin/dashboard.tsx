@@ -9,7 +9,7 @@ import { DataTable } from '@/components/ui/table/data-table';
 import { agentsColumns } from '@/components/ui/table/columns';
 import { AGENT_TABLE } from '@/lib/consts';
 
-export default function DashboardSuperAdmin(user: USERI) {
+export default function DashboardSuperAdmin(user: IUser) {
 	const [date, setDate] = React.useState<Date | undefined>(new Date());
 
 	return (

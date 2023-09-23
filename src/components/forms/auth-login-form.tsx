@@ -21,8 +21,8 @@ import {
 	AlertDialogCancel,
 	AlertDialogContent,
 } from '../ui/alert-dialog';
-import React, { useEffect } from 'react';
-import { successIcon } from '@/lib/icons';
+import React from 'react';
+import { loadingSpinner, successIcon } from '@/lib/icons';
 import { Checkbox } from '../ui/checkbox';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -51,7 +51,7 @@ const defaultValues: Partial<AgentFormValues> = {
 };
 
 export function AuthLoginForm() {
-	const { status } = useSession();
+	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const router = useRouter();
 
 	const [open, setOpen] = React.useState(false);
@@ -63,38 +63,41 @@ export function AuthLoginForm() {
 	});
 
 	async function onSubmit(data: AgentFormValues) {
+		setIsLoading(true);
 		try {
 			const signInResponse = await signIn('credentials', {
 				email: data.email,
 				password: data.password,
 				redirect: true,
-				callbackUrl: '/',
+				callbackUrl: '/dashboard',
 			});
 			console.log(signInResponse);
 
-			if (!signInResponse || !signInResponse.ok) {
+			if (!signInResponse) {
 				toast({
 					title: 'Invalid Credentials:',
 					description: 'Check your email or password',
 				});
 				console.log(signInResponse);
+				setIsLoading(false);
 			} else {
-				router.refresh();
+				router.push('/dashboard');
 				toast({
 					title: 'Successful Sign in',
 				});
+				setIsLoading(false);
 			}
 		} catch (error) {
 			console.log(error);
 		}
 	}
 
-	useEffect(() => {
-		if (status === 'authenticated') {
-			router.refresh();
-			router.push('/dashboard');
-		}
-	}, [status]);
+	// useEffect(() => {
+	// 	if (status === 'authenticated') {
+	// 		router.refresh();
+	// 		router.push('/dashboard');
+	// 	}
+	// }, [status]);
 
 	return (
 		<Form {...form}>
@@ -147,7 +150,12 @@ export function AuthLoginForm() {
 					</div>
 				</div>
 				<div className='grid'>
-					<Button type='submit'>Login</Button>
+					<Button
+						disabled={isLoading}
+						type='submit'
+					>
+						{isLoading ? loadingSpinner : 'Login'}
+					</Button>
 					<div className='flex items-center'>
 						Forgot your password?
 						<Button

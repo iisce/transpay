@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 import { ModeToggle } from '../dark-mode-toggle';
 import { Separator } from '../ui/separator';
 
-export default function Sidebar({ pages }: { pages: IPage[] }) {
+export default function Sidebar({ pages }: { pages?: IPage[] }) {
 	const pathname = usePathname();
 	console.log('Pages from side bar', pages);
 	return (

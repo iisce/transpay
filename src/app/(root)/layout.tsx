@@ -18,7 +18,7 @@ export default async function DashboardLayout({
 		<div className='h-screen flex flex-col justify-between'>
 			<Navbar pages={pages} />
 			<div className='flex h-full'>
-				<Sidebar pages={pages} />
+				<Sidebar />
 				{children}
 			</div>
 		</div>

@@ -3,7 +3,7 @@ import { RevenueCharts } from '@/components/shared/chats/revenue-chart';
 import { DASHBOARD_CARD } from '@/lib/consts';
 import React from 'react';
 
-export default function DashboardAdmin(user: USERI) {
+export default function DashboardAdmin(user: IUser) {
 	return (
 		<div>
 			<div className='flex flex-row flex-wrap'>

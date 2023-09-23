@@ -154,6 +154,34 @@ export const DASHBOARD_CARD = [
 	},
 ];
 
+export const AGENT_DASHBOARD_CARD = [
+	{
+		name: 'Vehicles',
+		description: 'Drivers list & Update',
+		icon: peopleIcon,
+		number: '9,200',
+		href: '/vehicles',
+		image: '/tricycle.jpg',
+	},
+	{
+		name: 'Fines & Penalties',
+		description: 'Create fines & penalties',
+		icon: finesIcon,
+		number: '10,000',
+		href: '/fines',
+		image: '/tricycle.jpg',
+	},
+	{
+		name: 'Scan Plate',
+		description:
+			'Scan Driver Plate to retrieve drivers information plate',
+		icon: '',
+		number: '',
+		href: '/scan',
+		image: '/scanplate.png',
+	},
+];
+
 export const AGENT_TABLE = [
 	{
 		name: 'Emeka Ignatius',
