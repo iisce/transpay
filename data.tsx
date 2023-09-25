@@ -88,11 +88,11 @@ export const ACTIVITIES: IActivities[] = [
 	},
 ];
 
-export const USER: IUser = {
-	user: {
-		avatar: 'https://avatars.githubusercontent.com/u/62449713?v=4',
-		email: 'ap.oyeniran@gmail.com',
-		name: 'Oyeniran Ayobami',
-		role: 'agent', // admin, agent, super admin
-	},
-};
+// export const USER: IUser = {
+// 	user: {
+// 		avatar: 'https://avatars.githubusercontent.com/u/62449713?v=4',
+// 		email: 'ap.oyeniran@gmail.com',
+// 		name: 'Oyeniran Ayobami',
+// 		role: 'admin', // admin, agent, super-admin
+// 	},
+// };

@@ -7,7 +7,7 @@ import NextTopLoader from 'nextjs-toploader';
 import Provider from '@/lib/session-provider';
 
 const lato = Lato({
-	weight: '300',
+	weight: ['100', '300', '400', '700', '900'],
 	subsets: ['latin'],
 	display: 'swap',
 });
@@ -33,7 +33,7 @@ export default function RootLayout({
 				>
 					<ThemeProvider
 						attribute='class'
-						defaultTheme='system'
+						defaultTheme='light'
 						enableSystem
 					>
 						<div className='h-full overflow-hidden'>

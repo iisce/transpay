@@ -73,13 +73,13 @@ export const options: NextAuthOptions = {
 		session: ({ session, token }) => {
 			session.user.access_token = token.access_token as string;
 			// session.user.email = token.email as string;
-			// session.user.role = token.role as string;
+			session.user.role = token.role as string;
 			return session;
 		},
 		jwt: ({ token, user }) => {
 			if (user) token.access_token = user.access_token;
 			// if (user) token.email = user.email;
-			// if (user) token.role = user.role;
+			if (user) token.role = user.role;
 			return token;
 		},
 	},

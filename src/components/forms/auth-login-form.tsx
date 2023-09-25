@@ -24,7 +24,7 @@ import {
 import React from 'react';
 import { loadingSpinner, successIcon } from '@/lib/icons';
 import { Checkbox } from '../ui/checkbox';
-import { signIn, useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
 const agentFormSchema = z.object({
@@ -73,7 +73,7 @@ export function AuthLoginForm() {
 			});
 			console.log(signInResponse);
 
-			if (!signInResponse) {
+			if (signInResponse?.ok === false) {
 				toast({
 					title: 'Invalid Credentials:',
 					description: 'Check your email or password',
@@ -91,13 +91,6 @@ export function AuthLoginForm() {
 			console.log(error);
 		}
 	}
-
-	// useEffect(() => {
-	// 	if (status === 'authenticated') {
-	// 		router.refresh();
-	// 		router.push('/dashboard');
-	// 	}
-	// }, [status]);
 
 	return (
 		<Form {...form}>
@@ -196,7 +189,7 @@ export function AuthLoginForm() {
 									asChild
 									className='rounded-xl'
 								>
-									<Link href={`/agents/agentid`}>
+									<Link href={`/agents/agentId`}>
 										View Account
 									</Link>
 								</AlertDialogAction>

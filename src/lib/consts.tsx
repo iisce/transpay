@@ -47,14 +47,54 @@ export const SIDEBAR_LINKS = [
 		icon: scanIcon,
 	},
 	{
-		title: 'Search',
-		href: '/search',
-		icon: searchIcon,
-	},
-	{
 		title: 'Revenue',
 		href: '/revenue',
 		icon: revenueIcon,
+	},
+];
+export const SIDEBAR_LINKS_ADMIN = [
+	{
+		title: 'Dashboard',
+		href: '/dashboard',
+		icon: dashboardIcon,
+	},
+	{
+		title: 'Agents',
+		href: '/agents',
+		icon: agentsIcon,
+	},
+	{
+		title: 'Vehicles',
+		href: '/vehicles',
+		icon: driverIcon,
+	},
+	{
+		title: 'Fines & Penalties',
+		href: '/fines',
+		icon: finesIcon,
+	},
+	{
+		title: 'Scan',
+		href: '/scan',
+		icon: scanIcon,
+	},
+];
+
+export const SIDEBAR_LINKS_AGENT = [
+	{
+		title: 'Dashboard',
+		href: '/dashboard',
+		icon: dashboardIcon,
+	},
+	{
+		title: 'Vehicles',
+		href: '/vehicles',
+		icon: driverIcon,
+	},
+	{
+		title: 'Scan',
+		href: '/scan',
+		icon: scanIcon,
 	},
 ];
 
@@ -103,14 +143,6 @@ export const DRIVERS_CARD = [
 ];
 
 export const DASHBOARD_CARD = [
-	{
-		name: 'Admins',
-		description: 'List of all the admins',
-		icon: peopleIcon,
-		number: '30',
-		href: '/admins',
-		image: '/tricycle.jpg',
-	},
 	{
 		name: 'Agents',
 		description: 'Agents List',
@@ -1578,9 +1610,18 @@ export const WAIVER_HISTORY = [
 		generated_by: 'Agent Leo1',
 	},
 ];
+
 export const API = 'https://squid-app-ruxoz.ondigitalocean.app';
 
 export const URLS = {
+	admin: {
+		all: '/api/v1/admins',
+		me: '/api/v1/admins/me',
+	},
+	agent: {
+		all: '/api/v1/agents',
+		me: '/api/v1/agents/me',
+	},
 	auth: {
 		signin: {
 			admin: '/api/v1/admins/login',
@@ -1588,6 +1629,12 @@ export const URLS = {
 		},
 	},
 	dashboard: '/api/v1/dashboard',
+	vehicles: {
+		all: '/api/v1/vehicles', // GET for all, POST to create
+		single: '/api/v1/vehicles', // Get by ID, Include /${vehicleId}
+		blacklist: '/api/v1/vehicles/blacklist', // add vehicle to blacklist
+	},
 };
 
-export const xApiKey = process.env.X_API_KEY;
+export const BUS_IMAGE_SAMPLE =
+	'https://images.unsplash.com/photo-1616792577902-f1d86383a21b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2803&q=80';

@@ -1,7 +1,12 @@
 import { ArrowDown, ArrowUp } from 'lucide-react';
 import React from 'react';
 
-export default function DashboardCard({ title, amount, type, percent }: ADBCI) {
+export default function DashboardCard({
+	title,
+	amount,
+	type,
+	percent,
+}: IDashboardCard) {
 	return (
 		<div className='h-32 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between'>
 			<div className=''>

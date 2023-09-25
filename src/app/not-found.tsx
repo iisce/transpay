@@ -26,9 +26,9 @@ const NotFound = () => {
 					<Button asChild>
 						<Link
 							className=''
-							href={'/'}
+							href={'/dashboard'}
 						>
-							Homepage
+							Go To Dashboard
 						</Link>
 					</Button>
 					<Button asChild>

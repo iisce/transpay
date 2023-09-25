@@ -1,4 +1,4 @@
-import ViewDriverDetails from '@/components/pages/drives/view-driver-details';
+import ViewDriverDetails from '@/components/pages/vehicle/view-vehicle-details';
 import React from 'react';
 
 export default function DriverPage({ params }: { params: { plate: string } }) {

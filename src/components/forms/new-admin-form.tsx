@@ -1,5 +1,4 @@
 'use client';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -30,7 +29,8 @@ import {
 	AlertDialogContent,
 } from '../ui/alert-dialog';
 import React from 'react';
-import { successIcon } from '@/lib/icons';
+import { loadingSpinner, successIcon } from '@/lib/icons';
+import { NextResponse } from 'next/server';
 
 const agentFormSchema = z.object({
 	name: z
@@ -52,6 +52,9 @@ const agentFormSchema = z.object({
 	phone: z.string({
 		required_error: 'Please enter phone number.',
 	}),
+	role: z.string({
+		required_error: 'Please choose role.',
+	}),
 	idNumber: z
 		.string({
 			required_error: 'Please enter identification number.',
@@ -65,9 +68,10 @@ const agentFormSchema = z.object({
 	address: z.string().max(160).min(15),
 	password: z.string().refine((password) => {
 		return (
-			password.length >= 8 &&
-			/[A-Z]/.test(password) &&
-			/\d/.test(password)
+			password.length >= 8
+			// &&
+			// /[A-Z]/.test(password) &&
+			// /\d/.test(password)
 		);
 	}, 'The password must contain at least one uppercase letter and one number and be at least 8 characters long.'),
 	confirmPassword: z.string().min(8),
@@ -80,6 +84,7 @@ const defaultValues: Partial<AgentFormValues> = {
 	name: '',
 	email: '',
 	phone: '',
+	role: 'Admin',
 	idNumber: '',
 	address: '',
 	password: '',
@@ -87,6 +92,7 @@ const defaultValues: Partial<AgentFormValues> = {
 };
 
 export function AdminForm() {
+	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const [open, setOpen] = React.useState(false);
 	const { toast } = useToast();
 	const form = useForm<AgentFormValues>({
@@ -95,18 +101,41 @@ export function AdminForm() {
 		mode: 'onChange',
 	});
 
-	function onSubmit(data: AgentFormValues) {
-		setOpen(true);
-		toast({
-			title: 'You submitted the following values:',
-			description: (
-				<pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-					<code className='text-white'>
-						{JSON.stringify(data, null, 2)}
-					</code>
-				</pre>
-			),
-		});
+	async function onSubmit(data: AgentFormValues) {
+		setIsLoading(true);
+		try {
+			const createAdminResponse = await fetch('/api/create-admin', {
+				method: 'POST',
+				body: JSON.stringify({
+					name: data.name,
+					email: data.email,
+					password: data.password,
+					phone: data.phone,
+					role: data.role,
+				}),
+			});
+			const result = await createAdminResponse.json();
+			if (
+				createAdminResponse.status > 199 &&
+				createAdminResponse.status < 299
+			) {
+				toast({
+					title: 'Admin Created Successfully',
+				});
+				setIsLoading(false);
+				setOpen(true);
+				return NextResponse.json(result);
+			} else {
+				setIsLoading(false);
+				console.log('Something went wrong');
+				toast({
+					title: 'Admin NOT Created',
+				});
+				return null;
+			}
+		} catch (error) {
+			setIsLoading(false);
+		}
 	}
 
 	return (
@@ -279,7 +308,7 @@ export function AdminForm() {
 						className='w-28'
 						type='submit'
 					>
-						Add Admin
+						{isLoading ? loadingSpinner : 'Add Admin'}
 					</Button>
 				</div>
 				<AlertDialog
@@ -305,17 +334,16 @@ export function AdminForm() {
 									asChild
 									className='rounded-xl'
 								>
-									<Link href={`/admins/adminid`}>
-										View Account
+									<Link
+										href={`/admins/${
+											form.getValues().idNumber
+										}`}
+									>
+										View Admin
 									</Link>
 								</AlertDialogAction>
-								<AlertDialogCancel
-									asChild
-									className='rounded-xl'
-								>
-									<Link href={`/admins`}>
-										Dashboard
-									</Link>
+								<AlertDialogCancel className='rounded-xl'>
+									New Admin
 								</AlertDialogCancel>
 							</div>
 						</div>

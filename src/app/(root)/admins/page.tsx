@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { adminsColumns, agentsColumns } from '@/components/ui/table/columns';
+import { adminsColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ADMINS_TABLE } from '@/lib/consts';
@@ -7,7 +7,7 @@ import { addIcon } from '@/lib/icons';
 import Link from 'next/link';
 import React from 'react';
 
-export default function Admins() {
+export default async function Admins() {
 	return (
 		<div className='p-5 w-full h-full flex flex-col'>
 			<div className='flex justify-between'>

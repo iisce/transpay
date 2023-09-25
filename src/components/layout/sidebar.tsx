@@ -1,40 +1,31 @@
-'use client';
 import React from 'react';
-import { Button } from '../ui/button';
-import { SIDEBAR_LINKS } from '@/lib/consts';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import {
+	SIDEBAR_LINKS,
+	SIDEBAR_LINKS_ADMIN,
+	SIDEBAR_LINKS_AGENT,
+} from '@/lib/consts';
 import { ModeToggle } from '../dark-mode-toggle';
 import { Separator } from '../ui/separator';
+import { NavbarButton } from './navbar-button';
+import { getUserMe } from '@/lib/get-data';
 
-export default function Sidebar({ pages }: { pages?: IPage[] }) {
-	const pathname = usePathname();
-	console.log('Pages from side bar', pages);
+export default async function Sidebar() {
+	const user = await getUserMe();
 	return (
-		<div className='h-full flex-col px-5 min-w-min bg-secondary hidden sm:flex justify-between'>
-			<div className='flex flex-col gap-3 pt-10'>
-				{/* {pages.map((link, i) => ( */}
-				{SIDEBAR_LINKS.map((link, i) => (
-					<Button
+		<div className='h-full flex-col px-5 min-w-[200px] bg-secondary hidden sm:flex justify-between'>
+			<div className='flex flex-col gap-3 pt-10 h-full w-full    '>
+				{(user?.role.toLowerCase() === 'agent'
+					? SIDEBAR_LINKS_AGENT
+					: user?.role.toLowerCase() === 'admin'
+					? SIDEBAR_LINKS_ADMIN
+					: SIDEBAR_LINKS
+				).map((link, i) => (
+					<NavbarButton
 						key={i}
-						className='justify-start rounded-xl'
-						asChild
-						variant={
-							pathname.startsWith(link.href)
-								? 'default'
-								: 'ghost'
-						}
-					>
-						<Link
-							href={link.href}
-							className='shrink-0 whitespace-nowrap'
-						>
-							<div className='mr-2 h-4 w-4 shrink-0'>
-								{link.icon}
-							</div>
-							{link.title}
-						</Link>
-					</Button>
+						title={link.title}
+						href={link.href}
+						icon={link.icon}
+					/>
 				))}
 				<Separator />
 				<ModeToggle />

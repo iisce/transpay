@@ -3,10 +3,10 @@ import { RevenueCharts } from '@/components/shared/chats/revenue-chart';
 import { DASHBOARD_CARD } from '@/lib/consts';
 import React from 'react';
 
-export default function DashboardAdmin(user: IUser) {
+export default function DashboardAdmin(user: { user: IUser }) {
 	return (
 		<div>
-			<div className='flex flex-row flex-wrap'>
+			<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 w-full'>
 				{DASHBOARD_CARD.map((card: DashboardCardI, i) => (
 					<DashboardCard
 						key={i}

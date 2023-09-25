@@ -1,3 +1,4 @@
+'use client';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import {
 	DropdownMenu,
@@ -11,15 +12,17 @@ import {
 } from '../ui/dropdown-menu';
 import { Button } from '../ui/button';
 import Link from 'next/link';
-import { MANAGE_SIDEBAR_LINKS, SIDEBAR_LINKS } from '@/lib/consts';
-import { USER } from '../../../data';
+import {
+	MANAGE_SIDEBAR_LINKS,
+	SIDEBAR_LINKS,
+	SIDEBAR_LINKS_AGENT,
+} from '@/lib/consts';
 import { getInitials } from '@/lib/utils';
 import { ModeToggle } from '../dark-mode-toggle';
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 
-export function UserNav({ pages }: { pages?: IPage[] }) {
-	console.log('From user Navigation....', pages);
+export function UserNav({ user }: { user: IUser }) {
 	const pathName = usePathname();
 
 	return (
@@ -27,25 +30,28 @@ export function UserNav({ pages }: { pages?: IPage[] }) {
 			<DropdownMenuTrigger asChild>
 				<div className='flex gap-3 cursor-pointer'>
 					<Button
-						variant='destructive'
+						variant='link'
 						className='relative h-8 w-8 rounded-full'
 					>
 						<Avatar className='h-9 w-9'>
 							<AvatarImage
-								src={USER.user.avatar}
-								alt={USER.user.name}
+								src={
+									user.image ||
+									'https://avatars.githubusercontent.com/u/62449713?v=4'
+								}
+								alt={user.name || 'Agent User'}
 							/>
 							<AvatarFallback>
-								{getInitials(USER.user.name)}
+								{getInitials(user.name || 'Agent User')}
 							</AvatarFallback>
 						</Avatar>
 					</Button>
 					<div className='hidden sm:flex w-32 flex-col'>
 						<div className='text-xs font-bold'>
-							{USER.user.name}
+							{user.name || 'Agent User'}
 						</div>
 						<div className='text-xs text-primary capitalize'>
-							{USER.user.role}
+							{user.role}
 						</div>
 					</div>
 				</div>
@@ -61,17 +67,20 @@ export function UserNav({ pages }: { pages?: IPage[] }) {
 						className='flex flex-col space-y-1'
 					>
 						<p className='text-sm font-medium leading-none'>
-							{USER.user.name}
+							{user.name || 'Agent User'}
 						</p>
 						<p className='text-xs leading-none text-muted-foreground'>
-							{USER.user.email}
+							{user.email}
 						</p>
 					</Link>
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
 					{pathName.startsWith('/manage')
-						? SIDEBAR_LINKS.map((link, k) => (
+						? (user.role.toLowerCase() === 'agent'
+								? SIDEBAR_LINKS_AGENT
+								: SIDEBAR_LINKS
+						  ).map((link, k) => (
 								<DropdownMenuItem
 									className='sm:hidden'
 									asChild

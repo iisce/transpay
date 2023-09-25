@@ -1,26 +1,29 @@
 import React from 'react';
-import { USER } from '../../../../data';
 import DashboardAdmin from '@/components/role/admin/dashboard';
-import DashboardSuperAdmin from '@/components/role/superadmin/dashboard';
+import DashboardSuperAdmin from '@/components/role/super-admin/dashboard';
 import DashboardAgent from '@/components/role/agent/dashboard';
-import { getDashboard } from '@/lib/get-data';
+import { getUserMe } from '@/lib/get-data';
+import { notFound } from 'next/navigation';
 
 export default async function DashboardPage() {
-	const dashboardData = await getDashboard();
-	return (
-		<div className='h-full p-3 sm:p-5 flex flex-col gap-5 overflow-y-scroll w-full'>
-			<div className=' text-title1Bold sm:text-h4Bold'>
-				Welcome Back, {USER.user.name}
+	const user = await getUserMe();
+	const role = user?.role.toLowerCase();
+	if (!user) return notFound();
+	else
+		return (
+			<div className='h-full p-3 sm:p-5 flex flex-col gap-5 overflow-y-scroll w-full'>
+				<div className=' text-title1Bold sm:text-h4Bold'>
+					Welcome Back, {user.name}
+				</div>
+				<div className=''>
+					{role === 'superadmin' ? (
+						<DashboardSuperAdmin user={user} />
+					) : role === 'admin' ? (
+						<DashboardAdmin user={user} />
+					) : (
+						<DashboardAgent user={user} />
+					)}
+				</div>
 			</div>
-			<div className=''>
-				{USER.user.role === 'super-admin' ? (
-					<DashboardSuperAdmin user={USER.user} />
-				) : USER.user.role === 'admin' ? (
-					<DashboardAdmin user={USER.user} />
-				) : (
-					<DashboardAgent user={USER.user} />
-				)}
-			</div>
-		</div>
-	);
+		);
 }

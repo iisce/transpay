@@ -84,15 +84,8 @@ interface ButtonF {
 	onClick?: () => void;
 	className?: string;
 }
-interface IUser {
-	user: {
-		name: string;
-		role: 'super-admin' | 'admin' | 'agent';
-		avatar: string;
-		email: string;
-	};
-}
-interface ADBCI {
+type IRole = 'superadmin' | 'admin' | 'agent';
+interface IDashboardCard {
 	title: string;
 	amount: number;
 	type: 'positive' | 'negative' | 'neutral';
@@ -120,4 +113,58 @@ interface IDashboard {
 			};
 		};
 	};
+}
+interface IUser {
+	admin_id: string;
+	blacklisted: boolean;
+	createdAt: string;
+	email: string;
+	exp?: number;
+	iat?: number;
+	id: number;
+	image: string;
+	name: string;
+	password: string;
+	phone: string;
+	role: string;
+	updatedAt: string;
+	user_type?: string;
+}
+interface IAgent {
+	id: string;
+	email: string;
+	role: string;
+	user_type: string;
+	iat: number;
+	exp: number;
+}
+interface IAdminMe {
+	data: {
+		admin: IUser;
+	};
+}
+interface IAgentMe {
+	data: {
+		agent: IUser;
+	};
+}
+
+interface ICategories {
+	id: string;
+	name: string;
+}
+
+interface ICreateVehicleForm {
+	image: string;
+	category: string;
+	color: string;
+	plate_number: string;
+	status: string;
+}
+interface ICreateAdminForm {
+	name: string;
+	email: string;
+	password: string;
+	phone: string;
+	role: string;
 }
