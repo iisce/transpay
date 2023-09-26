@@ -1,4 +1,4 @@
-import { AgentForm } from '@/components/forms/agents-registration-form';
+import { AgentForm } from '@/components/forms/new-agent-form';
 import { addIcon } from '@/lib/icons';
 import React from 'react';
 

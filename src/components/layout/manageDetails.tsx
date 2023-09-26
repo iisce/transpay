@@ -18,7 +18,7 @@ export function ManageDetails({
 	return (
 		<>
 			<Link
-				className={`w-full h-[200px] shadow-xl p-[30px] bg-primary-50 hover:bg-primary-900 hover:text-white
+				className={`w-full h-[200px] shadow-xl p-[30px] bg-secondary hover:bg-primary-900 hover:text-white
          rounded-[20px] ${className}`}
 				href={link}
 			>

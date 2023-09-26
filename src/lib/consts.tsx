@@ -1629,9 +1629,9 @@ export const URLS = {
 		},
 	},
 	dashboard: '/api/v1/dashboard',
-	vehicles: {
-		all: '/api/v1/vehicles', // GET for all, POST to create
-		single: '/api/v1/vehicles', // Get by ID, Include /${vehicleId}
+	vehicle: {
+		all: '/api/v1/vehicles', // GET for all, POST to create || Get by ID, Include /${vehicleId}
+		driver: '/api/v1/vehicles/${id}/driver', // add vehicle to blacklist
 		blacklist: '/api/v1/vehicles/blacklist', // add vehicle to blacklist
 	},
 };

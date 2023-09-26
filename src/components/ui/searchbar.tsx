@@ -16,14 +16,14 @@ export default function Searchbar({
 
 	const variants =
 		variant === 'primary'
-			? 'bg-primary-50 text-primary-400'
+			? 'bg-secondary text-primary-400'
 			: variant === 'secondary'
 			? 'bg-transparent border border-black'
 			: 'bg-primary-900 text-primary-400';
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		router.push(`/vehicles/${searchValue.toLowerCase()}`);
+		router.push(`/search/${searchValue.toLowerCase()}`);
 	};
 
 	return (

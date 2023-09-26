@@ -1,23 +1,24 @@
-'use client';
-import { DRIVER_TABLE } from '@/lib/consts';
-import VehicleInfoForm from '@/components/forms/web-agent-vehicle-form';
+import VehicleInfoForm from '@/components/forms/edit-vehicle-form';
+import { getVehicleById } from '@/lib/controllers/vehicle-controller';
 import { addIcon } from '@/lib/icons';
-import React, { useState } from 'react';
+import { notFound } from 'next/navigation';
+import React from 'react';
 
-export default function VehicleInformationPage({
+export default async function VehicleInformationPage({
 	params,
 }: {
-	params: { plate: string };
+	params: { id: string };
 }) {
-	const vehicle = DRIVER_TABLE.find(
-		(driver) => driver.plate === params.plate
-	);
+	const vehicle = await getVehicleById(params.id);
+	if (!vehicle) {
+		notFound();
+	}
 	return (
 		<>
 			<div className='w-full flex flex-col gap-3 mb-8 p-2 xs:p-5 overflow-y-scroll '>
 				<div className=''>
 					<h1 className='text-title1Bold py-2'>
-						Vehicle Details {vehicle?.name}
+						Vehicle Details {vehicle?.vehicle_id}
 					</h1>
 				</div>
 
@@ -28,7 +29,7 @@ export default function VehicleInformationPage({
 				</div>
 
 				<div>
-					<VehicleInfoForm plate={params.plate} />
+					<VehicleInfoForm vehicle={vehicle} />
 				</div>
 			</div>
 		</>

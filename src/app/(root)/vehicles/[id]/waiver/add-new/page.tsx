@@ -37,13 +37,13 @@ export default function AddNewWaiver({
 			<div className=' w-full flex flex-col py-4'>
 				<label className='pl-4'>Reason for Extension</label>
 				<input
-					className=' flex h-32 rounded-3xl gap-2 p-4 pb-20 bg-primary-50'
+					className=' flex h-32 rounded-3xl gap-2 p-4 pb-20 bg-secondary'
 					type='text'
 					placeholder='Brief explanation'
 				/>
 				<label className=' pt-4 pl-4'> End Date</label>
 				<input
-					className=' h-16 text-black bg-primary-50 rounded-3xl p-4 flex'
+					className=' h-16 text-black bg-secondary rounded-3xl p-4 flex'
 					type='date'
 					placeholder='date'
 				/>

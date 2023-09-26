@@ -26,7 +26,6 @@ import { loadingSpinner, successIcon } from '@/lib/icons';
 import {
 	AlertDialog,
 	AlertDialogAction,
-	AlertDialogCancel,
 	AlertDialogContent,
 } from '../ui/alert-dialog';
 import { NextResponse } from 'next/server';
@@ -73,6 +72,7 @@ const defaultValues: Partial<DriverFormValues> = {
 };
 
 export default function CreateVehicleForm() {
+	const [newVehicleId, setNewVehicleId] = React.useState<string>('');
 	const { toast } = useToast();
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const [open, setOpen] = React.useState(false);
@@ -84,8 +84,6 @@ export default function CreateVehicleForm() {
 
 	const onSubmit = async (data: DriverFormValues) => {
 		setIsLoading(true);
-		console.log(data);
-
 		try {
 			const createVehicleResponse = await fetch(
 				'/api/create-vehicle',
@@ -110,14 +108,14 @@ export default function CreateVehicleForm() {
 				});
 				setIsLoading(false);
 				setOpen(true);
+				setNewVehicleId(result.data.vehicle_id);
 				return NextResponse.json(result);
 			} else {
 				setIsLoading(false);
-				console.log(NextResponse.json(result));
 				toast({
 					title: 'Vehicle NOT Created',
 				});
-				return null;
+				return NextResponse.json(result);
 			}
 		} catch (error) {
 			setIsLoading(false);
@@ -140,7 +138,10 @@ export default function CreateVehicleForm() {
 									Means Of Identification
 								</FormLabel>
 
-								<Select defaultValue={field.value}>
+								<Select
+									onValueChange={field.onChange}
+									defaultValue={field.value}
+								>
 									<FormControl>
 										<SelectTrigger className='relative text-body flex  items-center h-14 rounded-2xl'>
 											<SelectValue placeholder='Select a means of identification' />
@@ -211,7 +212,10 @@ export default function CreateVehicleForm() {
 									Means Of Identification
 								</FormLabel>
 
-								<Select defaultValue={field.value}>
+								<Select
+									onValueChange={field.onChange}
+									defaultValue={field.value}
+								>
 									<FormControl>
 										<SelectTrigger className='relative text-body flex  items-center h-14 rounded-2xl'>
 											<SelectValue placeholder='Select a means of identification' />
@@ -286,16 +290,11 @@ export default function CreateVehicleForm() {
 								className='rounded-xl'
 							>
 								<Link
-									href={`/vehicles/${
-										form.getValues().plate_number
-									}`}
+									href={`/vehicles/${newVehicleId}/new-driver`}
 								>
-									View Vehicle
+									All Vehicles
 								</Link>
 							</AlertDialogAction>
-							<AlertDialogCancel className='rounded-xl'>
-								Add New Vehicle
-							</AlertDialogCancel>
 						</div>
 					</div>
 				</AlertDialogContent>

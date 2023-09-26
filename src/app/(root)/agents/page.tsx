@@ -2,12 +2,13 @@ import { Button } from '@/components/ui/button';
 import { agentsColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { AGENT_TABLE } from '@/lib/consts';
+import { getAgents } from '@/lib/agent-controller';
 import { addIcon } from '@/lib/icons';
 import Link from 'next/link';
 import React from 'react';
 
-export default function Agents() {
+export default async function Agents() {
+	const agents = await getAgents();
 	return (
 		<div className='p-5 w-full h-full flex flex-col'>
 			<div className='flex justify-between'>
@@ -19,7 +20,7 @@ export default function Agents() {
 						variant={'default'}
 					>
 						<Link
-							href={'/agents/add-new'}
+							href={'/agents/new-agent'}
 							className='shrink-0 whitespace-nowrap'
 						>
 							<div className='mr-2 h-4 w-4 shrink-0'>
@@ -46,30 +47,66 @@ export default function Agents() {
 						<TabsTrigger value='inactive'>
 							Inactive
 						</TabsTrigger>
+						<TabsTrigger value='blacklisted'>
+							Blacklisted
+						</TabsTrigger>
 					</TabsList>
 					<TabsContent value='all'>
 						<DataTable
 							showSearch
+							searchWith='name'
+							searchWithPlaceholder='Search with name'
+							showColumns
+							showPagination
 							columns={agentsColumns}
-							data={AGENT_TABLE}
+							data={agents || []}
 						/>
 					</TabsContent>
 					<TabsContent value='active'>
 						<DataTable
 							showSearch
+							searchWith='name'
+							searchWithPlaceholder='Search with name'
+							showColumns
+							showPagination
 							columns={agentsColumns}
-							data={AGENT_TABLE.filter(
-								(agent) => agent.status === 'active'
-							)}
+							data={
+								agents?.filter(
+									(agent) => agent.is_active === true
+								) || []
+							}
 						/>
 					</TabsContent>
 					<TabsContent value='inactive'>
 						<DataTable
 							showSearch
+							searchWith='name'
+							searchWithPlaceholder='Search with name'
+							showColumns
+							showPagination
 							columns={agentsColumns}
-							data={AGENT_TABLE.filter(
-								(agent) => agent.status === 'inactive'
-							)}
+							data={
+								agents?.filter(
+									(agent) =>
+										agent.is_active === false
+								) || []
+							}
+						/>
+					</TabsContent>
+					<TabsContent value='blacklisted'>
+						<DataTable
+							showSearch
+							searchWith='name'
+							searchWithPlaceholder='Search with name'
+							showColumns
+							showPagination
+							columns={agentsColumns}
+							data={
+								agents?.filter(
+									(agent) =>
+										agent.blacklisted === true
+								) || []
+							}
 						/>
 					</TabsContent>
 				</Tabs>

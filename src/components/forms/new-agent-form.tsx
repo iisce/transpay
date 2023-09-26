@@ -1,5 +1,4 @@
 'use client';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -30,29 +29,37 @@ import {
 	AlertDialogContent,
 } from '../ui/alert-dialog';
 import React from 'react';
-import { successIcon } from '@/lib/icons';
+import { loadingSpinner, successIcon } from '@/lib/icons';
+import { NextResponse } from 'next/server';
 
 const agentFormSchema = z.object({
-	name: z
-		.string()
-		.min(2, {
-			message: 'Username must be at least 2 characters.',
+	city: z
+		.string({
+			required_error: 'Please enter city.',
+		})
+		.min(3, {
+			message: 'City must be at least 3 characters.',
 		})
 		.max(30, {
-			message: 'Username must not be longer than 30 characters.',
+			message: 'City must not be longer than 30 characters.',
+		}),
+	confirmPassword: z.string().min(8),
+	country: z
+		.string({
+			required_error: 'Please enter country.',
+		})
+		.min(3, {
+			message: 'Country must be at least 3 characters.',
+		})
+		.max(30, {
+			message: 'Country must not be longer than 30 characters.',
 		}),
 	email: z
 		.string({
 			required_error: 'Please enter an email.',
 		})
 		.email(),
-	moi: z.string({
-		required_error: 'Please select a mode of identification',
-	}),
-	phone: z.string({
-		required_error: 'Please enter phone number.',
-	}),
-	idNumber: z
+	identification_number: z
 		.string({
 			required_error: 'Please enter identification number.',
 		})
@@ -60,9 +67,29 @@ const agentFormSchema = z.object({
 			message: 'ID number must be at least 8 characters.',
 		})
 		.max(20, {
-			message: 'Username must not be longer than 20 characters.',
+			message: 'ID Number must not be longer than 20 characters.',
 		}),
-	address: z.string().max(160).min(15),
+	identification_type: z.string({
+		required_error: 'Please select a mode of identification',
+	}),
+	location: z
+		.string({
+			required_error: 'Please enter location.',
+		})
+		.min(3, {
+			message: 'Location must be at least 3 characters.',
+		})
+		.max(30, {
+			message: 'Location must not be longer than 30 characters.',
+		}),
+	name: z
+		.string()
+		.min(2, {
+			message: 'Name must be at least 2 characters.',
+		})
+		.max(30, {
+			message: 'Name must not be longer than 30 characters.',
+		}),
 	password: z.string().refine((password) => {
 		return (
 			password.length >= 8 &&
@@ -70,7 +97,24 @@ const agentFormSchema = z.object({
 			/\d/.test(password)
 		);
 	}, 'The password must contain at least one uppercase letter and one number and be at least 8 characters long.'),
-	confirmPassword: z.string().min(8),
+	phone: z.string({
+		required_error: 'Please enter phone number.',
+	}),
+	postcode: z
+		.string()
+		.min(5, {
+			message: 'postcode must be at least 5 characters.',
+		})
+		.max(7, {
+			message: 'postcode must not be longer than 7 characters.',
+		}),
+	role: z
+		.string({
+			required_error: 'Please enter role.',
+		})
+		.refine((value) => ['agent'].includes(value), {
+			message: 'Invalid means of identification.',
+		}),
 });
 
 type AgentFormValues = z.infer<typeof agentFormSchema>;
@@ -78,15 +122,20 @@ type AgentFormValues = z.infer<typeof agentFormSchema>;
 // This can come from your database or API.
 const defaultValues: Partial<AgentFormValues> = {
 	name: '',
-	email: '',
-	phone: '',
-	idNumber: '',
-	address: '',
 	password: '',
-	confirmPassword: '',
+	phone: '',
+	email: '',
+	identification_type: 'nin',
+	identification_number: '',
+	role: 'agent',
+	location: '',
+	city: '',
+	country: 'nigeria',
+	postcode: '',
 };
 
 export function AgentForm() {
+	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const [open, setOpen] = React.useState(false);
 	const { toast } = useToast();
 	const form = useForm<AgentFormValues>({
@@ -95,18 +144,47 @@ export function AgentForm() {
 		mode: 'onChange',
 	});
 
-	function onSubmit(data: AgentFormValues) {
-		setOpen(true);
-		toast({
-			title: 'You submitted the following values:',
-			description: (
-				<pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-					<code className='text-white'>
-						{JSON.stringify(data, null, 2)}
-					</code>
-				</pre>
-			),
-		});
+	async function onSubmit(data: AgentFormValues) {
+		setIsLoading(true);
+		try {
+			const createAgentResponse = await fetch('/api/create-agent', {
+				method: 'POST',
+				body: JSON.stringify({
+					name: data.name,
+					password: data.password,
+					phone: data.phone,
+					email: data.email,
+					identification_type: data.identification_type,
+					identification_number: data.identification_number,
+					role: data.role,
+					location: data.location,
+					city: data.city,
+					country: data.country,
+					postcode: data.postcode,
+				}),
+			});
+			const result = await createAgentResponse.json();
+			if (
+				createAgentResponse.status > 199 &&
+				createAgentResponse.status < 299
+			) {
+				toast({
+					title: 'Agent Created Successfully',
+				});
+				setIsLoading(false);
+				setOpen(true);
+				return NextResponse.json(result);
+			} else {
+				setIsLoading(false);
+				console.log('Something went wrong');
+				toast({
+					title: 'Agent NOT Created',
+				});
+				return null;
+			}
+		} catch (error) {
+			setIsLoading(false);
+		}
 	}
 
 	return (
@@ -134,7 +212,7 @@ export function AgentForm() {
 					/>
 					<FormField
 						control={form.control}
-						name='moi'
+						name='identification_type'
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel>
@@ -183,7 +261,7 @@ export function AgentForm() {
 					/>
 					<FormField
 						control={form.control}
-						name='idNumber'
+						name='identification_number'
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel>
@@ -217,14 +295,70 @@ export function AgentForm() {
 					/>
 					<FormField
 						control={form.control}
-						name='address'
+						name='location'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Address</FormLabel>
+								<FormLabel>Location</FormLabel>
 								<FormControl>
-									<Textarea
-										placeholder='Address'
-										className='resize-none'
+									<Input
+										placeholder='Location'
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name='city'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>City</FormLabel>
+								<FormControl>
+									<Input
+										placeholder='City'
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name='country'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Country</FormLabel>
+								<Select
+									onValueChange={field.onChange}
+									defaultValue={field.value}
+								>
+									<FormControl>
+										<SelectTrigger className='h-12'>
+											<SelectValue placeholder='Select a mean of Identification' />
+										</SelectTrigger>
+									</FormControl>
+									<SelectContent>
+										<SelectItem value='nigeria'>
+											Nigeria
+										</SelectItem>
+									</SelectContent>
+								</Select>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name='postcode'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Postcode</FormLabel>
+								<FormControl>
+									<Input
+										placeholder='Postcode'
 										{...field}
 									/>
 								</FormControl>
@@ -279,7 +413,7 @@ export function AgentForm() {
 						className='w-28'
 						type='submit'
 					>
-						Add Agent
+						{isLoading ? loadingSpinner : 'Add Agent'}
 					</Button>
 				</div>
 				<AlertDialog
@@ -297,25 +431,25 @@ export function AgentForm() {
 								</div>
 							</div>
 							<div className='flex flex-col text-center mb-5'>
-								<div>E-mail: omoroge24@gmail.com</div>
-								<div>Password: hdfay123454</div>
+								<div>
+									E-mail: {form.getValues('email')}
+								</div>
+								<div>
+									Password:{' '}
+									{form.getValues('password')}
+								</div>
 							</div>
 							<div className='flex flex-col gap-3'>
 								<AlertDialogAction
 									asChild
 									className='rounded-xl'
 								>
-									<Link href={`/agents/agentid`}>
-										View Account
+									<Link href={`/agents`}>
+										View Agents
 									</Link>
 								</AlertDialogAction>
-								<AlertDialogCancel
-									asChild
-									className='rounded-xl'
-								>
-									<Link href={`/agents`}>
-										Dashboard
-									</Link>
+								<AlertDialogCancel className='rounded-xl'>
+									New Agent
 								</AlertDialogCancel>
 							</div>
 						</div>

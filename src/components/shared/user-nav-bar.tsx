@@ -57,22 +57,40 @@ export function UserNav({ user }: { user: IUser }) {
 				</div>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent
-				className='w-56'
+				className='w-60'
 				align='end'
 				forceMount
 			>
 				<DropdownMenuLabel className='font-normal'>
-					<Link
-						href='/manage/profile'
-						className='flex flex-col space-y-1'
-					>
-						<p className='text-sm font-medium leading-none'>
-							{user.name || 'Agent User'}
-						</p>
-						<p className='text-xs leading-none text-muted-foreground'>
-							{user.email}
-						</p>
-					</Link>
+					<div className='flex items-center gap-4 bg-secondary rounded-xl p-2'>
+						<div className=''>
+							<Avatar className='h-14 w-14'>
+								<AvatarImage
+									src={
+										user.image ||
+										'https://avatars.githubusercontent.com/u/62449713?v=4'
+									}
+									alt={user.name || 'Agent User'}
+								/>
+								<AvatarFallback>
+									{getInitials(
+										user.name || 'Agent User'
+									)}
+								</AvatarFallback>
+							</Avatar>
+						</div>
+						<Link
+							href='/manage/profile'
+							className='flex flex-col space-y-1'
+						>
+							<p className='text-sm font-medium leading-none'>
+								{user.name || 'Agent User'}
+							</p>
+							<p className='text-xs leading-none text-muted-foreground'>
+								{user.email}
+							</p>
+						</Link>
+					</div>
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
@@ -122,6 +140,11 @@ export function UserNav({ user }: { user: IUser }) {
 				<div className='sm:hidden'>
 					<DropdownMenuSeparator />
 					<ModeToggle />
+				</div>
+				<DropdownMenuSeparator />
+				<div className='flex justify-between gap-3 items-center text-xs px-2'>
+					<Link href='/privacy'>Privacy Policy</Link>
+					<Link href='/terms'>Terms of Service</Link>
 				</div>
 			</DropdownMenuContent>
 		</DropdownMenu>

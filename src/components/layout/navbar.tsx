@@ -6,6 +6,8 @@ import { searchIcon } from '@/lib/icons';
 import { UserNav } from '../shared/user-nav-bar';
 import { Notification } from '../shared/notification';
 import { getUserMe } from '@/lib/get-data';
+import { Button } from '../ui/button';
+import { signIn } from 'next-auth/react';
 
 export default async function NavBar() {
 	const user = await getUserMe();
@@ -37,7 +39,16 @@ export default async function NavBar() {
 				</div>
 				<div className='flex gap-3 items-center text-primary-700'>
 					<Notification />
-					{user && <UserNav user={user} />}
+					{user ? (
+						<UserNav user={user} />
+					) : (
+						<Button
+							variant='link'
+							asChild
+						>
+							<Link href='/agent/sign-in'>Login</Link>
+						</Button>
+					)}
 				</div>
 			</div>
 		</div>

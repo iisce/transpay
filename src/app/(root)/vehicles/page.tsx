@@ -4,13 +4,16 @@ import Link from 'next/link';
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DataTable } from '@/components/ui/table/data-table';
-import { driversColumns } from '@/components/ui/table/columns';
-import { DRIVER_TABLE } from '@/lib/consts';
+import { vehiclesColumns } from '@/components/ui/table/columns';
 import { getSSession } from '@/lib/get-data';
 import Searchbar from '@/components/ui/searchbar';
+import { getVehicles } from '@/lib/controllers/vehicle-controller';
 
 export default async function Vehicles() {
-	const { role } = await getSSession();
+	const [session, vehicles] = await Promise.all([
+		getSSession(),
+		getVehicles(),
+	]);
 	return (
 		<div className='p-5 w-full h-full flex flex-col'>
 			<div className='flex justify-between'>
@@ -33,7 +36,7 @@ export default async function Vehicles() {
 					</Button>
 				</div>
 			</div>
-			{role?.toLowerCase() !== 'agent' ? (
+			{vehicles && session.role?.toLowerCase() !== 'agent' ? (
 				<div className='flex flex-col gap-5 overflow-y-scroll'>
 					<Tabs
 						defaultValue='all'
@@ -59,41 +62,53 @@ export default async function Vehicles() {
 						<TabsContent value='all'>
 							<DataTable
 								showSearch
-								searchWith='plate'
-								columns={driversColumns}
-								data={DRIVER_TABLE}
+								searchWith='plate_number'
+								searchWithPlaceholder='Search with plate number'
+								showColumns
+								showPagination
+								columns={vehiclesColumns}
+								data={vehicles}
 							/>
 						</TabsContent>
 						<TabsContent value='cleared'>
 							<DataTable
 								showSearch
-								searchWith='plate'
-								columns={driversColumns}
-								data={DRIVER_TABLE.filter(
-									(agent) =>
-										agent.category === 'cleared'
+								searchWith='plate_number'
+								searchWithPlaceholder='Search with plate number'
+								showColumns
+								showPagination
+								columns={vehiclesColumns}
+								data={vehicles.filter(
+									(vehicle) =>
+										vehicle.status === 'cleared'
 								)}
 							/>
 						</TabsContent>
 						<TabsContent value='debtors'>
 							<DataTable
 								showSearch
-								searchWith='plate'
-								columns={driversColumns}
-								data={DRIVER_TABLE.filter(
-									(agent) =>
-										agent.category === 'debtors'
+								searchWith='plate_number'
+								searchWithPlaceholder='Search with plate number'
+								showColumns
+								showPagination
+								columns={vehiclesColumns}
+								data={vehicles.filter(
+									(vehicle) =>
+										vehicle.status === 'debtors'
 								)}
 							/>
 						</TabsContent>
 						<TabsContent value='waived'>
 							<DataTable
 								showSearch
-								searchWith='plate'
-								columns={driversColumns}
-								data={DRIVER_TABLE.filter(
-									(agent) =>
-										agent.status === 'waived'
+								searchWith='plate_number'
+								searchWithPlaceholder='Search with plate number'
+								showColumns
+								showPagination
+								columns={vehiclesColumns}
+								data={vehicles.filter(
+									(vehicle) =>
+										vehicle.status === 'waived'
 								)}
 							/>
 						</TabsContent>

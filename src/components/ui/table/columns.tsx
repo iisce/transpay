@@ -25,6 +25,8 @@ import {
 import Pill from '../pill';
 import Link from 'next/link';
 import Cbadge from '../category-badge';
+import { deleteAdminById } from '@/lib/controllers/admin-controller';
+import DeleteAdminButton from '@/components/shared/delete-admin-button';
 
 export const paymentColumns: ColumnDef<Payment>[] = [
 	{
@@ -117,86 +119,137 @@ export const paymentColumns: ColumnDef<Payment>[] = [
 		},
 	},
 ];
-export const adminsColumns: ColumnDef<AdminT>[] = [
+export const adminsColumns: ColumnDef<IAdmin>[] = [
 	{
 		accessorKey: 'name',
-		header: 'Name',
-	},
-	{
-		accessorKey: 'contact',
 		header: ({ column }) => (
 			<DataTableColumnHeader
 				column={column}
-				title='Contact'
+				title='Name'
 			/>
 		),
 		cell: ({ row }) => (
-			<div>
-				<div>{row.original.contact.email}</div>
-				<div>{row.original.contact.phone}</div>
-			</div>
+			<Link
+				href={`/admins/${row.original.admin_id}`}
+				className=''
+			>
+				{row.original.name}
+			</Link>
 		),
 	},
 	{
-		accessorKey: 'status',
+		accessorKey: 'email',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Email'
+			/>
+		),
+		cell: ({ row }) => <div>{row.original.email}</div>,
+	},
+	{
+		accessorKey: 'phone',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Phone'
+			/>
+		),
+		cell: ({ row }) => <div>{row.original.phone}</div>,
+	},
+	{
+		accessorKey: 'blacklisted',
 		header: 'Status',
-		cell: ({ row }) => (
-			<Pill
-				status={row.getValue('status')}
-				text={row.getValue('status')}
-			/>
-		),
-	},
-	{
-		accessorKey: 'address',
-		header: 'Address',
+		cell: ({ row }) => {
+			if (row.getValue('blacklisted') === true)
+				return (
+					<Pill
+						status={'inactive'}
+						text={'inactive'}
+					/>
+				);
+			else
+				return (
+					<Pill
+						status={'active'}
+						text={'active'}
+					/>
+				);
+		},
 	},
 	{
 		id: 'actions',
 		header: 'Action',
 		cell: ({ row }) => {
 			return (
-				<div className='flex flex-row gap-2 justify-center '>
-					<Link href={`/admins/${row.id}`}>
+				<div className='flex flex-row gap-2 justify-start'>
+					<Link href={`/admins/${row.original.admin_id}`}>
 						<span className='h-4 w-4 mr-3 items-center '>
 							{editIcon}
 						</span>
 					</Link>
-					<div className='items-center'>
-						<span className='h-4 w-4 mr-3'>{deleteIcon}</span>
-					</div>
+					<DeleteAdminButton id={row.original.admin_id} />
 				</div>
 			);
 		},
 	},
 ];
-export const agentsColumns: ColumnDef<AgentT>[] = [
+export const agentsColumns: ColumnDef<IAgent>[] = [
 	{
 		accessorKey: 'name',
-		header: 'Name',
-	},
-	{
-		accessorKey: 'area',
 		header: ({ column }) => (
 			<DataTableColumnHeader
 				column={column}
-				title='Area'
+				title='Name'
+			/>
+		),
+		cell: ({ row }) => (
+			<Link
+				href={`/agents/${row.original.agent_id}`}
+				className=''
+			>
+				{row.original.name}
+			</Link>
+		),
+	},
+	{
+		accessorKey: 'location',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Location'
 			/>
 		),
 	},
 	{
 		accessorKey: 'phone',
-		header: 'Phone',
-	},
-	{
-		accessorKey: 'status',
-		header: 'Status',
-		cell: ({ row }) => (
-			<Pill
-				status={row.getValue('status')}
-				text={row.getValue('status')}
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Phone'
 			/>
 		),
+		cell: ({ row }) => <div>{row.original.phone}</div>,
+	},
+	{
+		accessorKey: 'is_active',
+		header: 'Status',
+		cell: ({ row }) => {
+			if (row.getValue('is_active') === true)
+				return (
+					<Pill
+						status={'active'}
+						text={'active'}
+					/>
+				);
+			else
+				return (
+					<Pill
+						status={'inactive'}
+						text={'inactive'}
+					/>
+				);
+		},
 	},
 	{
 		id: 'actions',
@@ -214,7 +267,9 @@ export const agentsColumns: ColumnDef<AgentT>[] = [
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align='end'>
 						<DropdownMenuItem asChild>
-							<Link href={`/agents/${row.id}`}>
+							<Link
+								href={`/agents/${row.original.agent_id}`}
+							>
 								<span className='h-4 w-4 mr-3'>
 									{editIcon}
 								</span>
@@ -233,16 +288,20 @@ export const agentsColumns: ColumnDef<AgentT>[] = [
 		},
 	},
 ];
-export const driversColumns: ColumnDef<DriverT>[] = [
+export const vehiclesColumns: ColumnDef<IVehicle>[] = [
 	{
-		accessorKey: 'name',
-		header: 'Name',
+		accessorKey: 'color',
+		header: 'Color',
 	},
 	{
-		accessorKey: 'plate',
-		header: 'Vehicle Plate Number',
+		accessorKey: 'category',
+		header: 'Category',
+	},
+	{
+		accessorKey: 'plate_number',
+		header: 'Plate Number',
 		cell: ({ row }) => (
-			<span className='uppercase'>{row.getValue('plate')}</span>
+			<span className='uppercase'>{row.getValue('plate_number')}</span>
 		),
 	},
 	{
@@ -255,16 +314,11 @@ export const driversColumns: ColumnDef<DriverT>[] = [
 			/>
 		),
 	},
-	{
-		accessorKey: 'category',
-		header: 'Category',
-		cell: ({ row }) => <Cbadge variant={row.getValue('category')} />,
-	},
 
 	{
 		id: 'actions',
 		cell: ({ row }) => {
-			const driver = row.original;
+			const vehicle = row.original;
 			return (
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
@@ -284,11 +338,13 @@ export const driversColumns: ColumnDef<DriverT>[] = [
 							className='border-b border-black rounded-none'
 							asChild
 						>
-							<Link href={`/vehicles/${driver.plate}`}>
+							<Link
+								href={`/vehicles/${vehicle.vehicle_id}`}
+							>
 								<span className='h-4 w-4 mr-3'>
 									{editIcon}
 								</span>
-								View Driver
+								View Vehicle
 							</Link>
 						</DropdownMenuItem>
 						<DropdownMenuItem
@@ -296,7 +352,7 @@ export const driversColumns: ColumnDef<DriverT>[] = [
 							asChild
 						>
 							<Link
-								href={`/vehicles/${driver.plate}/payments`}
+								href={`/vehicles/${vehicle.vehicle_id}/payments`}
 							>
 								<span className='h-4 w-4 mr-3'>
 									{paymentIcon}
@@ -309,7 +365,7 @@ export const driversColumns: ColumnDef<DriverT>[] = [
 							asChild
 						>
 							<Link
-								href={`/vehicles/${driver.plate}/fines`}
+								href={`/vehicles/${vehicle.vehicle_id}/fines`}
 							>
 								<span className='h-4 w-4 mr-3'>
 									{finesIcon}
@@ -321,7 +377,7 @@ export const driversColumns: ColumnDef<DriverT>[] = [
 							<span className='h-4 w-4 mr-3'>
 								{deleteIcon}
 							</span>
-							Delete Driver
+							Delete Vehicle
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>

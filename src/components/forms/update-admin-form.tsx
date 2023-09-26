@@ -13,16 +13,10 @@ import {
 } from '../ui/form';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
-import Link from 'next/link';
-import {
-	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
-	AlertDialogContent,
-} from '../ui/alert-dialog';
 import React from 'react';
-import { loadingSpinner, successIcon } from '@/lib/icons';
+import { loadingSpinner } from '@/lib/icons';
 import { NextResponse } from 'next/server';
+import DeleteAdminButton from '../shared/delete-admin-button';
 
 const adminFormSchema = z.object({
 	name: z
@@ -58,31 +52,20 @@ const adminFormSchema = z.object({
 	// 		message: 'Username must not be longer than 20 characters.',
 	// 	}),
 	// address: z.string().max(160).min(15),
-	password: z.string().refine((password) => {
-		return (
-			password.length >= 8
-			// &&
-			// /[A-Z]/.test(password) &&
-			// /\d/.test(password)
-		);
-	}, 'The password must contain at least one uppercase letter and one number and be at least 8 characters long.'),
-	confirmPassword: z.string().min(8),
 });
 
 type AdminFormValues = z.infer<typeof adminFormSchema>;
 
-// This can come from your database or API.
-const defaultValues: Partial<AdminFormValues> = {
-	name: '',
-	email: '',
-	phone: '',
-	role: 'admin',
-	password: '',
-	confirmPassword: '',
-};
-export function AdminForm() {
+export function UpdateAdminForm({ admin }: { admin: IAdmin }) {
+	const [disabled, setDisabled] = React.useState<boolean>(true);
+	const defaultValues: Partial<AdminFormValues> = {
+		name: admin.name,
+		email: admin.email,
+		phone: admin.phone,
+		role: 'admin',
+	};
+
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
-	const [open, setOpen] = React.useState(false);
 	const { toast } = useToast();
 	const form = useForm<AdminFormValues>({
 		resolver: zodResolver(adminFormSchema),
@@ -94,11 +77,11 @@ export function AdminForm() {
 		setIsLoading(true);
 		try {
 			const createAdminResponse = await fetch('/api/create-admin', {
-				method: 'POST',
+				method: 'PUT',
 				body: JSON.stringify({
+					admin_id: admin.admin_id,
 					name: data.name,
 					email: data.email,
-					password: data.password,
 					phone: data.phone,
 					role: data.role,
 				}),
@@ -109,16 +92,16 @@ export function AdminForm() {
 				createAdminResponse.status < 299
 			) {
 				toast({
-					title: 'Admin Created Successfully',
+					title: 'Updated Successfully',
 				});
 				setIsLoading(false);
-				setOpen(true);
+				setDisabled(true);
 				return NextResponse.json(result);
 			} else {
 				setIsLoading(false);
 				console.log('Something went wrong');
 				toast({
-					title: 'Admin NOT Created',
+					title: 'Not Updated',
 				});
 				return null;
 			}
@@ -128,29 +111,31 @@ export function AdminForm() {
 	}
 
 	return (
-		<Form {...form}>
-			<form
-				onSubmit={form.handleSubmit(onSubmit)}
-				className='mb-20 flex flex-col gap-5'
-			>
-				<div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
-					<FormField
-						control={form.control}
-						name='name'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Name</FormLabel>
-								<FormControl>
-									<Input
-										placeholder='Full Name'
-										{...field}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					{/* <FormField
+		<>
+			<Form {...form}>
+				<form
+					onSubmit={form.handleSubmit(onSubmit)}
+					className='mb-20 flex flex-col gap-5'
+				>
+					<div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
+						<FormField
+							control={form.control}
+							name='name'
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Name</FormLabel>
+									<FormControl>
+										<Input
+											disabled={disabled}
+											placeholder='Full Name'
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						{/* <FormField
 						control={form.control}
 						name='moi'
 						render={({ field }) => (
@@ -183,23 +168,24 @@ export function AdminForm() {
 							</FormItem>
 						)}
 					/> */}
-					<FormField
-						control={form.control}
-						name='phone'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Phone Number</FormLabel>
-								<FormControl>
-									<Input
-										placeholder='Enter phone number'
-										{...field}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					{/* <FormField
+						<FormField
+							control={form.control}
+							name='phone'
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Phone Number</FormLabel>
+									<FormControl>
+										<Input
+											disabled={disabled}
+											placeholder='Enter phone number'
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						{/* <FormField
 						control={form.control}
 						name='idNumber'
 						render={({ field }) => (
@@ -217,23 +203,26 @@ export function AdminForm() {
 							</FormItem>
 						)}
 					/> */}
-					<FormField
-						control={form.control}
-						name='email'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Email Address</FormLabel>
-								<FormControl>
-									<Input
-										placeholder='Email'
-										{...field}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					{/* <FormField
+						<FormField
+							control={form.control}
+							name='email'
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>
+										Email Address
+									</FormLabel>
+									<FormControl>
+										<Input
+											disabled={disabled}
+											placeholder='Email'
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						{/* <FormField
 						control={form.control}
 						name='address'
 						render={({ field }) => (
@@ -250,7 +239,7 @@ export function AdminForm() {
 							</FormItem>
 						)}
 					/> */}
-					<FormField
+						{/* <FormField
 						control={form.control}
 						name='password'
 						render={({ field }) => (
@@ -283,63 +272,36 @@ export function AdminForm() {
 								<FormMessage />
 							</FormItem>
 						)}
-					/>
-				</div>
-				<div className='flex gap-5 justify-center'>
+					/> */}
+					</div>
+					<div className=''>
+						{!disabled && (
+							<Button
+								className='w-32'
+								type='submit'
+							>
+								{isLoading
+									? loadingSpinner
+									: 'Save Changes'}
+							</Button>
+						)}
+					</div>
+				</form>
+			</Form>
+			{disabled && (
+				<div className='flex items-center justify-between gap-5'>
 					<Button
-						className='w-28 border-primary text-primary'
-						variant='outline'
-						asChild
+						className='w-32'
+						onClick={() => setDisabled(false)}
+						type='button'
 					>
-						<Link href='/admins'>Cancel</Link>
+						Edit
 					</Button>
-					<Button
-						className='w-28'
-						type='submit'
-					>
-						{isLoading ? loadingSpinner : 'Add Admin'}
+					<Button className='w-32'>
+						<DeleteAdminButton id={admin.admin_id} />
 					</Button>
 				</div>
-				<AlertDialog
-					open={open}
-					onOpenChange={setOpen}
-				>
-					<AlertDialogContent className='bg-secondary'>
-						<div className='w-60 mx-auto flex-col'>
-							<div className='flex flex-col items-center gap-5 mb-5'>
-								<div className='h-20 w-20 text-awesome-foreground'>
-									{successIcon}
-								</div>
-								<div className='text-xl'>
-									Admin Account Created
-								</div>
-							</div>
-							<div className='flex flex-col text-center mb-5'>
-								<div>
-									E-mail: {form.getValues('email')}
-								</div>
-								<div>
-									Password:{' '}
-									{form.getValues('password')}
-								</div>
-							</div>
-							<div className='flex flex-col gap-3'>
-								<AlertDialogAction
-									asChild
-									className='rounded-xl'
-								>
-									<Link href={`/admins`}>
-										View Admins
-									</Link>
-								</AlertDialogAction>
-								<AlertDialogCancel className='rounded-xl'>
-									New Admin
-								</AlertDialogCancel>
-							</div>
-						</div>
-					</AlertDialogContent>
-				</AlertDialog>
-			</form>
-		</Form>
+			)}
+		</>
 	);
 }

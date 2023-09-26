@@ -15,30 +15,52 @@ import {
 	SelectValue,
 } from '../ui/select';
 
-const driverFormSchema = z.object({
-	colour: z.string({
-		description: 'Enter your vehicle colour.',
-	}),
-	type: z
-		.string()
-		.refine((value) => ['bus', 'car', 'keke'].includes(value), {
-			message: 'Invalid means of identification.',
+export default function VehicleInfoForm({ vehicle }: { vehicle: IVehicle }) {
+	const vehicleFormSchema = z.object({
+		category: z
+			.string({
+				required_error: 'Please enter a valid Category.',
+			})
+			.refine((value) => ['keke', 'bus'].includes(value), {
+				message: 'Invalid means of identification.',
+			}),
+		color: z
+			.string({
+				required_error: 'Please enter a valid Color.',
+			})
+			.min(3, { message: 'Colors have at least three characters.' }),
+		image: z
+			.string({
+				required_error: 'Please add image.',
+			})
+			.min(5, { message: 'Must be a valid Image link' }),
+		plate_number: z
+			.string({
+				required_error: 'Enter your plate number.',
+			})
+			.min(5, {
+				message: 'Plate numbers have at least five(5) characters.',
+			}),
+		status: z.string({
+			required_error: 'Choose Status',
 		}),
-	vehiclePlateNumber: z.string(),
+	});
 
-	ownersName: z.string(),
-	ownersPhone: z.string(),
-});
+	type VehicleFormValues = z.infer<typeof vehicleFormSchema>;
 
-type DriverFormValues = z.infer<typeof driverFormSchema>;
-
-export default function VehicleInfoForm({ plate }: { plate: string }) {
-	const form = useForm<DriverFormValues>({
-		resolver: zodResolver(driverFormSchema),
+	const defaultValues: Partial<VehicleFormValues> = {
+		category: 'bus',
+		color: '',
+		image: '',
+		plate_number: '',
+		status: 'waived',
+	};
+	const form = useForm<VehicleFormValues>({
+		resolver: zodResolver(vehicleFormSchema),
 		mode: 'onChange',
 	});
 
-	const onSubmit = (data: DriverFormValues) => {
+	const onSubmit = (data: VehicleFormValues) => {
 		console.log(data);
 	};
 
@@ -51,7 +73,7 @@ export default function VehicleInfoForm({ plate }: { plate: string }) {
 				<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
 					<FormField
 						control={form.control}
-						name='type'
+						name='category'
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel className='text-title1Bold pl-4'>
@@ -88,7 +110,7 @@ export default function VehicleInfoForm({ plate }: { plate: string }) {
 					/>
 
 					<FormField
-						name='colour'
+						name='color'
 						control={form.control}
 						render={({ field }) => (
 							<FormItem>
@@ -110,7 +132,7 @@ export default function VehicleInfoForm({ plate }: { plate: string }) {
 						)}
 					/>
 					<FormField
-						name='vehiclePlateNumber'
+						name='plate_number'
 						control={form.control}
 						render={({ field }) => (
 							<FormItem>
@@ -132,7 +154,7 @@ export default function VehicleInfoForm({ plate }: { plate: string }) {
 						)}
 					/>
 
-					<FormField
+					{/* <FormField
 						name='ownersName'
 						control={form.control}
 						render={({ field }) => (
@@ -175,7 +197,7 @@ export default function VehicleInfoForm({ plate }: { plate: string }) {
 								</FormControl>
 							</FormItem>
 						)}
-					/>
+					/> */}
 				</div>
 				<div className='flex justify-center items-center gap-6 text-title1Bold'>
 					<Button
@@ -185,23 +207,18 @@ export default function VehicleInfoForm({ plate }: { plate: string }) {
 						asChild
 						className='p-4 py-2 rounded-normal w-28'
 					>
-						<Link href={`/vehicles/${plate}`}>Back</Link>
+						<Link href={`/vehicles/${vehicle.plate_number}`}>
+							Back
+						</Link>
 					</Button>
-					{/* <Button
+					<Button
 						variant={'default'}
 						size='lg'
 						type='button'
-						asChild
 						className='p-4 py-2 rounded-normal w-28'
 					>
-						<Link
-							href={
-								'/vehicles/new-vehicle/drivers-license'
-							}
-						>
-							Next
-						</Link>
-					</Button> */}
+						Update Vehicle
+					</Button>
 				</div>
 			</form>
 		</Form>

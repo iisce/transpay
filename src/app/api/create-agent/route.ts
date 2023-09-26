@@ -4,7 +4,7 @@ import { getSSession } from '@/lib/get-data';
 
 export async function POST(req: NextRequest) {
 	const { access_token } = await getSSession();
-	const body: ICreateAdminForm = await req.json();
+	const body: ICreateAgentForm = await req.json();
 	const headers = {
 		'Content-Type': 'application/json',
 		'api-secret': process.env.API_SECRET || '',
@@ -12,16 +12,22 @@ export async function POST(req: NextRequest) {
 	};
 
 	try {
-		const url = API + URLS.admin.all;
+		const url = API + URLS.agent.all;
 		const response = await fetch(url, {
 			method: 'POST',
 			headers,
 			body: JSON.stringify({
 				name: body.name,
-				email: body.email,
 				password: body.password,
 				phone: body.phone,
+				email: body.email,
+				identification_type: body.identification_type,
+				identification_number: body.identification_number,
 				role: body.role,
+				location: body.location,
+				city: body.city,
+				country: body.country,
+				postcode: body.postcode,
 			}),
 		});
 		const result = await response.json();
@@ -38,7 +44,7 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
 	const { access_token } = await getSSession();
-	const body: ICreateAdminForm = await req.json();
+	const body: ICreateAgentForm = await req.json();
 	const headers = {
 		'Content-Type': 'application/json',
 		'api-secret': process.env.API_SECRET || '',
@@ -46,7 +52,7 @@ export async function PUT(req: NextRequest) {
 	};
 
 	try {
-		const url = `${API}${URLS.admin.all}/${body.admin_id}`;
+		const url = `${API}${URLS.agent.all}/${body.agent_id}`;
 		const response = await fetch(url, {
 			method: 'PUT',
 			headers,
@@ -66,7 +72,7 @@ export async function PUT(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
 	const { access_token } = await getSSession();
-	const body: ICreateAdminForm = await req.json();
+	const body: ICreateAgentForm = await req.json();
 	const headers = {
 		'Content-Type': 'application/json',
 		'api-secret': process.env.API_SECRET || '',
@@ -74,7 +80,7 @@ export async function DELETE(req: NextRequest) {
 	};
 
 	try {
-		const url = `${API}${URLS.admin.all}/${body.admin_id}`;
+		const url = `${API}${URLS.agent.all}/${body.agent_id}`;
 		const response = await fetch(url, {
 			method: 'DELETE',
 			headers,

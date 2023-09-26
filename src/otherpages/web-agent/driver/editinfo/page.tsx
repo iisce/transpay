@@ -1,5 +1,5 @@
 'use client';
-import VehicleInfoForm from '@/components/forms/web-agent-vehicle-form';
+import VehicleInfoForm from '@/components/forms/edit-vehicle-form';
 import { addIcon } from '@/lib/icons';
 import React, { useState } from 'react';
 

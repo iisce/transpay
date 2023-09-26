@@ -1,4 +1,4 @@
-import CreateVehicleForm from '@/components/forms/vehicle-creation-form';
+import CreateVehicleForm from '@/components/forms/new-vehicle-form';
 import { addIcon, driversProgressIcon1 } from '@/lib/icons';
 import React from 'react';
 

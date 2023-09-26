@@ -2,12 +2,13 @@ import { Button } from '@/components/ui/button';
 import { adminsColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ADMINS_TABLE } from '@/lib/consts';
+import { getAdmins } from '@/lib/controllers/admin-controller';
 import { addIcon } from '@/lib/icons';
 import Link from 'next/link';
 import React from 'react';
 
 export default async function Admins() {
+	const admins = await getAdmins();
 	return (
 		<div className='p-5 w-full h-full flex flex-col'>
 			<div className='flex justify-between'>
@@ -50,26 +51,42 @@ export default async function Admins() {
 					<TabsContent value='all'>
 						<DataTable
 							showSearch
+							searchWith='name'
+							searchWithPlaceholder='Search with name'
+							showColumns
+							showPagination
 							columns={adminsColumns}
-							data={ADMINS_TABLE}
+							data={admins || []}
 						/>
 					</TabsContent>
 					<TabsContent value='active'>
 						<DataTable
 							showSearch
+							searchWith='name'
+							searchWithPlaceholder='Search with name'
+							showColumns
 							columns={adminsColumns}
-							data={ADMINS_TABLE.filter(
-								(admin) => admin.status === 'active'
-							)}
+							data={
+								admins?.filter(
+									(admin) =>
+										admin.blacklisted === false
+								) || []
+							}
 						/>
 					</TabsContent>
 					<TabsContent value='inactive'>
 						<DataTable
 							showSearch
+							searchWith='name'
+							searchWithPlaceholder='Search with name'
+							showColumns
 							columns={adminsColumns}
-							data={ADMINS_TABLE.filter(
-								(admin) => admin.status === 'inactive'
-							)}
+							data={
+								admins?.filter(
+									(admin) =>
+										admin.blacklisted === true
+								) || []
+							}
 						/>
 					</TabsContent>
 				</Tabs>

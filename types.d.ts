@@ -41,20 +41,15 @@ interface AgentT {
 	status: 'active' | 'inactive';
 	area: string;
 }
-interface DriverT {
-	id: string;
-	name: string;
-	plate: string;
-	status: 'active' | 'inactive';
-	category: string;
-}
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
 	showSearch?: boolean;
 	showColumns?: boolean;
 	searchWith?: string;
+	searchWithPlaceholder?: string;
 	showPagination?: boolean;
+	showSelected?: boolean;
 }
 interface Framework {
 	value: string;
@@ -114,6 +109,69 @@ interface IDashboard {
 		};
 	};
 }
+interface IVehicle {
+	id: number;
+	vehicle_id: string;
+	color: string;
+	category: string;
+	plate_number: string;
+	image?: string;
+	user_role: string;
+	user_id: string;
+	blacklisted: boolean;
+	current_driver?: [];
+	status: string;
+	deleted: boolean;
+	createdAt: string;
+	updatedAt: string;
+	Drivers: [];
+	VehicleTransactions: [];
+	VehicleFines: [];
+	VehicleWaivers: [];
+}
+interface IVehicles {
+	data: {
+		vehicles: IVehicle[];
+	};
+}
+
+interface IAdmin {
+	id: number;
+	admin_id: string;
+	name: string;
+	email: string;
+	password: string;
+	phone: string;
+	role: string;
+	blacklisted: boolean;
+	createdAt: string;
+	updatedAt: string;
+}
+
+interface IResAdmin {
+	admin: IAdmin;
+}
+interface IAdmins {
+	data: {
+		admins: IAdmin[];
+	};
+}
+interface IResAgent {
+	agent: IAgent;
+}
+interface IAgents {
+	data: {
+		agents: IAgent[];
+	};
+}
+interface IResVehicle {
+	vehicle: IVehicle;
+}
+interface IVehicles {
+	data: {
+		vehicles: IVehicle[];
+	};
+}
 interface IUser {
 	admin_id: string;
 	blacklisted: boolean;
@@ -131,12 +189,25 @@ interface IUser {
 	user_type?: string;
 }
 interface IAgent {
-	id: string;
+	id: number;
+	agent_id: string;
+	name: string;
+	phone: string;
+	password: string;
 	email: string;
+	identification_type: string;
+	identification_number: string;
 	role: string;
-	user_type: string;
-	iat: number;
-	exp: number;
+	location: string;
+	city: string;
+	country: string;
+	postcode: string;
+	blacklisted: boolean;
+	created_by: string;
+	is_active: boolean;
+	is_admin: boolean;
+	createdAt: string;
+	updatedAt: string;
 }
 interface IAdminMe {
 	data: {
@@ -160,6 +231,19 @@ interface ICreateVehicleForm {
 	color: string;
 	plate_number: string;
 	status: string;
+	vehicle_id?: string;
+}
+interface ICreateDriverForm {
+	name: string;
+	email: string;
+	phone: string;
+	address: string;
+	city: string;
+	lga: string;
+	identification_type: string;
+	identification_number: string;
+	is_active: boolean;
+	driver_id?: string;
 }
 interface ICreateAdminForm {
 	name: string;
@@ -167,4 +251,19 @@ interface ICreateAdminForm {
 	password: string;
 	phone: string;
 	role: string;
+	admin_id?: string;
+}
+interface ICreateAgentForm {
+	name: string;
+	password: string;
+	phone: string;
+	email: string;
+	identification_type: string;
+	identification_number: string;
+	role: string;
+	location: string;
+	city: string;
+	country: string;
+	postcode: string;
+	agent_id?: string;
 }
