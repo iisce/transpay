@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { agentsColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { getAgents } from '@/lib/agent-controller';
+import { getAgents } from '@/lib/controllers/agent-controller';
 import { addIcon } from '@/lib/icons';
 import Link from 'next/link';
 import React from 'react';
