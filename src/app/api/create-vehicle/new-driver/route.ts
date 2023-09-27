@@ -12,7 +12,8 @@ export async function PUT(req: NextRequest) {
 	};
 
 	try {
-		const url = `${API}${URLS.vehicle.all}/${body.driver_id}/driver`;
+		const url = `${API}${URLS.vehicle.all}/${body.vehicle_id}/driver`;
+		console.log(url, body.vehicle_id);
 		const response = await fetch(url, {
 			method: 'PUT',
 			headers,

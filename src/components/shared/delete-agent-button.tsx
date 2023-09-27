@@ -31,9 +31,9 @@ export default function DeleteAgentButton({ id }: { id: string }) {
 				return NextResponse.json(result);
 			} else {
 				setIsLoading(false);
-				console.log('Something went wrong');
 				toast({
 					title: 'Not Updated',
+					description: 'Something went wrong',
 				});
 				return null;
 			}

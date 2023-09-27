@@ -1,12 +1,15 @@
 import DashboardCard from '@/components/layout/dashboard-card';
 import { Button } from '@/components/ui/button';
 import {
-	addDriversColumns,
+	driversColumns,
 	viewDriversColumns,
 } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
 import { ADD_DRIVER_TABLE, VIEW_DRIVER_TABLE } from '@/lib/consts';
-import { getVehicleById } from '@/lib/controllers/vehicle-controller';
+import {
+	getVehicleById,
+	searchVehicle,
+} from '@/lib/controllers/vehicle-controller';
 import { getSSession } from '@/lib/get-data';
 import { addIcon } from '@/lib/icons';
 import Link from 'next/link';
@@ -14,17 +17,23 @@ import { notFound } from 'next/navigation';
 import React from 'react';
 
 export default async function ViewVehicleDetails({ id }: { id: string }) {
+	// const [session, vehicles] = await Promise.all([
+	// 	getSSession(),
+	// 	getVehicleById(id),
+	// ]);
 	const { role } = await getSSession();
-	const vehicle = await getVehicleById(id);
+	// const vehicle = await getVehicleById(id);
+	const vehicle = await searchVehicle(id);
 	if (!vehicle) {
 		notFound();
 	}
-
 	return (
 		<div className='h-full w-full p-6 flex flex-col gap-6 '>
 			<div className='flex items-center justify-between'>
-				<div className='text-title1Bold'>{vehicle.color}</div>
-				{role && role.toLowerCase() !== 'agent' && (
+				<div className='text-title1Bold'>
+					{vehicle.plate_number}
+				</div>
+				{/* {role && role.toLowerCase() !== 'agent' && (
 					<Button
 						className='justify-start  text-white rounded-xl bg-primary-800'
 						asChild
@@ -37,10 +46,10 @@ export default async function ViewVehicleDetails({ id }: { id: string }) {
 							<div className='mr-2 h-4 w-4 shrink-0'>
 								{addIcon}
 							</div>
-							Fine Vehicle
+							Add 
 						</Link>
 					</Button>
-				)}
+				)} */}
 			</div>
 			<div className='overflow-y-scroll  w-full'>
 				<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 w-full'>
@@ -159,7 +168,7 @@ export default async function ViewVehicleDetails({ id }: { id: string }) {
 										variant='link'
 									>
 										<Link
-											href={`/vehicles/${id}/add-driver`}
+											href={`/vehicles/${id}/drivers`}
 										>
 											See all
 										</Link>
@@ -168,8 +177,8 @@ export default async function ViewVehicleDetails({ id }: { id: string }) {
 							</div>
 							<div className=''>
 								<DataTable
-									columns={addDriversColumns}
-									data={ADD_DRIVER_TABLE.slice(0, 3)}
+									columns={driversColumns}
+									data={vehicle.Drivers.slice(0, 3)}
 								/>
 							</div>
 						</div>

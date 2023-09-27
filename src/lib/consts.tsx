@@ -1611,6 +1611,30 @@ export const WAIVER_HISTORY = [
 	},
 ];
 
+export const LGA = [
+	'Aguata',
+	'Anambra East',
+	'Anambra West',
+	'Anaocha',
+	'Awka North',
+	'Awka South',
+	'Ayamelum',
+	'Dunukofia',
+	'Ekwusigo',
+	'Idemili North',
+	'Idemili South',
+	'Ihiala',
+	'Njikoka',
+	'Nnewi North',
+	'Nnewi South',
+	'Ogbaru',
+	'Onitsha North',
+	'Onitsha South',
+	'Orumba North',
+	'Orumba South',
+	'Oyi',
+];
+
 export const API = 'https://squid-app-ruxoz.ondigitalocean.app';
 
 export const URLS = {
@@ -1629,10 +1653,14 @@ export const URLS = {
 		},
 	},
 	dashboard: '/api/v1/dashboard',
+	driver: {
+		all: '/api/v1/drivers', // GET for all, POST to create || Get by ID, Include /${vehicleId}
+		blacklist: '/api/v1/drivers/blacklist', // add vehicle to blacklist
+	},
 	vehicle: {
 		all: '/api/v1/vehicles', // GET for all, POST to create || Get by ID, Include /${vehicleId}
-		driver: '/api/v1/vehicles/${id}/driver', // add vehicle to blacklist
 		blacklist: '/api/v1/vehicles/blacklist', // add vehicle to blacklist
+		search: '/api/v1/vehicles/search', // add vehicle to blacklist
 	},
 };
 

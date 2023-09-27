@@ -1,3 +1,6 @@
+type Prettify<T> = {
+	[k in keyof T]: T[K];
+} & {};
 interface Payment {
 	id: string;
 	amount: number;
@@ -109,6 +112,37 @@ interface IDashboard {
 		};
 	};
 }
+interface IDriver {
+	id: 1;
+	driver_id: string;
+	vehicle_id: string;
+	firstname: string;
+	lastname: string;
+	phone: string;
+	email: string;
+	password: string;
+	address: string;
+	lga: string;
+	city: string;
+	state: string;
+	country: string;
+	postcode?: string;
+	gender?: string;
+	identification_type: string;
+	identification_number: string;
+	blacklisted: boolean;
+	is_active: boolean;
+	user_role: string;
+	user_id: string;
+	deleted: boolean;
+	createdAt: string;
+	updatedAt: string;
+	Vehicle: Omit<
+		IVehicle,
+		'VehicleTransactions' | 'VehicleFines' | 'VehicleWaivers' | 'Drivers'
+	>;
+}
+
 interface IVehicle {
 	id: number;
 	vehicle_id: string;
@@ -119,16 +153,18 @@ interface IVehicle {
 	user_role: string;
 	user_id: string;
 	blacklisted: boolean;
-	current_driver?: [];
+	current_driver?: IDriver;
 	status: string;
 	deleted: boolean;
 	createdAt: string;
 	updatedAt: string;
-	Drivers: [];
+	Drivers: IDriver[];
 	VehicleTransactions: [];
 	VehicleFines: [];
 	VehicleWaivers: [];
 }
+type PrettyVehicle = Prettify<IVehicle>;
+type PrettyVehicles = Prettify<IVehicles>;
 interface IVehicles {
 	data: {
 		vehicles: IVehicle[];
@@ -170,6 +206,14 @@ interface IResVehicle {
 interface IVehicles {
 	data: {
 		vehicles: IVehicle[];
+	};
+}
+interface IResDriver {
+	driver: IDriver;
+}
+interface IDrivers {
+	data: {
+		drivers: IDriver[];
 	};
 }
 interface IUser {
@@ -243,7 +287,7 @@ interface ICreateDriverForm {
 	identification_type: string;
 	identification_number: string;
 	is_active: boolean;
-	driver_id?: string;
+	vehicle_id?: string;
 }
 interface ICreateAdminForm {
 	name: string;

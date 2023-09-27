@@ -1,5 +1,4 @@
 'use client';
-
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -379,6 +378,15 @@ export const vehiclesColumns: ColumnDef<IVehicle>[] = [
 							</span>
 							Delete Vehicle
 						</DropdownMenuItem>
+						<DropdownMenuItem
+							onClick={() =>
+								navigator.clipboard.writeText(
+									vehicle.vehicle_id
+								)
+							}
+						>
+							Copy payment ID
+						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
 			);
@@ -492,22 +500,36 @@ export const viewDriversColumns: ColumnDef<DriverPayment>[] = [
 		},
 	},
 ];
-export const addDriversColumns: ColumnDef<DriverT>[] = [
+export const driversColumns: ColumnDef<IDriver>[] = [
 	{
-		accessorKey: 'Name',
-		header: () => <div className='font-bold'>Name</div>,
+		accessorKey: 'firstname',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Name'
+			/>
+		),
+		cell: ({ row }) => (
+			<span className=''>{`${row.original.firstname} ${row.original.lastname}`}</span>
+		),
 	},
 	{
-		accessorKey: 'Phone_Number',
-		header: () => (
-			<div className='text-right font-bold'>Phone Number</div>
+		accessorKey: 'phone',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Phone'
+			/>
 		),
-		cell: ({ row }) => {
-			const phone_number = row.getValue('Phone_Number');
-			return (
-				<div className='text-right font-medium'>{`${phone_number}`}</div>
-			);
-		},
+	},
+	{
+		accessorKey: 'lga',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='LGA'
+			/>
+		),
 	},
 ];
 
@@ -516,6 +538,13 @@ export const webAgentDriversColumns: ColumnDef<AgentT>[] = [
 	{
 		accessorKey: 'name',
 		header: 'Name',
+	},
+	{
+		accessorKey: 'plate',
+		header: 'Vehicle Plate Number',
+		cell: ({ row }) => (
+			<span className='uppercase'>{row.getValue('plate')}</span>
+		),
 	},
 	{
 		accessorKey: 'plate',
