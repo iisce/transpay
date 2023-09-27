@@ -1,5 +1,4 @@
 import { UpdateAgentForm } from '@/components/forms/update-agent-form';
-import ViewAgentDetails from '@/components/pages/agents/view-agent-details';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { agentPaymentColumns } from '@/components/ui/table/columns';
@@ -14,7 +13,7 @@ import React from 'react';
 export async function generateMetadata({ params }: { params: { id: string } }) {
 	const agent = await getAgentById(params.id);
 	return {
-		title: agent?.name.toLocaleUpperCase(),
+		title: agent?.name.toLocaleUpperCase() || 'ISCE | All Agents',
 	};
 }
 
