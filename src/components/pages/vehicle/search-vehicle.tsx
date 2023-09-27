@@ -11,17 +11,19 @@ import {
 	searchVehicle,
 } from '@/lib/controllers/vehicle-controller';
 import { getSSession } from '@/lib/get-data';
+import { addIcon } from '@/lib/icons';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import React from 'react';
 
-export default async function ViewVehicleDetails({ id }: { id: string }) {
+export default async function SearchVehicle({ id }: { id: string }) {
 	// const [session, vehicles] = await Promise.all([
 	// 	getSSession(),
 	// 	getVehicleById(id),
 	// ]);
 	const { role } = await getSSession();
-	const vehicle = await getVehicleById(id);
+	// const vehicle = await getVehicleById(id);
+	const vehicle = await searchVehicle(id);
 	if (!vehicle) {
 		notFound();
 	}
