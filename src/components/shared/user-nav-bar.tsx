@@ -95,7 +95,21 @@ export function UserNav({ user }: { user: IUser }) {
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
 					{pathName.startsWith('/manage')
-						? (user.role.toLowerCase() === 'agent'
+						? MANAGE_SIDEBAR_LINKS.map((link, k) => (
+								<DropdownMenuItem
+									className='sm:hidden'
+									asChild
+									key={k}
+								>
+									<Link href={link.href}>
+										{link.name}
+										<DropdownMenuShortcut className='h-4 w-4'>
+											{link.icon}
+										</DropdownMenuShortcut>
+									</Link>
+								</DropdownMenuItem>
+						  ))
+						: (user.role.toLowerCase() === 'agent'
 								? SIDEBAR_LINKS_AGENT
 								: SIDEBAR_LINKS
 						  ).map((link, k) => (
@@ -106,20 +120,6 @@ export function UserNav({ user }: { user: IUser }) {
 								>
 									<Link href={link.href}>
 										{link.title}
-										<DropdownMenuShortcut className='h-4 w-4'>
-											{link.icon}
-										</DropdownMenuShortcut>
-									</Link>
-								</DropdownMenuItem>
-						  ))
-						: MANAGE_SIDEBAR_LINKS.map((link, k) => (
-								<DropdownMenuItem
-									className='sm:hidden'
-									asChild
-									key={k}
-								>
-									<Link href={link.href}>
-										{link.name}
 										<DropdownMenuShortcut className='h-4 w-4'>
 											{link.icon}
 										</DropdownMenuShortcut>
