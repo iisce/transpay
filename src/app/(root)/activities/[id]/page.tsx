@@ -20,9 +20,7 @@ export default function Activity({ params }: { params: { id: string } }) {
 					asChild
 					className='w-full mt-10 uppercase'
 				>
-					<Link href='/dashboard/activities'>
-						Back To Activities
-					</Link>
+					<Link href='/activities'>Back To Activities</Link>
 				</Button>
 			</div>
 		</div>

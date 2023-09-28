@@ -1,4 +1,6 @@
-import { getUserMe } from '@/lib/get-data';
+import { getAdminMe } from '@/lib/controllers/admin-controller';
+import { getAgentMe } from '@/lib/controllers/agent-controller';
+import { getSSession, getUserMe } from '@/lib/get-data';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 export const metadata: Metadata = {
@@ -11,7 +13,11 @@ export default async function DashboardLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	const user = await getUserMe();
+	const { role } = await getSSession();
+	const user =
+		role?.toLowerCase() === 'agent'
+			? await getAgentMe()
+			: await getAdminMe();
 	if (user?.role.toLowerCase() !== 'superadmin') return notFound();
 	return <>{children}</>;
 }

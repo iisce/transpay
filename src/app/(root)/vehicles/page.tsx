@@ -6,8 +6,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DataTable } from '@/components/ui/table/data-table';
 import { vehiclesColumns } from '@/components/ui/table/columns';
 import { getSSession } from '@/lib/get-data';
-import Searchbar from '@/components/ui/searchbar';
 import { getVehicles } from '@/lib/controllers/vehicle-controller';
+import AgentSearchBar from '@/components/ui/agent-search-bar';
 
 export default async function Vehicles() {
 	const [session, vehicles] = await Promise.all([
@@ -116,7 +116,7 @@ export default async function Vehicles() {
 				</div>
 			) : (
 				<div className='max-w-[500px] w-full h-full mx-auto grid place-items-center'>
-					<Searchbar
+					<AgentSearchBar
 						placeholder='Enter vehicle plate'
 						variant='primary'
 					/>

@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { driversColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
-import { ADD_DRIVER_TABLE } from '@/lib/consts';
 import { getDrivers } from '@/lib/controllers/driver-controller';
 import Link from 'next/link';
 import React from 'react';
@@ -27,6 +26,11 @@ export default async function VehicleDriversPage({
 				</div>
 				<div className=''>
 					<DataTable
+						showColumns
+						showSearch
+						showPagination
+						searchWith='firstname'
+						searchWithPlaceholder='Search with firstname'
 						columns={driversColumns}
 						data={drivers || []}
 					/>

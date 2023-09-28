@@ -26,6 +26,7 @@ import Link from 'next/link';
 import Cbadge from '../category-badge';
 import { deleteAdminById } from '@/lib/controllers/admin-controller';
 import DeleteAdminButton from '@/components/shared/delete-admin-button';
+import { useToast } from '../use-toast';
 
 export const paymentColumns: ColumnDef<Payment>[] = [
 	{
@@ -289,31 +290,61 @@ export const agentsColumns: ColumnDef<IAgent>[] = [
 ];
 export const vehiclesColumns: ColumnDef<IVehicle>[] = [
 	{
-		accessorKey: 'color',
-		header: 'Color',
-	},
-	{
-		accessorKey: 'category',
-		header: 'Category',
+		accessorKey: 'Drivers',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Driver'
+			/>
+		),
+		cell: ({ row }) => (
+			<Link
+				href={`/vehicles/${row.original.vehicle_id}`}
+				className=''
+			>
+				{`${
+					row.original.Drivers[0]?.firstname ||
+					'No Current Driver'
+				} ${row.original.Drivers[0]?.lastname || ''}`}
+			</Link>
+		),
 	},
 	{
 		accessorKey: 'plate_number',
-		header: 'Plate Number',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Plate Number'
+			/>
+		),
 		cell: ({ row }) => (
-			<span className='uppercase'>{row.getValue('plate_number')}</span>
+			<div className='uppercase'>{row.original.plate_number}</div>
 		),
 	},
 	{
 		accessorKey: 'status',
-		header: 'Today Status',
-		cell: ({ row }) => (
-			<Pill
-				status={row.getValue('status')}
-				text={row.getValue('status')}
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Status'
 			/>
 		),
+		cell: ({ row }) => (
+			<div className='uppercase'>{row.original.status}</div>
+		),
 	},
-
+	{
+		accessorKey: 'category',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Category'
+			/>
+		),
+		cell: ({ row }) => (
+			<div className='uppercase'>{row.original.category}</div>
+		),
+	},
 	{
 		id: 'actions',
 		cell: ({ row }) => {
@@ -346,7 +377,7 @@ export const vehiclesColumns: ColumnDef<IVehicle>[] = [
 								View Vehicle
 							</Link>
 						</DropdownMenuItem>
-						<DropdownMenuItem
+						{/* <DropdownMenuItem
 							className='border-b border-black rounded-none'
 							asChild
 						>
@@ -371,21 +402,19 @@ export const vehiclesColumns: ColumnDef<IVehicle>[] = [
 								</span>
 								View Fines
 							</Link>
-						</DropdownMenuItem>
+						</DropdownMenuItem> */}
 						<DropdownMenuItem className='text-destructive'>
-							<span className='h-4 w-4 mr-3'>
-								{deleteIcon}
-							</span>
 							Delete Vehicle
 						</DropdownMenuItem>
 						<DropdownMenuItem
+							className=''
 							onClick={() =>
 								navigator.clipboard.writeText(
 									vehicle.vehicle_id
 								)
 							}
 						>
-							Copy payment ID
+							Copy vehicle ID
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
@@ -530,6 +559,22 @@ export const driversColumns: ColumnDef<IDriver>[] = [
 				title='LGA'
 			/>
 		),
+	},
+	{
+		id: 'actions',
+		cell: ({ row }) => {
+			const driver = row.original;
+			return (
+				<div
+					className=' cursor-pointer'
+					onClick={() => {
+						navigator.clipboard.writeText(driver.driver_id);
+					}}
+				>
+					Copy ID
+				</div>
+			);
+		},
 	},
 ];
 

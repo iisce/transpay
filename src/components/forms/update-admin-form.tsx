@@ -99,7 +99,6 @@ export function UpdateAdminForm({ admin }: { admin: IAdmin }) {
 				return NextResponse.json(result);
 			} else {
 				setIsLoading(false);
-				console.log('Something went wrong');
 				toast({
 					title: 'Not Updated',
 				});

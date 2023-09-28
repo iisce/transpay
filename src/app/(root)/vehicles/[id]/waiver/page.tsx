@@ -1,8 +1,5 @@
-import FineDriverForm from '@/components/forms/add-fine-form';
 import { Button } from '@/components/ui/button';
-import { viewDriversColumns } from '@/components/ui/table/columns';
-import { DataTable } from '@/components/ui/table/data-table';
-import { DRIVER_TABLE, VIEW_DRIVER_TABLE } from '@/lib/consts';
+import { DRIVER_TABLE } from '@/lib/consts';
 import { addIcon, successIcon } from '@/lib/icons';
 import Link from 'next/link';
 import React from 'react';
@@ -11,7 +8,6 @@ export default function Waiver({ params }: { params: { plate: string } }) {
 	const vehicle = DRIVER_TABLE.find(
 		(driver) => driver.plate === params.plate
 	);
-	console.log(vehicle);
 	return (
 		<div className='w-full flex flex-col gap-3 mb-8 p-2 xs:p-5 overflow-y-scroll'>
 			<div className='flex justify-between'>

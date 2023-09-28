@@ -5,21 +5,14 @@ import {
 	viewDriversColumns,
 } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
-import { ADD_DRIVER_TABLE, VIEW_DRIVER_TABLE } from '@/lib/consts';
-import {
-	getVehicleById,
-	searchVehicle,
-} from '@/lib/controllers/vehicle-controller';
+import { VIEW_DRIVER_TABLE } from '@/lib/consts';
+import { getVehicleById } from '@/lib/controllers/vehicle-controller';
 import { getSSession } from '@/lib/get-data';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import React from 'react';
 
 export default async function ViewVehicleDetails({ id }: { id: string }) {
-	// const [session, vehicles] = await Promise.all([
-	// 	getSSession(),
-	// 	getVehicleById(id),
-	// ]);
 	const { role } = await getSSession();
 	const vehicle = await getVehicleById(id);
 	if (!vehicle) {
@@ -29,7 +22,8 @@ export default async function ViewVehicleDetails({ id }: { id: string }) {
 		<div className='h-full w-full p-6 flex flex-col gap-6 '>
 			<div className='flex items-center justify-between'>
 				<div className='text-title1Bold'>
-					{vehicle.plate_number}
+					Current Driver:{' '}
+					{vehicle.Drivers[0]?.firstname || 'No current driver'}
 				</div>
 				{/* {role && role.toLowerCase() !== 'agent' && (
 					<Button
@@ -60,6 +54,12 @@ export default async function ViewVehicleDetails({ id }: { id: string }) {
 								description={'View Vehicle information'}
 							/>
 
+							<DashboardCard
+								name='Drivers'
+								href={`${id}/drivers`}
+								image={'/fineandpenal.png'}
+								description='Fine Driver & Check Fine Payment'
+							/>
 							{role?.toLowerCase() !== 'agent' && (
 								<>
 									<DashboardCard

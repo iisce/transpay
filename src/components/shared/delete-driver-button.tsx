@@ -5,29 +5,29 @@ import { useToast } from '../ui/use-toast';
 import { NextResponse } from 'next/server';
 import { useRouter } from 'next/navigation';
 
-export default function DeleteAdminButton({ id }: { id: string }) {
+export default function DeleteDriverButton({ id }: { id: string }) {
 	const router = useRouter();
 	const { toast } = useToast();
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const handleDelete = async (id: string) => {
 		setIsLoading(true);
 		try {
-			const createAdminResponse = await fetch('/api/create-admin', {
+			const createDriverResponse = await fetch('/api/create-driver/', {
 				method: 'DELETE',
 				body: JSON.stringify({
-					admin_id: id,
+					driver_id: id,
 				}),
 			});
-			const result = await createAdminResponse.json();
+			const result = await createDriverResponse.json();
 			if (
-				createAdminResponse.status > 199 &&
-				createAdminResponse.status < 299
+				createDriverResponse.status > 199 &&
+				createDriverResponse.status < 299
 			) {
 				toast({
 					title: 'Updated Successfully',
 				});
 				setIsLoading(false);
-				router.push(`/admins`);
+				router.push(`/drivers`);
 				return NextResponse.json(result);
 			} else {
 				setIsLoading(false);
@@ -51,7 +51,7 @@ export default function DeleteAdminButton({ id }: { id: string }) {
 						{loadingSpinner}
 					</div>
 				) : (
-					deleteIcon
+					'Delete Driver'
 				)}
 			</span>
 		</div>

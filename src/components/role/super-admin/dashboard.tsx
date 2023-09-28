@@ -10,7 +10,7 @@ import { AGENT_TABLE } from '@/lib/consts';
 
 export default function DashboardSuperAdmin(user: { user: IUser }) {
 	return (
-		<div className='w-full mb-14'>
+		<div className='w-full'>
 			<div className='grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-5'>
 				<DashboardCard
 					type='positive'

@@ -6,10 +6,10 @@ import React from 'react';
 const NotFound = () => {
 	return (
 		<section className='max-w-lg mx-auto flex gap-10 flex-col items-center justify-center h-screen'>
-			<div className='h-10'>
+			<div className='h-16'>
 				<Image
 					className='object-contain h-full w-full dark:invert'
-					src={'/vercel.svg'}
+					src={'/logo.png'}
 					alt=''
 					width={400}
 					height={400}

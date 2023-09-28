@@ -15,7 +15,6 @@ export default function WaiverHistory({
 	const vehicle = DRIVER_TABLE.find(
 		(driver) => driver.plate === params.plate
 	);
-	console.log(vehicle);
 	return (
 		<div className='w-full flex flex-col gap-3 mb-8 p-2 xs:p-5 overflow-y-scroll'>
 			<div className=''>

@@ -208,8 +208,8 @@ interface IVehicles {
 		vehicles: IVehicle[];
 	};
 }
-interface IResDriver {
-	driver: IDriver;
+interface IResDrivers {
+	drivers: IDriver[];
 }
 interface IDrivers {
 	data: {
@@ -288,6 +288,12 @@ interface ICreateDriverForm {
 	identification_number: string;
 	is_active: boolean;
 	vehicle_id?: string;
+}
+interface IAddLicenseForm {
+	license_number: string;
+	license_name: string;
+	license_expiry: string;
+	driver_id?: string;
 }
 interface ICreateAdminForm {
 	name: string;

@@ -19,7 +19,6 @@ export const options: NextAuthOptions = {
 			},
 			async authorize(credentials, req) {
 				const loginUrl = req.headers!.referer; // Get the login URL from the request object.
-				console.log(loginUrl);
 				// Decide which API route to access based on the login URL.
 				const apiRoute = loginUrl.includes('/admin/')
 					? URLS.auth.signin.admin
@@ -38,8 +37,10 @@ export const options: NextAuthOptions = {
 						console.log(user);
 						return user;
 					} else {
-						console.log(res.statusText);
-						return null;
+						throw new Error(
+							res.statusText ||
+								'An error occurred during api connection.'
+						);
 					}
 				} catch (error) {
 					if (axios.isAxiosError(error)) {

@@ -21,7 +21,6 @@ export default function AddNewWaiver({
 		(driver) => driver.timeline === params.plate
 	);
 	const [open, setOpen] = React.useState(false);
-	console.log(vehicle, AlertDialog);
 	return (
 		<div className='w-full p-10'>
 			<div className=' py-5'>

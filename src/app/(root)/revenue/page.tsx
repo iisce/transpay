@@ -52,7 +52,7 @@ export default function Revenue() {
 						<Button
 							className='justify-start rounded-xl h-12'
 							variant={'default'}
-							onClick={() => alert('Hello Button')}
+							onClick={() => console.log('Hello Button')}
 						>
 							<div className='h-4 w-4 shrink-0'>
 								{addIcon}

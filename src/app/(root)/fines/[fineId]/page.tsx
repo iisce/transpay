@@ -10,7 +10,6 @@ export default function AddNewFines({
 	const fine = FINE_CARDS.find(
 		(singleFine) => singleFine.id == params.fineId
 	);
-	console.log(fine, params.fineId);
 	if (fine) {
 		return (
 			<div className='w-full p-3 xs:p-5'>

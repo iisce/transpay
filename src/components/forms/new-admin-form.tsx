@@ -116,7 +116,6 @@ export function AdminForm() {
 				return NextResponse.json(result);
 			} else {
 				setIsLoading(false);
-				console.log('Something went wrong');
 				toast({
 					title: 'Admin NOT Created',
 				});

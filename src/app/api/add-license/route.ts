@@ -4,7 +4,8 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function PUT(req: NextRequest) {
 	const { access_token } = await getSSession();
-	const body: ICreateDriverForm = await req.json();
+
+	const body: IAddLicenseForm = await req.json();
 	const headers = {
 		'Content-Type': 'application/json',
 		'api-secret': process.env.API_SECRET || '',
@@ -12,29 +13,24 @@ export async function PUT(req: NextRequest) {
 	};
 
 	try {
-		const url = `${API}${URLS.vehicle.all}/${body.vehicle_id}/driver`;
+		const url = `${API}${URLS.driver.all}/${body.driver_id}/license`;
 		const response = await fetch(url, {
 			method: 'PUT',
 			headers,
 			body: JSON.stringify({
-				name: body.name,
-				email: body.email,
-				phone: body.phone,
-				address: body.address,
-				city: body.city,
-				lga: body.lga,
-				identification_type: body.identification_type,
-				identification_number: body.identification_number,
-				is_active: body.is_active,
+				license_number: body.license_number,
+				license_name: body.license_name,
+				license_expiry: body.license_expiry,
 			}),
 		});
 		const result = await response.json();
 		if (!response.ok) {
+			console.log(NextResponse.json(result));
 			throw new Error(`Something Went wrong ${response.statusText}`);
 		} else {
 			return NextResponse.json(result);
 		}
 	} catch (error: any) {
-		return error?.message;
+		throw new Error(`Something Went wrong ${error?.message}`);
 	}
 }

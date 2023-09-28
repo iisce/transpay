@@ -71,14 +71,12 @@ export function AuthLoginForm() {
 				redirect: true,
 				callbackUrl: '/dashboard',
 			});
-			console.log(signInResponse);
 
 			if (signInResponse?.ok === false) {
 				toast({
 					title: 'Invalid Credentials:',
 					description: 'Check your email or password',
 				});
-				console.log(signInResponse);
 				setIsLoading(false);
 			} else {
 				router.push('/dashboard');
@@ -86,9 +84,12 @@ export function AuthLoginForm() {
 					title: 'Successful Sign in',
 				});
 				setIsLoading(false);
+				return signInResponse;
 			}
-		} catch (error) {
-			console.log(error);
+		} catch (error: any) {
+			throw new Error(
+				error?.message || 'An error occurred during api connection.'
+			);
 		}
 	}
 

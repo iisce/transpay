@@ -37,7 +37,6 @@ export async function POST(req: NextRequest) {
 			return NextResponse.json(result);
 		}
 	} catch (error: any) {
-		console.log(error?.message);
 		return error?.message;
 	}
 }
@@ -65,7 +64,6 @@ export async function PUT(req: NextRequest) {
 			return NextResponse.json(result);
 		}
 	} catch (error: any) {
-		console.log(error?.message);
 		return error?.message;
 	}
 }
@@ -86,15 +84,12 @@ export async function DELETE(req: NextRequest) {
 			headers,
 		});
 		const result = await response.json();
-		console.log(result);
-		console.log(url);
 		if (!response.ok) {
 			throw new Error(`Something Went wrong ${response.statusText}`);
 		} else {
 			return NextResponse.json(result);
 		}
 	} catch (error: any) {
-		console.log(error?.message);
 		return error?.message;
 	}
 }

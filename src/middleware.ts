@@ -11,6 +11,7 @@ export const config = {
 		'/manage/:path*',
 		'/revenue/:path*',
 		'/vehicles/:path*',
+		'/drivers/:path*',
 	],
 };
 export default withAuth(

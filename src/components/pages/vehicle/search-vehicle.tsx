@@ -5,24 +5,15 @@ import {
 	viewDriversColumns,
 } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
-import { ADD_DRIVER_TABLE, VIEW_DRIVER_TABLE } from '@/lib/consts';
-import {
-	getVehicleById,
-	searchVehicle,
-} from '@/lib/controllers/vehicle-controller';
+import { VIEW_DRIVER_TABLE } from '@/lib/consts';
+import { searchVehicle } from '@/lib/controllers/vehicle-controller';
 import { getSSession } from '@/lib/get-data';
-import { addIcon } from '@/lib/icons';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import React from 'react';
 
 export default async function SearchVehicle({ id }: { id: string }) {
-	// const [session, vehicles] = await Promise.all([
-	// 	getSSession(),
-	// 	getVehicleById(id),
-	// ]);
 	const { role } = await getSSession();
-	// const vehicle = await getVehicleById(id);
 	const vehicle = await searchVehicle(id);
 	if (!vehicle) {
 		notFound();
@@ -31,7 +22,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 		<div className='h-full w-full p-6 flex flex-col gap-6 '>
 			<div className='flex items-center justify-between'>
 				<div className='text-title1Bold'>
-					{vehicle.plate_number}
+					{vehicle.Drivers[0]?.firstname || 'No current driver'}
 				</div>
 				{/* {role && role.toLowerCase() !== 'agent' && (
 					<Button
@@ -57,7 +48,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 						<>
 							<DashboardCard
 								name='Vehicle Information'
-								href={`${id}/vehicle-info`}
+								href={`/vehicles/${vehicle.vehicle_id}/vehicle-info`}
 								image={'/personalinfo.png'}
 								description={'View Vehicle information'}
 							/>
@@ -66,7 +57,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 								<>
 									<DashboardCard
 										name='Payment'
-										href={`${id}/payments`}
+										href={`/vehicles/${vehicle.vehicle_id}/payments`}
 										image={'/payment.png'}
 										description={
 											'Make Payment & Check Payment History'
@@ -75,7 +66,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 
 									<DashboardCard
 										name='Fines & Penalties'
-										href={`${id}/fines`}
+										href={`/vehicles/${vehicle.vehicle_id}/fines`}
 										image={'/fineandpenal.png'}
 										description='Fine Driver & Check Fine Payment'
 									/>
@@ -83,7 +74,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 							)}
 							<DashboardCard
 								name='Waiver Form'
-								href={`${id}/waiver`}
+								href={`/vehicles/${vehicle.vehicle_id}/waiver`}
 								image={'/fineandpenal.png'}
 								description='Fill waiver form to process driver grace period'
 							/>
@@ -105,7 +96,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 												variant='link'
 											>
 												<Link
-													href={`/vehicles/${id}/fines`}
+													href={`/vehicles/${vehicle.vehicle_id}/fines`}
 												>
 													See all
 												</Link>
@@ -135,7 +126,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 												variant='link'
 											>
 												<Link
-													href={`/vehicles/${id}/payments`}
+													href={`/vehicles/${vehicle.vehicle_id}/payments`}
 												>
 													See all
 												</Link>
@@ -168,7 +159,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 										variant='link'
 									>
 										<Link
-											href={`/vehicles/${id}/drivers`}
+											href={`/vehicles/${vehicle.vehicle_id}/drivers`}
 										>
 											See all
 										</Link>

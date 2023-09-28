@@ -5,12 +5,17 @@ import { Input } from '../ui/input';
 import { searchIcon } from '@/lib/icons';
 import { UserNav } from '../shared/user-nav-bar';
 import { Notification } from '../shared/notification';
-import { getUserMe } from '@/lib/get-data';
+import { getSSession } from '@/lib/get-data';
 import { Button } from '../ui/button';
-import { signIn } from 'next-auth/react';
+import { getAgentMe } from '@/lib/controllers/agent-controller';
+import { getAdminMe } from '@/lib/controllers/admin-controller';
 
 export default async function NavBar() {
-	const user = await getUserMe();
+	const { role } = await getSSession();
+	const user =
+		role?.toLowerCase() === 'agent'
+			? await getAgentMe()
+			: await getAdminMe();
 	return (
 		<div className='h-16 w-full bg-secondary px-5 shrink-0'>
 			<div className='flex items-center justify-between h-full gap-5'>
@@ -38,14 +43,13 @@ export default async function NavBar() {
 					</div>
 				</div>
 				<div className='flex gap-3 items-center text-primary-700'>
-					<Notification />
 					{user ? (
-						<UserNav user={user} />
+						<>
+							<Notification />
+							<UserNav user={user} />
+						</>
 					) : (
-						<Button
-							variant='link'
-							asChild
-						>
+						<Button asChild>
 							<Link href='/agent/sign-in'>Login</Link>
 						</Button>
 					)}

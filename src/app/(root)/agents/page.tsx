@@ -8,7 +8,8 @@ import Link from 'next/link';
 import React from 'react';
 
 export default async function Agents() {
-	const agents = await getAgents();
+	// const agents = await getAgents();
+	const agents: any[] = [];
 	return (
 		<div className='p-5 w-full h-full flex flex-col'>
 			<div className='flex justify-between'>

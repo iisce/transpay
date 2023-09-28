@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Button } from './button';
 import { useRouter } from 'next/navigation';
 
-export default function Searchbar({
+export default function AgentSearchBar({
 	placeholder,
 	variant,
 }: {
@@ -25,7 +25,7 @@ export default function Searchbar({
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 		setIsLoading(true);
-		router.push(`/search/${searchValue.toLowerCase()}`);
+		router.push(`/vehicles/search/${searchValue.toLowerCase()}`);
 	};
 
 	return (

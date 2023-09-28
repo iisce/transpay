@@ -27,11 +27,6 @@ import {
 	AlertDialogAction,
 	AlertDialogCancel,
 	AlertDialogContent,
-	AlertDialogDescription,
-	AlertDialogFooter,
-	AlertDialogHeader,
-	AlertDialogTitle,
-	AlertDialogTrigger,
 } from '../ui/alert-dialog';
 import React from 'react';
 import { addIcon, loadingSpinner, successIcon } from '@/lib/icons';
@@ -153,7 +148,6 @@ export function DriverForm({ id }: { id: string }) {
 				return NextResponse.json(result);
 			} else {
 				setIsLoading(false);
-				console.log('Something went wrong');
 				toast({
 					title: 'Driver NOT Created',
 				});
