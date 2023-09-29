@@ -1,3 +1,4 @@
+'use client';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import {
 	DropdownMenu,
@@ -11,13 +12,17 @@ import {
 } from '../ui/dropdown-menu';
 import { Button } from '../ui/button';
 import Link from 'next/link';
-import { MANAGE_SIDEBAR_LINKS, SIDEBAR_LINKS } from '@/lib/consts';
-import { USER } from '../../../data';
+import {
+	MANAGE_SIDEBAR_LINKS,
+	SIDEBAR_LINKS,
+	SIDEBAR_LINKS_AGENT,
+} from '@/lib/consts';
 import { getInitials } from '@/lib/utils';
 import { ModeToggle } from '../dark-mode-toggle';
 import { usePathname } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 
-export function UserNav() {
+export function UserNav({ user }: { user: IUser }) {
 	const pathName = usePathname();
 
 	return (
@@ -25,51 +30,72 @@ export function UserNav() {
 			<DropdownMenuTrigger asChild>
 				<div className='flex gap-3 cursor-pointer'>
 					<Button
-						variant='destructive'
+						variant='link'
 						className='relative h-8 w-8 rounded-full'
 					>
 						<Avatar className='h-9 w-9'>
 							<AvatarImage
-								src={USER.user.avatar}
-								alt={USER.user.name}
+								src={
+									user.image ||
+									'https://avatars.githubusercontent.com/u/62449713?v=4'
+								}
+								alt={user.name || 'Agent User'}
 							/>
 							<AvatarFallback>
-								{getInitials(USER.user.name)}
+								{getInitials(user.name || 'Agent User')}
 							</AvatarFallback>
 						</Avatar>
 					</Button>
 					<div className='hidden sm:flex w-32 flex-col'>
 						<div className='text-xs font-bold'>
-							{USER.user.name}
+							{user.name || 'Agent User'}
 						</div>
 						<div className='text-xs text-primary capitalize'>
-							{USER.user.role}
+							{user.role}
 						</div>
 					</div>
 				</div>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent
-				className='w-56'
+				className='w-60'
 				align='end'
 				forceMount
 			>
 				<DropdownMenuLabel className='font-normal'>
-					<Link
-						href='/manage/profile'
-						className='flex flex-col space-y-1'
-					>
-						<p className='text-sm font-medium leading-none'>
-							{USER.user.name}
-						</p>
-						<p className='text-xs leading-none text-muted-foreground'>
-							ap.oyeniran@gmail.com
-						</p>
-					</Link>
+					<div className='flex items-center gap-4 bg-secondary rounded-xl p-2'>
+						<div className=''>
+							<Avatar className='h-14 w-14'>
+								<AvatarImage
+									src={
+										user.image ||
+										'https://avatars.githubusercontent.com/u/62449713?v=4'
+									}
+									alt={user.name || 'Agent User'}
+								/>
+								<AvatarFallback>
+									{getInitials(
+										user.name || 'Agent User'
+									)}
+								</AvatarFallback>
+							</Avatar>
+						</div>
+						<Link
+							href='/manage/profile'
+							className='flex flex-col space-y-1'
+						>
+							<p className='text-sm font-medium leading-none'>
+								{user.name || 'Agent User'}
+							</p>
+							<p className='text-xs leading-none text-muted-foreground'>
+								{user.email}
+							</p>
+						</Link>
+					</div>
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
-					{pathName !== '/manage'
-						? SIDEBAR_LINKS.map((link, k) => (
+					{pathName.startsWith('/manage')
+						? MANAGE_SIDEBAR_LINKS.map((link, k) => (
 								<DropdownMenuItem
 									className='sm:hidden'
 									asChild
@@ -83,14 +109,17 @@ export function UserNav() {
 									</Link>
 								</DropdownMenuItem>
 						  ))
-						: MANAGE_SIDEBAR_LINKS.map((link, k) => (
+						: (user.role.toLowerCase() === 'agent'
+								? SIDEBAR_LINKS_AGENT
+								: SIDEBAR_LINKS
+						  ).map((link, k) => (
 								<DropdownMenuItem
 									className='sm:hidden'
 									asChild
 									key={k}
 								>
 									<Link href={link.href}>
-										{link.name}
+										{link.title}
 										<DropdownMenuShortcut className='h-4 w-4'>
 											{link.icon}
 										</DropdownMenuShortcut>
@@ -105,10 +134,17 @@ export function UserNav() {
 					</DropdownMenuItem>
 				</DropdownMenuGroup>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem>Log out</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => signOut()}>
+					Log out
+				</DropdownMenuItem>
 				<div className='sm:hidden'>
 					<DropdownMenuSeparator />
 					<ModeToggle />
+				</div>
+				<DropdownMenuSeparator />
+				<div className='flex justify-between gap-3 items-center text-xs px-2'>
+					<Link href='/privacy'>Privacy Policy</Link>
+					<Link href='/terms'>Terms of Service</Link>
 				</div>
 			</DropdownMenuContent>
 		</DropdownMenu>

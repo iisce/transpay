@@ -1,6 +1,6 @@
 import {
 	adminIcon,
-	agentdriverIcon,
+	agentDriverIcon,
 	agentsIcon,
 	dashboardIcon,
 	driverIcon,
@@ -12,45 +12,92 @@ import {
 	profileIcon,
 	securityIcon,
 	aboutIcon,
+	searchIcon,
 } from './icons';
 
 export const SIDEBAR_LINKS = [
 	{
-		name: 'Dashboard',
+		title: 'Dashboard',
 		href: '/dashboard',
 		icon: dashboardIcon,
 	},
 	{
-		name: 'Admins',
-		href: '/dashboard/admins',
+		title: 'Admins',
+		href: '/admins',
 		icon: adminIcon,
 	},
 	{
-		name: 'Agents',
-		href: '/dashboard/agents',
+		title: 'Agents',
+		href: '/agents',
 		icon: agentsIcon,
 	},
 	{
-		name: 'Drivers',
-		href: '/dashboard/drivers',
+		title: 'Vehicles',
+		href: '/vehicles',
 		icon: driverIcon,
 	},
 	{
-		name: 'Fines & Penalties',
-		href: '/dashboard/fines',
+		title: 'Fines & Penalties',
+		href: '/fines',
 		icon: finesIcon,
 	},
 	{
-		name: 'Scan',
-		href: '/dashboard/scan',
+		title: 'Scan',
+		href: '/scan',
 		icon: scanIcon,
 	},
 	{
-		name: 'Revenue',
-		href: '/dashboard/revenue',
+		title: 'Revenue',
+		href: '/revenue',
 		icon: revenueIcon,
 	},
 ];
+export const SIDEBAR_LINKS_ADMIN = [
+	{
+		title: 'Dashboard',
+		href: '/dashboard',
+		icon: dashboardIcon,
+	},
+	{
+		title: 'Agents',
+		href: '/agents',
+		icon: agentsIcon,
+	},
+	{
+		title: 'Vehicles',
+		href: '/vehicles',
+		icon: driverIcon,
+	},
+	{
+		title: 'Fines & Penalties',
+		href: '/fines',
+		icon: finesIcon,
+	},
+	{
+		title: 'Scan',
+		href: '/scan',
+		icon: scanIcon,
+	},
+];
+
+export const SIDEBAR_LINKS_AGENT = [
+	{
+		title: 'Dashboard',
+		href: '/dashboard',
+		icon: dashboardIcon,
+	},
+	{
+		title: 'Vehicles',
+		href: '/vehicles',
+		icon: driverIcon,
+	},
+	{
+		title: 'Scan',
+		href: '/scan',
+		icon: scanIcon,
+	},
+];
+
 export const MANAGE_SIDEBAR_LINKS = [
 	{
 		name: 'Home',
@@ -73,49 +120,43 @@ export const MANAGE_SIDEBAR_LINKS = [
 		icon: aboutIcon,
 	},
 ];
+
 export const DRIVERS_CARD = [
 	{
 		name: 'Personal Information',
 		description: 'Edit Drivers information',
-		href: '/dashboard/drivers',
+		href: '/vehicles',
 		image: '/personalinfo.png',
 	},
 	{
 		name: 'Payment',
 		description: 'Make Payment & Check Payment History',
-		href: '/dashboard/revenue',
+		href: '/revenue',
 		image: '/payment.png',
 	},
 	{
 		name: 'Fines & Penalties',
 		description: 'Fine Driver & Check Fine Payment',
-		href: '/dashboard/fines',
+		href: '/fines',
 		image: '/fineandpenal.png',
 	},
 ];
+
 export const DASHBOARD_CARD = [
-	{
-		name: 'Admins',
-		description: 'List of all the admins',
-		icon: peopleIcon,
-		number: '30',
-		href: '/dashboard/admins',
-		image: '/tricycle.jpg',
-	},
 	{
 		name: 'Agents',
 		description: 'Agents List',
 		icon: peopleIcon,
 		number: '500',
-		href: '/dashboard/agents',
+		href: '/agents',
 		image: '/tricycle.jpg',
 	},
 	{
-		name: 'Drivers',
+		name: 'Vehicles',
 		description: 'Drivers list & Update',
 		icon: peopleIcon,
 		number: '9,200',
-		href: '/dashboard/drivers',
+		href: '/vehicles',
 		image: '/tricycle.jpg',
 	},
 	{
@@ -123,7 +164,7 @@ export const DASHBOARD_CARD = [
 		description: 'Create fines & penalties',
 		icon: finesIcon,
 		number: '10,000',
-		href: '/dashboard/fines',
+		href: '/fines',
 		image: '/tricycle.jpg',
 	},
 	{
@@ -132,7 +173,7 @@ export const DASHBOARD_CARD = [
 			'Scan Driver Plate to retrieve drivers information plate',
 		icon: '',
 		number: '',
-		href: '/dashboard/scan',
+		href: '/scan',
 		image: '/scanplate.png',
 	},
 	{
@@ -140,10 +181,39 @@ export const DASHBOARD_CARD = [
 		description: 'View Money raised and submitted.',
 		icon: '',
 		number: '',
-		href: '/dashboard/revenue',
+		href: '/revenue',
 		image: '/tricycle.jpg',
 	},
 ];
+
+export const AGENT_DASHBOARD_CARD = [
+	{
+		name: 'Vehicles',
+		description: 'Drivers list & Update',
+		icon: peopleIcon,
+		number: '9,200',
+		href: '/vehicles',
+		image: '/tricycle.jpg',
+	},
+	{
+		name: 'Fines & Penalties',
+		description: 'Create fines & penalties',
+		icon: finesIcon,
+		number: '10,000',
+		href: '/fines',
+		image: '/tricycle.jpg',
+	},
+	{
+		name: 'Scan Plate',
+		description:
+			'Scan Driver Plate to retrieve drivers information plate',
+		icon: '',
+		number: '',
+		href: '/scan',
+		image: '/scanplate.png',
+	},
+];
+
 export const AGENT_TABLE = [
 	{
 		name: 'Emeka Ignatius',
@@ -518,6 +588,7 @@ export const AGENT_TABLE = [
 		status: 'inactive',
 	},
 ];
+
 export const DRIVER_TABLE = [
 	{
 		name: 'Emeka Ignatius',
@@ -544,6 +615,7 @@ export const DRIVER_TABLE = [
 		category: 'cleared',
 	},
 ];
+
 export const PAYMENT_TABLE = [
 	{
 		driver: 'Emeka Ignatius',
@@ -642,7 +714,8 @@ export const PAYMENT_TABLE = [
 		status: 'failed',
 	},
 ];
-export const VIEWDRIVER_TABLE = [
+
+export const VIEW_DRIVER_TABLE = [
 	{
 		Date: '23-08-2023',
 		amount_NGN: '15000',
@@ -699,53 +772,47 @@ export const VIEWDRIVER_TABLE = [
 	},
 ];
 
-export const ADDDRIVER_TABLE = [
+export const ADD_DRIVER_TABLE = [
 	{
 		Name: 'Okechukwu John',
 		Phone_Number: '09078398045',
-			
 	},
 	{
 		Name: 'Ikechukwu Jonathan',
 		Phone_Number: '09078398048',
-	
 	},
 	{
 		Name: 'Tobechukwu Tony',
 		Phone_Number: '09078398047',
-			},
+	},
 	{
 		Name: 'Godson Alfred',
 		Phone_Number: '09078398075',
-		
 	},
 	{
 		Name: 'Godwin Emmanuel',
-		Phone_Number: '09078399045',	
+		Phone_Number: '09078399045',
 	},
 	{
 		Name: 'Micheal Thomas',
 		Phone_Number: '09078398065',
-		
 	},
 	{
 		Name: 'Abraham Pius',
 		Phone_Number: '09078398985',
-		
 	},
 	{
 		Name: 'Anthony Wilson',
 		Phone_Number: '09078398095',
-		
 	},
 	{
 		Name: 'Obi Moses',
 		Phone_Number: '09078398105',
-		
 	},
 ];
+
 // WEB AGENT
-export const WEBAGENTSIDEBAR_LINKS = [
+export const WEB_AGENT_SIDEBAR_LINKS = [
 	{
 		name: 'Dashboard',
 		href: '/web-agent',
@@ -759,10 +826,11 @@ export const WEBAGENTSIDEBAR_LINKS = [
 	{
 		name: 'Driver',
 		href: '/web-agent/driver',
-		icon: agentdriverIcon,
+		icon: agentDriverIcon,
 	},
 ];
-export const WEBAGENT_CARD = [
+
+export const WEB_AGENT_CARD = [
 	{
 		name: 'Scan Plate',
 		description:
@@ -782,7 +850,8 @@ export const WEBAGENT_CARD = [
 		image: '/drivers.png',
 	},
 ];
-export const WEBAGENTDRIVER_CARD = [
+
+export const WEB_AGENT_DRIVER_CARD = [
 	{
 		name: 'Vehicle Information',
 		description: 'View Vehicle information',
@@ -808,6 +877,7 @@ export const WEBAGENTDRIVER_CARD = [
 		image: '/fineandpenal.png',
 	},
 ];
+
 export const FINE_CARDS: FinesCardP[] = [
 	{
 		id: 0,
@@ -954,7 +1024,7 @@ export const ADMINS_TABLE = [
 			email: 'emekaignatius5@gmail.com',
 			phone: '08063456789',
 		},
-		adress: 'Awada, okiki street, flat 3 block 18',
+		address: 'Awada, okiki street, flat 3 block 18',
 		status: 'active',
 	},
 	{
@@ -1098,7 +1168,7 @@ export const ADMINS_TABLE = [
 			email: 'emekaignatius5@gmail.com',
 			phone: '08063456789',
 		},
-		adress: '08061234567',
+		address: '08061234567',
 		status: 'active',
 	},
 	{
@@ -1296,7 +1366,7 @@ export const ADMINS_TABLE = [
 			email: 'emekaignatius5@gmail.com',
 			phone: '08063456789',
 		},
-		ddress: '08061234567',
+		address: '08061234567',
 		status: 'active',
 	},
 	{
@@ -1540,3 +1610,59 @@ export const WAIVER_HISTORY = [
 		generated_by: 'Agent Leo1',
 	},
 ];
+
+export const LGA = [
+	'Aguata',
+	'Anambra East',
+	'Anambra West',
+	'Anaocha',
+	'Awka North',
+	'Awka South',
+	'Ayamelum',
+	'Dunukofia',
+	'Ekwusigo',
+	'Idemili North',
+	'Idemili South',
+	'Ihiala',
+	'Njikoka',
+	'Nnewi North',
+	'Nnewi South',
+	'Ogbaru',
+	'Onitsha North',
+	'Onitsha South',
+	'Orumba North',
+	'Orumba South',
+	'Oyi',
+];
+
+export const API = 'https://squid-app-ruxoz.ondigitalocean.app';
+
+export const URLS = {
+	admin: {
+		all: '/api/v1/admins',
+		me: '/api/v1/admins/me',
+	},
+	agent: {
+		all: '/api/v1/agents',
+		me: '/api/v1/agents/me',
+	},
+	auth: {
+		signin: {
+			admin: '/api/v1/admins/login',
+			agent: '/api/v1/agents/login',
+		},
+	},
+	dashboard: '/api/v1/dashboard',
+	driver: {
+		all: '/api/v1/drivers', // GET for all, POST to create || Get by ID, Include /${vehicleId}
+		blacklist: '/api/v1/drivers/blacklist', // add vehicle to blacklist
+	},
+	vehicle: {
+		all: '/api/v1/vehicles', // GET for all, POST to create || Get by ID, Include /${vehicleId}
+		blacklist: '/api/v1/vehicles/blacklist', // add vehicle to blacklist
+		search: '/api/v1/vehicles/search', // add vehicle to blacklist
+	},
+};
+
+export const BUS_IMAGE_SAMPLE =
+	'https://images.unsplash.com/photo-1616792577902-f1d86383a21b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2803&q=80';

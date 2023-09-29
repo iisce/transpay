@@ -248,7 +248,7 @@ export const deleteIcon = (
 		viewBox='0 0 26 25'
 		fill='none'
 		xmlns='http://www.w3.org/2000/svg'
-		className='h-full w-full object-contain'
+		className='h-6 w-6 object-contain'
 	>
 		<path
 			d='M18.6667 1.33333H14L12.6667 0H6L4.66667 1.33333H0V4H18.6667M1.33333 21.3333C1.33333 22.0406 1.61429 22.7189 2.11438 23.219C2.61448 23.719 3.29276 24 4 24H14.6667C15.3739 24 16.0522 23.719 16.5523 23.219C17.0524 22.7189 17.3333 22.0406 17.3333 21.3333V5.33333H1.33333V21.3333Z'
@@ -725,7 +725,7 @@ export const scanIcon = (
 	</svg>
 );
 
-export const agentdriverIcon = (
+export const agentDriverIcon = (
 	<svg
 		width='32'
 		height='37'
@@ -886,5 +886,28 @@ export const aboutIcon = (
 			d='M13.2 8.9H10.8V6.5H13.2M13.2 18.5H10.8V11.3H13.2M12 0.5C10.4241 0.5 8.86371 0.810389 7.4078 1.41345C5.95189 2.0165 4.62902 2.90042 3.51472 4.01472C1.26428 6.26516 0 9.3174 0 12.5C0 15.6826 1.26428 18.7348 3.51472 20.9853C4.62902 22.0996 5.95189 22.9835 7.4078 23.5866C8.86371 24.1896 10.4241 24.5 12 24.5C15.1826 24.5 18.2348 23.2357 20.4853 20.9853C22.7357 18.7348 24 15.6826 24 12.5C24 10.9241 23.6896 9.36371 23.0866 7.9078C22.4835 6.45189 21.5996 5.12902 20.4853 4.01472C19.371 2.90042 18.0481 2.0165 16.5922 1.41345C15.1363 0.810389 13.5759 0.5 12 0.5Z'
 			fill='currentColor'
 		/>
+	</svg>
+);
+
+export const loadingSpinner = (
+	<svg
+		className='animate-spin h-6 w-6 object-contain'
+		xmlns='http://www.w3.org/2000/svg'
+		fill='none'
+		viewBox='0 0 24 24'
+	>
+		<circle
+			className='opacity-25'
+			cx='12'
+			cy='12'
+			r='10'
+			stroke='currentColor'
+			strokeWidth='4'
+		></circle>
+		<path
+			className='opacity-75'
+			fill='currentColor'
+			d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
+		></path>
 	</svg>
 );

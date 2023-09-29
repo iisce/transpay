@@ -1,5 +1,4 @@
 'use client';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -13,15 +12,7 @@ import {
 	FormMessage,
 } from '../ui/form';
 import { Input } from '../ui/input';
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from '../ui/select';
 import { Button } from '../ui/button';
-import { Textarea } from '../ui/textarea';
 import Link from 'next/link';
 import {
 	AlertDialog,
@@ -30,9 +21,10 @@ import {
 	AlertDialogContent,
 } from '../ui/alert-dialog';
 import React from 'react';
-import { successIcon } from '@/lib/icons';
+import { loadingSpinner, successIcon } from '@/lib/icons';
+import { NextResponse } from 'next/server';
 
-const agentFormSchema = z.object({
+const adminFormSchema = z.object({
 	name: z
 		.string()
 		.min(2, {
@@ -46,67 +38,92 @@ const agentFormSchema = z.object({
 			required_error: 'Please enter an email.',
 		})
 		.email(),
-	moi: z.string({
-		required_error: 'Please select a mode of identification',
-	}),
+	// moi: z.string({
+	// 	required_error: 'Please select a mode of identification',
+	// }),
 	phone: z.string({
 		required_error: 'Please enter phone number.',
 	}),
-	idNumber: z
-		.string({
-			required_error: 'Please enter identification number.',
-		})
-		.min(8, {
-			message: 'ID number must be at least 8 characters.',
-		})
-		.max(20, {
-			message: 'Username must not be longer than 20 characters.',
-		}),
-	address: z.string().max(160).min(15),
+	role: z.string({
+		required_error: 'Please choose role.',
+	}),
+	// idNumber: z
+	// 	.string({
+	// 		required_error: 'Please enter identification number.',
+	// 	})
+	// 	.min(8, {
+	// 		message: 'ID number must be at least 8 characters.',
+	// 	})
+	// 	.max(20, {
+	// 		message: 'Username must not be longer than 20 characters.',
+	// 	}),
+	// address: z.string().max(160).min(15),
 	password: z.string().refine((password) => {
 		return (
-			password.length >= 8 &&
-			/[A-Z]/.test(password) &&
-			/\d/.test(password)
+			password.length >= 8
+			// &&
+			// /[A-Z]/.test(password) &&
+			// /\d/.test(password)
 		);
 	}, 'The password must contain at least one uppercase letter and one number and be at least 8 characters long.'),
 	confirmPassword: z.string().min(8),
 });
 
-type AgentFormValues = z.infer<typeof agentFormSchema>;
+type AdminFormValues = z.infer<typeof adminFormSchema>;
 
 // This can come from your database or API.
-const defaultValues: Partial<AgentFormValues> = {
+const defaultValues: Partial<AdminFormValues> = {
 	name: '',
 	email: '',
 	phone: '',
-	idNumber: '',
-	address: '',
+	role: 'admin',
 	password: '',
 	confirmPassword: '',
 };
-
 export function AdminForm() {
+	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const [open, setOpen] = React.useState(false);
 	const { toast } = useToast();
-	const form = useForm<AgentFormValues>({
-		resolver: zodResolver(agentFormSchema),
+	const form = useForm<AdminFormValues>({
+		resolver: zodResolver(adminFormSchema),
 		defaultValues,
 		mode: 'onChange',
 	});
 
-	function onSubmit(data: AgentFormValues) {
-		setOpen(true);
-		toast({
-			title: 'You submitted the following values:',
-			description: (
-				<pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-					<code className='text-white'>
-						{JSON.stringify(data, null, 2)}
-					</code>
-				</pre>
-			),
-		});
+	async function onSubmit(data: AdminFormValues) {
+		setIsLoading(true);
+		try {
+			const createAdminResponse = await fetch('/api/create-admin', {
+				method: 'POST',
+				body: JSON.stringify({
+					name: data.name,
+					email: data.email,
+					password: data.password,
+					phone: data.phone,
+					role: data.role,
+				}),
+			});
+			const result = await createAdminResponse.json();
+			if (
+				createAdminResponse.status > 199 &&
+				createAdminResponse.status < 299
+			) {
+				toast({
+					title: 'Admin Created Successfully',
+				});
+				setIsLoading(false);
+				setOpen(true);
+				return NextResponse.json(result);
+			} else {
+				setIsLoading(false);
+				toast({
+					title: 'Admin NOT Created',
+				});
+				return null;
+			}
+		} catch (error) {
+			setIsLoading(false);
+		}
 	}
 
 	return (
@@ -132,7 +149,7 @@ export function AdminForm() {
 							</FormItem>
 						)}
 					/>
-					<FormField
+					{/* <FormField
 						control={form.control}
 						name='moi'
 						render={({ field }) => (
@@ -164,7 +181,7 @@ export function AdminForm() {
 								<FormMessage />
 							</FormItem>
 						)}
-					/>
+					/> */}
 					<FormField
 						control={form.control}
 						name='phone'
@@ -181,7 +198,7 @@ export function AdminForm() {
 							</FormItem>
 						)}
 					/>
-					<FormField
+					{/* <FormField
 						control={form.control}
 						name='idNumber'
 						render={({ field }) => (
@@ -198,7 +215,7 @@ export function AdminForm() {
 								<FormMessage />
 							</FormItem>
 						)}
-					/>
+					/> */}
 					<FormField
 						control={form.control}
 						name='email'
@@ -215,7 +232,7 @@ export function AdminForm() {
 							</FormItem>
 						)}
 					/>
-					<FormField
+					{/* <FormField
 						control={form.control}
 						name='address'
 						render={({ field }) => (
@@ -231,7 +248,7 @@ export function AdminForm() {
 								<FormMessage />
 							</FormItem>
 						)}
-					/>
+					/> */}
 					<FormField
 						control={form.control}
 						name='password'
@@ -273,13 +290,13 @@ export function AdminForm() {
 						variant='outline'
 						asChild
 					>
-						<Link href='/dashboard/admins'>Cancel</Link>
+						<Link href='/admins'>Cancel</Link>
 					</Button>
 					<Button
 						className='w-28'
 						type='submit'
 					>
-						Add Admin
+						{isLoading ? loadingSpinner : 'Add Admin'}
 					</Button>
 				</div>
 				<AlertDialog
@@ -293,37 +310,34 @@ export function AdminForm() {
 									{successIcon}
 								</div>
 								<div className='text-xl'>
-									Agent Account Created
+									Admin Account Created
 								</div>
 							</div>
 							<div className='flex flex-col text-center mb-5'>
-								<div>E-mail: omoroge24@gmail.com</div>
-								<div>Password: hdfay123454</div>
+								<div>
+									E-mail: {form.getValues('email')}
+								</div>
+								<div>
+									Password:{' '}
+									{form.getValues('password')}
+								</div>
 							</div>
 							<div className='flex flex-col gap-3'>
 								<AlertDialogAction
 									asChild
 									className='rounded-xl'
 								>
-									<Link
-										href={`/dashboard/admins/adminid`}
-									>
-										View Account
+									<Link href={`/admins`}>
+										View Admins
 									</Link>
 								</AlertDialogAction>
-								<AlertDialogCancel
-									asChild
-									className='rounded-xl'
-								>
-									<Link href={`/dashboard/admins`}>
-										Dashboard
-									</Link>
+								<AlertDialogCancel className='rounded-xl'>
+									New Admin
 								</AlertDialogCancel>
 							</div>
 						</div>
 					</AlertDialogContent>
 				</AlertDialog>
-                
 			</form>
 		</Form>
 	);

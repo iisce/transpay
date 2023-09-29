@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 
-export default function ActivityCard({ id, name, time, date }: ACTIVITIESI) {
+export default function ActivityCard({ id, name, time, date }: IActivities) {
 	return (
 		<Link
 			href={`activities/${id}`}

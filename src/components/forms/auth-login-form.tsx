@@ -22,8 +22,10 @@ import {
 	AlertDialogContent,
 } from '../ui/alert-dialog';
 import React from 'react';
-import { successIcon } from '@/lib/icons';
+import { loadingSpinner, successIcon } from '@/lib/icons';
 import { Checkbox } from '../ui/checkbox';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 const agentFormSchema = z.object({
 	email: z
@@ -33,9 +35,9 @@ const agentFormSchema = z.object({
 		.email(),
 	password: z.string().refine((password) => {
 		return (
-			password.length >= 8 &&
-			/[A-Z]/.test(password) &&
-			/\d/.test(password)
+			password.length >= 8
+			// && /[A-Z]/.test(password) &&
+			// /\d/.test(password)
 		);
 	}, 'The password must contain at least one uppercase letter and one number and be at least 8 characters long.'),
 });
@@ -49,6 +51,9 @@ const defaultValues: Partial<AgentFormValues> = {
 };
 
 export function AuthLoginForm() {
+	const [isLoading, setIsLoading] = React.useState<boolean>(false);
+	const router = useRouter();
+
 	const [open, setOpen] = React.useState(false);
 	const { toast } = useToast();
 	const form = useForm<AgentFormValues>({
@@ -57,30 +62,43 @@ export function AuthLoginForm() {
 		mode: 'onChange',
 	});
 
-	function onSubmit(data: AgentFormValues) {
-		setOpen(true);
-		toast({
-			title: 'You submitted the following values:',
-			description: (
-				<pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-					<code className='text-white'>
-						{JSON.stringify(data, null, 2)}
-					</code>
-				</pre>
-			),
-		});
+	async function onSubmit(data: AgentFormValues) {
+		setIsLoading(true);
+		try {
+			const signInResponse = await signIn('credentials', {
+				email: data.email,
+				password: data.password,
+				redirect: true,
+				callbackUrl: '/dashboard',
+			});
+
+			if (signInResponse?.ok === false) {
+				toast({
+					title: 'Invalid Credentials:',
+					description: 'Check your email or password',
+				});
+				setIsLoading(false);
+			} else {
+				router.push('/dashboard');
+				toast({
+					title: 'Successful Sign in',
+				});
+				setIsLoading(false);
+				return signInResponse;
+			}
+		} catch (error: any) {
+			throw new Error(
+				error?.message || 'An error occurred during api connection.'
+			);
+		}
 	}
 
 	return (
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
-				className='mb-20 flex flex-col gap-5'
+				className='mb-5 flex flex-col gap-5'
 			>
-				{' '}
-				<div className=' capitalize text-h4Bold sm:text-h3Bold'>
-					Login to your account
-				</div>
 				<div className='grid gap-5'>
 					<FormField
 						control={form.control}
@@ -126,14 +144,19 @@ export function AuthLoginForm() {
 					</div>
 				</div>
 				<div className='grid'>
-					<Button type='submit'>Login</Button>
+					<Button
+						disabled={isLoading}
+						type='submit'
+					>
+						{isLoading ? loadingSpinner : 'Login'}
+					</Button>
 					<div className='flex items-center'>
 						Forgot your password?
 						<Button
 							asChild
 							variant='link'
 						>
-							<Link href='/auth/reset-password'>
+							<Link href='/reset-password'>
 								Reset your Password
 							</Link>
 						</Button>
@@ -168,9 +191,7 @@ export function AuthLoginForm() {
 									asChild
 									className='rounded-xl'
 								>
-									<Link
-										href={`/dashboard/agents/agentid`}
-									>
+									<Link href={`/agents/agentId`}>
 										View Account
 									</Link>
 								</AlertDialogAction>
@@ -178,7 +199,7 @@ export function AuthLoginForm() {
 									asChild
 									className='rounded-xl'
 								>
-									<Link href={`/dashboard/agents`}>
+									<Link href={`/agents`}>
 										Dashboard
 									</Link>
 								</AlertDialogCancel>

@@ -37,8 +37,10 @@ export function DataTable<TData, TValue>({
 	data,
 	showSearch,
 	searchWith,
+	searchWithPlaceholder,
 	showColumns,
-	showPagination = true,
+	showPagination,
+	showSelected,
 }: DataTableProps<TData, TValue>) {
 	const [sorting, setSorting] = React.useState<SortingState>([]);
 	const [columnFilters, setColumnFilters] =
@@ -68,27 +70,29 @@ export function DataTable<TData, TValue>({
 
 	return (
 		<div>
-			{showSearch && (
+			{showSearch && searchWith && (
 				<div className='flex items-center py-4 text-title2'>
 					<div className='relative flex  items-center w-full'>
 						<div className='h-6 w-6 left-2 opacity-60 shrink-0 absolute'>
 							{searchIcon}
 						</div>
 						<Input
-							placeholder='Search agents'
+							placeholder={
+								searchWithPlaceholder || 'Search Here'
+							}
 							value={
 								(table
-									.getColumn(searchWith || 'name')
+									.getColumn(searchWith)
 									?.getFilterValue() as string) ?? ''
 							}
 							onChange={(event) =>
 								table
-									.getColumn(searchWith || 'name')
+									.getColumn(searchWith)
 									?.setFilterValue(
 										event.target.value
 									)
 							}
-							className='pl-10 mr-5'
+							className='pl-10'
 						/>
 					</div>
 					{showColumns && (
@@ -96,7 +100,7 @@ export function DataTable<TData, TValue>({
 							<DropdownMenuTrigger asChild>
 								<Button
 									variant='outline'
-									className='ml-auto'
+									className='ml-5'
 								>
 									Columns
 								</Button>
@@ -193,6 +197,7 @@ export function DataTable<TData, TValue>({
 			{showPagination && (
 				<div className='flex items-center py-4 mb-20 sm:mb-0'>
 					<DataTablePagination
+						showSelected={showSelected}
 						rowsPerPage
 						table={table}
 					/>

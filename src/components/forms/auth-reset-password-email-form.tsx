@@ -62,7 +62,7 @@ export function AuthResetPasswordEmail() {
 				</pre>
 			),
 		});
-		router.push('/auth/verification-code');
+		router.push('/verification-code');
 	}
 
 	return (
@@ -102,7 +102,7 @@ export function AuthResetPasswordEmail() {
 						asChild
 						variant='link'
 					>
-						<Link href='/auth/sign-in'>
+						<Link href='/sign-in'>
 							<div className='h-4 w-4 mr-2'>
 								{backIcon}
 							</div>
@@ -132,9 +132,7 @@ export function AuthResetPasswordEmail() {
 									asChild
 									className='rounded-xl'
 								>
-									<Link
-										href={`/dashboard/agents/agentid`}
-									>
+									<Link href={`/agents/agentid`}>
 										View Account
 									</Link>
 								</AlertDialogAction>
@@ -142,7 +140,7 @@ export function AuthResetPasswordEmail() {
 									asChild
 									className='rounded-xl'
 								>
-									<Link href={`/dashboard/agents`}>
+									<Link href={`/agents`}>
 										Dashboard
 									</Link>
 								</AlertDialogCancel>

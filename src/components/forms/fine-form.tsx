@@ -189,7 +189,7 @@ export default function FineForm({
 						asChild
 						className='p-4 py-2 rounded-normal w-32'
 					>
-						<Link href={'/dashboard/fines/'}>Cancel</Link>
+						<Link href={'/fines/'}>Cancel</Link>
 					</Button>
 					<Button
 						variant={'default'}
@@ -232,9 +232,7 @@ export default function FineForm({
 									asChild
 									className='rounded-xl'
 								>
-									<Link
-										href={`/dashboard/agents/agentid`}
-									>
+									<Link href={`/agents/agentid`}>
 										View Account
 									</Link>
 								</AlertDialogAction>
@@ -242,7 +240,7 @@ export default function FineForm({
 									asChild
 									className='rounded-xl'
 								>
-									<Link href={`/dashboard/agents`}>
+									<Link href={`/agents`}>
 										Dashboard
 									</Link>
 								</AlertDialogCancel>

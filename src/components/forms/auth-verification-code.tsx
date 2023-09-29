@@ -73,7 +73,7 @@ export function AuthVerificationCode() {
 				</pre>
 			),
 		});
-		// router.push('/auth/new-password');
+		// router.push('/new-password');
 	};
 
 	return (
@@ -119,7 +119,7 @@ export function AuthVerificationCode() {
 					asChild
 					variant='link'
 				>
-					<Link href='/auth/sign-in'>
+					<Link href='/sign-in'>
 						<div className='h-4 w-4 mr-2'>{backIcon}</div>
 						Back to Login
 					</Link>
@@ -145,9 +145,7 @@ export function AuthVerificationCode() {
 								asChild
 								className='rounded-xl'
 							>
-								<Link
-									href={`/dashboard/agents/agentid`}
-								>
+								<Link href={`/agents/agentid`}>
 									View Account
 								</Link>
 							</AlertDialogAction>
@@ -155,9 +153,7 @@ export function AuthVerificationCode() {
 								asChild
 								className='rounded-xl'
 							>
-								<Link href={`/dashboard/agents`}>
-									Dashboard
-								</Link>
+								<Link href={`/agents`}>Dashboard</Link>
 							</AlertDialogCancel>
 						</div>
 					</div>

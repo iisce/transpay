@@ -1,43 +1,21 @@
-'use client';
 import React from 'react';
 import Link from 'next/link';
-import { NavigationMenuLink } from '@radix-ui/react-navigation-menu';
-import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { Input } from '../ui/input';
 import { searchIcon } from '@/lib/icons';
 import { UserNav } from '../shared/user-nav-bar';
 import { Notification } from '../shared/notification';
+import { getSSession } from '@/lib/get-data';
+import { Button } from '../ui/button';
+import { getAgentMe } from '@/lib/controllers/agent-controller';
+import { getAdminMe } from '@/lib/controllers/admin-controller';
 
-const ListItem = React.forwardRef<
-	React.ElementRef<'a'>,
-	React.ComponentPropsWithoutRef<'a'>
->(({ className, title, children, ...props }, ref) => {
-	return (
-		<li>
-			<NavigationMenuLink asChild>
-				<a
-					ref={ref}
-					className={cn(
-						'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
-						className
-					)}
-					{...props}
-				>
-					<div className='text-sm font-medium leading-none'>
-						{title}
-					</div>
-					<p className='line-clamp-2 text-sm leading-snug text-muted-foreground'>
-						{children}
-					</p>
-				</a>
-			</NavigationMenuLink>
-		</li>
-	);
-});
-ListItem.displayName = 'ListItem';
-
-export default function NavBar() {
+export default async function NavBar() {
+	const { role } = await getSSession();
+	const user =
+		role?.toLowerCase() === 'agent'
+			? await getAgentMe()
+			: await getAdminMe();
 	return (
 		<div className='h-16 w-full bg-secondary px-5 shrink-0'>
 			<div className='flex items-center justify-between h-full gap-5'>
@@ -65,8 +43,16 @@ export default function NavBar() {
 					</div>
 				</div>
 				<div className='flex gap-3 items-center text-primary-700'>
-					<Notification />
-					<UserNav />
+					{user ? (
+						<>
+							<Notification />
+							<UserNav user={user} />
+						</>
+					) : (
+						<Button asChild>
+							<Link href='/agent/sign-in'>Login</Link>
+						</Button>
+					)}
 				</div>
 			</div>
 		</div>

@@ -1,5 +1,4 @@
 'use client';
-
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -25,6 +24,9 @@ import {
 import Pill from '../pill';
 import Link from 'next/link';
 import Cbadge from '../category-badge';
+import { deleteAdminById } from '@/lib/controllers/admin-controller';
+import DeleteAdminButton from '@/components/shared/delete-admin-button';
+import { useToast } from '../use-toast';
 
 export const paymentColumns: ColumnDef<Payment>[] = [
 	{
@@ -117,86 +119,137 @@ export const paymentColumns: ColumnDef<Payment>[] = [
 		},
 	},
 ];
-export const adminsColumns: ColumnDef<AdminT>[] = [
+export const adminsColumns: ColumnDef<IAdmin>[] = [
 	{
 		accessorKey: 'name',
-		header: 'Name',
-	},
-	{
-		accessorKey: 'contact',
 		header: ({ column }) => (
 			<DataTableColumnHeader
 				column={column}
-				title='Contact'
+				title='Name'
 			/>
 		),
 		cell: ({ row }) => (
-			<div>
-				<div>{row.original.contact.email}</div>
-				<div>{row.original.contact.phone}</div>
-			</div>
+			<Link
+				href={`/admins/${row.original.admin_id}`}
+				className=''
+			>
+				{row.original.name}
+			</Link>
 		),
 	},
 	{
-		accessorKey: 'status',
+		accessorKey: 'email',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Email'
+			/>
+		),
+		cell: ({ row }) => <div>{row.original.email}</div>,
+	},
+	{
+		accessorKey: 'phone',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Phone'
+			/>
+		),
+		cell: ({ row }) => <div>{row.original.phone}</div>,
+	},
+	{
+		accessorKey: 'blacklisted',
 		header: 'Status',
-		cell: ({ row }) => (
-			<Pill
-				status={row.getValue('status')}
-				text={row.getValue('status')}
-			/>
-		),
-	},
-	{
-		accessorKey: 'address',
-		header: 'Address',
+		cell: ({ row }) => {
+			if (row.getValue('blacklisted') === true)
+				return (
+					<Pill
+						status={'inactive'}
+						text={'inactive'}
+					/>
+				);
+			else
+				return (
+					<Pill
+						status={'active'}
+						text={'active'}
+					/>
+				);
+		},
 	},
 	{
 		id: 'actions',
 		header: 'Action',
 		cell: ({ row }) => {
 			return (
-				<div className='flex flex-row gap-2 justify-center '>
-					<Link href={`/dashboard/admins/${row.id}`}>
+				<div className='flex flex-row gap-2 justify-start'>
+					<Link href={`/admins/${row.original.admin_id}`}>
 						<span className='h-4 w-4 mr-3 items-center '>
 							{editIcon}
 						</span>
 					</Link>
-					<div className='items-center'>
-						<span className='h-4 w-4 mr-3'>{deleteIcon}</span>
-					</div>
+					<DeleteAdminButton id={row.original.admin_id} />
 				</div>
 			);
 		},
 	},
 ];
-export const agentsColumns: ColumnDef<AgentT>[] = [
+export const agentsColumns: ColumnDef<IAgent>[] = [
 	{
 		accessorKey: 'name',
-		header: 'Name',
-	},
-	{
-		accessorKey: 'area',
 		header: ({ column }) => (
 			<DataTableColumnHeader
 				column={column}
-				title='Area'
+				title='Name'
+			/>
+		),
+		cell: ({ row }) => (
+			<Link
+				href={`/agents/${row.original.agent_id}`}
+				className=''
+			>
+				{row.original.name}
+			</Link>
+		),
+	},
+	{
+		accessorKey: 'location',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Location'
 			/>
 		),
 	},
 	{
 		accessorKey: 'phone',
-		header: 'Phone',
-	},
-	{
-		accessorKey: 'status',
-		header: 'Status',
-		cell: ({ row }) => (
-			<Pill
-				status={row.getValue('status')}
-				text={row.getValue('status')}
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Phone'
 			/>
 		),
+		cell: ({ row }) => <div>{row.original.phone}</div>,
+	},
+	{
+		accessorKey: 'is_active',
+		header: 'Status',
+		cell: ({ row }) => {
+			if (row.getValue('is_active') === true)
+				return (
+					<Pill
+						status={'active'}
+						text={'active'}
+					/>
+				);
+			else
+				return (
+					<Pill
+						status={'inactive'}
+						text={'inactive'}
+					/>
+				);
+		},
 	},
 	{
 		id: 'actions',
@@ -214,7 +267,9 @@ export const agentsColumns: ColumnDef<AgentT>[] = [
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align='end'>
 						<DropdownMenuItem asChild>
-							<Link href={`/dashboard/agents/${row.id}`}>
+							<Link
+								href={`/agents/${row.original.agent_id}`}
+							>
 								<span className='h-4 w-4 mr-3'>
 									{editIcon}
 								</span>
@@ -233,38 +288,67 @@ export const agentsColumns: ColumnDef<AgentT>[] = [
 		},
 	},
 ];
-export const driversColumns: ColumnDef<DriverT>[] = [
+export const vehiclesColumns: ColumnDef<IVehicle>[] = [
 	{
-		accessorKey: 'name',
-		header: 'Name',
+		accessorKey: 'Drivers',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Driver'
+			/>
+		),
+		cell: ({ row }) => (
+			<Link
+				href={`/vehicles/${row.original.vehicle_id}`}
+				className=''
+			>
+				{`${
+					row.original.Drivers[0]?.firstname ||
+					'No Current Driver'
+				} ${row.original.Drivers[0]?.lastname || ''}`}
+			</Link>
+		),
 	},
 	{
-		accessorKey: 'plate',
-		header: 'Vehicle Plate Number',
+		accessorKey: 'plate_number',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Plate Number'
+			/>
+		),
 		cell: ({ row }) => (
-			<span className='uppercase'>{row.getValue('plate')}</span>
+			<div className='uppercase'>{row.original.plate_number}</div>
 		),
 	},
 	{
 		accessorKey: 'status',
-		header: 'Today Status',
-		cell: ({ row }) => (
-			<Pill
-				status={row.getValue('status')}
-				text={row.getValue('status')}
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Status'
 			/>
+		),
+		cell: ({ row }) => (
+			<div className='uppercase'>{row.original.status}</div>
 		),
 	},
 	{
 		accessorKey: 'category',
-		header: 'Category',
-		cell: ({ row }) => <Cbadge variant={row.getValue('category')} />,
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Category'
+			/>
+		),
+		cell: ({ row }) => (
+			<div className='uppercase'>{row.original.category}</div>
+		),
 	},
-
 	{
 		id: 'actions',
 		cell: ({ row }) => {
-			const driver = row.original;
+			const vehicle = row.original;
 			return (
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
@@ -285,20 +369,20 @@ export const driversColumns: ColumnDef<DriverT>[] = [
 							asChild
 						>
 							<Link
-								href={`/dashboard/drivers/${driver.plate}`}
+								href={`/vehicles/${vehicle.vehicle_id}`}
 							>
 								<span className='h-4 w-4 mr-3'>
 									{editIcon}
 								</span>
-								View Driver
+								View Vehicle
 							</Link>
 						</DropdownMenuItem>
-						<DropdownMenuItem
+						{/* <DropdownMenuItem
 							className='border-b border-black rounded-none'
 							asChild
 						>
 							<Link
-								href={`/dashboard/drivers/${driver.plate}/payments`}
+								href={`/vehicles/${vehicle.vehicle_id}/payments`}
 							>
 								<span className='h-4 w-4 mr-3'>
 									{paymentIcon}
@@ -311,19 +395,26 @@ export const driversColumns: ColumnDef<DriverT>[] = [
 							asChild
 						>
 							<Link
-								href={`/dashboard/drivers/${driver.plate}/fines`}
+								href={`/vehicles/${vehicle.vehicle_id}/fines`}
 							>
 								<span className='h-4 w-4 mr-3'>
 									{finesIcon}
 								</span>
 								View Fines
 							</Link>
-						</DropdownMenuItem>
+						</DropdownMenuItem> */}
 						<DropdownMenuItem className='text-destructive'>
-							<span className='h-4 w-4 mr-3'>
-								{deleteIcon}
-							</span>
-							Delete Driver
+							Delete Vehicle
+						</DropdownMenuItem>
+						<DropdownMenuItem
+							className=''
+							onClick={() =>
+								navigator.clipboard.writeText(
+									vehicle.vehicle_id
+								)
+							}
+						>
+							Copy vehicle ID
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
@@ -438,18 +529,50 @@ export const viewDriversColumns: ColumnDef<DriverPayment>[] = [
 		},
 	},
 ];
-export const addDriversColumns: ColumnDef<DriverT>[] = [
+export const driversColumns: ColumnDef<IDriver>[] = [
 	{
-		accessorKey: 'Name',
-		header:()=> <div className='font-bold'>Name</div>,
+		accessorKey: 'firstname',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Name'
+			/>
+		),
+		cell: ({ row }) => (
+			<span className=''>{`${row.original.firstname} ${row.original.lastname}`}</span>
+		),
 	},
 	{
-		accessorKey: 'Phone_Number',
-		header: () => <div className='text-right font-bold'>Phone Number</div>,
+		accessorKey: 'phone',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Phone'
+			/>
+		),
+	},
+	{
+		accessorKey: 'lga',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='LGA'
+			/>
+		),
+	},
+	{
+		id: 'actions',
 		cell: ({ row }) => {
-			const phone_number = row.getValue('Phone_Number');
+			const driver = row.original;
 			return (
-				<div className='text-right font-medium'>{`${phone_number}`}</div>
+				<div
+					className=' cursor-pointer'
+					onClick={() => {
+						navigator.clipboard.writeText(driver.driver_id);
+					}}
+				>
+					Copy ID
+				</div>
 			);
 		},
 	},
@@ -460,6 +583,13 @@ export const webAgentDriversColumns: ColumnDef<AgentT>[] = [
 	{
 		accessorKey: 'name',
 		header: 'Name',
+	},
+	{
+		accessorKey: 'plate',
+		header: 'Vehicle Plate Number',
+		cell: ({ row }) => (
+			<span className='uppercase'>{row.getValue('plate')}</span>
+		),
 	},
 	{
 		accessorKey: 'plate',
@@ -647,7 +777,7 @@ export const viewWaiverColumns: ColumnDef<DriverPayment>[] = [
 							asChild
 						>
 							<Link
-								href={`/dashboard/drivers/${row.id}/waiver/add-new`}
+								href={`/vehicles/${row.id}/waiver/add-new`}
 							>
 								<span className='h-4 w-4 mr-3'>
 									{editIcon}
