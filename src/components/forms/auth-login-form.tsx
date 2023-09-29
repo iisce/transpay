@@ -139,6 +139,7 @@ export function AuthLoginForm() {
 						</Button>
 					</div>
 				</div>
+				
 				<AlertDialog
 					open={open}
 					onOpenChange={setOpen}
