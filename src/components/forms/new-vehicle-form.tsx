@@ -59,7 +59,7 @@ const vehicleFormSchema = z.object({
 		.min(5, {
 			message: 'Plate numbers have at least five(5) characters.',
 		}),
-	owner_Phone_Number: z
+	owners_phone_number: z
 		.string({
 			required_error: 'Enter owner phone number.',
 		})
@@ -87,6 +87,7 @@ const vehicleFormSchema = z.object({
 		required_error: 'Choose Status',
 	}),
 	barcode_string: z.string(),
+	tracker_id: z.string(),
 });
 
 type DriverFormValues = z.infer<typeof vehicleFormSchema>;
@@ -100,7 +101,8 @@ const defaultValues: Partial<DriverFormValues> = {
 	vehicle_type: '',
 	vin: '',
 	barcode_string: '',
-	owner_Phone_Number: '',
+	tracker_id: '',
+	owners_phone_number: '',
 	owners_name: '',
 };
 
@@ -131,7 +133,8 @@ export default function CreateVehicleForm() {
 						vehicle_type: data.vehicle_type,
 						vin: data.vin,
 						barcode_string: data.barcode_string,
-						owner_Phone_Number: data.owner_Phone_Number,
+						tracker_id: data.tracker_id,
+						owners_phone_number: data.owners_phone_number,
 						owners_name: data.owners_name,
 					}),
 				}
@@ -310,7 +313,7 @@ export default function CreateVehicleForm() {
 					/>
 
 					<FormField
-						name='owner_Phone_Number'
+						name='owners_phone_number'
 						control={form.control}
 						render={({ field }) => (
 							<FormItem>
@@ -331,7 +334,8 @@ export default function CreateVehicleForm() {
 						)}
 					/>
 
-					{/* <FormField
+					{/* 
+					<FormField
 						name='barcode_string'
 						control={form.control}
 						render={({ field }) => (
@@ -351,7 +355,29 @@ export default function CreateVehicleForm() {
 								<FormMessage />
 							</FormItem>
 						)}
-					/> */}
+					/> 
+					<FormField
+						name='tracker_id'
+						control={form.control}
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel className='text-title1Bold pl-4'>
+									Tracker ID
+								</FormLabel>
+
+								<FormControl>
+									<Input
+										className='relative text-body flex  items-center h-14 rounded-2xl'
+										{...field}
+										type='text'
+										placeholder='Tracker ID'
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/> 
+					*/}
 				</div>
 				<div className='flex justify-center items-center gap-6 text-title1Bold'>
 					<Button

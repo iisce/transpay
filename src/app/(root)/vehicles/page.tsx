@@ -80,7 +80,7 @@ export default async function Vehicles() {
 								columns={vehiclesColumns}
 								data={vehicles.filter(
 									(vehicle) =>
-										vehicle.status === 'cleared'
+										vehicle.status === 'active'
 								)}
 							/>
 						</TabsContent>
@@ -94,7 +94,7 @@ export default async function Vehicles() {
 								columns={vehiclesColumns}
 								data={vehicles.filter(
 									(vehicle) =>
-										vehicle.status === 'debtors'
+										vehicle.status === 'inactive'
 								)}
 							/>
 						</TabsContent>

@@ -8,6 +8,7 @@ import { DataTable } from '@/components/ui/table/data-table';
 import { VIEW_DRIVER_TABLE } from '@/lib/consts';
 import { searchVehicle } from '@/lib/controllers/vehicle-controller';
 import { getSSession } from '@/lib/get-data';
+import { failureIcon, successIcon } from '@/lib/icons';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import React from 'react';
@@ -15,6 +16,8 @@ import React from 'react';
 export default async function SearchVehicle({ id }: { id: string }) {
 	const { role } = await getSSession();
 	const vehicle = await searchVehicle(id);
+	const onWaiver = false;
+	const isOwing = true;
 	if (!vehicle) {
 		notFound();
 	}
@@ -22,7 +25,8 @@ export default async function SearchVehicle({ id }: { id: string }) {
 		<div className='h-full w-full p-6 flex flex-col gap-6 '>
 			<div className='flex items-center justify-between'>
 				<div className='text-title1Bold'>
-					{vehicle.Drivers[0]?.firstname || 'No current driver'}
+					{`Owner's Name: `}
+					{vehicle.owners_name || 'No current driver'}
 				</div>
 				{/* {role && role.toLowerCase() !== 'agent' && (
 					<Button
@@ -43,6 +47,46 @@ export default async function SearchVehicle({ id }: { id: string }) {
 				)} */}
 			</div>
 			<div className='overflow-y-scroll  w-full'>
+				{onWaiver ? (
+					<div className='flex flex-col p-3 w-full items-center gap-2 mb-20'>
+						<div className=' text-green-500'>
+							{successIcon}
+						</div>
+						<div className='flex py-2'>
+							<div className='shrink-0 grow-0 text-title1Bold'>
+								Vehicle is on Waiver!
+							</div>
+						</div>
+						<Button asChild>
+							<Link
+								href={'waiver/history'}
+								className='uppercase'
+							>
+								View Waiver History
+							</Link>
+						</Button>
+					</div>
+				) : isOwing ? (
+					<div className='flex flex-col p-3 w-full items-center gap-2 mb-20'>
+						<div className=' text-red-500'>{failureIcon}</div>
+						<div className='flex py-2'>
+							<div className='shrink-0 grow-0 text-title1Bold'>
+								Vehicle is Owing!
+							</div>
+						</div>
+					</div>
+				) : (
+					<div className='flex flex-col p-3 w-full items-center gap-2 mb-20'>
+						<div className=' text-green-500'>
+							{successIcon}
+						</div>
+						<div className='flex py-2'>
+							<div className='shrink-0 grow-0 text-title1Bold'>
+								Vehicle is clear!
+							</div>
+						</div>
+					</div>
+				)}
 				<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 w-full'>
 					{role && (
 						<>

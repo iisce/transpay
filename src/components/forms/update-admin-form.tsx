@@ -92,7 +92,7 @@ export function UpdateAdminForm({ admin }: { admin: IAdmin }) {
 				createAdminResponse.status < 299
 			) {
 				toast({
-					title: 'Updated Successfully',
+					title: 'Admin Updated Successfully',
 				});
 				setIsLoading(false);
 				setDisabled(true);

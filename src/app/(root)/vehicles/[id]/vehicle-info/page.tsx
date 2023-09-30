@@ -1,4 +1,5 @@
 import VehicleInfoForm from '@/components/forms/edit-vehicle-form';
+import { UpdateVehicleForm } from '@/components/forms/update-vehicle-form';
 import { getVehicleById } from '@/lib/controllers/vehicle-controller';
 import { addIcon } from '@/lib/icons';
 import { notFound } from 'next/navigation';
@@ -18,7 +19,7 @@ export default async function VehicleInformationPage({
 			<div className='w-full flex flex-col gap-3 mb-8 p-2 xs:p-5 overflow-y-scroll '>
 				<div className=''>
 					<h1 className='text-title1Bold py-2'>
-						Vehicle Details {vehicle?.vehicle_id}
+						Vehicle Owner: Mr. {vehicle.owners_name}
 					</h1>
 				</div>
 
@@ -29,7 +30,7 @@ export default async function VehicleInformationPage({
 				</div>
 
 				<div>
-					<VehicleInfoForm vehicle={vehicle} />
+					<UpdateVehicleForm vehicle={vehicle} />
 				</div>
 			</div>
 		</>

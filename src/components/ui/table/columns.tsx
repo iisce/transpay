@@ -302,10 +302,7 @@ export const vehiclesColumns: ColumnDef<IVehicle>[] = [
 				href={`/vehicles/${row.original.vehicle_id}`}
 				className=''
 			>
-				{`${
-					row.original.Drivers[0]?.firstname ||
-					'No Current Driver'
-				} ${row.original.Drivers[0]?.lastname || ''}`}
+				{row.original.owners_name}
 			</Link>
 		),
 	},

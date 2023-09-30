@@ -23,10 +23,11 @@ export async function POST(req: NextRequest) {
 				plate_number: body.plate_number,
 				status: body.status,
 				vehicle_type: body.vehicle_type,
-				owner_Phone_Number: body.owner_Phone_Number,
+				owners_phone_number: body.owners_phone_number,
 				owners_name: body.owners_name,
 				vin: body.vin,
 				barcode_string: body.barcode_string,
+				tracker_id: body.tracker_id,
 			}),
 		});
 

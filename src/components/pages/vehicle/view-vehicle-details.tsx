@@ -22,8 +22,7 @@ export default async function ViewVehicleDetails({ id }: { id: string }) {
 		<div className='h-full w-full p-6 flex flex-col gap-6 '>
 			<div className='flex items-center justify-between'>
 				<div className='text-title1Bold'>
-					Current Driver:{' '}
-					{vehicle.Drivers[0]?.firstname || 'No current driver'}
+					Vehicle Owner: Mr. {vehicle.owners_name}
 				</div>
 				{/* {role && role.toLowerCase() !== 'agent' && (
 					<Button
@@ -92,7 +91,7 @@ export default async function ViewVehicleDetails({ id }: { id: string }) {
 					<div className='flex flex-col gap-5'>
 						{role?.toLowerCase() !== 'agent' && (
 							<>
-								<div className='flex flex-col gap-2'>
+								{/* <div className='flex flex-col gap-2'>
 									<div className='flex justify-between py-2'>
 										<div className='shrink-0 grow-0 text-title1Bold'>
 											Fine History
@@ -121,7 +120,7 @@ export default async function ViewVehicleDetails({ id }: { id: string }) {
 											)}
 										/>
 									</div>
-								</div>
+								</div> */}
 								<div className='flex flex-col gap-2 '>
 									<div className='flex justify-between py-2'>
 										<div className='shrink-0 grow-0 text-title1Bold'>
