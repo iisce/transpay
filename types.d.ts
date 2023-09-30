@@ -155,6 +155,10 @@ interface IVehicle {
 	blacklisted: boolean;
 	current_driver?: IDriver;
 	status: string;
+	owner_Phone_Number: string;
+	owners_name: string;
+	vin: string;
+	barcode_string: string;
 	deleted: boolean;
 	createdAt: string;
 	updatedAt: string;
@@ -273,9 +277,14 @@ interface ICreateVehicleForm {
 	image: string;
 	category: string;
 	color: string;
-	plate_number: string;
 	status: string;
 	vehicle_id?: string;
+	plate_number: string;
+	owner_Phone_Number: string;
+	owners_name: string;
+	vehicle_type: string;
+	vin: string;
+	barcode_string?: string;
 }
 interface ICreateDriverForm {
 	name: string;

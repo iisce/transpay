@@ -22,6 +22,11 @@ export async function POST(req: NextRequest) {
 				image: body.image,
 				plate_number: body.plate_number,
 				status: body.status,
+				vehicle_type: body.vehicle_type,
+				owner_Phone_Number: body.owner_Phone_Number,
+				owners_name: body.owners_name,
+				vin: body.vin,
+				barcode_string: body.barcode_string,
 			}),
 		});
 

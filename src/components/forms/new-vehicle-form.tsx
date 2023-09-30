@@ -39,6 +39,9 @@ const vehicleFormSchema = z.object({
 		.refine((value) => ['keke', 'bus'].includes(value), {
 			message: 'Invalid means of identification.',
 		}),
+	vehicle_type: z.string({
+		required_error: 'Please enter a valid vehicle type.',
+	}),
 	color: z
 		.string({
 			required_error: 'Please enter a valid Color.',
@@ -56,9 +59,34 @@ const vehicleFormSchema = z.object({
 		.min(5, {
 			message: 'Plate numbers have at least five(5) characters.',
 		}),
+	owner_Phone_Number: z
+		.string({
+			required_error: 'Enter owner phone number.',
+		})
+		.min(9, {
+			message: 'Phone numbers have at least nine(9) characters.',
+		})
+		.max(15, {
+			message: 'Phone numbers have at most (15) characters.',
+		}),
+	owners_name: z
+		.string({
+			required_error: 'Enter owner phone number.',
+		})
+		.min(5, {
+			message: 'Plate numbers have at least five(5) characters.',
+		}),
+	vin: z
+		.string({
+			required_error: 'Enter your VIN.',
+		})
+		.min(5, {
+			message: 'VIN have at least five(5) characters.',
+		}),
 	status: z.string({
 		required_error: 'Choose Status',
 	}),
+	barcode_string: z.string(),
 });
 
 type DriverFormValues = z.infer<typeof vehicleFormSchema>;
@@ -68,7 +96,12 @@ const defaultValues: Partial<DriverFormValues> = {
 	color: '',
 	image: BUS_IMAGE_SAMPLE,
 	plate_number: '',
-	status: 'waived',
+	status: 'active',
+	vehicle_type: '',
+	vin: '',
+	barcode_string: '',
+	owner_Phone_Number: '',
+	owners_name: '',
 };
 
 export default function CreateVehicleForm() {
@@ -95,6 +128,11 @@ export default function CreateVehicleForm() {
 						image: data.image,
 						plate_number: data.plate_number,
 						status: data.status,
+						vehicle_type: data.vehicle_type,
+						vin: data.vin,
+						barcode_string: data.barcode_string,
+						owner_Phone_Number: data.owner_Phone_Number,
+						owners_name: data.owners_name,
 					}),
 				}
 			);
@@ -135,7 +173,7 @@ export default function CreateVehicleForm() {
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel className='text-title1Bold pl-4'>
-									Means Of Identification
+									Vehicle Category
 								</FormLabel>
 
 								<Select
@@ -144,7 +182,7 @@ export default function CreateVehicleForm() {
 								>
 									<FormControl>
 										<SelectTrigger className='relative text-body flex  items-center h-14 rounded-2xl'>
-											<SelectValue placeholder='Select a means of identification' />
+											<SelectValue placeholder='Select a vehicle category' />
 										</SelectTrigger>
 									</FormControl>
 									<SelectContent>
@@ -182,6 +220,29 @@ export default function CreateVehicleForm() {
 							</FormItem>
 						)}
 					/>
+
+					<FormField
+						name='vehicle_type'
+						control={form.control}
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel className='text-title1Bold pl-4'>
+									Vehicle Type
+								</FormLabel>
+
+								<FormControl>
+									<Input
+										className='relative text-body flex  items-center h-14 rounded-2xl'
+										{...field}
+										type='text'
+										placeholder='Enter vehicle type'
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+
 					<FormField
 						name='plate_number'
 						control={form.control}
@@ -203,40 +264,94 @@ export default function CreateVehicleForm() {
 							</FormItem>
 						)}
 					/>
+
 					<FormField
+						name='vin'
 						control={form.control}
-						name='status'
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel className='text-title1Bold pl-4'>
-									Means Of Identification
+									VIN
 								</FormLabel>
 
-								<Select
-									onValueChange={field.onChange}
-									defaultValue={field.value}
-								>
-									<FormControl>
-										<SelectTrigger className='relative text-body flex  items-center h-14 rounded-2xl'>
-											<SelectValue placeholder='Select a means of identification' />
-										</SelectTrigger>
-									</FormControl>
-									<SelectContent>
-										<SelectItem value='active'>
-											Active
-										</SelectItem>
-										<SelectItem value='inactive'>
-											Inactive
-										</SelectItem>
-										<SelectItem value='waived'>
-											Waived
-										</SelectItem>
-									</SelectContent>
-								</Select>
+								<FormControl>
+									<Input
+										className='relative text-body flex  items-center h-14 rounded-2xl'
+										{...field}
+										type='text'
+										placeholder='Enter VIN'
+									/>
+								</FormControl>
 								<FormMessage />
 							</FormItem>
 						)}
 					/>
+
+					<FormField
+						name='owners_name'
+						control={form.control}
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel className='text-title1Bold pl-4'>
+									{`Owner's Name`}
+								</FormLabel>
+
+								<FormControl>
+									<Input
+										className='relative text-body flex  items-center h-14 rounded-2xl'
+										{...field}
+										type='text'
+										placeholder={`Enter owner's name`}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+
+					<FormField
+						name='owner_Phone_Number'
+						control={form.control}
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel className='text-title1Bold pl-4'>
+									{`Owner's Phone Number`}
+								</FormLabel>
+
+								<FormControl>
+									<Input
+										className='relative text-body flex  items-center h-14 rounded-2xl'
+										{...field}
+										type='text'
+										placeholder={`Enter owner's phone number`}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+
+					{/* <FormField
+						name='barcode_string'
+						control={form.control}
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel className='text-title1Bold pl-4'>
+									Barcode String
+								</FormLabel>
+
+								<FormControl>
+									<Input
+										className='relative text-body flex  items-center h-14 rounded-2xl'
+										{...field}
+										type='text'
+										placeholder='Barcode String'
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/> */}
 				</div>
 				<div className='flex justify-center items-center gap-6 text-title1Bold'>
 					<Button
@@ -292,7 +407,7 @@ export default function CreateVehicleForm() {
 								<Link
 									href={`/vehicles/${newVehicleId}/new-driver`}
 								>
-									All Vehicles
+									Add Driver
 								</Link>
 							</AlertDialogAction>
 						</div>

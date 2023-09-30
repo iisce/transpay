@@ -143,23 +143,18 @@ export function AuthLoginForm() {
 						</label>
 					</div>
 				</div>
-				<div className='grid'>
+				<div className='grid gap-2'>
 					<Button
 						disabled={isLoading}
 						type='submit'
 					>
 						{isLoading ? loadingSpinner : 'Login'}
 					</Button>
-					<div className='flex items-center'>
-						Forgot your password?
-						<Button
-							asChild
-							variant='link'
-						>
-							<Link href='/reset-password'>
-								Reset your Password
-							</Link>
-						</Button>
+					<div className='flex items-center text-xs sm:text-base'>
+						Forgot your password?{' '}
+						<Link href='/reset-password'>
+							Reset your Password
+						</Link>
 					</div>
 				</div>
 				<AlertDialog

@@ -15,7 +15,7 @@ export default function AddNewDriver() {
 				<div className='h-12 w-12 bg-black p-3'>{addIcon}</div>
 				<div className='p-3'>VEHICLE INFORMATION</div>
 			</div>
-			<div className=''>
+			<div className='mb-16'>
 				<CreateVehicleForm />
 			</div>
 		</div>

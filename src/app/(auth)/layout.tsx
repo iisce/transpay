@@ -57,37 +57,6 @@ export default function AuthLayout({
 						</div>
 					</div>
 					<div>
-						{/* <div className='w-full flex flex-col gap-7 bg-primary-900 p-7 rounded-2xl'>
-							<div className='text-h5 max-w-[450px]'>
-								{`“Accountability in a civilized society
-								is the stepping stone to development and
-								progressive Environment”.`}
-							</div>
-							<div className='flex items-center gap-8'>
-								<div className='h-[70px] w-[70px] overflow-hidden rounded-full'>
-									<Image
-										src='/avater.png'
-										height={70}
-										width={70}
-										alt='avater'
-										className='h-full w-full object-cover object-center'
-									/>
-								</div>
-								<div className='mt-2'>
-									<div className='text-h5 font-bold'>
-										ISCE Digital Concepts
-									</div>
-									<div className='text-bodyBold'>
-										Governor Anambra state
-									</div>
-								</div>
-							</div>
-						</div>
-						<div className='flex gap-1 justify-center mt-8'>
-							<div className='bg-white w-10 h-2 rounded-sm'></div>
-							<div className='bg-white w-2 h-2 rounded-sm'></div>
-							<div className='bg-white w-2 h-2 rounded-sm'></div>
-						</div> */}
 						<div className='w-full flex flex-col mt-8 gap-7 bg-primary-900 p-7 rounded-2xl'>
 							<Carousel slides={slides} />
 						</div>
@@ -95,8 +64,8 @@ export default function AuthLayout({
 				</div>
 			</div>
 			<div className='flex h-full rounded-2xl justify-center items-center'>
-				<div className='flex flex-col w-full gap-10 items-center max-w-[450px] lg:ml-10 xl:ml-20'>
-					<div className='h-48 w-48 flex items-center justify-center'>
+				<div className='flex flex-col w-full gap-5 md:gap-10 items-center max-w-[450px] lg:ml-10 xl:ml-20'>
+					<div className='h-20 md:h-48 w-20 md:w-48 flex items-center justify-center'>
 						<Image
 							src='/authpageLogo.png'
 							width={250}

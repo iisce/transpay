@@ -6,7 +6,7 @@ import React from 'react';
 export default function SignIn() {
 	return (
 		<div>
-			<div className=' capitalize text-h4Bold sm:text-h3Bold mb-5 grid place-items-center'>
+			<div className=' capitalize text-h5Bold md:text-h3Bold mb-5 grid place-items-center'>
 				Admin Login
 			</div>
 			<AuthLoginForm />
