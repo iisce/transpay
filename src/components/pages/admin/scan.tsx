@@ -39,7 +39,7 @@ export default function QRScan() {
 	};
 
 	const handleScanResult = (result: string) => {
-		router.push(`/vehicles/${result.toLowerCase()}`);
+		router.push(`/search/${result.toLowerCase()}`);
 		setResult(result);
 		setOpen(true);
 		setScanning(false);

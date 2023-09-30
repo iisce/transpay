@@ -36,11 +36,11 @@ export const SIDEBAR_LINKS = [
 		href: '/vehicles',
 		icon: driverIcon,
 	},
-	{
-		title: 'Fines & Penalties',
-		href: '/fines',
-		icon: finesIcon,
-	},
+	// {
+	// 	title: 'Fines & Penalties',
+	// 	href: '/fines',
+	// 	icon: finesIcon,
+	// },
 	{
 		title: 'Scan',
 		href: '/scan',
@@ -68,11 +68,11 @@ export const SIDEBAR_LINKS_ADMIN = [
 		href: '/vehicles',
 		icon: driverIcon,
 	},
-	{
-		title: 'Fines & Penalties',
-		href: '/fines',
-		icon: finesIcon,
-	},
+	// {
+	// 	title: 'Fines & Penalties',
+	// 	href: '/fines',
+	// 	icon: finesIcon,
+	// },
 	{
 		title: 'Scan',
 		href: '/scan',
@@ -134,12 +134,12 @@ export const DRIVERS_CARD = [
 		href: '/revenue',
 		image: '/payment.png',
 	},
-	{
-		name: 'Fines & Penalties',
-		description: 'Fine Driver & Check Fine Payment',
-		href: '/fines',
-		image: '/fineandpenal.png',
-	},
+	// {
+	// 	name: 'Fines & Penalties',
+	// 	description: 'Fine Driver & Check Fine Payment',
+	// 	href: '/fines',
+	// 	image: '/fineandpenal.png',
+	// },
 ];
 
 export const DASHBOARD_CARD = [
@@ -159,14 +159,14 @@ export const DASHBOARD_CARD = [
 		href: '/vehicles',
 		image: '/tricycle.jpg',
 	},
-	{
-		name: 'Fines & Penalties',
-		description: 'Create fines & penalties',
-		icon: finesIcon,
-		number: '10,000',
-		href: '/fines',
-		image: '/tricycle.jpg',
-	},
+	// {
+	// 	name: 'Fines & Penalties',
+	// 	description: 'Create fines & penalties',
+	// 	icon: finesIcon,
+	// 	number: '10,000',
+	// 	href: '/fines',
+	// 	image: '/tricycle.jpg',
+	// },
 	{
 		name: 'Scan Plate',
 		description:
@@ -195,14 +195,14 @@ export const AGENT_DASHBOARD_CARD = [
 		href: '/vehicles',
 		image: '/tricycle.jpg',
 	},
-	{
-		name: 'Fines & Penalties',
-		description: 'Create fines & penalties',
-		icon: finesIcon,
-		number: '10,000',
-		href: '/fines',
-		image: '/tricycle.jpg',
-	},
+	// {
+	// 	name: 'Fines & Penalties',
+	// 	description: 'Create fines & penalties',
+	// 	icon: finesIcon,
+	// 	number: '10,000',
+	// 	href: '/fines',
+	// 	image: '/tricycle.jpg',
+	// },
 	{
 		name: 'Scan Plate',
 		description:
