@@ -1,16 +1,15 @@
 import { viewDriversColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
-import { DRIVER_TABLE, VIEW_DRIVER_TABLE } from '@/lib/consts';
+import { VIEW_DRIVER_TABLE } from '@/lib/consts';
+import { getVehicleById } from '@/lib/controllers/vehicle-controller';
 import React from 'react';
 
-export default function Payments({ params }: { params: { plate: string } }) {
-	const vehicle = DRIVER_TABLE.find(
-		(driver) => driver.plate === params.plate
-	);
+export default async function Payments({ params }: { params: { id: string } }) {
+	const vehicle = await getVehicleById(params.id);
 	return (
 		<div className='w-full flex flex-col gap-3 mb-8 p-2 xs:p-5 overflow-y-scroll'>
 			<div className=' text-title1Bold py-2 '>
-				ALL PAYMENTS for verhicle owned by {vehicle?.name}
+				All payment for vehicle owned by {vehicle?.owners_name}
 			</div>
 
 			<div className='flex flex-col gap-2 mb-20'>

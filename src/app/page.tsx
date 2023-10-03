@@ -13,7 +13,6 @@ export default async function Home() {
 		role?.toLowerCase() === 'agent'
 			? await getAgentMe()
 			: await getAdminMe();
-	// const session = await getServerSession(options);
 	return (
 		<main className='flex gap-5 min-h-screen items-center flex-col justify-start py-12'>
 			<div className='text-h4 text-primary font-bold uppercase'>

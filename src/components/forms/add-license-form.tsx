@@ -14,13 +14,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import Link from 'next/link';
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from '../ui/select';
 import { useToast } from '../ui/use-toast';
 import { loadingSpinner, successIcon } from '@/lib/icons';
 import {
@@ -92,6 +85,7 @@ export default function AddLicenseForm({ id }: { id: string }) {
 				});
 				setIsLoading(false);
 				setOpen(true);
+				form.reset();
 				// setNewLicenseId(result.data.license_id);
 				return NextResponse.json(result);
 			} else {
