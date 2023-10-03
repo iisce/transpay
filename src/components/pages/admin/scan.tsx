@@ -72,12 +72,21 @@ export default function QRScan() {
 
 	return (
 		<div className=''>
-			<Card className='h-[250px] w-[250px] overflow-hidden mb-5'>
-				<video
-					className='h-full w-full object-cover'
-					id='video'
-				/>
-			</Card>
+			<div className='w-full max-w-lg'>
+				<Card className='w-full aspect-square overflow-hidden'>
+					<video
+						className='h-full w-full object-cover'
+						id='video'
+					/>
+				</Card>
+				<Button
+					className='mt-4 w-full'
+					onClick={startScan}
+					disabled={scanning || scanCount >= 10}
+				>
+					Start Scan
+				</Button>
+			</div>
 			{result && (
 				<Card className='p-3 border border-primary w-[250px] overflow-hidden mb-5'>
 					<QRCode
@@ -87,13 +96,6 @@ export default function QRScan() {
 					/>
 				</Card>
 			)}
-			<Button
-				className='mt-4 w-full max-w-[250px] mx-auto'
-				onClick={startScan}
-				disabled={scanning || scanCount >= 10}
-			>
-				Start Scan
-			</Button>
 			<Dialog
 				open={open}
 				onOpenChange={setOpen}

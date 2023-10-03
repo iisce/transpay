@@ -40,7 +40,7 @@ export default function AuthLayout({
 }) {
 	return (
 		<div className='grid grid-cols-1 lg:grid-cols-2 gap-5 p-3 lg:p-5 min-h-screen bg-background'>
-			<div className='hidden lg:flex justify-center items-center w-full p-3 sm:p-5 lg:p-10 bg-gradient-to-b from-primary-900 to-primary-700 text-white rounded-2xl'>
+			<div className='hidden lg:flex justify-center items-center w-full p-3 md:p-5 lg:p-10 bg-gradient-to-b from-primary-900 to-primary-700 text-white rounded-2xl'>
 				<div className='flex flex-col justify-between h-full max-w-[550px]'>
 					<div className='flex flex-col gap-12'>
 						<div className='text-h5'>TRANSPAY</div>
@@ -63,7 +63,7 @@ export default function AuthLayout({
 					</div>
 				</div>
 			</div>
-			<div className='flex h-full rounded-2xl justify-center items-center'>
+			<div className='flex h-full rounded-2xl justify-center items-start lg:items-center'>
 				<div className='flex flex-col w-full gap-5 md:gap-10 items-center max-w-[450px] lg:ml-10 xl:ml-20'>
 					<div className='h-20 md:h-48 w-20 md:w-48 flex items-center justify-center'>
 						<Image

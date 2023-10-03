@@ -11,7 +11,7 @@ export default async function Admins() {
 	const admins = await getAdmins();
 	return (
 		<div className='p-5 w-full h-full flex flex-col'>
-			<div className='flex justify-between'>
+			<div className='flex justify-between items-center uppercase font-bold'>
 				<div className='shrink-0 grow-0'>Admins</div>
 				<div className='shrink-0 grow-0'>
 					<Button
@@ -26,12 +26,12 @@ export default async function Admins() {
 							<div className='mr-2 h-4 w-4 shrink-0'>
 								{addIcon}
 							</div>
-							Add New Admin
+							New Admin
 						</Link>
 					</Button>
 				</div>
 			</div>
-			<div className='flex flex-col gap-5 overflow-y-scroll'>
+			<div className='flex flex-col gap-5'>
 				<Tabs
 					defaultValue='all'
 					className='w-full'

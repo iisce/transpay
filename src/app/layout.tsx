@@ -33,15 +33,13 @@ export default function RootLayout({
 			suppressHydrationWarning
 		>
 			<Provider>
-				<body
-					className={`${lato.className} h-screen overflow-hidden`}
-				>
+				<body className={`${lato.className}`}>
 					<ThemeProvider
 						attribute='class'
 						defaultTheme='light'
 						enableSystem
 					>
-						<div className='h-full overflow-hidden'>
+						<div className=''>
 							<NextTopLoader
 								color='#7F7433'
 								showSpinner={false}

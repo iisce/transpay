@@ -41,6 +41,7 @@ export function DataTable<TData, TValue>({
 	showColumns,
 	showPagination,
 	showSelected,
+	showRowsPerPage,
 }: DataTableProps<TData, TValue>) {
 	const [sorting, setSorting] = React.useState<SortingState>([]);
 	const [columnFilters, setColumnFilters] =
@@ -195,10 +196,10 @@ export function DataTable<TData, TValue>({
 				</Table>
 			</div>
 			{showPagination && (
-				<div className='flex items-center py-4 mb-20 sm:mb-0'>
+				<div className='flex items-center py-4 mb-20 md:mb-0'>
 					<DataTablePagination
 						showSelected={showSelected}
-						rowsPerPage
+						rowsPerPage={showRowsPerPage}
 						table={table}
 					/>
 				</div>

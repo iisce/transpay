@@ -132,7 +132,7 @@ export function AdminForm() {
 				onSubmit={form.handleSubmit(onSubmit)}
 				className='mb-20 flex flex-col gap-5'
 			>
-				<div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
+				<div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
 					<FormField
 						control={form.control}
 						name='name'

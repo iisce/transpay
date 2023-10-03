@@ -10,7 +10,7 @@ import { Separator } from '../ui/separator';
 export default function WebAgentSidebar() {
 	const pathname = usePathname();
 	return (
-		<div className='h-full flex-col px-5 min-w-min bg-secondary hidden sm:flex justify-between'>
+		<div className='h-full flex-col px-5 min-w-min bg-secondary hidden md:flex justify-between'>
 			<div className='flex flex-col gap-3 pt-10'>
 				{WEB_AGENT_SIDEBAR_LINKS.map((link, i) => (
 					<Button

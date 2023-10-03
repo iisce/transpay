@@ -79,7 +79,7 @@ export function AuthVerificationCode() {
 	return (
 		<form className='mb-20 flex flex-col gap-5'>
 			{' '}
-			<div className=' capitalize text-h4Bold sm:text-h3Bold'>
+			<div className=' capitalize text-h4Bold md:text-h3Bold'>
 				Verification Code
 			</div>
 			<div className='text-base'>

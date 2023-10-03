@@ -21,9 +21,14 @@ export default function ViewAgentDetails() {
 		address: 'enter your address',
 	};
 	return (
-		<div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
+		<div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
 			<div className='flex flex-col w-full items-start gap-1.5'>
-				<Label htmlFor='name'  className='text-title2'>Name</Label>
+				<Label
+					htmlFor='name'
+					className='text-title2'
+				>
+					Name
+				</Label>
 				<Input
 					type='name'
 					id='name'
@@ -31,10 +36,13 @@ export default function ViewAgentDetails() {
 				/>
 			</div>
 			<div className='flex flex-col w-full items-start gap-1.5'>
-				<Label htmlFor='moi'  className='text-title2'>Means of Identification</Label>
-				<Select
-					defaultValue={agentDetails.moi}
+				<Label
+					htmlFor='moi'
+					className='text-title2'
 				>
+					Means of Identification
+				</Label>
+				<Select defaultValue={agentDetails.moi}>
 					<SelectTrigger className=''>
 						<SelectValue placeholder='Select a fruit' />
 					</SelectTrigger>
@@ -50,7 +58,12 @@ export default function ViewAgentDetails() {
 				</Select>
 			</div>
 			<div className='flex flex-col w-full items-start gap-1.5'>
-				<Label htmlFor='phone'  className='text-title2'>Phone Number</Label>
+				<Label
+					htmlFor='phone'
+					className='text-title2'
+				>
+					Phone Number
+				</Label>
 				<Input
 					type='tel'
 					id='phone'
@@ -58,25 +71,38 @@ export default function ViewAgentDetails() {
 				/>
 			</div>
 			<div className='flex flex-col w-full items-start gap-1.5'>
-				<Label htmlFor='id' className='text-title2'>Identification Number</Label>
+				<Label
+					htmlFor='id'
+					className='text-title2'
+				>
+					Identification Number
+				</Label>
 				<Input
-				
 					type='text'
 					id='id'
 					value={agentDetails.id}
 				/>
 			</div>
 			<div className='flex flex-col w-full items-start gap-1.5'>
-				<Label htmlFor='email' className='text-title2'>Email Address</Label>
+				<Label
+					htmlFor='email'
+					className='text-title2'
+				>
+					Email Address
+				</Label>
 				<Input
-				
 					type='email'
 					id='email'
 					value={agentDetails.email}
 				/>
 			</div>
 			<div className='grid w-full gap-1.5'>
-				<Label htmlFor='address'  className='text-title2'>Address</Label>
+				<Label
+					htmlFor='address'
+					className='text-title2'
+				>
+					Address
+				</Label>
 				<Textarea
 					value={agentDetails.address}
 					id='address'

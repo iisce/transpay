@@ -16,7 +16,7 @@ export default async function Vehicles() {
 	]);
 	return (
 		<div className='p-5 w-full h-full flex flex-col'>
-			<div className='flex justify-between'>
+			<div className='flex justify-between items-center uppercase font-bold'>
 				<div className='shrink-0 grow-0'>VEHICLES</div>
 				<div className='shrink-0 grow-0'>
 					<Button

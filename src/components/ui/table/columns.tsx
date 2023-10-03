@@ -26,7 +26,6 @@ import Link from 'next/link';
 import Cbadge from '../category-badge';
 import { deleteAdminById } from '@/lib/controllers/admin-controller';
 import DeleteAdminButton from '@/components/shared/delete-admin-button';
-import { useToast } from '../use-toast';
 
 export const paymentColumns: ColumnDef<Payment>[] = [
 	{
@@ -182,11 +181,12 @@ export const adminsColumns: ColumnDef<IAdmin>[] = [
 		header: 'Action',
 		cell: ({ row }) => {
 			return (
-				<div className='flex flex-row gap-2 justify-start'>
-					<Link href={`/admins/${row.original.admin_id}`}>
-						<span className='h-4 w-4 mr-3 items-center '>
-							{editIcon}
-						</span>
+				<div className='flex gap-2 justify-start items-center'>
+					<Link
+						href={`/admins/${row.original.admin_id}`}
+						className='h-5 w-5 items-center shrink-0'
+					>
+						{editIcon}
 					</Link>
 					<DeleteAdminButton id={row.original.admin_id} />
 				</div>
@@ -256,14 +256,8 @@ export const agentsColumns: ColumnDef<IAgent>[] = [
 		cell: ({ row }) => {
 			return (
 				<DropdownMenu>
-					<DropdownMenuTrigger asChild>
-						<Button
-							variant='ghost'
-							className='h-8 w-8 p-0'
-						>
-							<span className='sr-only'>Open menu</span>
-							<MoreVertical className='h-4 w-4' />
-						</Button>
+					<DropdownMenuTrigger>
+						<MoreVertical className='h-4 w-4' />
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align='end'>
 						<DropdownMenuItem asChild>
@@ -348,14 +342,8 @@ export const vehiclesColumns: ColumnDef<IVehicle>[] = [
 			const vehicle = row.original;
 			return (
 				<DropdownMenu>
-					<DropdownMenuTrigger asChild>
-						<Button
-							variant='ghost'
-							className='h-8 w-8 p-0'
-						>
-							<span className='sr-only'>Open menu</span>
-							<MoreVertical className='h-4 w-4' />
-						</Button>
+					<DropdownMenuTrigger>
+						<MoreVertical className='h-4 w-4' />
 					</DropdownMenuTrigger>
 					<DropdownMenuContent
 						className='border border-black'

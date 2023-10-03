@@ -14,7 +14,7 @@ export default function DashboardCard({
 	return (
 		<Link
 			href={href}
-			className='w-full h-[300px] p-1.5 sm:p-2.5'
+			className='w-full h-[300px] p-1.5 md:p-2.5'
 		>
 			<Card className='bg-secondary overflow-hidden h-full  shadow-md hover:shadow-xl transition-all'>
 				<CardHeader className='p-0 h-[160px] w-full overflow-hidden'>
@@ -31,7 +31,7 @@ export default function DashboardCard({
 						<div className=' text-bodyBold uppercase'>
 							{name}
 						</div>
-						<div className=' text-captionBold sm:text-bodyBold'>
+						<div className=' text-captionBold md:text-bodyBold'>
 							{description}
 						</div>
 						{number && (

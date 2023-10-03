@@ -19,8 +19,8 @@ export default async function Sidebar() {
 			: await getAdminMe();
 	if (role) {
 		return (
-			<div className='px-5 min-w-[200px] bg-secondary hidden sm:flex justify-between'>
-				<div className='flex flex-col gap-3 pt-10 h-full w-full'>
+			<div className='px-5 fixed w-52 h-full bg-secondary hidden md:flex justify-between z-10'>
+				<div className='flex flex-col gap-3 pt-20 h-full w-full'>
 					{(user?.role.toLowerCase() === 'agent'
 						? SIDEBAR_LINKS_AGENT
 						: user?.role.toLowerCase() === 'admin'

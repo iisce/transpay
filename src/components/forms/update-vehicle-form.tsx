@@ -161,7 +161,7 @@ export function UpdateVehicleForm({ vehicle }: { vehicle: IVehicle }) {
 					onSubmit={form.handleSubmit(onSubmit)}
 					className='flex flex-col gap-5 w-full'
 				>
-					<div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
+					<div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
 						<FormField
 							control={form.control}
 							name='category'

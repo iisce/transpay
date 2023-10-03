@@ -46,7 +46,7 @@ export function UserNav({ user }: { user: IUser }) {
 							</AvatarFallback>
 						</Avatar>
 					</Button>
-					<div className='hidden sm:flex w-32 flex-col'>
+					<div className='hidden md:flex w-32 flex-col'>
 						<div className='text-xs font-bold'>
 							{user.name || 'Agent User'}
 						</div>
@@ -97,7 +97,7 @@ export function UserNav({ user }: { user: IUser }) {
 					{pathName.startsWith('/manage')
 						? MANAGE_SIDEBAR_LINKS.map((link, k) => (
 								<DropdownMenuItem
-									className='sm:hidden'
+									className='md:hidden'
 									asChild
 									key={k}
 								>
@@ -114,7 +114,7 @@ export function UserNav({ user }: { user: IUser }) {
 								: SIDEBAR_LINKS
 						  ).map((link, k) => (
 								<DropdownMenuItem
-									className='sm:hidden'
+									className='md:hidden'
 									asChild
 									key={k}
 								>
@@ -137,7 +137,7 @@ export function UserNav({ user }: { user: IUser }) {
 				<DropdownMenuItem onClick={() => signOut()}>
 					Log out
 				</DropdownMenuItem>
-				<div className='sm:hidden'>
+				<div className='md:hidden'>
 					<DropdownMenuSeparator />
 					<ModeToggle />
 				</div>

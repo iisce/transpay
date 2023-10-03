@@ -12,7 +12,7 @@ export default async function VehicleDriversPage({
 }) {
 	const drivers = await getDrivers();
 	return (
-		<div className='p-3 sm:p-5 w-full'>
+		<div className='p-3 md:p-5 w-full'>
 			<div className='flex flex-col gap-2 mb-20'>
 				<div className='flex justify-between py-2'>
 					<div className='shrink-0 grow-0 text-title1Bold'>

@@ -6,7 +6,7 @@ import React from 'react';
 export default function DashboardAdmin(user: { user: IUser }) {
 	return (
 		<div>
-			<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 w-full'>
+			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 w-full'>
 				{DASHBOARD_CARD.map((card: DashboardCardI, i) => (
 					<DashboardCard
 						key={i}
@@ -20,10 +20,10 @@ export default function DashboardAdmin(user: { user: IUser }) {
 				))}
 			</div>
 			<div className='flex flex-col gap-2 mb-20'>
-				<div className=' text-title1Bold sm:text-h4Bold'>
+				<div className=' text-title1Bold md:text-h4Bold'>
 					Revenue & Statistics
 				</div>
-				<div className='bg-secondary rounded-3xl p-2 sm:p-5'>
+				<div className='bg-secondary rounded-3xl p-2 md:p-5'>
 					<RevenueCharts />
 				</div>
 			</div>

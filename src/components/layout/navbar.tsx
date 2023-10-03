@@ -17,11 +17,11 @@ export default async function NavBar() {
 			? await getAgentMe()
 			: await getAdminMe();
 	return (
-		<div className='h-16 w-full bg-secondary px-5 shrink-0'>
-			<div className='flex items-center justify-between h-full gap-5'>
+		<div className='h-16 w-full bg-secondary/60 backdrop-blur-sm pr-5 shrink-0 fixed z-50 '>
+			<div className='flex items-center justify-between h-full'>
 				<Link
 					href={'/'}
-					className='min-w-[155px] '
+					className='w-52 shrink-0 px-5'
 				>
 					<Image
 						src={'/logo.png'}
@@ -31,7 +31,7 @@ export default async function NavBar() {
 						alt='Transpay Logo'
 					/>
 				</Link>
-				<div className='w-full hidden sm:block'>
+				<div className='w-full hidden md:block pr-5'>
 					<div className='max-w-[500px] relative flex  items-center justify-start'>
 						<div className='h-6 w-6 left-2 opacity-60 shrink-0 absolute'>
 							{searchIcon}

@@ -150,14 +150,14 @@ export function AuthLoginForm() {
 					>
 						{isLoading ? loadingSpinner : 'Login'}
 					</Button>
-					<div className='flex items-center text-xs sm:text-base'>
+					<div className='flex items-center text-xs md:text-base'>
 						Forgot your password?{' '}
 						<Link href='/reset-password'>
 							Reset your Password
 						</Link>
 					</div>
 				</div>
-				
+
 				<AlertDialog
 					open={open}
 					onOpenChange={setOpen}

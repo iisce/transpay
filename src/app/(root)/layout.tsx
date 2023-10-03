@@ -12,11 +12,11 @@ export default function DashboardLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<div className='h-screen flex flex-col justify-between'>
+		<div className=''>
 			<Navbar />
-			<div className='flex h-full'>
+			<div className=''>
 				<Sidebar />
-				{children}
+				<div className='md:ml-52 pt-20'>{children}</div>
 			</div>
 		</div>
 	);

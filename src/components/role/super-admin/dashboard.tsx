@@ -5,10 +5,12 @@ import { Calendar } from '@/components/ui/calendar';
 import { ACTIVITIES } from '../../../../data';
 import ActivityCard from '@/components/shared/activity-card';
 import { DataTable } from '@/components/ui/table/data-table';
-import { agentsColumns } from '@/components/ui/table/columns';
+import { adminsColumns } from '@/components/ui/table/columns';
 import { AGENT_TABLE } from '@/lib/consts';
+import { getAdmins } from '@/lib/controllers/admin-controller';
 
-export default function DashboardSuperAdmin(user: { user: IUser }) {
+export default async function DashboardSuperAdmin(user: { user: IUser }) {
+	const admins = await getAdmins();
 	return (
 		<div className='w-full'>
 			<div className='grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-5'>
@@ -48,8 +50,8 @@ export default function DashboardSuperAdmin(user: { user: IUser }) {
 						</div>
 						<DataTable
 							showPagination={false}
-							columns={agentsColumns}
-							data={AGENT_TABLE.slice(0, 3)}
+							columns={adminsColumns}
+							data={admins?.slice(0, 3) || []}
 						/>
 					</div>
 				</div>

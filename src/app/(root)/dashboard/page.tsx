@@ -17,11 +17,11 @@ export default async function DashboardPage() {
 	if (!user) return notFound();
 	else
 		return (
-			<div className='h-full w-full p-3 sm:p-5 flex flex-col gap-5 overflow-y-scroll'>
-				<div className=' text-title1Bold sm:text-h4Bold'>
+			<div className='w-full p-3 md:p-5 flex flex-col gap-5'>
+				<div className=' text-title2Bold md:text-h5Bold'>
 					Welcome Back, {user.name}
 				</div>
-				<div className='w-full mb-20'>
+				<div className='w-full'>
 					{role === 'superadmin' ? (
 						<DashboardSuperAdmin user={user} />
 					) : role === 'admin' ? (
