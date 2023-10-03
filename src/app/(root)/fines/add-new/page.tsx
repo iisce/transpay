@@ -12,7 +12,7 @@ export default function AddNewFines() {
 		type: 'fine',
 	};
 	return (
-		<div className=' p-10 w-full h-full overflow-y-scroll'>
+		<div className=' p-10 w-full h-full '>
 			<div className=' py-4'>
 				<h1 className=' text-h2Bold '>Add New Fines</h1>
 				<p className=' text-title2Bold'>

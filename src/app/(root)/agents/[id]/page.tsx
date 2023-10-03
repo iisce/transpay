@@ -42,7 +42,7 @@ export default async function SingularAgent({
 					</Button>
 				</div> */}
 			</div>
-			<div className='flex flex-col gap-3 xs:gap-5 overflow-y-scroll'>
+			<div className='flex flex-col gap-3 xs:gap-5'>
 				<div className='space-y-6'>
 					<div className='h-12 shrink-0 bg-primary w-full rounded-2xl flex overflow-hidden text-white items-center'>
 						<div className='h-12 w-12 bg-black p-3'>
@@ -52,7 +52,7 @@ export default async function SingularAgent({
 					</div>
 					<UpdateAgentForm agent={agent} />
 				</div>
-				<div className='flex flex-col gap-2 mb-20'>
+				{/* <div className='flex flex-col gap-2 mb-20'>
 					<div className='flex justify-between py-2'>
 						<div className='shrink-0 grow-0 text-title1Bold'>
 							Total Payments
@@ -74,7 +74,7 @@ export default async function SingularAgent({
 							</Link>
 						</Button>
 					</div>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);

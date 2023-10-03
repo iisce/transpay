@@ -547,6 +547,7 @@ export const driversColumns: ColumnDef<IDriver>[] = [
 	},
 	{
 		id: 'actions',
+		header: 'Actions',
 		cell: ({ row }) => {
 			const driver = row.original;
 			return (

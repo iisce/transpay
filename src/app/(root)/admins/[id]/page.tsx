@@ -25,7 +25,7 @@ export default async function SingularAdmin({
 	else
 		return (
 			<div className='p-3 xs:p-5 gap-5 w-full h-full flex flex-col'>
-				<div className='flex flex-col gap-3 xs:gap-5 overflow-y-scroll'>
+				<div className='flex flex-col gap-3 xs:gap-5 '>
 					<div className='space-y-6'>
 						<div className='h-12 shrink-0 bg-primary w-full rounded-2xl flex overflow-hidden text-white items-center'>
 							<div className='h-12 w-12 bg-black p-3'>

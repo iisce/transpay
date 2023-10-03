@@ -103,7 +103,7 @@ export function DataTable<TData, TValue>({
 									variant='outline'
 									className='ml-5'
 								>
-									Columns
+									Filter
 								</Button>
 							</DropdownMenuTrigger>
 							<DropdownMenuContent align='end'>

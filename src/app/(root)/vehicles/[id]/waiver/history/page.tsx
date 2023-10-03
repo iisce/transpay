@@ -16,7 +16,7 @@ export default function WaiverHistory({
 		(driver) => driver.plate === params.plate
 	);
 	return (
-		<div className='w-full flex flex-col gap-3 mb-8 p-2 xs:p-5 overflow-y-scroll'>
+		<div className='w-full flex flex-col gap-3 mb-8 p-2 xs:p-5 '>
 			<div className=''>
 				<h1 className=' text-title1Bold py-2 '>
 					His Story {vehicle?.name}

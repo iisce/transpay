@@ -15,7 +15,7 @@ export default function ManageLayout({
 	return (
 		<div className=''>
 			<Navbar />
-			<div className='flex h-full overflow-y-scroll'>
+			<div className='flex h-full '>
 				<SideBar />
 				<div className='md:ml-52 pt-20'>{children}</div>
 			</div>

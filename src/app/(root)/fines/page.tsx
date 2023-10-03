@@ -9,7 +9,7 @@ import React from 'react';
 
 export default function Fines() {
 	return (
-		<div className='p-3 lg:p-12 w-full flex flex-col gap-6 overflow-y-scroll'>
+		<div className='p-3 lg:p-12 w-full flex flex-col gap-6 '>
 			<div className='flex justify-between'>
 				<div className=' shrink-0 grow-0'>Fines & Penalties</div>
 				<div className=' shrink-0 grow-0'>

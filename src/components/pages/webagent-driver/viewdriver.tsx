@@ -42,7 +42,7 @@ export default function WebAgentViewDriverDetails({
 				</div>
 			</div>
 
-			<div className=' overflow-y-scroll'>
+			<div className=' '>
 				<div className='flex flex-row gap-6 rounded-3xl'>
 					{WEB_AGENT_DRIVER_CARD.map(
 						(card: DashboardCardI, i) => (

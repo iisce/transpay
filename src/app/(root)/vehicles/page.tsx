@@ -37,7 +37,7 @@ export default async function Vehicles() {
 				</div>
 			</div>
 			{vehicles && session.role?.toLowerCase() !== 'agent' ? (
-				<div className='flex flex-col gap-5 overflow-y-scroll'>
+				<div className='flex flex-col gap-5 '>
 					<Tabs
 						defaultValue='all'
 						className='w-full'

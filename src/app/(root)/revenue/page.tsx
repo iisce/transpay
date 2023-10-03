@@ -64,7 +64,7 @@ export default function Revenue() {
 					</div>
 				</div>
 			</div>
-			<div className='flex flex-col gap-5 overflow-y-scroll'>
+			<div className='flex flex-col gap-5 '>
 				<div className=' py-5 flex flex-row flex-wrap'>
 					<StatsCard
 						percentage={9.26}

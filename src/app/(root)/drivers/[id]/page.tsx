@@ -28,7 +28,7 @@ export default async function DriversPage({
 	if (!driver) return notFound();
 
 	return (
-		<div className='p-5 w-full flex flex-col gap-5 overflow-y-scroll'>
+		<div className='p-5 w-full flex flex-col gap-5 '>
 			<div className='flex justify-between'>
 				<div className='uppercase'>{`Driver ${driver?.firstname} ${driver?.lastname}`}</div>
 				<Button asChild>

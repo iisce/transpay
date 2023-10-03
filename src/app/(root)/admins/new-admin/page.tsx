@@ -17,7 +17,7 @@ export default function AddNewAdmin() {
 				<div className='h-12 w-12 bg-black p-3'>{addIcon}</div>
 				<div className='p-3'>ADMIN INFORMATION</div>
 			</div>
-			<div className='flex flex-col gap-5 overflow-y-scroll px-2'>
+			<div className='flex flex-col gap-5  px-2'>
 				<AdminForm />
 			</div>
 		</div>

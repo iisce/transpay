@@ -5,7 +5,7 @@ import React from 'react';
 
 export default function AddNewDriver2() {
 	return (
-		<div className='w-full overflow-y-scroll p-12'>
+		<div className='w-full  p-12'>
 			<div className=''>
 				<h1 className=' text-title1Bold py-2 '>Add New Driver</h1>
 				<p className=' text-title2Bold pb-4'>

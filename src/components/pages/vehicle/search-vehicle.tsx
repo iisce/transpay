@@ -46,7 +46,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 					</Button>
 				)} */}
 			</div>
-			<div className='overflow-y-scroll  w-full'>
+			<div className='  w-full'>
 				{onWaiver ? (
 					<div className='flex flex-col p-3 w-full items-center gap-2 mb-20'>
 						<div className=' text-green-500'>
