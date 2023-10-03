@@ -30,7 +30,7 @@ export default async function SingularAgent({
 				<div className='shrink-0 grow-0'>
 					{agent?.name.toLocaleUpperCase()}
 				</div>
-				<div className='shrink-0 grow-0'>
+				{/* <div className='shrink-0 grow-0'>
 					<Button
 						asChild
 						variant={'default'}
@@ -40,7 +40,7 @@ export default async function SingularAgent({
 							Make an Agent
 						</div>
 					</Button>
-				</div>
+				</div> */}
 			</div>
 			<div className='flex flex-col gap-3 xs:gap-5 overflow-y-scroll'>
 				<div className='space-y-6'>
