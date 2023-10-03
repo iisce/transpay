@@ -12,7 +12,7 @@ export default async function Agents() {
 	return (
 		<div className='p-5 w-full h-full flex flex-col'>
 			<div className='flex justify-between items-center uppercase font-bold'>
-				<div className='shrink-0 grow-0'>Agent</div>
+				<div className='shrink-0 grow-0'>Agents</div>
 				<div className='shrink-0 grow-0'>
 					<Button
 						className='justify-start text-white rounded-xl bg-primary-800'

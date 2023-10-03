@@ -36,6 +36,11 @@ export const SIDEBAR_LINKS = [
 		href: '/vehicles',
 		icon: driverIcon,
 	},
+	{
+		title: 'Drivers',
+		href: '/drivers',
+		icon: driverIcon,
+	},
 	// {
 	// 	title: 'Fines & Penalties',
 	// 	href: '/fines',

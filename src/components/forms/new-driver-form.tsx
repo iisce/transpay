@@ -143,6 +143,7 @@ export function DriverForm({ id }: { id: string }) {
 				toast({
 					title: 'Driver Created Successfully',
 				});
+				form.reset();
 				setIsLoading(false);
 				setOpen(true);
 				return NextResponse.json(result);
@@ -378,7 +379,7 @@ export function DriverForm({ id }: { id: string }) {
 								</div>
 							</div>
 							<div className='flex flex-col gap-3'>
-								<AlertDialogAction
+								{/* <AlertDialogAction
 									asChild
 									className='rounded-xl'
 								>
@@ -387,7 +388,7 @@ export function DriverForm({ id }: { id: string }) {
 									>
 										View Drivers
 									</Link>
-								</AlertDialogAction>
+								</AlertDialogAction> */}
 								<AlertDialogCancel className='rounded-xl'>
 									New Driver
 								</AlertDialogCancel>
