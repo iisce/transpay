@@ -18,11 +18,7 @@ export default async function VehicleDriversPage({
 					<div className='shrink-0 grow-0 text-title1Bold'>
 						Drivers
 					</div>
-					<Button asChild>
-						<Link href={`/vehicles/${params.id}/new-driver`}>
-							New Driver
-						</Link>
-					</Button>
+					
 				</div>
 				<div className=''>
 					<DataTable
