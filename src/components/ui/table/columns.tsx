@@ -14,17 +14,10 @@ import {
 import { ColumnDef } from '@tanstack/react-table';
 import { MoreHorizontal, MoreVertical } from 'lucide-react';
 import { DataTableColumnHeader } from './data-column-table-header';
-import {
-	deleteIcon,
-	editIcon,
-	finesIcon,
-	paymentIcon,
-	printIcon,
-} from '@/lib/icons';
+import { deleteIcon, editIcon, paymentIcon, printIcon } from '@/lib/icons';
 import Pill from '../pill';
 import Link from 'next/link';
 import Cbadge from '../category-badge';
-import { deleteAdminById } from '@/lib/controllers/admin-controller';
 import DeleteAdminButton from '@/components/shared/delete-admin-button';
 
 export const paymentColumns: ColumnDef<Payment>[] = [
@@ -524,7 +517,12 @@ export const driversColumns: ColumnDef<IDriver>[] = [
 			/>
 		),
 		cell: ({ row }) => (
-			<span className=''>{`${row.original.firstname} ${row.original.lastname}`}</span>
+			<Link
+				href={`/drivers/${row.original.driver_id}`}
+				className=''
+			>
+				{`${row.original.firstname} ${row.original.lastname}`}
+			</Link>
 		),
 	},
 	{

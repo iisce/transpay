@@ -28,7 +28,7 @@ import {
 	AlertDialogContent,
 } from '../ui/alert-dialog';
 import React from 'react';
-import {  loadingSpinner, successIcon } from '@/lib/icons';
+import { loadingSpinner, successIcon } from '@/lib/icons';
 import { NextResponse } from 'next/server';
 import { LGA } from '@/lib/consts';
 
@@ -114,7 +114,6 @@ export function DriverForm({ id }: { id: string }) {
 	});
 	async function onSubmit(data: DriverFormValues) {
 		setIsLoading(true);
-		console.log(form.getValues('email'))
 		try {
 			const createDriverResponse = await fetch(
 				'/api/create-vehicle/new-driver',
@@ -142,12 +141,10 @@ export function DriverForm({ id }: { id: string }) {
 				toast({
 					title: 'Driver Created Successfully',
 				});
-				console.log(result.data.driver_id)
-				setDriver(result.data.driver_id)
+				setDriver(result.data.driver_id);
 				form.reset();
 				setIsLoading(false);
 				setOpen(true);
-				console.log(result) 
 				return NextResponse.json(result);
 			} else {
 				setIsLoading(false);
@@ -159,7 +156,6 @@ export function DriverForm({ id }: { id: string }) {
 		} catch (error) {
 			setIsLoading(false);
 		}
-		 
 	}
 
 	return (
@@ -376,24 +372,17 @@ export function DriverForm({ id }: { id: string }) {
 									Driver Account Created
 								</div>
 							</div>
-							<div className='flex flex-col text-center mb-5'>
-								<div>
-									Driver ID: {driver}
-								</div>
-							</div>
 							<div className='flex flex-col gap-3'>
 								<AlertDialogAction
 									asChild
 									className='rounded-xl'
 								>
-									<Link
-										href={`/drivers/${driver}`}
-									>
-										View Drivers
+									<Link href={`/drivers/${driver}`}>
+										View Driver
 									</Link>
 								</AlertDialogAction>
 								<AlertDialogCancel className='rounded-xl'>
-										New Driver
+									New Driver
 								</AlertDialogCancel>
 							</div>
 						</div>
