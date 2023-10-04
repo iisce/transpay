@@ -12,10 +12,10 @@ export default function ManageAccount() {
 				width='150'
 				height='150'
 			/>
-			<p className='text-h4Bold'>Welcome, Agent ISCE</p>
+			<p className='text-h4Bold'>{`Welcome, Agent ISCE`}</p>
 			<p className='text-title1 p-3 text-center'>
-				Manage your account, view and edit personal information,
-				change password.
+				{`Manage your account, view and edit personal information,
+				change password.`}
 			</p>
 			<div className='grid grid-cols-1 lg:grid-cols-2 p-6 gap-8 pb-10'>
 				<ManageDetails
@@ -32,7 +32,7 @@ export default function ManageAccount() {
 					className=' lg:col-span-2'
 					link='/manage/about'
 					title='About Us'
-					description='Transpay is a government approved software developed to ensure safery and accountability on the road..... Learn More'
+					description='Transpay is a government approved software developed to ensure safety and accountability on the road..... Learn More'
 				/>
 			</div>
 		</div>

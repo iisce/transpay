@@ -42,7 +42,7 @@ export default async function Home() {
 								className='w-full'
 								href={'/admin/sign-in'}
 							>
-								Admin Sign In
+								{`Admin Sign In`}
 							</Link>
 						</Button>
 						<Button asChild>
@@ -50,7 +50,7 @@ export default async function Home() {
 								className='w-full'
 								href={'/agent/sign-in'}
 							>
-								Agent Sign In
+								{`Agent Sign In`}
 							</Link>
 						</Button>
 					</>
@@ -60,7 +60,7 @@ export default async function Home() {
 						className='w-full'
 						href={'/dashboard'}
 					>
-						Dashboard
+						{`Dashboard`}
 					</Link>
 				</Button>
 				<Button asChild>
@@ -68,7 +68,7 @@ export default async function Home() {
 						className='w-full'
 						href={'/admins'}
 					>
-						Admin
+						{`Admin`}
 					</Link>
 				</Button>
 				<Button asChild>
@@ -76,7 +76,7 @@ export default async function Home() {
 						className='w-full'
 						href={'/agents'}
 					>
-						Agents
+						{`Agents`}
 					</Link>
 				</Button>
 
@@ -85,7 +85,7 @@ export default async function Home() {
 						className='w-full'
 						href={'/scan'}
 					>
-						Scan
+						{`Scan`}
 					</Link>
 				</Button>
 				<Button asChild>
@@ -93,7 +93,7 @@ export default async function Home() {
 						className='w-full'
 						href={'/search'}
 					>
-						Search Vehicle
+						{`Search Vehicle`}
 					</Link>
 				</Button>
 				<Button asChild>
@@ -101,7 +101,7 @@ export default async function Home() {
 						className='w-full'
 						href={'/manage'}
 					>
-						Manage Account
+						{`Manage Account`}
 					</Link>
 				</Button>
 			</div>
