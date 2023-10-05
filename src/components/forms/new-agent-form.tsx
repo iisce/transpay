@@ -92,9 +92,10 @@ const agentFormSchema = z.object({
 		}),
 	password: z.string().refine((password) => {
 		return (
-			password.length >= 8 &&
-			/[A-Z]/.test(password) &&
-			/\d/.test(password)
+			password.length >= 8 
+			// &&
+			// /[A-Z]/.test(password) &&
+			// /\d/.test(password)
 		);
 	}, 'The password must contain at least one uppercase letter and one number and be at least 8 characters long.'),
 	phone: z.string({

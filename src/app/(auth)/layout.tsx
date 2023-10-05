@@ -15,8 +15,7 @@ const slides = [
 	</>,
 	<>
 		<CarouselSlides
-			desc='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore'
+			desc='We believe that accountability is fundamental for societal progress, and TRANSPAY stands as a testament to that ethos, offering a reliable and efficient means for commuters'
 			images='/avater.png'
 			author='ISCE Digital Concepts'
 			title='Governor Anambra state'
@@ -24,8 +23,7 @@ const slides = [
 	</>,
 	<>
 		<CarouselSlides
-			desc='knkdnfjdnfdjf jdnfdjfndjdjfndfjdngkfbfg ffgjfgfbgfj gfgbfgjjgbjbgjgbdjbdg
-      dgdbdb ngfigtmitgutng gutgnt tngtjg'
+			desc='Just as development relies on being accountable for our actions, TRANSPAY cultivates an efficient and sustainable transit system, contributing to the growth and prosperity of our community.'
 			images='/avater.png'
 			author='ISCE Digital Concepts'
 			title='Governor Anambra state'
@@ -57,7 +55,7 @@ export default function AuthLayout({
 						</div>
 					</div>
 					<div>
-						<div className='w-full flex flex-col mt-8 gap-7 bg-primary-900 p-7 rounded-2xl'>
+						<div className='w-full flex flex-col mt-8 gap-7 bg-primary-900 p-7 duration-700 rounded-2xl'>
 							<Carousel slides={slides} />
 						</div>
 					</div>
