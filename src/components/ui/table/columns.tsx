@@ -19,59 +19,98 @@ import Pill from '../pill';
 import Link from 'next/link';
 import Cbadge from '../category-badge';
 import DeleteAdminButton from '@/components/shared/delete-admin-button';
+import { formatDate } from '@/lib/utils';
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogFooter,
+	AlertDialogTrigger,
+} from '../alert-dialog';
+import Receipt from '@/components/shared/receipt/vehicle-transaction';
 
-export const paymentColumns: ColumnDef<Payment>[] = [
+export const debtColumns: ColumnDef<IVehiclePayment>[] = [
 	{
-		id: 'select',
-		header: ({ table }) => (
-			<Checkbox
-				checked={table.getIsAllPageRowsSelected()}
-				onCheckedChange={(value) =>
-					table.toggleAllPageRowsSelected(!!value)
-				}
-				aria-label='Select all'
-			/>
-		),
-		cell: ({ row }) => (
-			<Checkbox
-				checked={row.getIsSelected()}
-				onCheckedChange={(value) => row.toggleSelected(!!value)}
-				aria-label='Select row'
-			/>
-		),
-		enableSorting: false,
-		enableHiding: false,
-	},
-
-	{
-		accessorKey: 'status',
-		header: 'Status',
-	},
-	{
-		accessorKey: 'payment_type',
-		header: 'Payment Type',
-	},
-	{
-		accessorKey: 'email',
+		accessorKey: 'transaction_date',
 		header: ({ column }) => (
 			<DataTableColumnHeader
 				column={column}
-				title='Email'
+				title='Date'
 			/>
 		),
+		cell: ({ row }) => {
+			const payment = row.original;
+			return <div>{formatDate(payment.transaction_date)}</div>;
+		},
+		sortDescFirst: true,
 	},
 	{
 		accessorKey: 'amount',
 		header: () => <div className='text-right'>Amount</div>,
 		cell: ({ row }) => {
 			const amount = parseFloat(row.getValue('amount'));
-			const formatted = new Intl.NumberFormat('en-US', {
-				style: 'currency',
-				currency: 'USD',
-			}).format(amount);
-
-			return <div className='text-right font-medium'>{formatted}</div>;
+			return <div className='text-right font-medium'>₦{amount}</div>;
 		},
+	},
+];
+export const paymentColumns: ColumnDef<IVehiclePayment>[] = [
+	{
+		accessorKey: 'transaction_date',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Date'
+			/>
+		),
+		cell: ({ row }) => {
+			const payment = row.original;
+			return (
+				<Link
+					href={`/vehicles/${payment.vehicle_id}/payments/${payment.vehicle_transaction_id}`}
+					className=''
+				>
+					{formatDate(payment.transaction_date)}
+				</Link>
+			);
+		},
+		sortDescFirst: true,
+	},
+	{
+		accessorKey: 'amount',
+		header: () => <div className=''>Amount</div>,
+		cell: ({ row }) => {
+			const amount = parseFloat(row.getValue('amount'));
+			return <div className='font-medium'>₦{amount}</div>;
+		},
+	},
+	{
+		accessorKey: 'payment_status',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Status'
+			/>
+		),
+		cell: ({ row }) => {
+			const status = row.original.payment_status;
+			const style =
+				status === 'failed'
+					? 'text-destructive-foreground'
+					: status === 'success'
+					? 'text-awesome-foreground'
+					: status === 'processing'
+					? 'text-orange-300'
+					: 'text-primary';
+			return <div className={`uppercase ${style}`}>{status}</div>;
+		},
+	},
+	{
+		accessorKey: 'payment_type',
+		header: 'Payment Type',
+		cell: ({ row }) => (
+			<div className='uppercase'>{row.original.payment_type}</div>
+		),
 	},
 	{
 		id: 'actions',
@@ -101,9 +140,30 @@ export const paymentColumns: ColumnDef<Payment>[] = [
 							Copy payment ID
 						</DropdownMenuItem>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem>View customer</DropdownMenuItem>
-						<DropdownMenuItem>
-							View payment details
+						<DropdownMenuItem asChild>
+							<AlertDialog>
+								<AlertDialogTrigger className='px-2 text-sm'>
+									View receipt
+								</AlertDialogTrigger>
+								<AlertDialogContent>
+									<Receipt receipt={payment} />
+									<AlertDialogFooter className='grid grid-cols-2 gap-3'>
+										<AlertDialogCancel>
+											Close
+										</AlertDialogCancel>
+										<AlertDialogAction>
+											Print
+										</AlertDialogAction>
+									</AlertDialogFooter>
+								</AlertDialogContent>
+							</AlertDialog>
+						</DropdownMenuItem>
+						<DropdownMenuItem asChild>
+							<Link
+								href={`/vehicles/${payment.vehicle_id}/payments/${payment.vehicle_transaction_id}`}
+							>
+								View payment details
+							</Link>
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>

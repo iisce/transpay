@@ -30,3 +30,25 @@ export function getInitials(name: string): string {
 
 	return words[0].charAt(0);
 }
+
+/**
+ * Takes in a date string and formats it to return a DD-MM-YYYY format date
+ * @param {string} inputDate
+ * @returns {string}
+ */
+
+export function formatDate(inputDate: string): string {
+	const date = new Date(inputDate);
+
+	if (isNaN(date.getTime())) {
+		return 'Invalid Date';
+	}
+
+	const day = date.getDate().toString().padStart(2, '0');
+	const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-based, so add 1
+	const year = date.getFullYear();
+
+	const formattedDate = `${day}-${month}-${year}`;
+
+	return formattedDate;
+}

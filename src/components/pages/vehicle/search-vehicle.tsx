@@ -21,6 +21,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 	if (!vehicle) {
 		notFound();
 	}
+	console.log(vehicle);
 	return (
 		<div className='h-full w-full p-6 flex flex-col gap-6 '>
 			<div className='flex items-center justify-between'>

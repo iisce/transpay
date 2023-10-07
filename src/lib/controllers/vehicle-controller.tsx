@@ -30,6 +30,19 @@ export const getVehicleById = async (id: string) => {
 	const { vehicle } = await result;
 	return vehicle;
 };
+
+export const getVehicleSummaryByPlateNumber = async (plate_number: string) => {
+	const headers = {
+		'Content-Type': 'application/json',
+	};
+	const url = `${API}${URLS.vehicle.all}/summary?plate_number=${plate_number}`;
+	const res = await fetch(url, { headers, cache: 'no-store' });
+	if (!res.ok) return undefined;
+	const result: Promise<PrettyVehicleSummary> = await res.json();
+	const { data } = await result;
+	return data.vehicle;
+};
+
 export const searchVehicle = async (id: string) => {
 	const session = await getSSession();
 	const headers = {

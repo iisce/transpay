@@ -205,7 +205,7 @@ export function DriverForm({ id }: { id: string }) {
 								<FormLabel>Phone Number</FormLabel>
 								<FormControl>
 									<Input
-										placeholder='Enter phone number'
+										placeholder='08012345678'
 										{...field}
 									/>
 								</FormControl>
