@@ -42,11 +42,7 @@ const vehicleFormSchema = z.object({
 	vehicle_type: z.string({
 		required_error: 'Please enter a valid vehicle type.',
 	}),
-	color: z
-		.string({
-			required_error: 'Please enter a valid Color.',
-		})
-		.min(3, { message: 'Colors have at least three characters.' }),
+	color: z.string(),
 	image: z
 		.string({
 			required_error: 'Please add image.',
@@ -59,41 +55,30 @@ const vehicleFormSchema = z.object({
 		.min(5, {
 			message: 'Plate numbers have at least five(5) characters.',
 		}),
-	owners_phone_number: z
+	owner_phone_number: z
 		.string({
 			required_error: 'Enter owner phone number.',
 		})
-		.min(9, {
-			message: 'Phone numbers have at least nine(9) characters.',
-		})
-		.max(15, {
-			message: 'Phone numbers have at most (15) characters.',
-		}),
+		.regex(/^\+234[789][01]\d{8}$/, 'Phone format (+2348012345678)'),
 	owners_name: z
 		.string({
 			required_error: 'Enter owner phone number.',
 		})
 		.min(5, {
-			message: 'Plate numbers have at least five(5) characters.',
+			message: 'Enter full name',
 		}),
-	vin: z
-		.string({
-			required_error: 'Enter your VIN.',
-		})
-		.min(5, {
-			message: 'VIN have at least five(5) characters.',
-		}),
+	vin: z.string(),
 	status: z.string({
 		required_error: 'Choose Status',
 	}),
 	barcode_string: z.string(),
 	tracker_id: z.string(),
+	with_wallet: z.boolean(),
 });
 
-type DriverFormValues = z.infer<typeof vehicleFormSchema>;
+type vehicleFormValues = z.infer<typeof vehicleFormSchema>;
 
-const defaultValues: Partial<DriverFormValues> = {
-	category: 'bus',
+const defaultValues: Partial<vehicleFormValues> = {
 	color: '',
 	image: BUS_IMAGE_SAMPLE,
 	plate_number: '',
@@ -102,8 +87,9 @@ const defaultValues: Partial<DriverFormValues> = {
 	vin: '',
 	barcode_string: '',
 	tracker_id: '',
-	owners_phone_number: '',
+	owner_phone_number: '',
 	owners_name: '',
+	with_wallet: true,
 };
 
 export default function CreateVehicleForm() {
@@ -111,13 +97,13 @@ export default function CreateVehicleForm() {
 	const { toast } = useToast();
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const [open, setOpen] = React.useState(false);
-	const form = useForm<DriverFormValues>({
+	const form = useForm<vehicleFormValues>({
 		resolver: zodResolver(vehicleFormSchema),
 		defaultValues,
 		mode: 'onChange',
 	});
 
-	const onSubmit = async (data: DriverFormValues) => {
+	const onSubmit = async (data: vehicleFormValues) => {
 		setIsLoading(true);
 		try {
 			const createVehicleResponse = await fetch(
@@ -134,8 +120,9 @@ export default function CreateVehicleForm() {
 						vin: data.vin,
 						barcode_string: data.barcode_string,
 						tracker_id: data.tracker_id,
-						owners_phone_number: data.owners_phone_number,
+						owner_phone_number: data.owner_phone_number,
 						owners_name: data.owners_name,
+						with_wallet: data.with_wallet,
 					}),
 				}
 			);
@@ -150,6 +137,7 @@ export default function CreateVehicleForm() {
 				setIsLoading(false);
 				setOpen(true);
 				setNewVehicleId(result.data.vehicle_id);
+				console.log(result);
 				return NextResponse.json(result);
 			} else {
 				setIsLoading(false);
@@ -313,7 +301,7 @@ export default function CreateVehicleForm() {
 					/>
 
 					<FormField
-						name='owners_phone_number'
+						name='owner_phone_number'
 						control={form.control}
 						render={({ field }) => (
 							<FormItem>
@@ -326,7 +314,29 @@ export default function CreateVehicleForm() {
 										className='relative text-body flex  items-center h-14 rounded-2xl'
 										{...field}
 										type='text'
-										placeholder={`Enter owner's phone number`}
+										placeholder={`+23481209847859`}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+
+					<FormField
+						name='barcode_string'
+						control={form.control}
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel className='text-title1Bold pl-4'>
+									Sticker Number
+								</FormLabel>
+
+								<FormControl>
+									<Input
+										className='relative text-body flex  items-center h-14 rounded-2xl'
+										{...field}
+										type='text'
+										placeholder='T-01'
 									/>
 								</FormControl>
 								<FormMessage />
@@ -335,27 +345,6 @@ export default function CreateVehicleForm() {
 					/>
 
 					{/* 
-					<FormField
-						name='barcode_string'
-						control={form.control}
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel className='text-title1Bold pl-4'>
-									Barcode String
-								</FormLabel>
-
-								<FormControl>
-									<Input
-										className='relative text-body flex  items-center h-14 rounded-2xl'
-										{...field}
-										type='text'
-										placeholder='Barcode String'
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/> 
 					<FormField
 						name='tracker_id'
 						control={form.control}

@@ -1,4 +1,4 @@
-export const PAYMENTS: Payment[] = [
+export const PAYMENTS = [
 	{
 		id: '728ed52f',
 		amount: 100,

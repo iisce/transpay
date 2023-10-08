@@ -2,6 +2,7 @@ import DashboardCard from '@/components/layout/dashboard-card';
 import { Button } from '@/components/ui/button';
 import {
 	driversColumns,
+	paymentColumns,
 	viewDriversColumns,
 } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
@@ -141,10 +142,8 @@ export default async function ViewVehicleDetails({ id }: { id: string }) {
 									</div>
 									<div className=''>
 										<DataTable
-											columns={
-												viewDriversColumns
-											}
-											data={VIEW_DRIVER_TABLE.slice(
+											columns={paymentColumns}
+											data={vehicle.VehicleTransactions.slice(
 												0,
 												3
 											)}

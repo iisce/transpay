@@ -1,11 +1,29 @@
 type Prettify<T> = {
-	[k in keyof T]: T[K];
+	[K in keyof T]: T[K];
 } & {};
-interface Payment {
+interface IVehiclePayment {
+	status: boolean;
+	last_message: string;
+	deficit: number;
+	createdAt: string;
+	updatedAt: string;
 	id: string;
 	amount: number;
-	status: 'pending' | 'processing' | 'success' | 'failed';
-	email: string;
+	payment_status: 'pending' | 'processing' | 'success' | 'failed';
+	vehicle_transaction_id: string;
+	vehicle_id: string;
+	transaction_date: string;
+	description: string;
+	payment_gateway_name: string;
+	transaction_type: string;
+	currency: 'NGN';
+	invoice_number: string;
+	invoice_prefix: string;
+	invoice_details: string;
+	payment_type: string;
+	user_role: string;
+	user_id: string;
+	transfer_id: string;
 }
 interface AgentPayment {
 	id: string;
@@ -144,7 +162,7 @@ interface IDriver {
 	>;
 }
 
-interface IVehicle {
+interface IVehicle extends IWallet {
 	id: number;
 	vehicle_id: string;
 	color: string;
@@ -156,7 +174,7 @@ interface IVehicle {
 	blacklisted: boolean;
 	current_driver?: IDriver;
 	status: string;
-	owners_phone_number: string;
+	owner_phone_number: string;
 	owners_name: string;
 	vin: string;
 	vehicle_type: string;
@@ -166,10 +184,44 @@ interface IVehicle {
 	createdAt: string;
 	updatedAt: string;
 	Drivers: IDriver[];
-	VehicleTransactions: [];
+	VehicleTransactions: IVehicleTransaction[];
 	VehicleFines: [];
+	VehicleTracker: string;
 	VehicleWaivers: [];
+	VehicleWallet: Omit<IWallet, 'vehicle_id'>;
 }
+interface IWallet {
+	vehicle_id: string;
+	nuban: number;
+	account_name: string;
+	bank_name: string;
+}
+
+interface IVehicleTransaction {
+	id: number;
+	vehicle_transaction_id: string;
+	vehicle_id: string;
+	transaction_date: string;
+	description: string;
+	payment_gateway_name: string;
+	transaction_type: string;
+	amount: number;
+	currency: 'NGN';
+	invoice_number: string;
+	invoice_prefix: string;
+	invoice_details: string;
+	payment_type: 'transfer';
+	user_role: string;
+	user_id: string;
+	payment_status: 'pending';
+	status: false;
+	transfer_id: string;
+	last_message: string;
+	deficit: number;
+	createdAt: string;
+	updatedAt: string;
+}
+
 type PrettyVehicle = Prettify<IVehicle>;
 type PrettyVehicles = Prettify<IVehicles>;
 interface IVehicles {
@@ -202,6 +254,18 @@ interface IAdmins {
 interface IResAgent {
 	agent: IAgent;
 }
+
+interface IVehicleSummary extends Omit<IVehicle, ''> {
+	current_driver?: string;
+}
+
+interface IResVehicleSummary {
+	data: {
+		vehicle: IVehicleSummary;
+	};
+}
+
+type PrettyVehicleSummary = Prettify<IResVehicleSummary>;
 interface IAgents {
 	data: {
 		agents: IAgent[];
@@ -222,6 +286,24 @@ interface IDrivers {
 	data: {
 		drivers: IDriver[];
 	};
+}
+interface IResSettings {
+	data: {
+		settings: ISettings[];
+	};
+}
+interface ISettings {
+	id: number;
+	setting_id: string;
+	name: string;
+	description: string;
+	value: string;
+	user_id: string;
+	user_role: string;
+	updated_by_id: string;
+	updated_by_role: string;
+	createdAt: string;
+	updatedAt: string;
 }
 interface IUser {
 	admin_id: string;
@@ -283,12 +365,19 @@ interface ICreateVehicleForm {
 	status: string;
 	vehicle_id?: string;
 	plate_number: string;
-	owners_phone_number: string;
+	owner_phone_number: string;
 	owners_name: string;
+	with_wallet: boolean;
 	vehicle_type: string;
 	vin: string;
 	barcode_string?: string;
 	tracker_id?: string;
+}
+interface ICreateSettingForm {
+	setting_id: string;
+	name: string;
+	description: string;
+	value: string;
 }
 interface ICreateDriverForm {
 	name: string;

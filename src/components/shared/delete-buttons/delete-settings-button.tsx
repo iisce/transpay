@@ -1,40 +1,46 @@
 'use client';
 import { deleteIcon, loadingSpinner } from '@/lib/icons';
 import React from 'react';
-import { useToast } from '../ui/use-toast';
 import { NextResponse } from 'next/server';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/components/ui/use-toast';
 
-export default function DeleteDriverButton({ id }: { id: string }) {
+export default function DeleteSettingsButton({ id }: { id: string }) {
 	const router = useRouter();
 	const { toast } = useToast();
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const handleDelete = async (id: string) => {
 		setIsLoading(true);
 		try {
-			const createDriverResponse = await fetch('/api/create-driver/', {
-				method: 'DELETE',
-				body: JSON.stringify({
-					driver_id: id,
-				}),
-			});
-			const result = await createDriverResponse.json();
+			const deleteSettingsResponse = await fetch(
+				'/api/create-settings',
+				{
+					method: 'DELETE',
+					body: JSON.stringify({
+						setting_id: id,
+					}),
+				}
+			);
+			const result = await deleteSettingsResponse.json();
 			if (
-				createDriverResponse.status > 199 &&
-				createDriverResponse.status < 299
+				deleteSettingsResponse.status > 199 &&
+				deleteSettingsResponse.status < 299
 			) {
 				toast({
 					title: 'Updated Successfully',
 				});
 				setIsLoading(false);
-				router.push(`/drivers`);
+				router.refresh();
 				return NextResponse.json(result);
 			} else {
 				setIsLoading(false);
 				toast({
 					title: 'Not Updated',
+					description: 'Something went wrong',
 				});
-				return null;
+				throw new Error(
+					`Something Went wrong ${result.statusText}`
+				);
 			}
 		} catch (error) {
 			setIsLoading(false);
@@ -45,14 +51,8 @@ export default function DeleteDriverButton({ id }: { id: string }) {
 			className='items-center cursor-pointer'
 			onClick={() => handleDelete(id)}
 		>
-			<span className='h-4 w-4'>
-				{isLoading ? (
-					<div className='h-4 w-4 object-contain'>
-						{loadingSpinner}
-					</div>
-				) : (
-					'Delete Driver'
-				)}
+			<span className='h-4 w-4 flex items-center justify-center'>
+				{isLoading ? loadingSpinner : deleteIcon}
 			</span>
 		</div>
 	);

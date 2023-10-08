@@ -24,11 +24,11 @@ export function Notification() {
 			<DropdownMenuContent
 				className='w-72'
 				align='end'
-				forceMount
+				// forceMount
 			>
 				<DropdownMenuLabel className='font-normal'>
 					<Link
-						href={'/dashboard/activities'}
+						href={'/activities'}
 						className='text-sm font-medium leading-none'
 					>
 						All Activities
@@ -42,9 +42,7 @@ export function Notification() {
 							asChild
 							key={k}
 						>
-							<Link
-								href={`dashboard/activities/${activity.id}`}
-							>
+							<Link href={`/activities/${activity.id}`}>
 								<ActivityCard
 									key={k}
 									id={activity.id}

@@ -52,7 +52,7 @@ const vehicleFormSchema = z.object({
 		.min(5, {
 			message: 'Plate numbers have at least five(5) characters.',
 		}),
-	owners_phone_number: z
+	owner_phone_number: z
 		.string({
 			required_error: 'Enter owner phone number.',
 		})
@@ -81,6 +81,7 @@ const vehicleFormSchema = z.object({
 	}),
 	barcode_string: z.string(),
 	tracker_id: z.string(),
+	with_wallet: z.boolean(),
 });
 
 type VehicleFormValues = z.infer<typeof vehicleFormSchema>;
@@ -97,7 +98,7 @@ export function UpdateVehicleForm({ vehicle }: { vehicle: IVehicle }) {
 		vin: vehicle.vin,
 		barcode_string: vehicle.barcode_string,
 		tracker_id: vehicle.tracker_id,
-		owners_phone_number: vehicle.owners_phone_number,
+		owner_phone_number: vehicle.owner_phone_number,
 		owners_name: vehicle.owners_name,
 	};
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -125,8 +126,9 @@ export function UpdateVehicleForm({ vehicle }: { vehicle: IVehicle }) {
 						vin: data.vin,
 						barcode_string: data.barcode_string,
 						tracker_id: data.tracker_id,
-						owners_phone_number: data.owners_phone_number,
+						owner_phone_number: data.owner_phone_number,
 						owners_name: data.owners_name,
+						with_wallet: data.with_wallet,
 						vehicle_id: vehicle.vehicle_id,
 					}),
 				}
@@ -311,7 +313,7 @@ export function UpdateVehicleForm({ vehicle }: { vehicle: IVehicle }) {
 						/>
 
 						<FormField
-							name='owners_phone_number'
+							name='owner_phone_number'
 							control={form.control}
 							render={({ field }) => (
 								<FormItem>

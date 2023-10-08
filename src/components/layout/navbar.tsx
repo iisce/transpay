@@ -31,7 +31,7 @@ export default async function NavBar() {
 						alt='Transpay Logo'
 					/>
 				</Link>
-				<div className='w-full hidden md:block pr-5'>
+				{/* <div className='w-full hidden md:block pr-5'>
 					<div className='max-w-[500px] relative flex  items-center justify-start'>
 						<div className='h-6 w-6 left-2 opacity-60 shrink-0 absolute'>
 							{searchIcon}
@@ -41,7 +41,7 @@ export default async function NavBar() {
 							placeholder='Search anything here'
 						/>
 					</div>
-				</div>
+				</div> */}
 				<div className='flex gap-3 items-center text-primary-700'>
 					{user ? (
 						<>

@@ -179,6 +179,22 @@ export const revenueIcon = (
 	</svg>
 );
 
+export const settingsIcon = (
+	<svg
+		width='26'
+		height='25'
+		viewBox='0 0 26 25'
+		fill='none'
+		xmlns='http://www.w3.org/2000/svg'
+		className='h-full w-full object-contain'
+	>
+		<path
+			d='M26.6667 24.5H0V0.5H2.66667V21.8333H5.33333V9.83333H10.6667V21.8333H13.3333V4.5H18.6667V21.8333H21.3333V15.1667H26.6667V24.5Z'
+			fill='currentColor'
+		/>
+	</svg>
+);
+
 export const notificationIcon = (
 	<svg
 		width='27'

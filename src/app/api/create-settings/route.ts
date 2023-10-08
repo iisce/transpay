@@ -4,7 +4,7 @@ import { getSSession } from '@/lib/get-data';
 
 export async function POST(req: NextRequest) {
 	const { access_token } = await getSSession();
-	const body: ICreateVehicleForm = await req.json();
+	const body: ICreateSettingForm = await req.json();
 	const headers = {
 		'Content-Type': 'application/json',
 		'api-secret': process.env.API_SECRET || '',
@@ -12,23 +12,14 @@ export async function POST(req: NextRequest) {
 	};
 
 	try {
-		const url = API + URLS.vehicle.all;
+		const url = API + URLS.settings;
 		const response = await fetch(url, {
 			method: 'POST',
 			headers,
 			body: JSON.stringify({
-				category: body.category,
-				color: body.color,
-				image: body.image,
-				plate_number: body.plate_number,
-				status: body.status,
-				vehicle_type: body.vehicle_type,
-				owner_phone_number: body.owner_phone_number,
-				owners_name: body.owners_name,
-				with_wallet: body.with_wallet,
-				vin: body.vin,
-				barcode_string: body.barcode_string,
-				tracker_id: body.tracker_id,
+				name: body.name,
+				description: body.description,
+				value: body.value,
 			}),
 		});
 
@@ -45,7 +36,7 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
 	const { access_token } = await getSSession();
-	const body: ICreateVehicleForm = await req.json();
+	const body: ICreateSettingForm = await req.json();
 	const headers = {
 		'Content-Type': 'application/json',
 		'api-secret': process.env.API_SECRET || '',
@@ -53,7 +44,7 @@ export async function PUT(req: NextRequest) {
 	};
 
 	try {
-		const url = `${API}${URLS.vehicle.all}/${body.vehicle_id}`;
+		const url = `${API}${URLS.settings}/${body.setting_id}`;
 		const response = await fetch(url, {
 			method: 'PUT',
 			headers,
@@ -72,7 +63,7 @@ export async function PUT(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
 	const { access_token } = await getSSession();
-	const body: ICreateVehicleForm = await req.json();
+	const body: ICreateSettingForm = await req.json();
 	const headers = {
 		'Content-Type': 'application/json',
 		'api-secret': process.env.API_SECRET || '',
@@ -80,7 +71,7 @@ export async function DELETE(req: NextRequest) {
 	};
 
 	try {
-		const url = `${API}${URLS.vehicle.all}/${body.vehicle_id}`;
+		const url = `${API}${URLS.settings}/${body.setting_id}`;
 		const response = await fetch(url, {
 			method: 'DELETE',
 			headers,
