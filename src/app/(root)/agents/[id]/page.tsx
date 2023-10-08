@@ -1,19 +1,19 @@
 import { UpdateAgentForm } from '@/components/forms/update-agent-form';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
-import { agentPaymentColumns } from '@/components/ui/table/columns';
-import { DataTable } from '@/components/ui/table/data-table';
-import { PAYMENT_TABLE } from '@/lib/consts';
 import { getAgentById } from '@/lib/controllers/agent-controller';
 import { addIcon } from '@/lib/icons';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import React from 'react';
+import { ACTIVITIES } from '../../../../../data';
+import ActivityCard from '@/components/shared/activity-card';
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
 	const agent = await getAgentById(params.id);
 	return {
-		title: agent?.name.toLocaleUpperCase() || 'ISCE | All Agents',
+		title: `Transpay Agent - ${agent?.name.toLocaleUpperCase()}`,
 	};
 }
 
@@ -30,17 +30,17 @@ export default async function SingularAgent({
 				<div className='shrink-0 grow-0'>
 					{agent?.name.toLocaleUpperCase()}
 				</div>
-				{/* <div className='shrink-0 grow-0'>
+				<div className='shrink-0 grow-0'>
 					<Button
 						asChild
 						variant={'default'}
 					>
 						<div className='justify-start rounded-xl flex gap-2'>
 							<Checkbox className='border-secondary text-primary bg-secondary' />
-							Make an Agent
+							Make Admin
 						</div>
 					</Button>
-				</div> */}
+				</div>
 			</div>
 			<div className='flex flex-col gap-3 xs:gap-5'>
 				<div className='space-y-6'>
@@ -52,29 +52,38 @@ export default async function SingularAgent({
 					</div>
 					<UpdateAgentForm agent={agent} />
 				</div>
-				{/* <div className='flex flex-col gap-2 mb-20'>
+				<div className='flex flex-col gap-2 mb-20'>
 					<div className='flex justify-between py-2'>
 						<div className='shrink-0 grow-0 text-title1Bold'>
-							Total Payments
+							Recent Activities
 						</div>
-						<div className='shrink-0 grow-0'>₦200,000</div>
-					</div>
-					<div>
-						<DataTable
-							columns={agentPaymentColumns}
-							data={PAYMENT_TABLE.slice(0, 5)}
-						/>
 						<Button
-							variant='outline'
 							asChild
-							className='justify-center items-center shrink-0 grow-0 w-1/5 rounded-xl flex'
+							variant='link'
 						>
-							<Link href={'/web-agent/driver/payment'}>
-								See More
+							<Link
+								href={`/admins/${agent.agent_id}/activities`}
+							>
+								See all
 							</Link>
 						</Button>
 					</div>
-				</div> */}
+					<div>
+						<Card className='bg-secondary'>
+							{ACTIVITIES.slice(0, 3).map(
+								(activity, k) => (
+									<ActivityCard
+										key={k}
+										id={activity.id}
+										name={activity.name}
+										time={activity.time}
+										date={activity.date}
+									/>
+								)
+							)}
+						</Card>
+					</div>
+				</div>
 			</div>
 		</div>
 	);

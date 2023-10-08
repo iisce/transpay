@@ -35,11 +35,7 @@ const vehicleFormSchema = z.object({
 	vehicle_type: z.string({
 		required_error: 'Please enter a valid vehicle type.',
 	}),
-	color: z
-		.string({
-			required_error: 'Please enter a valid Color.',
-		})
-		.min(3, { message: 'Colors have at least three characters.' }),
+	color: z.string(),
 	image: z
 		.string({
 			required_error: 'Please add image.',
@@ -52,16 +48,11 @@ const vehicleFormSchema = z.object({
 		.min(5, {
 			message: 'Plate numbers have at least five(5) characters.',
 		}),
-	owner_phone_number: z
+	owners_phone_number: z
 		.string({
 			required_error: 'Enter owner phone number.',
 		})
-		.min(9, {
-			message: 'Phone numbers have at least nine(9) characters.',
-		})
-		.max(15, {
-			message: 'Phone numbers have at most (15) characters.',
-		}),
+		.regex(/^\+234[789][01]\d{8}$/, 'Phone format (+2348012345678)'),
 	owners_name: z
 		.string({
 			required_error: 'Enter owner phone number.',
@@ -69,13 +60,7 @@ const vehicleFormSchema = z.object({
 		.min(5, {
 			message: 'Plate numbers have at least five(5) characters.',
 		}),
-	vin: z
-		.string({
-			required_error: 'Enter your VIN.',
-		})
-		.min(5, {
-			message: 'VIN have at least five(5) characters.',
-		}),
+	vin: z.string(),
 	status: z.string({
 		required_error: 'Choose Status',
 	}),
@@ -98,8 +83,9 @@ export function UpdateVehicleForm({ vehicle }: { vehicle: IVehicle }) {
 		vin: vehicle.vin,
 		barcode_string: vehicle.barcode_string,
 		tracker_id: vehicle.tracker_id,
-		owner_phone_number: vehicle.owner_phone_number,
+		owners_phone_number: vehicle.owners_phone_number,
 		owners_name: vehicle.owners_name,
+		with_wallet: vehicle.with_wallet,
 	};
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const { toast } = useToast();
@@ -126,7 +112,7 @@ export function UpdateVehicleForm({ vehicle }: { vehicle: IVehicle }) {
 						vin: data.vin,
 						barcode_string: data.barcode_string,
 						tracker_id: data.tracker_id,
-						owner_phone_number: data.owner_phone_number,
+						owners_phone_number: data.owners_phone_number,
 						owners_name: data.owners_name,
 						with_wallet: data.with_wallet,
 						vehicle_id: vehicle.vehicle_id,
@@ -313,7 +299,7 @@ export function UpdateVehicleForm({ vehicle }: { vehicle: IVehicle }) {
 						/>
 
 						<FormField
-							name='owner_phone_number'
+							name='owners_phone_number'
 							control={form.control}
 							render={({ field }) => (
 								<FormItem>
@@ -328,6 +314,28 @@ export function UpdateVehicleForm({ vehicle }: { vehicle: IVehicle }) {
 											{...field}
 											type='text'
 											placeholder={`Enter owner's phone number`}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							name='barcode_string'
+							control={form.control}
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel className='text-title1Bold pl-4'>
+										Sticker Number
+									</FormLabel>
+
+									<FormControl>
+										<Input
+											disabled={disabled}
+											className='relative text-body flex  items-center h-14 rounded-2xl'
+											{...field}
+											type='text'
+											placeholder='T-01'
 										/>
 									</FormControl>
 									<FormMessage />

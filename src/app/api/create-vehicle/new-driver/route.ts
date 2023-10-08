@@ -1,8 +1,9 @@
 import { API, URLS } from '@/lib/consts';
 import { getSSession } from '@/lib/get-data';
+import { NextApiResponse } from 'next';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function PUT(req: NextRequest) {
+export async function PUT(req: NextRequest, res: NextApiResponse) {
 	const { access_token } = await getSSession();
 	const body: ICreateDriverForm = await req.json();
 	const headers = {
@@ -30,11 +31,14 @@ export async function PUT(req: NextRequest) {
 		});
 		const result = await response.json();
 		if (!response.ok) {
-			throw new Error(`Something Went wrong ${response.statusText}`);
+			return NextResponse.json(
+				{ error: result.message },
+				{ status: 409 }
+			);
 		} else {
 			return NextResponse.json(result);
 		}
 	} catch (error: any) {
-		return error?.message;
+		return NextResponse.json({ error: error?.message }, { status: 500 });
 	}
 }

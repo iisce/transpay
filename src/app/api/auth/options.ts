@@ -8,6 +8,10 @@ const config = {
 		'api-secret': process.env.API_SECRET,
 	},
 };
+const headers = {
+	'api-secret': process.env.API_SECRET || '',
+	'Content-Type': 'application/json',
+};
 
 export const options: NextAuthOptions = {
 	providers: [
@@ -24,23 +28,18 @@ export const options: NextAuthOptions = {
 					? URLS.auth.signin.admin
 					: URLS.auth.signin.agent;
 				try {
-					const res = await axios.post(
-						API + apiRoute,
-						{
-							email: credentials?.email,
-							password: credentials?.password,
-						},
-						config
-					);
-					if (res.status >= 200 && res.status < 300) {
-						let user = res?.data?.data;
+					const res = await fetch(API + apiRoute, {
+						method: 'POST',
+						body: JSON.stringify(credentials),
+						headers,
+					});
+					const result = await res.json();
+					if (result.success === true) {
+						let user = result?.data;
 						console.log(user);
 						return user;
 					} else {
-						throw new Error(
-							res.statusText ||
-								'An error occurred during api connection.'
-						);
+						throw new Error(result.message);
 					}
 				} catch (error) {
 					if (axios.isAxiosError(error)) {

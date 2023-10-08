@@ -1,4 +1,4 @@
-import { SettingsIcon } from 'lucide-react';
+import { ActivitySquareIcon, CarTaxiFront, SettingsIcon } from 'lucide-react';
 import {
 	adminIcon,
 	agentDriverIcon,
@@ -26,6 +26,11 @@ export const SIDEBAR_LINKS = [
 		icon: adminIcon,
 	},
 	{
+		title: 'Activities',
+		href: '/activities',
+		icon: <ActivitySquareIcon className='h-5 w-5' />,
+	},
+	{
 		title: 'Agents',
 		href: '/agents',
 		icon: agentsIcon,
@@ -33,7 +38,7 @@ export const SIDEBAR_LINKS = [
 	{
 		title: 'Vehicles',
 		href: '/vehicles',
-		icon: driverIcon,
+		icon: <CarTaxiFront className='h-5 w-5' />,
 	},
 	{
 		title: 'Drivers',
@@ -108,7 +113,7 @@ export const SIDEBAR_LINKS_AGENT = [
 export const MANAGE_SIDEBAR_LINKS = [
 	{
 		name: 'Home',
-		href: '/dashboard',
+		href: '/manage',
 		icon: homeIcon,
 	},
 	{
@@ -125,6 +130,11 @@ export const MANAGE_SIDEBAR_LINKS = [
 		name: 'About Us',
 		href: '/manage/about',
 		icon: aboutIcon,
+	},
+	{
+		name: 'Dashboard',
+		href: '/dashboard',
+		icon: dashboardIcon,
 	},
 ];
 export const DRIVERS_CARD = [

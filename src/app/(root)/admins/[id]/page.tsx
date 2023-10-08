@@ -1,17 +1,18 @@
 import { UpdateAdminForm } from '@/components/forms/update-admin-form';
 import { Button } from '@/components/ui/button';
-import { agentPaymentColumns } from '@/components/ui/table/columns';
-import { DataTable } from '@/components/ui/table/data-table';
 import { getAdminById } from '@/lib/controllers/admin-controller';
-import { PAYMENT_TABLE } from '@/lib/consts';
 import { addIcon } from '@/lib/icons';
 import { notFound } from 'next/navigation';
 import React from 'react';
+import Link from 'next/link';
+import ActivityCard from '@/components/shared/activity-card';
+import { ACTIVITIES } from '../../../../../data';
+import { Card } from '@/components/ui/card';
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
 	const admin = await getAdminById(params.id);
 	return {
-		title: admin?.name.toLocaleUpperCase(),
+		title: `Transpay Admin - ${admin?.name.toLocaleUpperCase()}`,
 	};
 }
 
@@ -40,25 +41,33 @@ export default async function SingularAdmin({
 					<div className='flex flex-col gap-2 mb-20'>
 						<div className='flex justify-between py-2'>
 							<div className='shrink-0 grow-0 text-title1Bold'>
-								Total Payments
+								Recent Activities
 							</div>
-							<div className='shrink-0 grow-0'>
-								₦200,000
-							</div>
+							<Button
+								asChild
+								variant='link'
+							>
+								<Link
+									href={`/admins/${admin.admin_id}/activities`}
+								>
+									See all
+								</Link>
+							</Button>
 						</div>
 						<div>
-							<DataTable
-								columns={agentPaymentColumns}
-								data={PAYMENT_TABLE.slice(0, 5)}
-							/>
-
-							<Button
-								variant='outline'
-								asChild
-								className=' justify-center items-center shrink-0 grow-0 w-1/5 rounded-xl flex'
-							>
-								{/* <Link href={"/admins/[adminid]/payment"}>See More</Link> */}
-							</Button>
+							<Card className='bg-secondary'>
+								{ACTIVITIES.slice(0, 3).map(
+									(activity, k) => (
+										<ActivityCard
+											key={k}
+											id={activity.id}
+											name={activity.name}
+											time={activity.time}
+											date={activity.date}
+										/>
+									)
+								)}
+							</Card>
 						</div>
 					</div>
 				</div>

@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
 				plate_number: body.plate_number,
 				status: body.status,
 				vehicle_type: body.vehicle_type,
-				owner_phone_number: body.owner_phone_number,
+				owners_phone_number: body.owners_phone_number,
 				owners_name: body.owners_name,
 				with_wallet: body.with_wallet,
 				vin: body.vin,

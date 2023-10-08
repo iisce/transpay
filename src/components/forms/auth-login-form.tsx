@@ -72,12 +72,16 @@ export function AuthLoginForm() {
 				callbackUrl: '/dashboard',
 			});
 
+			// const result = signInResponse;
+			// console.log(result);
+
 			if (signInResponse?.ok === false) {
 				toast({
 					title: 'Invalid Credentials:',
 					description: 'Check your email or password',
 				});
 				setIsLoading(false);
+				return null;
 			} else {
 				router.push('/dashboard');
 				toast({
@@ -87,6 +91,11 @@ export function AuthLoginForm() {
 				return signInResponse;
 			}
 		} catch (error: any) {
+			toast({
+				title: 'Check Internet',
+				description: 'An error occurred during api connection.',
+			});
+			setIsLoading(false);
 			throw new Error(
 				error?.message || 'An error occurred during api connection.'
 			);

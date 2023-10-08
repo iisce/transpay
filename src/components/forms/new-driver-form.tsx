@@ -135,8 +135,8 @@ export function DriverForm({ id }: { id: string }) {
 			);
 			const result = await createDriverResponse.json();
 			if (
-				createDriverResponse.status > 199 &&
-				createDriverResponse.status < 299
+				createDriverResponse.status === 200 ||
+				createDriverResponse.status === 201
 			) {
 				toast({
 					title: 'Driver Created Successfully',
@@ -149,9 +149,10 @@ export function DriverForm({ id }: { id: string }) {
 			} else {
 				setIsLoading(false);
 				toast({
-					title: 'Driver NOT Created',
+					title: result.error,
 				});
-				return null;
+				// throw new Error(`Something Went wrong ${result.message}`);
+				// return null;
 			}
 		} catch (error) {
 			setIsLoading(false);

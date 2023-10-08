@@ -174,7 +174,7 @@ interface IVehicle extends IWallet {
 	blacklisted: boolean;
 	current_driver?: IDriver;
 	status: string;
-	owner_phone_number: string;
+	owners_phone_number: string;
 	owners_name: string;
 	vin: string;
 	vehicle_type: string;
@@ -189,6 +189,7 @@ interface IVehicle extends IWallet {
 	VehicleTracker: string;
 	VehicleWaivers: [];
 	VehicleWallet: Omit<IWallet, 'vehicle_id'>;
+	with_wallet: boolean;
 }
 interface IWallet {
 	vehicle_id: string;
@@ -365,7 +366,7 @@ interface ICreateVehicleForm {
 	status: string;
 	vehicle_id?: string;
 	plate_number: string;
-	owner_phone_number: string;
+	owners_phone_number: string;
 	owners_name: string;
 	with_wallet: boolean;
 	vehicle_type: string;
