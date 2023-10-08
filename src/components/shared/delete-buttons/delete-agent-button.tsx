@@ -1,40 +1,43 @@
 'use client';
 import { deleteIcon, loadingSpinner } from '@/lib/icons';
 import React from 'react';
-import { useToast } from '../ui/use-toast';
 import { NextResponse } from 'next/server';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/components/ui/use-toast';
 
-export default function DeleteAdminButton({ id }: { id: string }) {
+export default function DeleteAgentButton({ id }: { id: string }) {
 	const router = useRouter();
 	const { toast } = useToast();
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const handleDelete = async (id: string) => {
 		setIsLoading(true);
 		try {
-			const createAdminResponse = await fetch('/api/create-admin', {
+			const createAgentResponse = await fetch('/api/create-agent', {
 				method: 'DELETE',
 				body: JSON.stringify({
-					admin_id: id,
+					agent_id: id,
 				}),
 			});
-			const result = await createAdminResponse.json();
+			const result = await createAgentResponse.json();
 			if (
-				createAdminResponse.status > 199 &&
-				createAdminResponse.status < 299
+				createAgentResponse.status > 199 &&
+				createAgentResponse.status < 299
 			) {
 				toast({
 					title: 'Updated Successfully',
 				});
 				setIsLoading(false);
-				router.push(`/admins`);
+				router.push(`/agents`);
 				return NextResponse.json(result);
 			} else {
 				setIsLoading(false);
 				toast({
 					title: 'Not Updated',
+					description: 'Something went wrong',
 				});
-				return null;
+				throw new Error(
+					`Something Went wrong ${result.statusText}`
+				);
 			}
 		} catch (error) {
 			setIsLoading(false);

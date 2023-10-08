@@ -287,6 +287,24 @@ interface IDrivers {
 		drivers: IDriver[];
 	};
 }
+interface IResSettings {
+	data: {
+		settings: ISettings[];
+	};
+}
+interface ISettings {
+	id: number;
+	setting_id: string;
+	name: string;
+	description: string;
+	value: string;
+	user_id: string;
+	user_role: string;
+	updated_by_id: string;
+	updated_by_role: string;
+	createdAt: string;
+	updatedAt: string;
+}
 interface IUser {
 	admin_id: string;
 	blacklisted: boolean;
@@ -354,6 +372,12 @@ interface ICreateVehicleForm {
 	vin: string;
 	barcode_string?: string;
 	tracker_id?: string;
+}
+interface ICreateSettingForm {
+	setting_id: string;
+	name: string;
+	description: string;
+	value: string;
 }
 interface ICreateDriverForm {
 	name: string;

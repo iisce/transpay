@@ -1,0 +1,17 @@
+import { API, URLS } from '../consts';
+import { getSSession } from '../get-data';
+
+export const getSettings = async () => {
+	const session = await getSSession();
+	const headers = {
+		'Content-Type': 'application/json',
+		'api-secret': process.env.API_SECRET || '',
+		Authorization: `Bearer ${session.access_token}`,
+	};
+	const url = API + URLS.settings;
+	const res = await fetch(url, { headers, next: { revalidate: 0 } });
+	if (!res.ok) return undefined;
+	const data: Promise<IResSettings> = await res.json();
+	const settings = (await data).data.settings;
+	return settings;
+};

@@ -16,7 +16,7 @@ import { Button } from '../ui/button';
 import React from 'react';
 import { loadingSpinner } from '@/lib/icons';
 import { NextResponse } from 'next/server';
-import DeleteAdminButton from '../shared/delete-admin-button';
+import DeleteAdminButton from '../shared/delete-buttons/delete-admin-button';
 
 const adminFormSchema = z.object({
 	name: z

@@ -1,41 +1,42 @@
 'use client';
-import { deleteIcon, loadingSpinner } from '@/lib/icons';
+import { loadingSpinner } from '@/lib/icons';
 import React from 'react';
-import { useToast } from '../ui/use-toast';
 import { NextResponse } from 'next/server';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/components/ui/use-toast';
 
-export default function DeleteAgentButton({ id }: { id: string }) {
+export default function DeleteDriverButton({ id }: { id: string }) {
 	const router = useRouter();
 	const { toast } = useToast();
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const handleDelete = async (id: string) => {
 		setIsLoading(true);
 		try {
-			const createAgentResponse = await fetch('/api/create-agent', {
+			const createDriverResponse = await fetch('/api/create-driver/', {
 				method: 'DELETE',
 				body: JSON.stringify({
-					agent_id: id,
+					driver_id: id,
 				}),
 			});
-			const result = await createAgentResponse.json();
+			const result = await createDriverResponse.json();
 			if (
-				createAgentResponse.status > 199 &&
-				createAgentResponse.status < 299
+				createDriverResponse.status > 199 &&
+				createDriverResponse.status < 299
 			) {
 				toast({
 					title: 'Updated Successfully',
 				});
 				setIsLoading(false);
-				router.push(`/agents`);
+				router.push(`/drivers`);
 				return NextResponse.json(result);
 			} else {
 				setIsLoading(false);
 				toast({
 					title: 'Not Updated',
-					description: 'Something went wrong',
 				});
-				return null;
+				throw new Error(
+					`Something Went wrong ${result.statusText}`
+				);
 			}
 		} catch (error) {
 			setIsLoading(false);
@@ -52,7 +53,7 @@ export default function DeleteAgentButton({ id }: { id: string }) {
 						{loadingSpinner}
 					</div>
 				) : (
-					deleteIcon
+					'Delete Driver'
 				)}
 			</span>
 		</div>

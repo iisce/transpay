@@ -1,10 +1,10 @@
+import { SettingsIcon } from 'lucide-react';
 import {
 	adminIcon,
 	agentDriverIcon,
 	agentsIcon,
 	dashboardIcon,
 	driverIcon,
-	finesIcon,
 	peopleIcon,
 	revenueIcon,
 	scanIcon,
@@ -12,7 +12,6 @@ import {
 	profileIcon,
 	securityIcon,
 	aboutIcon,
-	searchIcon,
 } from './icons';
 
 export const SIDEBAR_LINKS = [
@@ -56,6 +55,11 @@ export const SIDEBAR_LINKS = [
 		href: '/revenue',
 		icon: revenueIcon,
 	},
+	{
+		title: 'Settings',
+		href: '/settings',
+		icon: <SettingsIcon className='h-5 w-5' />,
+	},
 ];
 export const SIDEBAR_LINKS_ADMIN = [
 	{
@@ -84,7 +88,6 @@ export const SIDEBAR_LINKS_ADMIN = [
 		icon: scanIcon,
 	},
 ];
-
 export const SIDEBAR_LINKS_AGENT = [
 	{
 		title: 'Dashboard',
@@ -102,11 +105,10 @@ export const SIDEBAR_LINKS_AGENT = [
 		icon: scanIcon,
 	},
 ];
-
 export const MANAGE_SIDEBAR_LINKS = [
 	{
 		name: 'Home',
-		href: '/manage',
+		href: '/dashboard',
 		icon: homeIcon,
 	},
 	{
@@ -125,7 +127,6 @@ export const MANAGE_SIDEBAR_LINKS = [
 		icon: aboutIcon,
 	},
 ];
-
 export const DRIVERS_CARD = [
 	{
 		name: 'Personal Information',
@@ -146,7 +147,6 @@ export const DRIVERS_CARD = [
 	// 	image: '/fineandpenal.png',
 	// },
 ];
-
 export const DASHBOARD_CARD = [
 	{
 		name: 'Agents',
@@ -190,7 +190,6 @@ export const DASHBOARD_CARD = [
 		image: '/tricycle.jpg',
 	},
 ];
-
 export const AGENT_DASHBOARD_CARD = [
 	{
 		name: 'Vehicles',
@@ -218,7 +217,6 @@ export const AGENT_DASHBOARD_CARD = [
 		image: '/scanplate.png',
 	},
 ];
-
 export const AGENT_TABLE = [
 	{
 		name: 'Emeka Ignatius',
@@ -593,7 +591,6 @@ export const AGENT_TABLE = [
 		status: 'inactive',
 	},
 ];
-
 export const DRIVER_TABLE = [
 	{
 		name: 'Emeka Ignatius',
@@ -620,7 +617,6 @@ export const DRIVER_TABLE = [
 		category: 'cleared',
 	},
 ];
-
 export const PAYMENT_TABLE = [
 	{
 		driver: 'Emeka Ignatius',
@@ -719,7 +715,6 @@ export const PAYMENT_TABLE = [
 		status: 'failed',
 	},
 ];
-
 export const VIEW_DRIVER_TABLE = [
 	{
 		Date: '23-08-2023',
@@ -776,7 +771,6 @@ export const VIEW_DRIVER_TABLE = [
 		handled_by: 'Agent Helen',
 	},
 ];
-
 export const ADD_DRIVER_TABLE = [
 	{
 		Name: 'Okechukwu John',
@@ -815,7 +809,6 @@ export const ADD_DRIVER_TABLE = [
 		Phone_Number: '09078398105',
 	},
 ];
-
 // WEB AGENT
 export const WEB_AGENT_SIDEBAR_LINKS = [
 	{
@@ -834,7 +827,6 @@ export const WEB_AGENT_SIDEBAR_LINKS = [
 		icon: agentDriverIcon,
 	},
 ];
-
 export const WEB_AGENT_CARD = [
 	{
 		name: 'Scan Plate',
@@ -855,7 +847,6 @@ export const WEB_AGENT_CARD = [
 		image: '/drivers.png',
 	},
 ];
-
 export const WEB_AGENT_DRIVER_CARD = [
 	{
 		name: 'Vehicle Information',
@@ -882,7 +873,6 @@ export const WEB_AGENT_DRIVER_CARD = [
 		image: '/fineandpenal.png',
 	},
 ];
-
 export const FINE_CARDS: FinesCardP[] = [
 	{
 		id: 0,
@@ -942,7 +932,6 @@ export const FINE_CARDS: FinesCardP[] = [
 		amount: 20000,
 	},
 ];
-
 // ADMINS PAGE
 export const ADMINS_TABLE = [
 	{
@@ -1509,7 +1498,6 @@ export const ADMINS_TABLE = [
 		status: 'inactive',
 	},
 ];
-
 export const PERSONAL_INFORMATION = [
 	{
 		title: 'Name',
@@ -1524,7 +1512,6 @@ export const PERSONAL_INFORMATION = [
 		entry: '080-332-7264',
 	},
 ];
-
 export const ADDRESS_INFORMATION = [
 	{
 		title: 'Address',
@@ -1535,7 +1522,6 @@ export const ADDRESS_INFORMATION = [
 		entry: 'Mile 1-3',
 	},
 ];
-
 export const LOGIN_DETAILS = [
 	{
 		title: 'User ID',
@@ -1546,7 +1532,6 @@ export const LOGIN_DETAILS = [
 		entry: 'IsaacE2000',
 	},
 ];
-
 export const WAIVER_HISTORY = [
 	{
 		timeline: 'Jan 31 - Feb 20',
@@ -1615,7 +1600,6 @@ export const WAIVER_HISTORY = [
 		generated_by: 'Agent Leo1',
 	},
 ];
-
 export const LGA = [
 	'Aguata',
 	'Anambra East',
@@ -1639,9 +1623,7 @@ export const LGA = [
 	'Orumba South',
 	'Oyi',
 ];
-
 export const API = 'https://squid-app-ruxoz.ondigitalocean.app';
-
 export const URLS = {
 	admin: {
 		all: '/api/v1/admins',
@@ -1659,15 +1641,15 @@ export const URLS = {
 	},
 	dashboard: '/api/v1/dashboard',
 	driver: {
-		all: '/api/v1/drivers', // GET for all, POST to create || Get by ID, Include /${vehicleId}
+		all: '/api/v1/drivers',
 		blacklist: '/api/v1/drivers/blacklist', // add vehicle to blacklist
 	},
 	vehicle: {
-		all: '/api/v1/vehicles', // GET for all, POST to create || Get by ID, Include /${vehicleId}
+		all: '/api/v1/vehicles',
 		blacklist: '/api/v1/vehicles/blacklist', // add vehicle to blacklist
 		search: '/api/v1/vehicles/search', // add vehicle to blacklist
 	},
+	settings: '/api/v1/settings', // for add ${id} for single.
 };
-
 export const BUS_IMAGE_SAMPLE =
 	'https://images.unsplash.com/photo-1616792577902-f1d86383a21b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2803&q=80';

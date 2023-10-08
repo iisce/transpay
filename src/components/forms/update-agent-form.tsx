@@ -16,7 +16,6 @@ import { Button } from '../ui/button';
 import React from 'react';
 import { loadingSpinner } from '@/lib/icons';
 import { NextResponse } from 'next/server';
-import DeleteAgentButton from '../shared/delete-agent-button';
 import {
 	Select,
 	SelectContent,
@@ -24,6 +23,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '../ui/select';
+import DeleteAgentButton from '../shared/delete-buttons/delete-agent-button';
 
 const agentFormSchema = z.object({
 	city: z

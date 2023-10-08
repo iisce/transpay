@@ -12,23 +12,24 @@ import {
 	DropdownMenuTrigger,
 } from '@radix-ui/react-dropdown-menu';
 import { ColumnDef } from '@tanstack/react-table';
-import { MoreHorizontal, MoreVertical } from 'lucide-react';
+import { EyeIcon, MoreHorizontal, MoreVertical } from 'lucide-react';
 import { DataTableColumnHeader } from './data-column-table-header';
 import { deleteIcon, editIcon, paymentIcon, printIcon } from '@/lib/icons';
 import Pill from '../pill';
 import Link from 'next/link';
 import Cbadge from '../category-badge';
-import DeleteAdminButton from '@/components/shared/delete-admin-button';
+import DeleteAdminButton from '@/components/shared/delete-buttons/delete-admin-button';
 import { formatDate } from '@/lib/utils';
 import {
-	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
-	AlertDialogContent,
-	AlertDialogFooter,
-	AlertDialogTrigger,
-} from '../alert-dialog';
+	Dialog,
+	DialogContent,
+	DialogFooter,
+	DialogHeader,
+	DialogTrigger,
+} from '../dialog';
 import Receipt from '@/components/shared/receipt/vehicle-transaction';
+import { SettingsForm } from '@/components/forms/new-settings-form';
+import { UpdateSettingsForm } from '@/components/forms/update-settings-form';
 
 export const debtColumns: ColumnDef<IVehiclePayment>[] = [
 	{
@@ -133,7 +134,7 @@ export const paymentColumns: ColumnDef<IVehiclePayment>[] = [
 						<DropdownMenuItem
 							onClick={() =>
 								navigator.clipboard.writeText(
-									payment.id
+									payment.vehicle_transaction_id
 								)
 							}
 						>
@@ -141,22 +142,17 @@ export const paymentColumns: ColumnDef<IVehiclePayment>[] = [
 						</DropdownMenuItem>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem asChild>
-							<AlertDialog>
-								<AlertDialogTrigger className='px-2 text-sm'>
+							<Dialog>
+								<DialogTrigger className='px-2 text-sm'>
 									View receipt
-								</AlertDialogTrigger>
-								<AlertDialogContent>
+								</DialogTrigger>
+								<DialogContent>
 									<Receipt receipt={payment} />
-									<AlertDialogFooter className='grid grid-cols-2 gap-3'>
-										<AlertDialogCancel>
-											Close
-										</AlertDialogCancel>
-										<AlertDialogAction>
-											Print
-										</AlertDialogAction>
-									</AlertDialogFooter>
-								</AlertDialogContent>
-							</AlertDialog>
+									<DialogFooter className='grid grid-cols-2 gap-3'>
+										<Button>Print</Button>
+									</DialogFooter>
+								</DialogContent>
+							</Dialog>
 						</DropdownMenuItem>
 						<DropdownMenuItem asChild>
 							<Link
@@ -617,6 +613,49 @@ export const driversColumns: ColumnDef<IDriver>[] = [
 				>
 					Copy ID
 				</div>
+			);
+		},
+	},
+];
+export const settingsColumns: ColumnDef<ISettings>[] = [
+	{
+		accessorKey: 'name',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Name'
+			/>
+		),
+		cell: ({ row }) => (
+			<Link
+				href={`/settings/${row.original.setting_id}`}
+				className=''
+			>
+				{row.original.name}
+			</Link>
+		),
+	},
+	{
+		accessorKey: 'value',
+		header: 'Value',
+	},
+	{
+		id: 'actions',
+		header: 'Actions',
+		cell: ({ row }) => {
+			const setting = row.original;
+			return (
+				<Dialog>
+					<DialogTrigger asChild>
+						<Button className='gap-1'>
+							<EyeIcon className='h-4 w-4' />
+							<span className='hidden md:block'>View</span>
+						</Button>
+					</DialogTrigger>
+					<DialogContent>
+						<UpdateSettingsForm settings={setting} />
+					</DialogContent>
+				</Dialog>
 			);
 		},
 	},
