@@ -138,6 +138,7 @@ export default function CreateVehicleForm() {
 				setOpen(true);
 				form.reset();
 				setNewVehicleId(result.data.vehicle_id);
+				console.log(result);
 				return NextResponse.json(result);
 			} else {
 				setIsLoading(false);
@@ -393,13 +394,16 @@ export default function CreateVehicleForm() {
 				onOpenChange={setOpen}
 			>
 				<AlertDialogContent className='bg-secondary'>
-					<div className='w-60 mx-auto flex-col'>
+					<div className='mx-auto flex-col'>
 						<div className='flex flex-col items-center gap-5 mb-5'>
 							<div className='h-20 w-20 text-awesome-foreground'>
 								{successIcon}
 							</div>
 							<div className='text-xl'>
-								Agent Account Created
+								Vehicle created successfully.
+							</div>
+							<div className='text-sm'>
+								Proceed to add a driver.
 							</div>
 						</div>
 						<div className='flex flex-col gap-3'>
