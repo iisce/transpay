@@ -36,7 +36,7 @@ export default function Searchbar({
 			<Button
 				type='submit'
 				variant='default'
-				className='absolute h-full aspect-square z-10 rounded-none'
+				className='absolute h-14 w-14 aspect-square z-10 rounded-none'
 			>
 				{isLoading ? loadingSpinner : searchIcon}
 			</Button>
