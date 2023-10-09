@@ -46,9 +46,11 @@ const driverFormSchema = z.object({
 			required_error: 'Please enter an email.',
 		})
 		.email(),
-	phone: z.string({
-		required_error: 'Please enter phone number.',
-	}),
+	phone: z
+		.string({
+			required_error: 'Enter owner phone number.',
+		})
+		.regex(/^\+234[789][01]\d{8}$/, 'Phone format (+2348012345678)'),
 	address: z
 		.string({
 			required_error: 'Please enter address.',
@@ -297,9 +299,9 @@ export function DriverForm({ id }: { id: string }) {
 										<SelectItem value='nin'>
 											NIN
 										</SelectItem>
-										<SelectItem value='bvn'>
+										{/* <SelectItem value='bvn'>
 											BVN
-										</SelectItem>
+										</SelectItem> */}
 										<SelectItem value='pvc'>
 											Voters Card
 										</SelectItem>
@@ -370,7 +372,7 @@ export function DriverForm({ id }: { id: string }) {
 									{successIcon}
 								</div>
 								<div className='text-xl'>
-									Driver Account Created
+									Driver created successfully
 								</div>
 							</div>
 							<div className='flex flex-col gap-3'>
