@@ -4,6 +4,7 @@ import React from 'react';
 import { NextResponse } from 'next/server';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
+import { Button } from '@/components/ui/button';
 
 export default function DeleteSettingsButton({ id }: { id: string }) {
 	const router = useRouter();
@@ -27,7 +28,7 @@ export default function DeleteSettingsButton({ id }: { id: string }) {
 				deleteSettingsResponse.status < 299
 			) {
 				toast({
-					title: 'Updated Successfully',
+					title: 'Deleted Successfully',
 				});
 				setIsLoading(false);
 				router.refresh();
@@ -47,13 +48,13 @@ export default function DeleteSettingsButton({ id }: { id: string }) {
 		}
 	};
 	return (
-		<div
-			className='items-center cursor-pointer'
+		<Button
+			className='items-center cursor-pointer w-32 h-12 flex justify-center'
 			onClick={() => handleDelete(id)}
 		>
 			<span className='h-4 w-4 flex items-center justify-center'>
 				{isLoading ? loadingSpinner : deleteIcon}
 			</span>
-		</div>
+		</Button>
 	);
 }

@@ -14,16 +14,12 @@ import {
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import Link from 'next/link';
-import {
-	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
-	AlertDialogContent,
-} from '../ui/alert-dialog';
+import { Dialog, DialogContent } from '../ui/dialog';
 import React from 'react';
 import { loadingSpinner, successIcon } from '@/lib/icons';
 import { NextResponse } from 'next/server';
 import { Textarea } from '../ui/textarea';
+import { useRouter } from 'next/navigation';
 
 const settingsFormSchema = z.object({
 	name: z
@@ -51,6 +47,7 @@ const defaultValues: Partial<SettingsFormValues> = {
 	value: '',
 };
 export function SettingsForm() {
+	const router = useRouter();
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const [open, setOpen] = React.useState(false);
 	const { toast } = useToast();
@@ -85,6 +82,7 @@ export function SettingsForm() {
 				setIsLoading(false);
 				setOpen(true);
 				form.reset();
+				router.refresh();
 				return NextResponse.json(result);
 			} else {
 				setIsLoading(false);
@@ -142,7 +140,7 @@ export function SettingsForm() {
 						name='description'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Email Address</FormLabel>
+								<FormLabel>Description</FormLabel>
 								<FormControl>
 									<Textarea
 										placeholder='Enter settings description'
@@ -162,11 +160,11 @@ export function SettingsForm() {
 						{isLoading ? loadingSpinner : 'Add Settings'}
 					</Button>
 				</div>
-				<AlertDialog
+				<Dialog
 					open={open}
 					onOpenChange={setOpen}
 				>
-					<AlertDialogContent className='bg-secondary'>
+					<DialogContent className='bg-secondary'>
 						<div className='mx-auto flex-col'>
 							<div className='flex flex-col items-center gap-5 mb-5'>
 								<div className='h-20 w-20 text-awesome-foreground'>
@@ -176,22 +174,9 @@ export function SettingsForm() {
 									Settings Created Successfully
 								</div>
 							</div>
-							<div className='flex flex-col gap-3'>
-								<AlertDialogAction
-									asChild
-									className='rounded-xl'
-								>
-									<Link href={`/settings`}>
-										View Settings
-									</Link>
-								</AlertDialogAction>
-								<AlertDialogCancel className='rounded-xl'>
-									New Settings
-								</AlertDialogCancel>
-							</div>
 						</div>
-					</AlertDialogContent>
-				</AlertDialog>
+					</DialogContent>
+				</Dialog>
 			</form>
 		</Form>
 	);

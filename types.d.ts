@@ -420,3 +420,8 @@ interface ICreateAgentForm {
 	postcode: string;
 	agent_id?: string;
 }
+
+interface IToken {
+	token: string;
+	secret: string;
+}
