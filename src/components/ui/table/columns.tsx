@@ -54,6 +54,22 @@ export const debtColumns: ColumnDef<IVehiclePayment>[] = [
 			return <div className='text-right font-medium'>₦{amount}</div>;
 		},
 	},
+	{
+		accessorKey: 'payment_status',
+		header: () => <div className=''>Status</div>,
+		cell: ({ row }) => {
+			const status = row.original.payment_status;
+			const style =
+				status === 'failed'
+					? 'text-destructive-foreground'
+					: status === 'success'
+					? 'text-awesome-foreground'
+					: status === 'processing'
+					? 'text-orange-300'
+					: 'text-primary';
+			return <div className={`uppercase ${style}`}>{status}</div>;
+		},
+	},
 ];
 export const paymentColumns: ColumnDef<IVehiclePayment>[] = [
 	{

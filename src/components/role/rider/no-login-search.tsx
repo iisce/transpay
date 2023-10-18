@@ -1,7 +1,7 @@
 import { CopyButton } from '@/components/shared/copy-button';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { debtColumns, paymentColumns } from '@/components/ui/table/columns';
+import { debtColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
 import { getVehicleSummaryByPlateNumber } from '@/lib/controllers/vehicle-controller';
 import { failureIcon, successIcon } from '@/lib/icons';
@@ -21,8 +21,9 @@ export default async function NoLoginSearch({
 	const onWaiver = vehicle.status === 'inactive';
 
 	const pendingPayments = vehicle.VehicleTransactions.filter(
-		(transaction) => transaction.payment_status === 'pending'
+		(transaction) => transaction.payment_status !== 'successful'
 	);
+	// console.log(pendingPayments);
 	const totalPendingAmount = pendingPayments.reduce(
 		(acc, order) => acc + order.amount,
 		0
@@ -73,12 +74,6 @@ export default async function NoLoginSearch({
 								Vehicle is Owing!
 							</div>
 						</div>
-						<div className='w-full grid'>
-							<DataTable
-								columns={debtColumns}
-								data={vehicle.VehicleTransactions}
-							/>
-						</div>
 						<Card className='grid gap-3 w-full p-3 bg-secondary'>
 							<div className='flex flex-col justify-between items-center'>
 								<div className=''>Amount Owed:</div>
@@ -110,6 +105,15 @@ export default async function NoLoginSearch({
 								text={`${vehicle.VehicleWallet.bank_name} ${vehicle.VehicleWallet.nuban} ${vehicle.VehicleWallet.account_name}`}
 							/>
 						</Card>
+						<div className='w-full grid'>
+							<DataTable
+								columns={debtColumns}
+								data={vehicle.VehicleTransactions.slice(
+									0,
+									4
+								)}
+							/>
+						</div>
 					</div>
 				) : (
 					<div className='flex flex-col p-3 w-full items-center gap-2 mb-20'>
