@@ -21,7 +21,7 @@ export default async function NoLoginSearch({
 	const onWaiver = vehicle.status === 'inactive';
 
 	const pendingPayments = vehicle.VehicleTransactions.filter(
-		(transaction) => transaction.payment_status !== 'successful'
+		(transaction) => transaction.payment_status === 'pending'
 	);
 	// console.log(pendingPayments);
 	const totalPendingAmount = pendingPayments.reduce(
