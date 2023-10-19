@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { debtColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { getVehicleSummaryByPlateNumber } from '@/lib/controllers/vehicle-controller';
 import { failureIcon, successIcon } from '@/lib/icons';
 import Link from 'next/link';
@@ -23,7 +24,6 @@ export default async function NoLoginSearch({
 	const pendingPayments = vehicle.VehicleTransactions.filter(
 		(transaction) => transaction.payment_status === 'pending'
 	);
-	// console.log(pendingPayments);
 	const totalPendingAmount = pendingPayments.reduce(
 		(acc, order) => acc + order.amount,
 		0
@@ -31,63 +31,35 @@ export default async function NoLoginSearch({
 	const isOwing = pendingPayments.length > 0;
 
 	return (
-		<div className='h-full w-full max-w-lg mx-auto p-3 flex flex-col gap-6'>
-			<div className='flex flex-col text-center justify-between w-full gap-3'>
+		<div className='h-full w-full max-w-xl mx-auto pb-3 px-3 flex flex-col gap-2'>
+			<div className='flex flex-col text-center justify-between w-full gap-1'>
 				<div className='text-sm'>
-					<div className='uppercase'>{`Owner`}</div>
-					<div className='text-h4Bold'>
+					<div className='uppercase'>{`Vehicle Owner`}</div>
+					<div className='text-xl font-bold'>
 						{vehicle.owners_name}
 					</div>
 				</div>
-				<div className='text-sm'>
-					<div className='uppercase'>Plate number</div>
-					<div className='text-h4Bold'>
+				<div className='text-sm uppercase'>
+					<div className=''>Plate number</div>
+					<div className='text-xl font-bold'>
 						{vehicle.plate_number}
 					</div>
 				</div>
 			</div>
-			<div className='  w-full'>
-				{onWaiver ? (
-					<div className='flex flex-col p-3 w-full items-center gap-2 mb-20'>
-						<div className=' text-green-500'>
-							{successIcon}
+			<Tabs
+				defaultValue='overview'
+				className='w-full'
+			>
+				<TabsList className='grid grid-cols-2'>
+					<TabsTrigger value='overview'>OVERVIEW</TabsTrigger>
+					<TabsTrigger value='history'>HISTORY</TabsTrigger>
+				</TabsList>
+				<TabsContent value='overview'>
+					<Card className='grid gap-2 w-full p-3 bg-secondary text-xs lg:text-base'>
+						<div className='uppercase text-center font-bold pb-3'>
+							Payment Details
 						</div>
-						<div className='flex py-2'>
-							<div className='shrink-0 grow-0 text-title1Bold'>
-								Vehicle is on Waiver!
-							</div>
-						</div>
-						<Button asChild>
-							<Link
-								href={'waiver/history'}
-								className='uppercase'
-							>
-								View Waiver History
-							</Link>
-						</Button>
-					</div>
-				) : isOwing ? (
-					<div className='flex flex-col p-3 w-full items-center gap-2 mb-20'>
-						<div className=' text-red-500'>{failureIcon}</div>
-						<div className='flex py-2'>
-							<div className='shrink-0 grow-0 text-title1Bold'>
-								Vehicle is Owing!
-							</div>
-						</div>
-						<Card className='grid gap-3 w-full p-3 bg-secondary'>
-							<div className='flex flex-col justify-between items-center'>
-								<div className=''>Amount Owed:</div>
-								<div className='text-destructive-foreground font-bold text-4xl'>
-									{`₦${totalPendingAmount}`}
-								</div>
-							</div>
-							<div className='flex justify-between items-center gap-5'>
-								<div className=''>Due Date:</div>
-								{new Date().toDateString()}
-							</div>
-							<div className='uppercase text-center font-bold py-3'>
-								Payment Details
-							</div>
+						<div className=''>
 							<div className='flex justify-between items-center gap-5'>
 								<div className=''>Bank Name</div>
 								{vehicle.VehicleWallet.bank_name}
@@ -100,34 +72,88 @@ export default async function NoLoginSearch({
 								<div className=''>Account Number</div>
 								{vehicle.VehicleWallet.nuban}
 							</div>
-							<CopyButton
-								label='Copy Account Details'
-								text={`${vehicle.VehicleWallet.bank_name} ${vehicle.VehicleWallet.nuban} ${vehicle.VehicleWallet.account_name}`}
-							/>
-						</Card>
-						<div className='w-full grid'>
-							<DataTable
-								columns={debtColumns}
-								data={vehicle.VehicleTransactions.slice(
-									0,
-									4
-								)}
-							/>
 						</div>
-					</div>
-				) : (
-					<div className='flex flex-col p-3 w-full items-center gap-2 mb-20'>
-						<div className=' text-green-500'>
-							{successIcon}
-						</div>
-						<div className='flex py-2'>
-							<div className='shrink-0 grow-0 text-title1Bold'>
-								Vehicle is clear!
+						<CopyButton
+							label='Copy Account Details'
+							text={`${vehicle.VehicleWallet.bank_name} ${vehicle.VehicleWallet.nuban} ${vehicle.VehicleWallet.account_name}`}
+						/>
+					</Card>
+					<div className='w-full'>
+						{onWaiver ? (
+							<div className='flex flex-col p-3 w-full items-center gap-2 mb-20'>
+								<div className=' text-green-500'>
+									{successIcon}
+								</div>
+								<div className='flex py-2'>
+									<div className='shrink-0 grow-0 text-title1Bold'>
+										Vehicle is on Waiver!
+									</div>
+								</div>
+								<Button asChild>
+									<Link
+										href={'waiver/history'}
+										className='uppercase'
+									>
+										View Waiver History
+									</Link>
+								</Button>
 							</div>
-						</div>
+						) : isOwing ? (
+							<>
+								<div className='flex flex-col p-3 w-full items-center gap-2'>
+									<div className=' text-red-500'>
+										{failureIcon}
+									</div>
+									<div className='flex flex-col items-center py-2'>
+										<div className='shrink-0 grow-0 text-title1Bold'>
+											Vehicle is Owing!
+										</div>
+										<div className='text-destructive-foreground font-bold text-4xl'>
+											{`₦${totalPendingAmount}`}
+										</div>
+									</div>
+								</div>
+								{/* <div className='flex flex-col justify-between items-center gap-4'>
+									<div className='text-center'>
+										<div className=''>
+											Amount Owed:
+										</div>
+									</div>
+									<div className='text-center'>
+										<div className='font-bold'>
+											Due Date:
+										</div>
+										{new Date().toDateString()}
+									</div>
+								</div> */}
+							</>
+						) : (
+							<div className='flex flex-col p-3 w-full items-center gap-2 mb-20'>
+								<div className=' text-green-500'>
+									{successIcon}
+								</div>
+								<div className='flex py-2'>
+									<div className='shrink-0 grow-0 text-title1Bold'>
+										Vehicle is clear!
+									</div>
+								</div>
+							</div>
+						)}
 					</div>
-				)}
-			</div>
+				</TabsContent>
+				<TabsContent value='history'>
+					<div className='w-full grid'>
+						<DataTable
+							showPagination
+							columns={debtColumns}
+							data={vehicle.VehicleTransactions.slice(
+								0,
+								10
+							)}
+						/>
+					</div>
+				</TabsContent>
+			</Tabs>
 		</div>
 	);
 }

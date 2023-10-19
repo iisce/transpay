@@ -6,11 +6,12 @@ import { ACTIVITIES } from '../../../../data';
 import ActivityCard from '@/components/shared/activity-card';
 import { DataTable } from '@/components/ui/table/data-table';
 import { adminsColumns } from '@/components/ui/table/columns';
-import { AGENT_TABLE } from '@/lib/consts';
 import { getAdmins } from '@/lib/controllers/admin-controller';
 
 export default async function DashboardSuperAdmin(user: { user: IUser }) {
 	const admins = await getAdmins();
+	const blackListed =
+		admins?.filter((admin) => admin.blacklisted === true) || [];
 	return (
 		<div className='w-full'>
 			<div className='grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-5'>
@@ -44,16 +45,18 @@ export default async function DashboardSuperAdmin(user: { user: IUser }) {
 							<SuperAdminRevenueCharts />
 						</div>
 					</div>
-					<div className='w-full bg-secondary rounded-xl p-3 md:p-5'>
-						<div className='text-2xl mb-2 px-4'>
-							Blacklisted Admin
+					{blackListed.length > 0 && (
+						<div className='w-full bg-secondary rounded-xl p-3 md:p-5'>
+							<div className='text-2xl mb-2 px-4'>
+								Blacklisted Admin
+							</div>
+							<DataTable
+								showPagination={false}
+								columns={adminsColumns}
+								data={blackListed?.slice(0, 4) || []}
+							/>
 						</div>
-						<DataTable
-							showPagination={false}
-							columns={adminsColumns}
-							data={admins?.slice(0, 3) || []}
-						/>
-					</div>
+					)}
 				</div>
 				<div className='shrink-0 hidden lg:flex flex-col gap-5 max-w-[280px] w-full'>
 					<Calendar
