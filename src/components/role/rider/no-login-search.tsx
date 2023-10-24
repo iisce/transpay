@@ -113,19 +113,6 @@ export default async function NoLoginSearch({
 										</div>
 									</div>
 								</div>
-								{/* <div className='flex flex-col justify-between items-center gap-4'>
-									<div className='text-center'>
-										<div className=''>
-											Amount Owed:
-										</div>
-									</div>
-									<div className='text-center'>
-										<div className='font-bold'>
-											Due Date:
-										</div>
-										{new Date().toDateString()}
-									</div>
-								</div> */}
 							</>
 						) : (
 							<div className='flex flex-col p-3 w-full items-center gap-2 mb-20'>

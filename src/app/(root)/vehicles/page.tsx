@@ -14,6 +14,7 @@ export default async function Vehicles() {
 		getSSession(),
 		getVehicles(),
 	]);
+	console.log(vehicles);
 	return (
 		<div className='p-5 w-full h-full flex flex-col'>
 			<div className='flex justify-between items-center uppercase font-bold'>
@@ -115,7 +116,7 @@ export default async function Vehicles() {
 					</Tabs>
 				</div>
 			) : (
-				<div className='max-w-[500px] w-full h-full mx-auto grid place-items-center'>
+				<div className='max-w-[500px] w-full h-full mx-auto grid place-items-center mt-10'>
 					<AgentSearchBar
 						placeholder='Enter vehicle plate'
 						variant='primary'

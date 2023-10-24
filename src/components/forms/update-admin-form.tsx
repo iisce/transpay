@@ -17,6 +17,7 @@ import React from 'react';
 import { loadingSpinner } from '@/lib/icons';
 import { NextResponse } from 'next/server';
 import DeleteAdminButton from '../shared/delete-buttons/delete-admin-button';
+import { Checkbox } from '../ui/checkbox';
 
 const adminFormSchema = z.object({
 	name: z
@@ -32,37 +33,25 @@ const adminFormSchema = z.object({
 			required_error: 'Please enter an email.',
 		})
 		.email(),
-	// moi: z.string({
-	// 	required_error: 'Please select a mode of identification',
-	// }),
+	blacklisted: z.boolean().default(false).optional(),
 	phone: z.string({
 		required_error: 'Please enter phone number.',
 	}),
 	role: z.string({
 		required_error: 'Please choose role.',
 	}),
-	// idNumber: z
-	// 	.string({
-	// 		required_error: 'Please enter identification number.',
-	// 	})
-	// 	.min(8, {
-	// 		message: 'ID number must be at least 8 characters.',
-	// 	})
-	// 	.max(20, {
-	// 		message: 'Username must not be longer than 20 characters.',
-	// 	}),
-	// address: z.string().max(160).min(15),
 });
 
 type AdminFormValues = z.infer<typeof adminFormSchema>;
 
 export function UpdateAdminForm({ admin }: { admin: IAdmin }) {
+	console.log(admin);
 	const [disabled, setDisabled] = React.useState<boolean>(true);
 	const defaultValues: Partial<AdminFormValues> = {
 		name: admin.name,
 		email: admin.email,
 		phone: admin.phone,
-		role: 'admin',
+		role: admin.role,
 	};
 
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -74,6 +63,7 @@ export function UpdateAdminForm({ admin }: { admin: IAdmin }) {
 	});
 
 	async function onSubmit(data: AdminFormValues) {
+		console.log(data);
 		setIsLoading(true);
 		try {
 			const createAdminResponse = await fetch('/api/create-admin', {
@@ -84,6 +74,7 @@ export function UpdateAdminForm({ admin }: { admin: IAdmin }) {
 					email: data.email,
 					phone: data.phone,
 					role: data.role,
+					blacklisted: data.blacklisted,
 				}),
 			});
 			const result = await createAdminResponse.json();
@@ -134,39 +125,6 @@ export function UpdateAdminForm({ admin }: { admin: IAdmin }) {
 								</FormItem>
 							)}
 						/>
-						{/* <FormField
-						control={form.control}
-						name='moi'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>
-									Means of Identification
-								</FormLabel>
-								<Select
-									onValueChange={field.onChange}
-									defaultValue={field.value}
-								>
-									<FormControl>
-										<SelectTrigger className='h-12'>
-											<SelectValue placeholder='Select a mean of Identification' />
-										</SelectTrigger>
-									</FormControl>
-									<SelectContent>
-										<SelectItem value='nin'>
-											NIN
-										</SelectItem>
-										<SelectItem value='bvn'>
-											BVN
-										</SelectItem>
-										<SelectItem value='pvc'>
-											Voters Card
-										</SelectItem>
-									</SelectContent>
-								</Select>
-								<FormMessage />
-							</FormItem>
-						)}
-					/> */}
 						<FormField
 							control={form.control}
 							name='phone'
@@ -184,24 +142,6 @@ export function UpdateAdminForm({ admin }: { admin: IAdmin }) {
 								</FormItem>
 							)}
 						/>
-						{/* <FormField
-						control={form.control}
-						name='idNumber'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>
-									Identification Number
-								</FormLabel>
-								<FormControl>
-									<Input
-										placeholder='Enter identification number'
-										{...field}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/> */}
 						<FormField
 							control={form.control}
 							name='email'
@@ -221,58 +161,30 @@ export function UpdateAdminForm({ admin }: { admin: IAdmin }) {
 								</FormItem>
 							)}
 						/>
-						{/* <FormField
+					</div>
+					<FormField
 						control={form.control}
-						name='address'
+						name='blacklisted'
 						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Address</FormLabel>
+							<FormItem className='flex flex-row items-start space-x-3 space-y-0 '>
 								<FormControl>
-									<Textarea
-										placeholder='Address'
-										className='resize-none'
-										{...field}
+									<Checkbox
+										disabled={disabled}
+										checked={field.value}
+										onCheckedChange={
+											field.onChange
+										}
 									/>
 								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/> */}
-						{/* <FormField
-						control={form.control}
-						name='password'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Password</FormLabel>
-								<FormControl>
-									<Input
-										type='password'
-										placeholder='Enter Password'
-										{...field}
-									/>
-								</FormControl>
-								<FormMessage />
+								<div className='space-y-1 leading-none'>
+									<FormLabel>
+										Blacklist Admin
+									</FormLabel>
+								</div>
 							</FormItem>
 						)}
 					/>
-					<FormField
-						control={form.control}
-						name='confirmPassword'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Password</FormLabel>
-								<FormControl>
-									<Input
-										type='password'
-										placeholder='Confirm Password'
-										{...field}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/> */}
-					</div>
+
 					<div className=''>
 						{!disabled && (
 							<Button
