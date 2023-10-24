@@ -37,7 +37,7 @@ export function UserNav({ user }: { user: IUser }) {
 							<AvatarImage
 								src={
 									user.image ||
-									'https://avatars.githubusercontent.com/u/62449713?v=4'
+									'/anambara.png'
 								}
 								alt={user.name || 'Agent User'}
 							/>
@@ -68,7 +68,7 @@ export function UserNav({ user }: { user: IUser }) {
 								<AvatarImage
 									src={
 										user.image ||
-										'https://avatars.githubusercontent.com/u/62449713?v=4'
+										'/anambara.png'
 									}
 									alt={user.name || 'Agent User'}
 								/>
