@@ -42,10 +42,9 @@ const driverFormSchema = z.object({
 			message: 'Name must not be longer than 30 characters.',
 		}),
 	email: z
-		.string({
-			required_error: 'Please enter an email.',
-		})
-		.email(),
+		.string()
+		.email({ message: 'Enter correct email format' })
+		.optional(),
 	phone: z
 		.string({
 			required_error: 'Enter owner phone number.',
@@ -57,7 +56,8 @@ const driverFormSchema = z.object({
 		})
 		.min(3, {
 			message: 'Address must be at least 3 characters.',
-		}),
+		})
+		.optional(),
 	city: z
 		.string({
 			required_error: 'Please enter city.',
@@ -80,12 +80,15 @@ const driverFormSchema = z.object({
 		})
 		.max(20, {
 			message: 'ID Number must not be longer than 20 characters.',
-		}),
-	identification_type: z.string({
-		required_error: 'Please select a mode of identification',
-	}),
+		})
+		.optional(),
+	identification_type: z
+		.string({
+			required_error: 'Please select a mode of identification',
+		})
+		.optional(),
 	is_active: z.boolean({
-		required_error: 'Please enter role.',
+		required_error: 'Select ',
 	}),
 });
 
@@ -94,13 +97,9 @@ type DriverFormValues = z.infer<typeof driverFormSchema>;
 // This can come from your database or API.
 const defaultValues: Partial<DriverFormValues> = {
 	name: '',
-	email: '',
 	phone: '',
-	address: '',
 	city: '',
 	lga: 'aguata',
-	identification_type: 'nin',
-	identification_number: '',
 	is_active: true,
 };
 
