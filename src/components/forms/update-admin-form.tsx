@@ -33,7 +33,7 @@ const adminFormSchema = z.object({
 			required_error: 'Please enter an email.',
 		})
 		.email(),
-	blacklisted: z.boolean().default(false).optional(),
+	blacklisted: z.boolean().optional(),
 	phone: z.string({
 		required_error: 'Please enter phone number.',
 	}),
@@ -52,7 +52,9 @@ export function UpdateAdminForm({ admin }: { admin: IAdmin }) {
 		email: admin.email,
 		phone: admin.phone,
 		role: admin.role,
+		blacklisted: admin.blacklisted,
 	};
+	console.log('default value ', defaultValues);
 
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const { toast } = useToast();

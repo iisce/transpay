@@ -2,7 +2,7 @@ import React from 'react';
 import DashboardAdmin from '@/components/role/admin/dashboard';
 import DashboardSuperAdmin from '@/components/role/super-admin/dashboard';
 import DashboardAgent from '@/components/role/agent/dashboard';
-import { getSSession } from '@/lib/get-data';
+import { getDashboard, getSSession } from '@/lib/get-data';
 import { notFound } from 'next/navigation';
 import { getAgentMe } from '@/lib/controllers/agent-controller';
 import { getAdminMe } from '@/lib/controllers/admin-controller';
