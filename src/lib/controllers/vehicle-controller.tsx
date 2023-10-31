@@ -1,5 +1,6 @@
 import { API, URLS } from '../consts';
 import { getSSession } from '../get-data';
+import { isUUID } from '../utils';
 
 export const getVehicles = async () => {
 	const session = await getSSession();
@@ -31,11 +32,13 @@ export const getVehicleById = async (id: string) => {
 	return vehicle;
 };
 
-export const getVehicleSummaryByPlateNumber = async (plate_number: string) => {
+export const getVehicleSummary = async (plate_number: string) => {
 	const headers = {
 		'Content-Type': 'application/json',
 	};
-	const url = `${API}${URLS.vehicle.all}/summary?plate_number=${plate_number}`;
+	const url = isUUID(plate_number)
+		? `${API}${URLS.vehicle.all}/summary?id=${plate_number}`
+		: `${API}${URLS.vehicle.all}/summary?plate_number=${plate_number}`;
 	const res = await fetch(url, { headers, cache: 'no-store' });
 	if (!res.ok) return undefined;
 	const result: Promise<PrettyVehicleSummary> = await res.json();
@@ -50,7 +53,10 @@ export const searchVehicle = async (id: string) => {
 		'api-secret': process.env.API_SECRET || '',
 		Authorization: `Bearer ${session.access_token}`,
 	};
-	const url = `${API}${URLS.vehicle.search}?plate_number=${id}`;
+
+	const url = isUUID(id)
+		? `${API}${URLS.vehicle.search}?id=${id}`
+		: `${API}${URLS.vehicle.search}?plate_number=${id}`;
 	const res = await fetch(url, { headers, cache: 'no-store' });
 	if (!res.ok) return undefined;
 	const result: Promise<IResVehicle> = (await res.json()).data;

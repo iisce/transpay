@@ -28,6 +28,7 @@ import {
 	AlertDialogAction,
 	AlertDialogContent,
 } from '../ui/alert-dialog';
+import { Dialog, DialogContent } from '../ui/dialog';
 import { NextResponse } from 'next/server';
 import { BUS_IMAGE_SAMPLE } from '@/lib/consts';
 
@@ -389,11 +390,11 @@ export default function CreateVehicleForm() {
 					</Button>
 				</div>
 			</form>
-			<AlertDialog
+			<Dialog
 				open={open}
 				onOpenChange={setOpen}
 			>
-				<AlertDialogContent className='bg-secondary'>
+				<DialogContent className='bg-secondary'>
 					<div className='mx-auto flex-col'>
 						<div className='flex flex-col items-center gap-5 mb-5'>
 							<div className='h-20 w-20 text-awesome-foreground'>
@@ -407,7 +408,7 @@ export default function CreateVehicleForm() {
 							</div>
 						</div>
 						<div className='flex flex-col gap-3'>
-							<AlertDialogAction
+							<Button
 								asChild
 								className='rounded-xl'
 							>
@@ -416,11 +417,11 @@ export default function CreateVehicleForm() {
 								>
 									Add Driver
 								</Link>
-							</AlertDialogAction>
+							</Button>
 						</div>
 					</div>
-				</AlertDialogContent>
-			</AlertDialog>
+				</DialogContent>
+			</Dialog>
 		</Form>
 	);
 }

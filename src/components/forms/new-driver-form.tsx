@@ -31,6 +31,7 @@ import React from 'react';
 import { loadingSpinner, successIcon } from '@/lib/icons';
 import { NextResponse } from 'next/server';
 import { LGA } from '@/lib/consts';
+import { Dialog, DialogContent } from '../ui/dialog';
 
 const driverFormSchema = z.object({
 	name: z
@@ -97,9 +98,13 @@ type DriverFormValues = z.infer<typeof driverFormSchema>;
 // This can come from your database or API.
 const defaultValues: Partial<DriverFormValues> = {
 	name: '',
+	email: '',
 	phone: '',
+	address: '',
 	city: '',
 	lga: 'aguata',
+	identification_type: 'nin',
+	identification_number: '',
 	is_active: true,
 };
 
@@ -139,11 +144,11 @@ export function DriverForm({ id }: { id: string }) {
 				createDriverResponse.status === 200 ||
 				createDriverResponse.status === 201
 			) {
+				form.reset();
 				toast({
 					title: 'Driver Created Successfully',
 				});
 				setDriver(result.data.driver_id);
-				form.reset();
 				setIsLoading(false);
 				setOpen(true);
 				return NextResponse.json(result);
@@ -360,11 +365,11 @@ export function DriverForm({ id }: { id: string }) {
 						{isLoading ? loadingSpinner : 'Add Driver'}
 					</Button>
 				</div>
-				<AlertDialog
+				<Dialog
 					open={open}
 					onOpenChange={setOpen}
 				>
-					<AlertDialogContent className='bg-secondary'>
+					<DialogContent className='bg-secondary'>
 						<div className='w-60 mx-auto flex-col'>
 							<div className='flex flex-col items-center gap-5 mb-5'>
 								<div className='h-20 w-20 text-awesome-foreground'>
@@ -375,21 +380,18 @@ export function DriverForm({ id }: { id: string }) {
 								</div>
 							</div>
 							<div className='flex flex-col gap-3'>
-								<AlertDialogAction
+								<Button
 									asChild
 									className='rounded-xl'
 								>
 									<Link href={`/drivers/${driver}`}>
 										View Driver
 									</Link>
-								</AlertDialogAction>
-								<AlertDialogCancel className='rounded-xl'>
-									New Driver
-								</AlertDialogCancel>
+								</Button>
 							</div>
 						</div>
-					</AlertDialogContent>
-				</AlertDialog>
+					</DialogContent>
+				</Dialog>
 			</form>
 		</Form>
 	);

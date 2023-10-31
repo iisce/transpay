@@ -10,7 +10,10 @@ import {
 import { DataTable } from '@/components/ui/table/data-table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { VIEW_DRIVER_TABLE } from '@/lib/consts';
-import { searchVehicle } from '@/lib/controllers/vehicle-controller';
+import {
+	getVehicleSummary,
+	searchVehicle,
+} from '@/lib/controllers/vehicle-controller';
 import { getSSession } from '@/lib/get-data';
 import { failureIcon, successIcon } from '@/lib/icons';
 import Link from 'next/link';
@@ -19,7 +22,7 @@ import React from 'react';
 
 export default async function SearchVehicle({ id }: { id: string }) {
 	const { role } = await getSSession();
-	const vehicle = await searchVehicle(id);
+	const vehicle = await getVehicleSummary(id);
 	const onWaiver = vehicle?.status === 'inactive';
 	const isOwing = true;
 	if (!vehicle) {

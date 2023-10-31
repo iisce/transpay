@@ -4,7 +4,7 @@ import { Card } from '@/components/ui/card';
 import { debtColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { getVehicleSummaryByPlateNumber } from '@/lib/controllers/vehicle-controller';
+import { getVehicleSummary } from '@/lib/controllers/vehicle-controller';
 import { failureIcon, successIcon } from '@/lib/icons';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -15,7 +15,7 @@ export default async function NoLoginSearch({
 }: {
 	plate_number: string;
 }) {
-	const vehicle = await getVehicleSummaryByPlateNumber(plate_number);
+	const vehicle = await getVehicleSummary(plate_number);
 	if (!vehicle) {
 		notFound();
 	}
