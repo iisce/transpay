@@ -18,6 +18,7 @@ import { loadingSpinner } from '@/lib/icons';
 import { NextResponse } from 'next/server';
 import { Textarea } from '../ui/textarea';
 import DeleteSettingsButton from '../shared/delete-buttons/delete-settings-button';
+import { useRouter } from 'next/navigation';
 
 const settingsFormSchema = z.object({
 	name: z
@@ -39,6 +40,7 @@ const settingsFormSchema = z.object({
 type SettingsFormValues = z.infer<typeof settingsFormSchema>;
 
 export function UpdateSettingsForm({ settings }: { settings: ISettings }) {
+	const router = useRouter();
 	const [disabled, setDisabled] = React.useState<boolean>(true);
 	const defaultValues: Partial<SettingsFormValues> = {
 		name: settings.name,
@@ -79,6 +81,7 @@ export function UpdateSettingsForm({ settings }: { settings: ISettings }) {
 				});
 				setIsLoading(false);
 				setDisabled(true);
+				router.refresh();
 				return NextResponse.json(result);
 			} else {
 				setIsLoading(false);
@@ -177,9 +180,7 @@ export function UpdateSettingsForm({ settings }: { settings: ISettings }) {
 					>
 						Edit
 					</Button>
-					<Button className='w-32'>
-						<DeleteSettingsButton id={settings.setting_id} />
-					</Button>
+					<DeleteSettingsButton id={settings.setting_id} />
 				</div>
 			)}
 		</>

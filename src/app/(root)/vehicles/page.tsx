@@ -115,7 +115,7 @@ export default async function Vehicles() {
 					</Tabs>
 				</div>
 			) : (
-				<div className='max-w-[500px] w-full h-full mx-auto grid place-items-center'>
+				<div className='max-w-[500px] w-full h-full mx-auto grid place-items-center mt-10'>
 					<AgentSearchBar
 						placeholder='Enter vehicle plate'
 						variant='primary'

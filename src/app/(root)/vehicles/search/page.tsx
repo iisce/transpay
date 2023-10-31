@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function SearchDriver() {
 	return (
-		<div className='w-[500px] mx-auto my-[200px]'>
+		<div className='max-w-[500px] p-2 mx-auto my-[100px]'>
 			<Searchbar
 				placeholder='Enter vehicle plate'
 				variant='primary'

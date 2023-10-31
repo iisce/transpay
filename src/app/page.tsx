@@ -23,10 +23,7 @@ export default async function Home() {
 					<div className='grid gap-3'>
 						<Avatar className='h-32 w-32 mx-auto border shadow-lg'>
 							<AvatarImage
-								src={
-									user?.image ||
-									'https://avatars.githubusercontent.com/u/62449713?v=4'
-								}
+								src={user?.image || '/anambara.png'}
 								alt={user?.name || 'User Name'}
 							/>
 							<AvatarFallback>

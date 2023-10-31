@@ -214,7 +214,7 @@ interface IVehicleTransaction {
 	payment_type: 'transfer';
 	user_role: string;
 	user_id: string;
-	payment_status: 'pending';
+	payment_status: 'pending' | 'processing' | 'successful';
 	status: false;
 	transfer_id: string;
 	last_message: string;
@@ -419,4 +419,9 @@ interface ICreateAgentForm {
 	country: string;
 	postcode: string;
 	agent_id?: string;
+}
+
+interface IToken {
+	token: string;
+	secret: string;
 }

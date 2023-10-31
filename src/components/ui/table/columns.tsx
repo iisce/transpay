@@ -20,15 +20,8 @@ import Link from 'next/link';
 import Cbadge from '../category-badge';
 import DeleteAdminButton from '@/components/shared/delete-buttons/delete-admin-button';
 import { formatDate } from '@/lib/utils';
-import {
-	Dialog,
-	DialogContent,
-	DialogFooter,
-	DialogHeader,
-	DialogTrigger,
-} from '../dialog';
+import { Dialog, DialogContent, DialogFooter, DialogTrigger } from '../dialog';
 import Receipt from '@/components/shared/receipt/vehicle-transaction';
-import { SettingsForm } from '@/components/forms/new-settings-form';
 import { UpdateSettingsForm } from '@/components/forms/update-settings-form';
 
 export const debtColumns: ColumnDef<IVehiclePayment>[] = [
@@ -42,7 +35,7 @@ export const debtColumns: ColumnDef<IVehiclePayment>[] = [
 		),
 		cell: ({ row }) => {
 			const payment = row.original;
-			return <div>{formatDate(payment.transaction_date)}</div>;
+			return <div>{payment.transaction_date}</div>;
 		},
 		sortDescFirst: true,
 	},
@@ -52,6 +45,14 @@ export const debtColumns: ColumnDef<IVehiclePayment>[] = [
 		cell: ({ row }) => {
 			const amount = parseFloat(row.getValue('amount'));
 			return <div className='text-right font-medium'>₦{amount}</div>;
+		},
+	},
+	{
+		accessorKey: 'transaction_type',
+		header: () => <div className='text-right'>Transaction Type</div>,
+		cell: ({ row }) => {
+			const tt = row.original.transaction_type;
+			return <div className='text-right font-medium'>{tt}</div>;
 		},
 	},
 ];

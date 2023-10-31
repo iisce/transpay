@@ -52,3 +52,34 @@ export function formatDate(inputDate: string): string {
 
 	return formattedDate;
 }
+
+/**
+ * Takes a number and returns an Array of numbers matching the star ratings
+ * @param {number} number
+ * @returns {any}
+ */
+export function cNTA(number: number): number[] {
+	if (number < 0 || number > 5) {
+		throw new Error('Input number must be between 0 and 5');
+	}
+
+	const array: number[] = [0, 0, 0, 0, 0];
+
+	for (let i = 0; i < 5; i++) {
+		if (number >= 1) {
+			array[i] = 1;
+			number -= 1;
+		} else if (number > 0) {
+			array[i] = number;
+			break;
+		}
+	}
+
+	return array;
+}
+
+export function isUUID(input: string): boolean {
+	const uuidPattern =
+		/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+	return uuidPattern.test(input);
+}

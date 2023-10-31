@@ -12,6 +12,7 @@ import {
 	profileIcon,
 	securityIcon,
 	aboutIcon,
+	searchIcon,
 } from './icons';
 import CarouselSlides from '@/components/layout/carouselSlides';
 
@@ -57,6 +58,11 @@ export const SIDEBAR_LINKS = [
 		icon: scanIcon,
 	},
 	{
+		title: 'Search',
+		href: '/search',
+		icon: searchIcon,
+	},
+	{
 		title: 'Revenue',
 		href: '/revenue',
 		icon: revenueIcon,
@@ -93,6 +99,11 @@ export const SIDEBAR_LINKS_ADMIN = [
 		href: '/scan',
 		icon: scanIcon,
 	},
+	{
+		title: 'Search',
+		href: '/search',
+		icon: searchIcon,
+	},
 ];
 export const SIDEBAR_LINKS_AGENT = [
 	{
@@ -109,6 +120,11 @@ export const SIDEBAR_LINKS_AGENT = [
 		title: 'Scan',
 		href: '/scan',
 		icon: scanIcon,
+	},
+	{
+		title: 'Search',
+		href: '/search',
+		icon: searchIcon,
 	},
 ];
 export const MANAGE_SIDEBAR_LINKS = [
@@ -136,6 +152,11 @@ export const MANAGE_SIDEBAR_LINKS = [
 		name: 'Dashboard',
 		href: '/dashboard',
 		icon: dashboardIcon,
+	},
+	{
+		title: 'Search',
+		href: '/search',
+		icon: searchIcon,
 	},
 ];
 export const DRIVERS_CARD = [

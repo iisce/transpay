@@ -35,10 +35,7 @@ export function UserNav({ user }: { user: IUser }) {
 					>
 						<Avatar className='h-9 w-9'>
 							<AvatarImage
-								src={
-									user.image ||
-									'https://avatars.githubusercontent.com/u/62449713?v=4'
-								}
+								src={user.image || '/anambara.png'}
 								alt={user.name || 'Agent User'}
 							/>
 							<AvatarFallback>
@@ -66,10 +63,7 @@ export function UserNav({ user }: { user: IUser }) {
 						<div className=''>
 							<Avatar className='h-14 w-14'>
 								<AvatarImage
-									src={
-										user.image ||
-										'https://avatars.githubusercontent.com/u/62449713?v=4'
-									}
+									src={user.image || '/anambara.png'}
 									alt={user.name || 'Agent User'}
 								/>
 								<AvatarFallback>

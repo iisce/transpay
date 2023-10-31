@@ -36,7 +36,10 @@ export default function AuthLayout({
 			</div>
 			<div className='flex h-full rounded-2xl justify-center items-start lg:items-center'>
 				<div className='flex flex-col w-full gap-5 md:gap-10 items-center max-w-[450px] lg:ml-10 xl:ml-20'>
-					<Link href='/' className='h-20 md:h-48 w-20 md:w-48 flex items-center justify-center'>
+					<Link
+						href='/'
+						className='h-20 md:h-48 w-20 md:w-48 flex items-center justify-center'
+					>
 						<Image
 							src='/authpageLogo.png'
 							width={250}

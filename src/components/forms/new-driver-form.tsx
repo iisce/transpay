@@ -31,6 +31,7 @@ import React from 'react';
 import { loadingSpinner, successIcon } from '@/lib/icons';
 import { NextResponse } from 'next/server';
 import { LGA } from '@/lib/consts';
+import { Dialog, DialogContent } from '../ui/dialog';
 
 const driverFormSchema = z.object({
 	name: z
@@ -42,20 +43,22 @@ const driverFormSchema = z.object({
 			message: 'Name must not be longer than 30 characters.',
 		}),
 	email: z
+		.string()
+		.email({ message: 'Enter correct email format' })
+		.optional(),
+	phone: z
 		.string({
-			required_error: 'Please enter an email.',
+			required_error: 'Enter owner phone number.',
 		})
-		.email(),
-	phone: z.string({
-		required_error: 'Please enter phone number.',
-	}),
+		.regex(/^\+234[789][01]\d{8}$/, 'Phone format (+2348012345678)'),
 	address: z
 		.string({
 			required_error: 'Please enter address.',
 		})
 		.min(3, {
 			message: 'Address must be at least 3 characters.',
-		}),
+		})
+		.optional(),
 	city: z
 		.string({
 			required_error: 'Please enter city.',
@@ -78,12 +81,15 @@ const driverFormSchema = z.object({
 		})
 		.max(20, {
 			message: 'ID Number must not be longer than 20 characters.',
-		}),
-	identification_type: z.string({
-		required_error: 'Please select a mode of identification',
-	}),
+		})
+		.optional(),
+	identification_type: z
+		.string({
+			required_error: 'Please select a mode of identification',
+		})
+		.optional(),
 	is_active: z.boolean({
-		required_error: 'Please enter role.',
+		required_error: 'Select ',
 	}),
 });
 
@@ -138,11 +144,11 @@ export function DriverForm({ id }: { id: string }) {
 				createDriverResponse.status === 200 ||
 				createDriverResponse.status === 201
 			) {
+				form.reset();
 				toast({
 					title: 'Driver Created Successfully',
 				});
 				setDriver(result.data.driver_id);
-				form.reset();
 				setIsLoading(false);
 				setOpen(true);
 				return NextResponse.json(result);
@@ -297,9 +303,9 @@ export function DriverForm({ id }: { id: string }) {
 										<SelectItem value='nin'>
 											NIN
 										</SelectItem>
-										<SelectItem value='bvn'>
+										{/* <SelectItem value='bvn'>
 											BVN
-										</SelectItem>
+										</SelectItem> */}
 										<SelectItem value='pvc'>
 											Voters Card
 										</SelectItem>
@@ -359,36 +365,33 @@ export function DriverForm({ id }: { id: string }) {
 						{isLoading ? loadingSpinner : 'Add Driver'}
 					</Button>
 				</div>
-				<AlertDialog
+				<Dialog
 					open={open}
 					onOpenChange={setOpen}
 				>
-					<AlertDialogContent className='bg-secondary'>
+					<DialogContent className='bg-secondary'>
 						<div className='w-60 mx-auto flex-col'>
 							<div className='flex flex-col items-center gap-5 mb-5'>
 								<div className='h-20 w-20 text-awesome-foreground'>
 									{successIcon}
 								</div>
 								<div className='text-xl'>
-									Driver Account Created
+									Driver created successfully
 								</div>
 							</div>
 							<div className='flex flex-col gap-3'>
-								<AlertDialogAction
+								<Button
 									asChild
 									className='rounded-xl'
 								>
 									<Link href={`/drivers/${driver}`}>
 										View Driver
 									</Link>
-								</AlertDialogAction>
-								<AlertDialogCancel className='rounded-xl'>
-									New Driver
-								</AlertDialogCancel>
+								</Button>
 							</div>
 						</div>
-					</AlertDialogContent>
-				</AlertDialog>
+					</DialogContent>
+				</Dialog>
 			</form>
 		</Form>
 	);
