@@ -1,35 +1,8 @@
 import Carousel from '@/components/layout/authCarousel';
-import CarouselSlides from '@/components/layout/carouselSlides';
+import { SLIDES } from '@/lib/consts';
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
-
-const slides = [
-	<>
-		<CarouselSlides
-			desc='Accountability in a civilized society is the stepping stone to
-        development and progressive Environment'
-			images='/avater.png'
-			author='ISCE Digital Concepts'
-			title='Governor Anambra state'
-		/>
-	</>,
-	<>
-		<CarouselSlides
-			desc='We believe that accountability is fundamental for societal progress, and TRANSPAY stands as a testament to that ethos, offering a reliable and efficient means for commuters'
-			images='/avater.png'
-			author='ISCE Digital Concepts'
-			title='Governor Anambra state'
-		/>
-	</>,
-	<>
-		<CarouselSlides
-			desc='Just as development relies on being accountable for our actions, TRANSPAY cultivates an efficient and sustainable transit system, contributing to the growth and prosperity of our community.'
-			images='/avater.png'
-			author='ISCE Digital Concepts'
-			title='Governor Anambra state'
-		/>
-	</>,
-];
 
 export default function AuthLayout({
 	children,
@@ -56,14 +29,14 @@ export default function AuthLayout({
 					</div>
 					<div>
 						<div className='w-full flex flex-col mt-8 gap-7 bg-primary-900 p-7 duration-700 rounded-2xl'>
-							<Carousel slides={slides} />
+							<Carousel slides={SLIDES} />
 						</div>
 					</div>
 				</div>
 			</div>
 			<div className='flex h-full rounded-2xl justify-center items-start lg:items-center'>
 				<div className='flex flex-col w-full gap-5 md:gap-10 items-center max-w-[450px] lg:ml-10 xl:ml-20'>
-					<div className='h-20 md:h-48 w-20 md:w-48 flex items-center justify-center'>
+					<Link href='/' className='h-20 md:h-48 w-20 md:w-48 flex items-center justify-center'>
 						<Image
 							src='/authpageLogo.png'
 							width={250}
@@ -71,7 +44,7 @@ export default function AuthLayout({
 							alt='logo'
 							className='dark:invert h-full w-full object-contain'
 						/>
-					</div>
+					</Link>
 					<div className='w-full max-w-md'>{children}</div>
 				</div>
 			</div>

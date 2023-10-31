@@ -6,7 +6,7 @@ import React from 'react';
 const NotFound = () => {
 	return (
 		<section className='max-w-lg mx-auto flex gap-10 flex-col items-center justify-center h-screen'>
-			<div className='h-16'>
+			<Link href='/' className='h-16'>
 				<Image
 					className='object-contain h-full w-full dark:invert'
 					src={'/logo.png'}
@@ -14,13 +14,13 @@ const NotFound = () => {
 					width={400}
 					height={400}
 				/>
-			</div>
+			</Link>
 			<div className='flex flex-col gap-5'>
 				<h3 className='uppercase text-center'>
 					Vehicle not found
 				</h3>
 				<span className='text-center'>
-					
+					There is no vehicle found with this plate number.
 				</span>
 				<div className='flex flex-col gap-3 uppercase'>
 					<Button asChild>
@@ -31,22 +31,7 @@ const NotFound = () => {
 							Go To Dashboard
 						</Link>
 					</Button>
-					<Button asChild>
-						<Link
-							className=''
-							href={'/'}
-						>
-							Create an Account
-						</Link>
-					</Button>
-					<Button asChild>
-						<Link
-							className=''
-							href={'/faqs'}
-						>
-							Faqs
-						</Link>
-					</Button>
+				
 				</div>
 			</div>
 		</section>

@@ -11,7 +11,7 @@ interface SLIDESI{
 export default function CarouselSlides({ desc, images, author, title }: SLIDESI) {
   return (
     <>
-      <p className="w-[77%] ">
+      <p className="w-[77%] line-clamp-4 ">
         “{desc}”.
       </p>
       <div className="flex gap-4 mt-4">
