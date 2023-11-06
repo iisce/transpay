@@ -50,7 +50,7 @@ export default async function NavBar() {
 						</>
 					) : (
 						<Button asChild>
-							<Link href='/agent/sign-in'>Login</Link>
+							<Link href='/sign-in'>Login</Link>
 						</Button>
 					)}
 				</div>

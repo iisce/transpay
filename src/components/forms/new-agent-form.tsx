@@ -79,8 +79,8 @@ const agentFormSchema = z.object({
 		.min(3, {
 			message: 'Location must be at least 3 characters.',
 		})
-		.max(30, {
-			message: 'Location must not be longer than 30 characters.',
+		.max(50, {
+			message: 'Location must not be longer than 50 characters.',
 		}),
 	name: z
 		.string()
@@ -92,7 +92,7 @@ const agentFormSchema = z.object({
 		}),
 	password: z.string().refine((password) => {
 		return (
-			password.length >= 8 
+			password.length >= 8
 			// &&
 			// /[A-Z]/.test(password) &&
 			// /\d/.test(password)

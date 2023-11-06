@@ -20,13 +20,13 @@ export const options: NextAuthOptions = {
 			credentials: {
 				email: { label: 'email', type: 'email' },
 				password: { label: 'Password', type: 'password' },
+				role: { label: 'role', type: 'text' },
 			},
 			async authorize(credentials, req) {
-				const loginUrl = req.headers!.referer; // Get the login URL from the request object.
-				// Decide which API route to access based on the login URL.
-				const apiRoute = loginUrl.includes('/admin/')
-					? URLS.auth.signin.admin
-					: URLS.auth.signin.agent;
+				const apiRoute =
+					credentials?.role === 'admin'
+						? URLS.auth.signin.admin
+						: URLS.auth.signin.agent;
 				try {
 					const res = await fetch(API + apiRoute, {
 						method: 'POST',
@@ -34,24 +34,18 @@ export const options: NextAuthOptions = {
 						headers,
 					});
 					const result = await res.json();
-					if (result.success === true) {
+					if (result.success === false) {
+						throw new Error(
+							result?.message || 'Something went wrong'
+						);
+					} else {
 						let user = result?.data;
 						console.log(user);
 						return user;
-					} else {
-						throw new Error(result.message);
 					}
-				} catch (error) {
-					if (axios.isAxiosError(error)) {
-						throw new Error(
-							error.response?.data?.message ||
-								'An error occurred during api connection.'
-						);
-					} else {
-						throw new Error(
-							'An error occurred during api connection.'
-						);
-					}
+				} catch (error: any) {
+					console.log(error);
+					throw new Error(error.message);
 				}
 			},
 		}),
@@ -62,8 +56,8 @@ export const options: NextAuthOptions = {
 		maxAge: 60 * 30,
 	},
 	pages: {
-		signIn: '/agent/sign-in',
-		error: '/agent/sign-in',
+		signIn: '/sign-in',
+		error: '/sign-in',
 	},
 	jwt: {
 		// maxAge: 60 * 60 * 24 * 30,  // 30 days
