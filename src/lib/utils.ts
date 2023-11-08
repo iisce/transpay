@@ -83,3 +83,21 @@ export function isUUID(input: string): boolean {
 		/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 	return uuidPattern.test(input);
 }
+
+export function slugify(text: string): string {
+	return text
+		.toLowerCase()
+		.replace(/ /g, '-') // Replace spaces with hyphens
+		.replace(/[^a-z0-9-]/g, '') // Remove non-alphanumeric characters
+		.replace(/--+/g, '-') // Replace multiple hyphens with a single hyphen
+		.replace(/^-|-$/g, ''); // Remove leading and trailing hyphens
+}
+
+export function unslugify(slug: string): string {
+	const words = slug.split('-');
+	const final = words.map((word) => {
+		return word.charAt(0).toUpperCase() + word.slice(1);
+	});
+
+	return final.join(' ');
+}

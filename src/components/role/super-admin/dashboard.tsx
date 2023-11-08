@@ -2,7 +2,7 @@ import React from 'react';
 import DashboardCard from './dashboard-card';
 import { SuperAdminRevenueCharts } from '@/components/shared/chats/super-admin-revenue-chart';
 import { Calendar } from '@/components/ui/calendar';
-import { ACTIVITIES } from '../../../../data';
+import { ACTIVITIES, TRANSACTIONS } from '../../../../data';
 import ActivityCard from '@/components/shared/activity-card';
 import { DataTable } from '@/components/ui/table/data-table';
 import { adminsColumns } from '@/components/ui/table/columns';
@@ -12,25 +12,65 @@ export default async function DashboardSuperAdmin(user: { user: IUser }) {
 	const admins = await getAdmins();
 	const blackListed =
 		admins?.filter((admin) => admin.blacklisted === true) || [];
+
+	const transactions = TRANSACTIONS;
+	const dailyFees = transactions.filter(
+		(transaction) => transaction.transaction_type === 'DAILY_FEES'
+	);
+	const trackerFees = transactions.filter(
+		(transaction) => transaction.transaction_type === 'TRACKER_FEES'
+	);
+
+	const totalRevenueAmount = TRANSACTIONS.reduce(
+		(total, transaction) => total + transaction.amount,
+		0
+	);
+	const totalDailyFeesAmount = dailyFees.reduce(
+		(total, transaction) => total + transaction.amount,
+		0
+	);
+	const totalTrackerFeesAmount = trackerFees.reduce(
+		(total, transaction) => total + transaction.amount,
+		0
+	);
+
 	return (
 		<div className='w-full'>
 			<div className='grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-5'>
 				<DashboardCard
-					type='positive'
+					type={
+						totalRevenueAmount < 0
+							? 'negative'
+							: totalRevenueAmount === 0
+							? 'neutral'
+							: 'positive'
+					}
 					title='Total Revenue'
-					amount={200000}
+					amount={totalDailyFeesAmount}
 					percent={10}
 				/>
 				<DashboardCard
-					type='negative'
+					type={
+						totalDailyFeesAmount < 0
+							? 'negative'
+							: totalDailyFeesAmount === 0
+							? 'neutral'
+							: 'positive'
+					}
 					title='Daily Fees'
-					amount={200000}
+					amount={totalDailyFeesAmount}
 					percent={10}
 				/>
 				<DashboardCard
-					type='negative'
-					title='Fines And Penalties'
-					amount={200000}
+					type={
+						totalTrackerFeesAmount < 0
+							? 'negative'
+							: totalTrackerFeesAmount === 0
+							? 'neutral'
+							: 'positive'
+					}
+					title='Tracker Fees'
+					amount={totalTrackerFeesAmount}
 					percent={10}
 				/>
 			</div>
@@ -73,8 +113,10 @@ export default async function DashboardSuperAdmin(user: { user: IUser }) {
 									key={k}
 									id={activity.id}
 									name={activity.name}
+									activity_id={activity.activity_id}
 									time={activity.time}
 									date={activity.date}
+									description={activity.description}
 								/>
 							))}
 						</div>

@@ -76,8 +76,14 @@ export default async function SingularAgent({
 										key={k}
 										id={activity.id}
 										name={activity.name}
+										activity_id={
+											activity.activity_id
+										}
 										time={activity.time}
 										date={activity.date}
+										description={
+											activity.description
+										}
 									/>
 								)
 							)}

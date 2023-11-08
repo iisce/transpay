@@ -238,7 +238,7 @@ export const adminsColumns: ColumnDef<IAdmin>[] = [
 					>
 						{editIcon}
 					</Link>
-					<DeleteAdminButton id={row.original.admin_id} />
+					{/* <DeleteAdminButton id={row.original.admin_id} /> */}
 				</div>
 			);
 		},

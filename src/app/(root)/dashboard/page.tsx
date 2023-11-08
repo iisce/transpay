@@ -13,7 +13,6 @@ export default async function DashboardPage() {
 		role?.toLowerCase() === 'agent'
 			? await getAgentMe()
 			: await getAdminMe();
-
 	if (!user) return notFound();
 	else
 		return (
