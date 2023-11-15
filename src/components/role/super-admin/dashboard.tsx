@@ -7,13 +7,14 @@ import ActivityCard from '@/components/shared/activity-card';
 import { DataTable } from '@/components/ui/table/data-table';
 import { adminsColumns } from '@/components/ui/table/columns';
 import { getAdmins } from '@/lib/controllers/admin-controller';
+import { getTransactions } from '@/app/api/transactions/transactions';
 
 export default async function DashboardSuperAdmin(user: { user: IUser }) {
 	const admins = await getAdmins();
 	const blackListed =
 		admins?.filter((admin) => admin.blacklisted === true) || [];
 
-	const transactions = TRANSACTIONS;
+	const transactions = await getTransactions();
 	const dailyFees = transactions.filter(
 		(transaction) => transaction.transaction_type === 'DAILY_FEES'
 	);
