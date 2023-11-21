@@ -7,7 +7,7 @@ import { UserNav } from '../shared/user-nav-bar';
 import { Notification } from '../shared/notification';
 import { getSSession } from '@/lib/get-data';
 import { Button } from '../ui/button';
-import { getAgentMe } from '@/lib/controllers/agent-controller';
+import { getAgentMe, getGreenAgent } from '@/lib/controllers/agent-controller';
 import { getAdminMe } from '@/lib/controllers/admin-controller';
 
 export default async function NavBar() {
@@ -15,7 +15,10 @@ export default async function NavBar() {
 	const user =
 		role?.toLowerCase() === 'agent'
 			? await getAgentMe()
+			: role?.toLowerCase() === 'greenengine_agent'
+			? await getGreenAgent()
 			: await getAdminMe();
+	console.log(user);
 	return (
 		<div className='h-16 w-full bg-secondary/60 backdrop-blur-sm pr-5 shrink-0 fixed z-50 '>
 			<div className='flex items-center justify-between h-full'>

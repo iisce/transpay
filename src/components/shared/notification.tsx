@@ -46,6 +46,8 @@ export function Notification() {
 								<ActivityCard
 									key={k}
 									id={activity.id}
+									description={activity.description}
+									activity_id={activity.activity_id}
 									name={activity.name}
 									time={activity.time}
 									date={activity.date}

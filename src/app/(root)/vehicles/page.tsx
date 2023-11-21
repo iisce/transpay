@@ -18,23 +18,25 @@ export default async function Vehicles() {
 		<div className='p-5 w-full h-full flex flex-col'>
 			<div className='flex justify-between items-center uppercase font-bold'>
 				<div className='shrink-0 grow-0'>VEHICLES</div>
-				<div className='shrink-0 grow-0'>
-					<Button
-						className='justify-start text-white rounded-xl bg-primary-800'
-						asChild
-						variant={'default'}
-					>
-						<Link
-							href={'/vehicles/new-vehicle'}
-							className='shrink-0 whitespace-nowrap'
+				{session.role?.toLowerCase() !== 'greenengine_agent' && (
+					<div className='shrink-0 grow-0'>
+						<Button
+							className='justify-start text-white rounded-xl bg-primary-800'
+							asChild
+							variant={'default'}
 						>
-							<div className='mr-2 h-4 w-4 shrink-0'>
-								{addIcon}
-							</div>
-							NEW VEHICLE
-						</Link>
-					</Button>
-				</div>
+							<Link
+								href={'/vehicles/new-vehicle'}
+								className='shrink-0 whitespace-nowrap'
+							>
+								<div className='mr-2 h-4 w-4 shrink-0'>
+									{addIcon}
+								</div>
+								NEW VEHICLE
+							</Link>
+						</Button>
+					</div>
+				)}
 			</div>
 			{vehicles && session.role?.toLowerCase() !== 'agent' ? (
 				<div className='flex flex-col gap-5 '>

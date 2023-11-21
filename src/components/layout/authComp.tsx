@@ -9,7 +9,7 @@ const slides = [
         development and progressive Environment'
 			images='/avater.png'
 			author='ISCE Digital Concepts'
-			title='Governor Anambra state'
+			title='Anambra state'
 		/>
 	</>,
 	<>
@@ -18,7 +18,7 @@ const slides = [
       tempor incididunt ut labore et dolore'
 			images='/avater.png'
 			author='ISCE Digital Concepts'
-			title='Governor Anambra state'
+			title='Anambra state'
 		/>
 	</>,
 	<>
@@ -27,7 +27,7 @@ const slides = [
       dgdbdb ngfigtmitgutng gutgnt tngtjg'
 			images='/avater.png'
 			author='ISCE Digital Concepts'
-			title='Governor Anambra state'
+			title='Anambra state'
 		/>
 	</>,
 ];

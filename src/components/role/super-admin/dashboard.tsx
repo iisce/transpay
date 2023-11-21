@@ -2,12 +2,16 @@ import React from 'react';
 import DashboardCard from './dashboard-card';
 import { SuperAdminRevenueCharts } from '@/components/shared/chats/super-admin-revenue-chart';
 import { Calendar } from '@/components/ui/calendar';
-import { ACTIVITIES, TRANSACTIONS } from '../../../../data';
+import { ACTIVITIES, REVENUE_CHART_DATA, TRANSACTIONS } from '../../../../data';
 import ActivityCard from '@/components/shared/activity-card';
 import { DataTable } from '@/components/ui/table/data-table';
 import { adminsColumns } from '@/components/ui/table/columns';
 import { getAdmins } from '@/lib/controllers/admin-controller';
 import { getTransactions } from '@/app/api/transactions/transactions';
+import {
+	transformTransactionsToMonthsData,
+	transformTransactionsToWeeksData,
+} from '@/lib/utils';
 
 export default async function DashboardSuperAdmin(user: { user: IUser }) {
 	const admins = await getAdmins();
@@ -34,6 +38,8 @@ export default async function DashboardSuperAdmin(user: { user: IUser }) {
 		(total, transaction) => total + transaction.amount,
 		0
 	);
+	const chartDataMonth = transformTransactionsToMonthsData(transactions);
+	const chartDataWeek = transformTransactionsToWeeksData(transactions);
 
 	return (
 		<div className='w-full'>
@@ -83,7 +89,9 @@ export default async function DashboardSuperAdmin(user: { user: IUser }) {
 							<div className='text-2xl mb-4'>2023</div>
 						</div>
 						<div className='h-full'>
-							<SuperAdminRevenueCharts />
+							<SuperAdminRevenueCharts
+								data={chartDataWeek}
+							/>
 						</div>
 					</div>
 					{blackListed.length > 0 && (

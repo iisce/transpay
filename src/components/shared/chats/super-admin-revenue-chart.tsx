@@ -9,57 +9,6 @@ import {
 	YAxis,
 } from 'recharts';
 
-const data = [
-	{
-		name: 'Jan',
-		total: Math.floor(Math.random() * 7000),
-	},
-	{
-		name: 'Feb',
-		total: Math.floor(Math.random() * 7000),
-	},
-	{
-		name: 'Mar',
-		total: Math.floor(Math.random() * 7000),
-	},
-	{
-		name: 'Apr',
-		total: Math.floor(Math.random() * 7000),
-	},
-	{
-		name: 'May',
-		total: Math.floor(Math.random() * 7000),
-	},
-	{
-		name: 'Jun',
-		total: Math.floor(Math.random() * 7000),
-	},
-	{
-		name: 'Jul',
-		total: Math.floor(Math.random() * 7000),
-	},
-	{
-		name: 'Aug',
-		total: Math.floor(Math.random() * 7000),
-	},
-	{
-		name: 'Sep',
-		total: Math.floor(Math.random() * 7000),
-	},
-	{
-		name: 'Oct',
-		total: Math.floor(Math.random() * 7000),
-	},
-	{
-		name: 'Nov',
-		total: Math.floor(Math.random() * 7000),
-	},
-	{
-		name: 'Dec',
-		total: Math.floor(Math.random() * 7000),
-	},
-];
-
 export const CustomTooltip = ({
 	active,
 	payload,
@@ -81,7 +30,11 @@ export const CustomTooltip = ({
 	return null;
 };
 
-export function SuperAdminRevenueCharts() {
+export function SuperAdminRevenueCharts({
+	data,
+}: {
+	data: { name: string; total: number }[];
+}) {
 	return (
 		<ResponsiveContainer
 			width='100%'

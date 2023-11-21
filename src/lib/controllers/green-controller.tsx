@@ -1,22 +1,6 @@
 import { API, URLS } from '../consts';
 import { getSSession } from '../get-data';
 
-export const getAgentMe = async () => {
-	const session = await getSSession();
-	const headers = {
-		'Content-Type': 'application/json',
-		'api-secret': process.env.API_SECRET || '',
-		Authorization: `Bearer ${session.access_token}`,
-	};
-	const url = API + URLS.agent.me;
-	const res = await fetch(url, { headers, cache: 'no-store' });
-	if (!res.ok) return undefined;
-
-	const data: Promise<IAgentMe> = await res.json();
-	const agent = (await data).data.agent;
-	return agent;
-};
-
 // export const getGreenAgent = async () => {
 // 	const session = await getSSession();
 // 	const headers = {
@@ -66,19 +50,20 @@ export const getAgents = async () => {
 	return agents;
 };
 
-export const getAgentById = async (id: string) => {
+export const getGreenVehicleByPlate = async (plate: string) => {
 	const session = await getSSession();
 	const headers = {
 		'Content-Type': 'application/json',
 		'api-secret': process.env.API_SECRET || '',
 		Authorization: `Bearer ${session.access_token}`,
 	};
-	const url = `${API}${URLS.agent.all}/${id}`;
+	const url = `${API + URLS.green.search}?plate_number=${plate}`;
+	console.log(url);
 	const res = await fetch(url, { headers, cache: 'no-store' });
 	if (!res.ok) return undefined;
-	const result: Promise<IResAgent> = (await res.json()).data;
-	const { agent } = await result;
-	return agent;
+	const result: Promise<IResVehicle> = (await res.json()).data;
+	const { vehicle } = await result;
+	return vehicle;
 };
 
 export const deleteAgentById = async (id: string) => {

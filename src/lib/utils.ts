@@ -101,3 +101,69 @@ export function unslugify(slug: string): string {
 
 	return final.join(' ');
 }
+export function transformTransactionsToMonthsData(
+	transactions: IVehicleTransaction[]
+): { name: string; total: number }[] {
+	const totalByMonth: { [month: string]: number } = {};
+
+	transactions.forEach((transaction: IVehicleTransaction) => {
+		const transactionDate = new Date(transaction.transaction_date);
+		const monthName = transactionDate.toLocaleString('en-US', {
+			month: 'short',
+		});
+
+		// Initialize total for the month if not present
+		if (!totalByMonth[monthName]) {
+			totalByMonth[monthName] = 0;
+		}
+
+		// Add transaction amount to the total for the month
+		totalByMonth[monthName] += transaction.amount;
+	});
+
+	// Convert totalByMonth object to the required format
+	const transformedData: { name: string; total: number }[] = Object.entries(
+		totalByMonth
+	).map(([month, total]) => ({
+		name: month,
+		total,
+	}));
+
+	return transformedData;
+}
+function getWeekNumber(date: Date): number {
+	const startOfYear = new Date(date.getFullYear(), 0, 1);
+	const diffInDays = Math.floor(
+		(date.getTime() - startOfYear.getTime()) / (24 * 60 * 60 * 1000)
+	);
+	const weekNumber = Math.ceil((diffInDays + startOfYear.getDay() + 1) / 7);
+	return weekNumber;
+}
+export function transformTransactionsToWeeksData(
+	transactions: IVehicleTransaction[]
+): { name: string; total: number }[] {
+	const totalByWeek: { [week: string]: number } = {};
+
+	transactions.forEach((transaction: IVehicleTransaction) => {
+		const transactionDate = new Date(transaction.transaction_date);
+		const weekNumber = getWeekNumber(transactionDate);
+		const weekKey = `Week ${weekNumber}`;
+		if (!totalByWeek[weekKey]) {
+			totalByWeek[weekKey] = 0;
+		}
+		totalByWeek[weekKey] += transaction.amount;
+	});
+	const transformedData: { name: string; total: number }[] = Object.entries(
+		totalByWeek
+	).map(([week, total]) => ({
+		name: week,
+		total,
+	}));
+	return transformedData;
+}
+export function isUuid(input: string): boolean {
+	const uuidRegex =
+		/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+	return uuidRegex.test(input);
+}

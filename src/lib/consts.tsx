@@ -127,6 +127,23 @@ export const SIDEBAR_LINKS_AGENT = [
 		icon: searchIcon,
 	},
 ];
+export const SIDEBAR_LINKS_GREEN = [
+	{
+		title: 'Dashboard',
+		href: '/dashboard',
+		icon: dashboardIcon,
+	},
+	{
+		title: 'Vehicles',
+		href: '/green-engine/vehicles',
+		icon: driverIcon,
+	},
+	{
+		title: 'Scan',
+		href: '/scan',
+		icon: scanIcon,
+	},
+];
 export const MANAGE_SIDEBAR_LINKS = [
 	{
 		name: 'Home',
@@ -1665,6 +1682,11 @@ export const URLS = {
 		all: '/api/v1/agents',
 		me: '/api/v1/agents/me',
 	},
+	green: {
+		all: '/api/v1/greenengine',
+		me: '/api/v1/greenengine/me',
+		search: '/api/v1/greenengine/search',
+	},
 	auth: {
 		signin: {
 			admin: '/api/v1/admins/login',
@@ -1685,31 +1707,30 @@ export const URLS = {
 };
 export const BUS_IMAGE_SAMPLE =
 	'https://images.unsplash.com/photo-1616792577902-f1d86383a21b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2803&q=80';
-export const SLIDES= [
-		<>
-		  <CarouselSlides
-			desc="Accountability in a civilized society is the stepping stone to
-				development and progressive Environment"
-			images="/avater.png"
-			author="ISCE Digital Concepts"
-			title="Governor Anambra state"
-		  />
-		</>,
-		<>
-		  <CarouselSlides
-			desc="We believe that accountability is fundamental for societal progress, and TRANSPAY stands as a testament to that ethos, offering a reliable and efficient means for commuters"
-			images="/avater.png"
-			author="ISCE Digital Concepts"
-			title="Governor Anambra state"
-		  />
-		</>,
-		<>
-		  <CarouselSlides
-			desc="Just as development relies on being accountable for our actions, TRANSPAY cultivates an efficient and sustainable transit system, contributing to the growth and prosperity of our community."
-			images="/avater.png"
-			author="ISCE Digital Concepts"
-			title="Governor Anambra state"
-		  />
-		</>,
-	  ];
-	
+export const SLIDES = [
+	<>
+		<CarouselSlides
+			desc='Accountability in a civilized society is the stepping stone to
+				development and progressive Environment'
+			images='/avater.png'
+			author='ISCE Digital Concepts'
+			title='Governor Anambra state'
+		/>
+	</>,
+	<>
+		<CarouselSlides
+			desc='We believe that accountability is fundamental for societal progress, and TRANSPAY stands as a testament to that ethos, offering a reliable and efficient means for commuters'
+			images='/avater.png'
+			author='ISCE Digital Concepts'
+			title='Governor Anambra state'
+		/>
+	</>,
+	<>
+		<CarouselSlides
+			desc='Just as development relies on being accountable for our actions, TRANSPAY cultivates an efficient and sustainable transit system, contributing to the growth and prosperity of our community.'
+			images='/avater.png'
+			author='ISCE Digital Concepts'
+			title='Governor Anambra state'
+		/>
+	</>,
+];

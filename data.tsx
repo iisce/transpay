@@ -148,6 +148,16 @@ export const TRANSACTIONS: IVehicleTransaction[] = [
 	{
 		vehicle_id: 'a71dd8f6-f4ac-4d05-876c-1a211c5c33fc',
 		transaction_type: 'DAILY_FEES',
+		transaction_date: '2023-09-05T01:11:10.000Z',
+		payment_gateway_name: 'flutterwave',
+		amount: 100,
+		currency: 'NGN',
+		payment_status: 'successful',
+		last_message: null,
+	},
+	{
+		vehicle_id: 'a71dd8f6-f4ac-4d05-876c-1a211c5c33fc',
+		transaction_type: 'DAILY_FEES',
 		transaction_date: '2023-10-05T01:11:10.000Z',
 		payment_gateway_name: 'flutterwave',
 		amount: 100,
@@ -227,6 +237,57 @@ export const TRANSACTIONS: IVehicleTransaction[] = [
 	},
 ];
 
+export const REVENUE_CHART_DATA = [
+	{
+		name: 'Jan',
+		total: Math.floor(Math.random() * 7000),
+	},
+	{
+		name: 'Feb',
+		total: Math.floor(Math.random() * 7000),
+	},
+	{
+		name: 'Mar',
+		total: Math.floor(Math.random() * 7000),
+	},
+	{
+		name: 'Apr',
+		total: Math.floor(Math.random() * 7000),
+	},
+	{
+		name: 'May',
+		total: Math.floor(Math.random() * 7000),
+	},
+	{
+		name: 'Jun',
+		total: Math.floor(Math.random() * 7000),
+	},
+	{
+		name: 'Jul',
+		total: Math.floor(Math.random() * 7000),
+	},
+	{
+		name: 'Aug',
+		total: Math.floor(Math.random() * 7000),
+	},
+	{
+		name: 'Sep',
+		total: Math.floor(Math.random() * 7000),
+	},
+	{
+		name: 'Oct',
+		total: Math.floor(Math.random() * 7000),
+	},
+	{
+		name: 'Nov',
+		total: Math.floor(Math.random() * 7000),
+	},
+	{
+		name: 'Dec',
+		total: Math.floor(Math.random() * 7000),
+	},
+];
+
 // export const USER: IUser = {
 // 	user: {
 // 		avatar: '/anambara.png',
@@ -237,3 +298,75 @@ export const TRANSACTIONS: IVehicleTransaction[] = [
 // };
 
 // https://avatars.githubusercontent.com/u/62449713?v=4
+export const ALL_VEHICLES: IVehicle[] = [
+	{
+		id: 1,
+		vehicle_id: 'vehicle_id',
+		color: 'color',
+		category: 'category',
+		plate_number: 'plate_number',
+		image: 'image',
+		user_role: 'user_role',
+		user_id: 'user_id',
+		blacklisted: false,
+		status: 'status',
+		owners_phone_number: 'owners_phone_number',
+		owners_name: 'owners_name',
+		vin: 'vin',
+		vehicle_type: 'vehicle_type',
+		barcode_string: 'barcode_string',
+		tracker_id: 'tracker_id',
+		deleted: false,
+		createdAt: 'createdAt',
+		updatedAt: 'updatedAt',
+		Drivers: [],
+		VehicleTransactions: [],
+		VehicleFines: [],
+		VehicleTracker: 'VehicleTracker',
+		VehicleWaivers: [],
+		nuban: 6767886899,
+		account_name: 'account_name',
+		bank_name: '',
+		VehicleWallet: {
+			nuban: 6767886899,
+			account_name: 'account_name',
+			bank_name: '',
+		},
+		with_wallet: false,
+	},
+	{
+		id: 2,
+		vehicle_id: 'vehicle_id',
+		color: 'color',
+		category: 'category',
+		plate_number: 'plate_number',
+		image: 'image',
+		user_role: 'user_role',
+		user_id: 'user_id',
+		blacklisted: false,
+		status: 'status',
+		owners_phone_number: 'owners_phone_number',
+		owners_name: 'owners_name',
+		vin: 'vin',
+		vehicle_type: 'vehicle_type',
+		barcode_string: 'barcode_string',
+		tracker_id: 'tracker_id',
+		deleted: false,
+		createdAt: 'createdAt',
+		updatedAt: 'updatedAt',
+		Drivers: [],
+		VehicleTransactions: [],
+		VehicleFines: [],
+		VehicleTracker: 'VehicleTracker',
+		VehicleWaivers: [],
+		nuban: 6767886899,
+		account_name: 'account_name',
+		bank_name: '',
+		VehicleWallet: {
+			nuban: 6767886899,
+			account_name: 'account_name',
+			bank_name: '',
+		},
+		with_wallet: false,
+	},
+];
