@@ -11,7 +11,7 @@ export default function CheckInLayout({
 	return (
 		<main className='gap-5 h-[100svh] relative'>
 			<div className='h-full grid p-3 lg:p-10'>
-				<div className='w-full max-w-xl mx-auto flex flex-col items-center px-5 pt-24 gap-10 '>
+				<div className='w-full max-w-xl mx-auto flex flex-col items-center px-5 pt-10 lg:pt-20 gap-10 '>
 					<div className='w-60 h-18 shrink-0 px-5'>
 						<Image
 							src={'/logo.png'}

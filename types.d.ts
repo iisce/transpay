@@ -590,8 +590,8 @@ interface IInterStateVehicle {
 	ownername: string;
 	owneraddress: string;
 	ischeckedin: boolean;
-	checkintime?: Date;
-	checkouttime?: Date;
+	checkintime?: string;
+	checkouttime?: string;
 }
 
 interface NFCCard {

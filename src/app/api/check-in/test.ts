@@ -9,9 +9,13 @@ export async function getVehicleByPlate(
 	plate: string
 ): Promise<IInterStateVehicle | undefined> {
 	try {
-		const vehicle =
-			await sql<IInterStateVehicle>`SELECT * from INTERSTATE where plate=${plate}`;
-		return vehicle.rows[0];
+		const v = await fetch(
+			checkEnvironment().concat(`/api/check-in?plate=${plate}`),
+			{ cache: 'no-store' }
+		);
+		const vehicle = await v.json();
+		// console.log(vehicle.v);
+		return vehicle.v;
 	} catch (error) {
 		console.error('Failed to fetch Vehicle:', error);
 		throw new Error('Failed to fetch Vehicle.');
@@ -34,16 +38,6 @@ export async function checkInOut(plate: string) {
 				SET checkintime = ${now}, ischeckedin = ${true}
 				WHERE plate = ${plate}
 			`;
-
-			// const updatedV = await fetch(
-			// 	checkEnvironment().concat(`/api/check-in?plate=${plate}`)
-			// );
-			// const uv = await updatedV.json();
-
-			// const realuv: IInterStateVehicle = uv.v;
-			// console.log(realuv.ownername);
-			// return realuv;
-
 			const updatedV = await getVehicleByPlate(plate);
 			return updatedV;
 		} catch (error) {
