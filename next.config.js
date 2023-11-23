@@ -23,5 +23,8 @@ module.exports = withPWA({
                     pathname: '/**'
                }
           ]
+     },
+     experimental: {
+          serverActions: true
      }
 });

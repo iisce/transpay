@@ -193,6 +193,7 @@ interface IVehicle extends IWallet {
 	VehicleWallet: Omit<IWallet, 'vehicle_id'>;
 	with_wallet: boolean;
 }
+
 interface IWallet {
 	vehicle_id: string;
 	nuban: number;
@@ -581,3 +582,35 @@ interface IToken {
 //         ]
 //     }
 // }
+
+// SAMPLE OF INTERSTATE
+interface IInterStateVehicle {
+	id: number;
+	plate: string;
+	ownername: string;
+	owneraddress: string;
+	ischeckedin: boolean;
+	checkintime?: Date;
+	checkouttime?: Date;
+}
+
+interface NFCCard {
+	plate: string;
+}
+
+interface CheckInRecord {
+	plate: string;
+	checkintime: Date;
+}
+
+interface CheckOutRecord {
+	plate: string;
+	checkouttime: Date;
+	fee: number;
+}
+
+interface Database {
+	getVehicleById(plate: string): Vehicle | null;
+	saveCheckInRecord(record: CheckInRecord): void;
+	saveCheckOutRecord(record: CheckOutRecord): void;
+}

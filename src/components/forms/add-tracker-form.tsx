@@ -16,6 +16,7 @@ import React from 'react';
 import { loadingSpinner } from '@/lib/icons';
 import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
+import { useRouter } from 'next/navigation';
 
 const vehicleTrackerFormSchema = z.object({
 	tracker_id: z.string({ required_error: '' }),
@@ -24,6 +25,11 @@ const vehicleTrackerFormSchema = z.object({
 type VehicleFormValues = z.infer<typeof vehicleTrackerFormSchema>;
 
 export function AddTrackerForm({ vehicle }: { vehicle: IVehicle }) {
+	const router = useRouter();
+	const hasTracker =
+		vehicle.tracker_id !== null || vehicle.tracker_id === '';
+	hasTracker &&
+		router.push(`/green-engine/${vehicle.plate_number.toLowerCase()}`);
 	const defaultValues: Partial<VehicleFormValues> = {
 		tracker_id: vehicle.tracker_id,
 	};
@@ -38,25 +44,24 @@ export function AddTrackerForm({ vehicle }: { vehicle: IVehicle }) {
 	async function onSubmit(data: VehicleFormValues) {
 		setIsLoading(true);
 		try {
-			const createVehicleResponse = await fetch('/api/add-tracker', {
+			const addTrackerResponse = await fetch('/api/add-tracker', {
 				method: 'PUT',
 				body: JSON.stringify({
 					tracker_id: data.tracker_id,
 					vehicle_id: vehicle.vehicle_id,
 				}),
 			});
-			const result = await createVehicleResponse.json();
+			const result = await addTrackerResponse.json();
 			if (
-				createVehicleResponse.status > 199 &&
-				createVehicleResponse.status < 299
+				addTrackerResponse.status > 199 &&
+				addTrackerResponse.status < 299
 			) {
 				toast({
 					title: 'Vehicle Updated Successfully',
 				});
 				setIsLoading(false);
-				revalidatePath(
-					`/green-engine/${vehicle.plate_number}'`,
-					'layout'
+				router.push(
+					`/green-engine/${vehicle.plate_number.toLowerCase()}`
 				);
 				return NextResponse.json(result);
 			} else {
@@ -72,7 +77,7 @@ export function AddTrackerForm({ vehicle }: { vehicle: IVehicle }) {
 	}
 
 	return (
-		<div className='my-5'>
+		<div className='my-5 w-full p-5'>
 			<Form {...form}>
 				<form
 					onSubmit={form.handleSubmit(onSubmit)}

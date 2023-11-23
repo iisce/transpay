@@ -1,4 +1,4 @@
-'use client';
+// 'use client';
 import { TotalRevenueCharts } from '@/components/shared/chats/total-revenue';
 import { RevenueCharts } from '@/components/shared/chats/revenue-chart';
 import { Button } from '@/components/ui/button';
@@ -15,8 +15,11 @@ import { DailyFeesCharts } from '@/components/shared/chats/daily-fees';
 import { FinesPaymentCharts } from '@/components/shared/chats/fines-and-penalties';
 import StatsCard from '@/components/shared/statistics-card';
 import { Badge } from '@/components/ui/badge';
+import { getRevenueStats } from '@/lib/controllers/revenue-controller';
 
-export default function Revenue() {
+export default async function Revenue() {
+	const revenue = await getRevenueStats();
+	console.log(revenue);
 	return (
 		<div className='p-5 w-full h-full flex flex-col gap-3'>
 			<div className='flex justify-between items-center'>

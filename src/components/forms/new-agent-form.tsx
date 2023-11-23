@@ -20,7 +20,6 @@ import {
 	SelectValue,
 } from '../ui/select';
 import { Button } from '../ui/button';
-import { Textarea } from '../ui/textarea';
 import Link from 'next/link';
 import {
 	AlertDialog,
@@ -66,8 +65,8 @@ const agentFormSchema = z.object({
 		.min(8, {
 			message: 'ID number must be at least 8 characters.',
 		})
-		.max(20, {
-			message: 'ID Number must not be longer than 20 characters.',
+		.max(50, {
+			message: 'ID Number must not be longer than 50 characters.',
 		}),
 	identification_type: z.string({
 		required_error: 'Please select a mode of identification',
@@ -113,7 +112,7 @@ const agentFormSchema = z.object({
 		.string({
 			required_error: 'Please enter role.',
 		})
-		.refine((value) => ['agent'].includes(value), {
+		.refine((value) => ['agent', 'greenengine_agent'].includes(value), {
 			message: 'Invalid means of identification.',
 		}),
 });
@@ -128,7 +127,6 @@ const defaultValues: Partial<AgentFormValues> = {
 	email: '',
 	identification_type: 'nin',
 	identification_number: '',
-	role: 'agent',
 	location: '',
 	city: '',
 	country: 'nigeria',
@@ -174,6 +172,7 @@ export function AgentForm() {
 				});
 				setIsLoading(false);
 				setOpen(true);
+				form.reset();
 				return NextResponse.json(result);
 			} else {
 				setIsLoading(false);
@@ -236,6 +235,34 @@ export function AgentForm() {
 										</SelectItem>
 										<SelectItem value='pvc'>
 											Voters Card
+										</SelectItem>
+									</SelectContent>
+								</Select>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name='role'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Agent Type</FormLabel>
+								<Select
+									onValueChange={field.onChange}
+									defaultValue={field.value}
+								>
+									<FormControl>
+										<SelectTrigger className='h-12'>
+											<SelectValue placeholder='Choose Agent Type' />
+										</SelectTrigger>
+									</FormControl>
+									<SelectContent>
+										<SelectItem value='agent'>
+											Transpay Agent
+										</SelectItem>
+										<SelectItem value='greenengine_agent'>
+											Green Engine Agent
 										</SelectItem>
 									</SelectContent>
 								</Select>
@@ -428,15 +455,6 @@ export function AgentForm() {
 								</div>
 								<div className='text-xl'>
 									Agent Account Created
-								</div>
-							</div>
-							<div className='flex flex-col text-center mb-5'>
-								<div>
-									E-mail: {form.getValues('email')}
-								</div>
-								<div>
-									Password:{' '}
-									{form.getValues('password')}
 								</div>
 							</div>
 							<div className='flex flex-col gap-3'>

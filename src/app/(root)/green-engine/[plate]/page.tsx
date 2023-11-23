@@ -1,8 +1,6 @@
-import { AddTrackerForm } from '@/components/forms/add-tracker-form';
-import Jap from '@/components/shared/json-animation-player';
-import { Card, CardContent } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
 import { getGreenVehicleByPlate } from '@/lib/controllers/green-controller';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import React from 'react';
 
@@ -13,7 +11,8 @@ export default async function GreenVehicleInfoPage({
 }) {
 	const vehicle = await getGreenVehicleByPlate(params.plate);
 	if (!vehicle) return notFound();
-	const hasTracker = vehicle.tracker_id !== null;
+	const hasTracker =
+		vehicle.tracker_id !== null || vehicle.tracker_id === '';
 	return (
 		<div>
 			<div className='flex flex-col text-center justify-between w-full gap-1'>
@@ -38,23 +37,17 @@ export default async function GreenVehicleInfoPage({
 					</div>
 				) : (
 					<div className='text-sm uppercase'>
-						<div className=''>No Tracker Found</div>
-						<Dialog>
-							<DialogTrigger>
-								<Card className='bg-secondary overflow-hidden h-full  shadow-md hover:shadow-xl transition-all'>
-									<CardContent className='p-3'>
-										<div className='flex flex-col gap-1.5'>
-											<div className=' text-bodyBold uppercase'>
-												Add Tracker
-											</div>
-										</div>
-									</CardContent>
-								</Card>
-							</DialogTrigger>
-							<DialogContent className='sm:max-w-[425px]'>
-								<AddTrackerForm vehicle={vehicle} />
-							</DialogContent>
-						</Dialog>
+						<div className='mb-2'>No Tracker Found</div>
+						<Link
+							href={`/green-engine/${vehicle.plate_number.toLowerCase()}/add`}
+						>
+							<Button
+								variant={'secondary'}
+								className='shadow-md hover:shadow-xl transition-all'
+							>
+								Add Tracker
+							</Button>
+						</Link>
 					</div>
 				)}
 			</div>

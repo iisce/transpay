@@ -1698,6 +1698,10 @@ export const URLS = {
 		all: '/api/v1/drivers',
 		blacklist: '/api/v1/drivers/blacklist', // add vehicle to blacklist
 	},
+	revenue: {
+		stats: '/api/v1/revenue/stats',
+		report: '/api/v1/revenue/report',
+	},
 	vehicle: {
 		all: '/api/v1/vehicles',
 		blacklist: '/api/v1/vehicles/blacklist', // add vehicle to blacklist

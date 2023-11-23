@@ -167,3 +167,12 @@ export function isUuid(input: string): boolean {
 
 	return uuidRegex.test(input);
 }
+
+export const checkEnvironment = () => {
+	let base_url =
+		process.env.NODE_ENV === 'development'
+			? 'http://localhost:8726'
+			: 'https://transpay.vercel.app/'; // https://v2ds.netlify.app
+
+	return base_url;
+};

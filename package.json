@@ -6,7 +6,8 @@
 		"dev": "next dev -p 8726",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint"
+		"lint": "next lint",
+		"seed": "node -r dotenv/config ./scripts/seed.js"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^3.3.0",
@@ -43,11 +44,13 @@
 		"@types/node": "20.5.1",
 		"@types/react": "18.2.20",
 		"@types/react-dom": "18.2.7",
+		"@vercel/postgres": "^0.5.1",
 		"autoprefixer": "10.4.15",
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.0.0",
 		"cmdk": "^0.2.0",
 		"date-fns": "^2.30.0",
+		"dotenv": "^16.3.1",
 		"eslint": "8.47.0",
 		"eslint-config-next": "^13.5.3",
 		"jsonwebtoken": "^9.0.2",

@@ -263,23 +263,23 @@ export const agentsColumns: ColumnDef<IAgent>[] = [
 		),
 	},
 	{
-		accessorKey: 'location',
+		accessorKey: 'role',
 		header: ({ column }) => (
 			<DataTableColumnHeader
 				column={column}
-				title='Location'
+				title='Type'
 			/>
 		),
 	},
 	{
-		accessorKey: 'phone',
+		accessorKey: 'email',
 		header: ({ column }) => (
 			<DataTableColumnHeader
 				column={column}
-				title='Phone'
+				title='Email'
 			/>
 		),
-		cell: ({ row }) => <div>{row.original.phone}</div>,
+		cell: ({ row }) => <div>{row.original.email}</div>,
 	},
 	{
 		accessorKey: 'is_active',
