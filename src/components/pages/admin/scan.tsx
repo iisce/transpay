@@ -39,11 +39,7 @@ export default function QRScan({ role }: { role?: string }) {
 	};
 
 	const handleScanResult = (result: string) => {
-		const url =
-			role === 'greenengine_agent'
-				? `/green-engine/${result.toLowerCase()}`
-				: `/search/${result.toLowerCase()}`;
-		router.push(url);
+		router.push(result.toLowerCase());
 		setResult(result);
 		setOpen(true);
 		setScanning(false);

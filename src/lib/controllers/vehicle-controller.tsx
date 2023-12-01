@@ -1,6 +1,6 @@
 import { API, URLS } from '../consts';
 import { getSSession } from '../get-data';
-import { isUUID } from '../utils';
+import { isBarcodeId, isURL, isUUID } from '../utils';
 
 export const getVehicles = async () => {
 	const session = await getSSession();
@@ -39,11 +39,20 @@ export const getVehicleSummary = async (plate_number: string) => {
 	};
 	const url = isUUID(plate_number)
 		? `${API}${URLS.vehicle.all}/summary?id=${plate_number}`
+		: isBarcodeId(plate_number)
+		? `${API}${URLS.vehicle.all}/summary?barcode=${plate_number}`
 		: `${API}${URLS.vehicle.all}/summary?plate_number=${plate_number}`;
 	const res = await fetch(url, { headers, cache: 'no-store' });
 	if (!res.ok) return undefined;
 	const result: Promise<PrettyVehicleSummary> = await res.json();
 	const { data } = await result;
+	// console.log({
+	// 	RESULT: result,
+	// 	ID: plate_number,
+	// 	URL: url,
+	// 	HEADERS: headers,
+	// 	DATA: data.vehicle,
+	// });
 	return data.vehicle;
 };
 

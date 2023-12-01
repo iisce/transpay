@@ -84,6 +84,11 @@ export function isUUID(input: string): boolean {
 	return uuidPattern.test(input);
 }
 
+export function isBarcodeId(str: string): boolean {
+	const formatRegex = /^\d{13}$/;
+	return formatRegex.test(str);
+}
+
 export function slugify(text: string): string {
 	return text
 		.toLowerCase()
@@ -168,11 +173,16 @@ export function isUuid(input: string): boolean {
 	return uuidRegex.test(input);
 }
 
+export function isURL(str: string): boolean {
+	const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/;
+	return urlRegex.test(str);
+}
+
 export const checkEnvironment = () => {
 	let base_url =
 		process.env.NODE_ENV === 'development'
 			? 'http://localhost:8726'
-			: 'https://transpay.vercel.app/'; // https://v2ds.netlify.app
+			: 'https://transpay.vercel.app/';
 
 	return base_url;
 };

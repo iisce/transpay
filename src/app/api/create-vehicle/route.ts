@@ -60,6 +60,11 @@ export async function PUT(req: NextRequest) {
 			body: JSON.stringify(body),
 		});
 		const result = await response.json();
+		// console.log({
+		// 	RESULT: result,
+		// 	URL: url,
+		// 	BODY: body,
+		// });
 		if (!response.ok) {
 			throw new Error(`Something Went wrong ${response.statusText}`);
 		} else {

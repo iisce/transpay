@@ -255,29 +255,36 @@ export default async function SearchVehicle({ id }: { id: string }) {
 						)}
 
 						<div className='flex flex-col gap-2 mb-20'>
-							<div className='flex justify-between py-2'>
-								<div className='shrink-0 grow-0 text-title1Bold'>
-									Drivers
-								</div>
-								<div className='shrink-0 grow-0 text-title1Bold'>
-									<Button
-										asChild
-										variant='link'
-									>
-										<Link
-											href={`/vehicles/${vehicle.vehicle_id}/drivers`}
-										>
-											See all
-										</Link>
-									</Button>
-								</div>
-							</div>
-							<div className=''>
-								<DataTable
-									columns={driversColumns}
-									data={vehicle.Drivers.slice(0, 3)}
-								/>
-							</div>
+							{vehicle.Drivers && (
+								<>
+									<div className='flex justify-between py-2'>
+										<div className='shrink-0 grow-0 text-title1Bold'>
+											Drivers
+										</div>
+										<div className='shrink-0 grow-0 text-title1Bold'>
+											<Button
+												asChild
+												variant='link'
+											>
+												<Link
+													href={`/vehicles/${vehicle.vehicle_id}/drivers`}
+												>
+													See all
+												</Link>
+											</Button>
+										</div>
+									</div>
+									<div className=''>
+										<DataTable
+											columns={driversColumns}
+											data={vehicle.Drivers.slice(
+												0,
+												3
+											)}
+										/>
+									</div>
+								</>
+							)}
 						</div>
 					</div>
 				)}
