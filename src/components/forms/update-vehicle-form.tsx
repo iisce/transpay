@@ -339,6 +339,28 @@ export function UpdateVehicleForm({ vehicle }: { vehicle: IVehicle }) {
 								</FormItem>
 							)}
 						/>
+						<FormField
+							name='tracker_id'
+							control={form.control}
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel className='text-title1Bold pl-4'>
+										Tracker ID
+									</FormLabel>
+
+									<FormControl>
+										<Input
+											disabled={disabled}
+											className='relative text-body flex  items-center h-14 rounded-2xl'
+											{...field}
+											type='text'
+											placeholder='Enter tracker ID'
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
 					</div>
 					<div className=''>
 						{!disabled && (
