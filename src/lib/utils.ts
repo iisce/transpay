@@ -186,3 +186,27 @@ export const checkEnvironment = () => {
 
 	return base_url;
 };
+
+export function generateRandomLocation(): {
+	lat: number;
+	lng: number;
+} {
+	const minlat: number = 5.8255;
+	const maxlat: number = 6.8998;
+	const minLng: number = 6.4101;
+	const maxLng: number = 7.1849;
+
+	// Generate random lat and lng
+	const lat: number = parseFloat(
+		(Math.random() * (maxlat - minlat) + minlat).toFixed(6)
+	);
+	const lng: number = parseFloat(
+		(Math.random() * (maxLng - minLng) + minLng).toFixed(6)
+	);
+
+	return { lat, lng };
+}
+
+export function generateRandomInteger(min: number, max: number): number {
+	return Math.floor(Math.random() * (max - min + 1)) + min;
+}

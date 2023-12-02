@@ -12,7 +12,12 @@ import {
 	DropdownMenuTrigger,
 } from '@radix-ui/react-dropdown-menu';
 import { ColumnDef } from '@tanstack/react-table';
-import { EyeIcon, MoreHorizontal, MoreVertical } from 'lucide-react';
+import {
+	EyeIcon,
+	MapPinIcon,
+	MoreHorizontal,
+	MoreVertical,
+} from 'lucide-react';
 import { DataTableColumnHeader } from './data-column-table-header';
 import { deleteIcon, editIcon, paymentIcon, printIcon } from '@/lib/icons';
 import Pill from '../pill';
@@ -410,6 +415,17 @@ export const vehiclesColumns: ColumnDef<IVehicle>[] = [
 									{editIcon}
 								</span>
 								View Vehicle
+							</Link>
+						</DropdownMenuItem>
+						<DropdownMenuItem
+							className='border-b border-black rounded-none'
+							asChild
+						>
+							<Link
+								href={`/vehicles/${vehicle.vehicle_id}/location`}
+							>
+								<MapPinIcon className='h-4 w-4 mr-3' />
+								View Location
 							</Link>
 						</DropdownMenuItem>
 						{/* <DropdownMenuItem
