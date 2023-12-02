@@ -6,6 +6,7 @@ import { DataTable } from '@/components/ui/table/data-table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { getVehicleSummary } from '@/lib/controllers/vehicle-controller';
 import { failureIcon, successIcon } from '@/lib/icons';
+import { MapPin } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import React from 'react';
@@ -45,6 +46,19 @@ export default async function NoLoginSearch({
 						{vehicle.plate_number}
 					</div>
 				</div>
+				<Button
+					className='w-full max-w-xl mx-auto text-white rounded-xl bg-primary-800'
+					asChild
+					variant={'default'}
+				>
+					<Link
+						href={`/vehicles/${vehicle.vehicle_id}/location`}
+						className='shrink-0 whitespace-nowrap'
+					>
+						<MapPin className='mr-2 h-4 w-4 shrink-0' />
+						View live location
+					</Link>
+				</Button>
 			</div>
 			<Tabs
 				defaultValue='overview'

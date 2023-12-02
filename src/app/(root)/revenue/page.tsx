@@ -16,9 +16,11 @@ import { FinesPaymentCharts } from '@/components/shared/chats/fines-and-penaltie
 import StatsCard from '@/components/shared/statistics-card';
 import { Badge } from '@/components/ui/badge';
 import { getRevenueStats } from '@/lib/controllers/revenue-controller';
+import { REVENUE_CHART_DATA } from '../../../../data';
 
 export default async function Revenue() {
-	const revenue = await getRevenueStats();
+	// const revenue = await getRevenueStats();
+	const revenue = REVENUE_CHART_DATA;
 	console.log(revenue);
 	return (
 		<div className='p-5 w-full h-full flex flex-col gap-3'>
@@ -55,7 +57,7 @@ export default async function Revenue() {
 						<Button
 							className='justify-start rounded-xl h-12'
 							variant={'default'}
-							onClick={() => console.log('Hello Button')}
+							// onClick={() => console.log('Hello Button')}
 						>
 							<div className='h-4 w-4 shrink-0'>
 								{addIcon}
@@ -85,10 +87,18 @@ export default async function Revenue() {
 					>
 						<DailyFeesCharts />
 					</StatsCard>
-					<StatsCard
+					{/* <StatsCard
 						percentage={0}
 						title='Fines & Penalties Payment'
 						amount='9,090,278'
+					>
+						<FinesPaymentCharts />
+					</StatsCard> */}
+					<StatsCard
+						percentage={1}
+						title='Bank Charges'
+						amount='90,278'
+						type='up'
 					>
 						<FinesPaymentCharts />
 					</StatsCard>
