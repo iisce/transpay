@@ -12,6 +12,7 @@ export const config = {
 		'/revenue/:path*',
 		'/vehicles/:path*',
 		'/drivers/:path*',
+		'/property/:path*',
 		'/green-engine/:path*',
 	],
 };

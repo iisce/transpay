@@ -473,6 +473,140 @@ export const vehiclesColumns: ColumnDef<IVehicle>[] = [
 		},
 	},
 ];
+export const propertiesColumns: ColumnDef<IProperty>[] = [
+	{
+		accessorKey: 'propertyId',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Property ID'
+			/>
+		),
+		cell: ({ row }) => (
+			<Link
+				href={`/property/${row.original.propertyId}`}
+				className=''
+			>
+				{row.original.propertyId}
+			</Link>
+		),
+	},
+	{
+		accessorKey: 'ownerName',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Owner'
+			/>
+		),
+		cell: ({ row }) => (
+			<div className='uppercase'>{row.original.ownerName}</div>
+		),
+	},
+	// {
+	// 	accessorKey: 'isPaid',
+	// 	header: ({ column }) => (
+	// 		<DataTableColumnHeader
+	// 			column={column}
+	// 			title='Status'
+	// 		/>
+	// 	),
+	// 	cell: ({ row }) => (
+	// 		<div className='uppercase'>{row.original.isPaid.valueOf()}</div>
+	// 	),
+	// },
+	{
+		accessorKey: 'paymentDueDate',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Due Date'
+			/>
+		),
+		cell: ({ row }) => (
+			<div className='uppercase'>{row.original.paymentDueDate}</div>
+		),
+	},
+	{
+		id: 'actions',
+		cell: ({ row }) => {
+			const property = row.original;
+			return (
+				<DropdownMenu>
+					<DropdownMenuTrigger>
+						<MoreVertical className='h-4 w-4' />
+					</DropdownMenuTrigger>
+					<DropdownMenuContent
+						className='border border-black'
+						align='end'
+					>
+						<DropdownMenuItem
+							className='border-b border-black rounded-none'
+							asChild
+						>
+							<Link
+								href={`/property/${property.propertyId}`}
+							>
+								<span className='h-4 w-4 mr-3'>
+									{editIcon}
+								</span>
+								View Vehicle
+							</Link>
+						</DropdownMenuItem>
+						<DropdownMenuItem
+							className='border-b border-black rounded-none'
+							asChild
+						>
+							<Link
+								href={`/property/${property.propertyId}/location`}
+							>
+								<MapPinIcon className='h-4 w-4 mr-3' />
+								View Location
+							</Link>
+						</DropdownMenuItem>
+						<DropdownMenuItem className='text-destructive'>
+							Delete Property
+						</DropdownMenuItem>
+						<DropdownMenuItem
+							className=''
+							onClick={() =>
+								navigator.clipboard.writeText(
+									property.propertyId
+								)
+							}
+						>
+							Copy Property ID
+						</DropdownMenuItem>
+					</DropdownMenuContent>
+				</DropdownMenu>
+			);
+		},
+	},
+];
+export const propertyPaymentColumns: ColumnDef<IPropertyPaymentRecord>[] = [
+	{
+		accessorKey: 'amountPaid',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Amount Paid'
+			/>
+		),
+		cell: ({ row }) => <div className=''>{row.original.amountPaid}</div>,
+	},
+	{
+		accessorKey: 'paymentDate',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Date Paid'
+			/>
+		),
+		cell: ({ row }) => (
+			<div className='uppercase'>{row.original.paymentDate}</div>
+		),
+	},
+];
 export const agentPaymentColumns: ColumnDef<AgentPayment>[] = [
 	{
 		accessorKey: 'driver',

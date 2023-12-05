@@ -1,4 +1,9 @@
-import { ActivitySquareIcon, CarTaxiFront, SettingsIcon } from 'lucide-react';
+import {
+	ActivitySquareIcon,
+	CarTaxiFront,
+	HomeIcon,
+	SettingsIcon,
+} from 'lucide-react';
 import {
 	adminIcon,
 	agentDriverIcon,
@@ -66,6 +71,11 @@ export const SIDEBAR_LINKS = [
 		title: 'Revenue',
 		href: '/revenue',
 		icon: revenueIcon,
+	},
+	{
+		title: 'Property',
+		href: '/property',
+		icon: <HomeIcon className='h-4 w-4' />,
 	},
 	{
 		title: 'Settings',
@@ -1737,4 +1747,257 @@ export const SLIDES = [
 			title='Governor Anambra state'
 		/>
 	</>,
+];
+
+export const PROPERTIES: IProperty[] = [
+	{
+		propertyId: 'ABC123',
+		ownerName: 'John Doe',
+		address: '123 Main Street',
+		propertyType: 'Residential',
+		assessmentValue: 250000,
+		taxRate: 0.02,
+		taxAmount: 5000,
+		paymentDueDate: '2023-12-31',
+		isPaid: false,
+		paymentRecords: [
+			{
+				paymentDate: '2023-01-15',
+				amountPaid: 2000,
+			},
+			{
+				paymentDate: '2023-02-28',
+				amountPaid: 3000,
+			},
+			{
+				paymentDate: '2023-04-15',
+				amountPaid: 2500,
+			},
+		],
+	},
+	{
+		propertyId: 'DEF456',
+		ownerName: 'Jane Smith',
+		address: '456 Oak Avenue',
+		propertyType: 'Commercial',
+		assessmentValue: 500000,
+		taxRate: 0.03,
+		taxAmount: 15000,
+		paymentDueDate: '2023-11-15',
+		isPaid: true,
+		paymentRecords: [
+			{
+				paymentDate: '2023-01-15',
+				amountPaid: 2000,
+			},
+			{
+				paymentDate: '2023-02-28',
+				amountPaid: 3000,
+			},
+			{
+				paymentDate: '2023-04-15',
+				amountPaid: 2500,
+			},
+		],
+	},
+	{
+		propertyId: 'GHI789',
+		ownerName: 'Bob Johnson',
+		address: '789 Pine Street',
+		propertyType: 'Residential',
+		assessmentValue: 300000,
+		taxRate: 0.025,
+		taxAmount: 7500,
+		paymentDueDate: '2023-10-31',
+		isPaid: false,
+		paymentRecords: [
+			{
+				paymentDate: '2023-01-15',
+				amountPaid: 2000,
+			},
+			{
+				paymentDate: '2023-02-28',
+				amountPaid: 3000,
+			},
+			{
+				paymentDate: '2023-04-15',
+				amountPaid: 2500,
+			},
+		],
+	},
+	{
+		propertyId: 'JKL012',
+		ownerName: 'Alice Williams',
+		address: '12 Cedar Avenue',
+		propertyType: 'Commercial',
+		assessmentValue: 700000,
+		taxRate: 0.035,
+		taxAmount: 24500,
+		paymentDueDate: '2023-09-15',
+		isPaid: true,
+		paymentRecords: [
+			{
+				paymentDate: '2023-01-15',
+				amountPaid: 2000,
+			},
+			{
+				paymentDate: '2023-02-28',
+				amountPaid: 3000,
+			},
+			{
+				paymentDate: '2023-04-15',
+				amountPaid: 2500,
+			},
+		],
+	},
+	{
+		propertyId: 'MNO345',
+		ownerName: 'Charlie Brown',
+		address: '345 Elm Street',
+		propertyType: 'Residential',
+		assessmentValue: 400000,
+		taxRate: 0.03,
+		taxAmount: 12000,
+		paymentDueDate: '2023-08-31',
+		isPaid: false,
+		paymentRecords: [
+			{
+				paymentDate: '2023-01-15',
+				amountPaid: 2000,
+			},
+			{
+				paymentDate: '2023-02-28',
+				amountPaid: 3000,
+			},
+			{
+				paymentDate: '2023-04-15',
+				amountPaid: 2500,
+			},
+		],
+	},
+	{
+		propertyId: 'PQR678',
+		ownerName: 'Eva Davis',
+		address: '678 Maple Avenue',
+		propertyType: 'Commercial',
+		assessmentValue: 600000,
+		taxRate: 0.04,
+		taxAmount: 24000,
+		paymentDueDate: '2023-07-15',
+		isPaid: true,
+		paymentRecords: [
+			{
+				paymentDate: '2023-01-15',
+				amountPaid: 2000,
+			},
+			{
+				paymentDate: '2023-02-28',
+				amountPaid: 3000,
+			},
+			{
+				paymentDate: '2023-04-15',
+				amountPaid: 2500,
+			},
+		],
+	},
+	{
+		propertyId: 'STU901',
+		ownerName: 'David Wilson',
+		address: '901 Oak Street',
+		propertyType: 'Residential',
+		assessmentValue: 350000,
+		taxRate: 0.028,
+		taxAmount: 9800,
+		paymentDueDate: '2023-06-30',
+		isPaid: false,
+		paymentRecords: [
+			{
+				paymentDate: '2023-01-15',
+				amountPaid: 2000,
+			},
+			{
+				paymentDate: '2023-02-28',
+				amountPaid: 3000,
+			},
+			{
+				paymentDate: '2023-04-15',
+				amountPaid: 2500,
+			},
+		],
+	},
+	{
+		propertyId: 'VWX234',
+		ownerName: 'Grace Taylor',
+		address: '234 Birch Avenue',
+		propertyType: 'Commercial',
+		assessmentValue: 800000,
+		taxRate: 0.045,
+		taxAmount: 36000,
+		paymentDueDate: '2023-05-15',
+		isPaid: true,
+		paymentRecords: [
+			{
+				paymentDate: '2023-01-15',
+				amountPaid: 2000,
+			},
+			{
+				paymentDate: '2023-02-28',
+				amountPaid: 3000,
+			},
+			{
+				paymentDate: '2023-04-15',
+				amountPaid: 2500,
+			},
+		],
+	},
+	{
+		propertyId: 'YZA567',
+		ownerName: 'Frank Miller',
+		address: '567 Pine Street',
+		propertyType: 'Residential',
+		assessmentValue: 450000,
+		taxRate: 0.032,
+		taxAmount: 14400,
+		paymentDueDate: '2023-04-30',
+		isPaid: false,
+		paymentRecords: [
+			{
+				paymentDate: '2023-01-15',
+				amountPaid: 2000,
+			},
+			{
+				paymentDate: '2023-02-28',
+				amountPaid: 3000,
+			},
+			{
+				paymentDate: '2023-04-15',
+				amountPaid: 2500,
+			},
+		],
+	},
+	{
+		propertyId: 'BCD890',
+		ownerName: 'Helen Clark',
+		address: '890 Elm Avenue',
+		propertyType: 'Commercial',
+		assessmentValue: 900000,
+		taxRate: 0.05,
+		taxAmount: 45000,
+		paymentDueDate: '2023-03-15',
+		isPaid: true,
+		paymentRecords: [
+			{
+				paymentDate: '2023-01-15',
+				amountPaid: 2000,
+			},
+			{
+				paymentDate: '2023-02-28',
+				amountPaid: 3000,
+			},
+			{
+				paymentDate: '2023-04-15',
+				amountPaid: 2500,
+			},
+		],
+	},
 ];

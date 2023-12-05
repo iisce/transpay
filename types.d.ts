@@ -614,3 +614,21 @@ interface Database {
 	saveCheckInRecord(record: CheckInRecord): void;
 	saveCheckOutRecord(record: CheckOutRecord): void;
 }
+
+interface IPropertyPaymentRecord {
+	paymentDate: string;
+	amountPaid: number;
+}
+
+interface IProperty {
+	propertyId: string;
+	ownerName: string;
+	address: string;
+	propertyType: string;
+	assessmentValue: number;
+	taxRate: number;
+	taxAmount: number;
+	paymentDueDate: string;
+	isPaid: boolean;
+	paymentRecords: IPropertyPaymentRecord[];
+}
