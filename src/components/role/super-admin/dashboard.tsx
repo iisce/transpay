@@ -43,7 +43,7 @@ export default async function DashboardSuperAdmin(user: { user: IUser }) {
 
 	return (
 		<div className='w-full'>
-			<div className='grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-5'>
+			<div className='grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5'>
 				<DashboardCard
 					type={
 						totalRevenueAmount < 0
@@ -66,6 +66,18 @@ export default async function DashboardSuperAdmin(user: { user: IUser }) {
 					}
 					title='Daily Fees'
 					amount={totalDailyFeesAmount}
+					percent={10}
+				/>
+				<DashboardCard
+					type={
+						totalDailyFeesAmount < 0
+							? 'negative'
+							: totalDailyFeesAmount === 0
+							? 'neutral'
+							: 'positive'
+					}
+					title='Monthly Fees'
+					amount={totalDailyFeesAmount * 21.67}
 					percent={10}
 				/>
 				<DashboardCard
@@ -117,17 +129,23 @@ export default async function DashboardSuperAdmin(user: { user: IUser }) {
 					<div className='rounded-xl border bg-secondary flex flex-col gap-3 p-2 h-full'>
 						<div className='text-2xl px-3'>Activities</div>
 						<div className='grid gap-3'>
-							{ACTIVITIES.map((activity, k) => (
-								<ActivityCard
-									key={k}
-									id={activity.id}
-									name={activity.name}
-									activity_id={activity.activity_id}
-									time={activity.time}
-									date={activity.date}
-									description={activity.description}
-								/>
-							))}
+							{ACTIVITIES.splice(0, 3).map(
+								(activity, k) => (
+									<ActivityCard
+										key={k}
+										id={activity.id}
+										name={activity.name}
+										activity_id={
+											activity.activity_id
+										}
+										time={activity.time}
+										date={activity.date}
+										description={
+											activity.description
+										}
+									/>
+								)
+							)}
 						</div>
 					</div>
 				</div>

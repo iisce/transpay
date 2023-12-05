@@ -17,7 +17,7 @@ export default function StatsCard({
 	percentage: string | number;
 }) {
 	return (
-		<div className='p-2 w-full md:w-1/2 lg:w-1/3'>
+		<div className='p-2 w-full md:w-1/2 lg:w-1/3 xl:w-1/4'>
 			<Card className=' overflow-hidden p-5 shadow-md hover:shadow-xl transition-all'>
 				<div className='mb-5'>
 					<div className=''>{title}</div>

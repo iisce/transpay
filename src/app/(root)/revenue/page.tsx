@@ -87,13 +87,14 @@ export default async function Revenue() {
 					>
 						<DailyFeesCharts />
 					</StatsCard>
-					{/* <StatsCard
-						percentage={0}
-						title='Fines & Penalties Payment'
-						amount='9,090,278'
+					<StatsCard
+						percentage={2.12}
+						type='up'
+						title='Monthly Fees Payment'
+						amount='32,090,278'
 					>
 						<FinesPaymentCharts />
-					</StatsCard> */}
+					</StatsCard>
 					<StatsCard
 						percentage={1}
 						title='Bank Charges'
@@ -108,10 +109,11 @@ export default async function Revenue() {
 						<div className=''>Net</div>
 						<div className='flex'>
 							<div className='p-1'>1D</div>
-							<div className='p-1'>1D</div>
-							<div className='p-1'>1D</div>
-							<div className='p-1'>1D</div>
-							<div className='p-1'>1D</div>
+							<div className='p-1'>1W</div>
+							<div className='p-1'>1M</div>
+							<div className='p-1'>2M</div>
+							<div className='p-1'>6M</div>
+							<div className='p-1'>1Y</div>
 						</div>
 					</div>
 					<div className='flex gap-2'>
