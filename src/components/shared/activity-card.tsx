@@ -3,13 +3,12 @@ import Link from 'next/link';
 import React from 'react';
 
 export default function ActivityCard({
-	id,
 	name,
 	time,
 	date,
 	activity_id,
 	description,
-}: IActivities) {
+}: IActivityCard) {
 	return (
 		<Link
 			href={`/activities/${activity_id}`}
@@ -18,7 +17,7 @@ export default function ActivityCard({
 			<div className=' truncate text-ellipsis text-sm'>
 				{unslugify(name)}
 			</div>
-			<div className=' truncate text-ellipsis text-xs line-clamp-1'>
+			<div className=' truncate text-ellipsis text-xs line-clamp-2'>
 				{description}
 			</div>
 			<div className='flex text-xs justify-between'>

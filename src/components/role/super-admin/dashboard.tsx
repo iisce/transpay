@@ -2,7 +2,7 @@ import React from 'react';
 import DashboardCard from './dashboard-card';
 import { SuperAdminRevenueCharts } from '@/components/shared/chats/super-admin-revenue-chart';
 import { Calendar } from '@/components/ui/calendar';
-import { ACTIVITIES, REVENUE_CHART_DATA, TRANSACTIONS } from '../../../../data';
+import { REVENUE_CHART_DATA, TRANSACTIONS } from '../../../../data';
 import ActivityCard from '@/components/shared/activity-card';
 import { DataTable } from '@/components/ui/table/data-table';
 import { adminsColumns } from '@/components/ui/table/columns';
@@ -12,9 +12,12 @@ import {
 	transformTransactionsToMonthsData,
 	transformTransactionsToWeeksData,
 } from '@/lib/utils';
+import { format } from 'date-fns';
+import { getAllActivities } from '@/lib/controllers/activity-controller';
 
 export default async function DashboardSuperAdmin(user: { user: IUser }) {
 	const admins = await getAdmins();
+	const ACTIVITIES = (await getAllActivities())?.splice(0, 3);
 	const blackListed =
 		admins?.filter((admin) => admin.blacklisted === true) || [];
 
@@ -129,23 +132,37 @@ export default async function DashboardSuperAdmin(user: { user: IUser }) {
 					<div className='rounded-xl border bg-secondary flex flex-col gap-3 p-2 h-full'>
 						<div className='text-2xl px-3'>Activities</div>
 						<div className='grid gap-3'>
-							{ACTIVITIES.splice(0, 3).map(
-								(activity, k) => (
-									<ActivityCard
-										key={k}
-										id={activity.id}
-										name={activity.name}
-										activity_id={
-											activity.activity_id
-										}
-										time={activity.time}
-										date={activity.date}
-										description={
-											activity.description
-										}
-									/>
-								)
-							)}
+							{ACTIVITIES &&
+								ACTIVITIES.splice(0, 3).map(
+									(activity, k) => (
+										<ActivityCard
+											key={k}
+											id={activity.id}
+											name={activity.name}
+											activity_id={
+												activity.activity_id
+											}
+											time={format(
+												new Date(
+													activity.createdAt
+												),
+												'h:mm a'
+											)}
+											date={new Date(
+												activity.createdAt
+											).toLocaleDateString()}
+											description={
+												activity.description
+											}
+											user_id={
+												activity.user_id
+											}
+											user_role={
+												activity.user_role
+											}
+										/>
+									)
+								)}
 						</div>
 					</div>
 				</div>

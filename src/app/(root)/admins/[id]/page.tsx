@@ -6,8 +6,9 @@ import { notFound } from 'next/navigation';
 import React from 'react';
 import Link from 'next/link';
 import ActivityCard from '@/components/shared/activity-card';
-import { ACTIVITIES } from '../../../../../data';
 import { Card } from '@/components/ui/card';
+import { getAllActivities } from '@/lib/controllers/activity-controller';
+import ActivityList from '@/components/pages/activities/activity-list';
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
 	const admin = await getAdminById(params.id);
@@ -21,6 +22,8 @@ export default async function SingularAdmin({
 }: {
 	params: { id: string };
 }) {
+	const ACTIVITIES = await getAllActivities();
+	if (!ACTIVITIES) return notFound();
 	const admin = await getAdminById(params.id);
 	if (!admin) return notFound();
 	else
@@ -56,23 +59,12 @@ export default async function SingularAdmin({
 						</div>
 						<div>
 							<Card className='bg-secondary'>
-								{ACTIVITIES.slice(0, 3).map(
-									(activity, k) => (
-										<ActivityCard
-											key={k}
-											id={activity.id}
-											name={activity.name}
-											activity_id={
-												activity.activity_id
-											}
-											time={activity.time}
-											date={activity.date}
-											description={
-												activity.description
-											}
-										/>
-									)
-								)}
+								<ActivityList
+									allActivities={ACTIVITIES.slice(
+										0,
+										3
+									)}
+								/>
 							</Card>
 						</div>
 					</div>

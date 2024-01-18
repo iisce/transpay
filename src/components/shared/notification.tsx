@@ -10,10 +10,14 @@ import {
 } from '../ui/dropdown-menu';
 import Link from 'next/link';
 import { notificationIcon } from '@/lib/icons';
-import { ACTIVITIES } from '../../../data';
 import ActivityCard from './activity-card';
+import ActivityList from '../pages/activities/activity-list';
+import { getAllActivities } from '@/lib/controllers/activity-controller';
+import { notFound } from 'next/navigation';
 
-export function Notification() {
+export async function Notification() {
+	const ACTIVITIES = await getAllActivities();
+	if (!ACTIVITIES) return notFound();
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
@@ -36,25 +40,7 @@ export function Notification() {
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
-					{ACTIVITIES.map((activity, k) => (
-						<DropdownMenuItem
-							className=''
-							asChild
-							key={k}
-						>
-							<Link href={`/activities/${activity.id}`}>
-								<ActivityCard
-									key={k}
-									id={activity.id}
-									description={activity.description}
-									activity_id={activity.activity_id}
-									name={activity.name}
-									time={activity.time}
-									date={activity.date}
-								/>
-							</Link>
-						</DropdownMenuItem>
-					))}
+					<ActivityList allActivities={ACTIVITIES} />
 				</DropdownMenuGroup>
 			</DropdownMenuContent>
 		</DropdownMenu>

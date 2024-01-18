@@ -108,14 +108,28 @@ interface IDashboardCard {
 	type: 'positive' | 'negative' | 'neutral';
 	percent: number;
 }
-interface IActivities {
+interface IActivity {
 	id: number;
 	activity_id: string;
+	user_role: string;
+	user_id: string;
 	name: string;
-	time: string;
-	date: string;
 	description: string;
+	createdAt: string;
+	updatedAt: string;
 }
+
+interface IActivityCard {
+	id: number;
+	activity_id: string;
+	user_role: string;
+	user_id: string;
+	name: string;
+	description: string;
+	date: string;
+	time: string;
+}
+
 interface IPage {
 	name: string;
 	href: string;

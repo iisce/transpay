@@ -1684,6 +1684,9 @@ export const LGA = [
 ];
 export const API = 'https://squid-app-ruxoz.ondigitalocean.app';
 export const URLS = {
+	activity: {
+		all: '/api/v1/activities',
+	},
 	admin: {
 		all: '/api/v1/admins',
 		me: '/api/v1/admins/me',
