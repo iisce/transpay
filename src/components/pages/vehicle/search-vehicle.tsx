@@ -25,7 +25,6 @@ export default async function SearchVehicle({ id }: { id: string }) {
 	const { role } = await getSSession();
 	const vehicle = await getVehicleSummary(id);
 	const onWaiver = vehicle?.status === 'inactive';
-	const isOwing = true;
 	if (!vehicle) {
 		notFound();
 	}
@@ -33,6 +32,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 		(transaction) => transaction.payment_status === 'pending'
 	);
 
+	const isOwing = pendingPayments.length > 0;
 	const totalPendingAmount = pendingPayments.reduce(
 		(acc, order) => acc + order.amount,
 		0

@@ -10,9 +10,10 @@ export const getAdminMe = async () => {
 	};
 	const url = API + URLS.admin.me;
 	const res = await fetch(url, { headers, cache: 'no-store' });
+	const data: Promise<IAdminMe> = await res.json();
+	console.log({ data });
 	if (!res.ok) return undefined;
 
-	const data: Promise<IAdminMe> = await res.json();
 	const admin = (await data).data.admin;
 	return admin;
 };
