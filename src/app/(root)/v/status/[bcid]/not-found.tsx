@@ -8,19 +8,12 @@ export default function AdminsPageNotFound() {
 	return (
 		<div className='grid place-items-center w-full'>
 			<div className='flex flex-col items-center justify-center text-center'>
-				<h2>Page Not Found</h2>
-				<p>You might not have permission to view this page</p>
-				<Button
-					onClick={() => router.back()}
-					variant='link'
-				>
-					Go Back
-				</Button>
+				<h2>Sticker Not Attatched To A Vehicle</h2>
 				<Button
 					asChild
 					variant='link'
 				>
-					<Link href='/dashboard'>Go to Dashboard</Link>
+					<Link href='/'>Go to Dashboard</Link>
 				</Button>
 			</div>
 		</div>

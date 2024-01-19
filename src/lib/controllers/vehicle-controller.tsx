@@ -53,6 +53,8 @@ export const getVehicleSummary = async (plate_number: string) => {
 	// 	HEADERS: headers,
 	// 	DATA: data.vehicle,
 	// });
+
+	if (!data) return undefined;
 	return data.vehicle;
 };
 
