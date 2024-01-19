@@ -15,7 +15,7 @@ export default function CarouselSlides({ desc, images, author, title }: SLIDESI)
         “{desc}”.
       </p>
       <div className="flex gap-4 mt-4">
-        <Image src={images} height={40} width={50} alt="avater" />
+        <Image className='rounded-[100px]' src={images} height={40} width={50} alt="avater" />
         <div className="mt-2">
           <p className="text-body ">{author}</p>
           <p className="text-caption">{title}</p>
