@@ -9,14 +9,19 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { settingsColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
-import { getSettings } from '@/lib/controllers/setting-controller';
+import {
+	getSettings,
+	//  mainJobs
+} from '@/lib/controllers/setting-controller';
 import { PlusIcon } from 'lucide-react';
 import React from 'react';
 
 export default async function SuperAdminSettingsPage() {
 	const settings = await getSettings();
+	// const gary = await mainJobs();
 
-	console.log(settings);
+	// console.log(settings);
+	// console.log(gary);
 	return (
 		<div className='w-full flex flex-col px-3'>
 			<div className='w-full flex gap-5 justify-between'>

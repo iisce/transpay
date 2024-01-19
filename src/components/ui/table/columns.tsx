@@ -28,6 +28,7 @@ import { formatDate } from '@/lib/utils';
 import { Dialog, DialogContent, DialogFooter, DialogTrigger } from '../dialog';
 import Receipt from '@/components/shared/receipt/vehicle-transaction';
 import { UpdateSettingsForm } from '@/components/forms/update-settings-form';
+import { format } from 'date-fns';
 
 export const debtColumns: ColumnDef<IVehiclePayment>[] = [
 	{
@@ -40,7 +41,14 @@ export const debtColumns: ColumnDef<IVehiclePayment>[] = [
 		),
 		cell: ({ row }) => {
 			const payment = row.original;
-			return <div>{payment.transaction_date}</div>;
+			return (
+				<div>
+					{format(
+						new Date(payment.transaction_date),
+						'MMM, dd yyyy'
+					)}
+				</div>
+			);
 		},
 		sortDescFirst: true,
 	},

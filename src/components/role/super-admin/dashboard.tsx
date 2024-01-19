@@ -23,8 +23,8 @@ export default async function DashboardSuperAdmin(user: { user: IUser }) {
 	const blackListed = dashboardDetails?.data.admins.blacklisted || [];
 
 	if (!dashboardDetails) return notFound();
-	const transactions = dashboardDetails?.data.chart.transactions.all;
-	// const transactions = await getTransactions();
+	// const transactions = dashboardDetails?.data.chart.transactions.all;
+	const transactions = await getTransactions();
 	const dailyFees = transactions.filter(
 		(transaction) => transaction.transaction_type === 'DAILY_FEES'
 	);
@@ -51,52 +51,24 @@ export default async function DashboardSuperAdmin(user: { user: IUser }) {
 		<div className='w-full'>
 			<div className='grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5'>
 				<DashboardCard
-					// type={
-					// 	totalRevenueAmount < 0
-					// 		? 'negative'
-					// 		: totalRevenueAmount === 0
-					// 		? 'neutral'
-					// 		: 'positive'
-					// }
 					type='positive'
 					title='Total Revenue'
 					amount={totalDailyFeesAmount}
 					percent={0}
 				/>
 				<DashboardCard
-					// type={
-					// 	totalDailyFeesAmount < 0
-					// 		? 'negative'
-					// 		: totalDailyFeesAmount === 0
-					// 		? 'neutral'
-					// 		: 'positive'
-					// }
 					type='positive'
 					title='Daily Fees'
 					amount={totalDailyFeesAmount}
 					percent={0}
 				/>
 				<DashboardCard
-					// type={
-					// 	totalDailyFeesAmount < 0
-					// 		? 'negative'
-					// 		: totalDailyFeesAmount === 0
-					// 		? 'neutral'
-					// 		: 'positive'
-					// }
 					type='positive'
 					title='Monthly Fees'
 					amount={totalDailyFeesAmount * 21.67}
 					percent={0}
 				/>
 				<DashboardCard
-					// type={
-					// 	totalTrackerFeesAmount < 0
-					// 		? 'negative'
-					// 		: totalTrackerFeesAmount === 0
-					// 		? 'neutral'
-					// 		: 'positive'
-					// }
 					type='positive'
 					title='Tracker Fees'
 					amount={totalTrackerFeesAmount}

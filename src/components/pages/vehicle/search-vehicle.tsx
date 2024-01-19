@@ -188,12 +188,12 @@ export default async function SearchVehicle({ id }: { id: string }) {
 										}
 									/>
 
-									<DashboardCard
+									{/* <DashboardCard
 										name='Fines & Penalties'
 										href={`/vehicles/${vehicle.vehicle_id}/fines`}
 										image={'/fineandpenal.png'}
 										description='Fine Driver & Check Fine Payment'
-									/>
+									/> */}
 								</>
 							)}
 							<DashboardCard
@@ -209,7 +209,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 					<div className='flex flex-col gap-5'>
 						{role?.toLowerCase() !== 'agent' && (
 							<>
-								<div className='flex flex-col gap-2'>
+								{/* <div className='flex flex-col gap-2'>
 									<div className='flex justify-between py-2'>
 										<div className='shrink-0 grow-0 text-title1Bold'>
 											Fine History
@@ -238,7 +238,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 											)}
 										/>
 									</div>
-								</div>
+								</div> */}
 								<div className='flex flex-col gap-2 '>
 									<div className='flex justify-between py-2'>
 										<div className='shrink-0 grow-0 text-title1Bold'>
@@ -259,10 +259,8 @@ export default async function SearchVehicle({ id }: { id: string }) {
 									</div>
 									<div className=''>
 										<DataTable
-											columns={
-												viewDriversColumns
-											}
-											data={VIEW_DRIVER_TABLE.slice(
+											columns={debtColumns}
+											data={vehicle.VehicleTransactions.slice(
 												0,
 												3
 											)}
