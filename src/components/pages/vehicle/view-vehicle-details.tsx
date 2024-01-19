@@ -88,20 +88,20 @@ export default async function ViewVehicleDetails({ id }: { id: string }) {
 										}
 									/>
 
-									<DashboardCard
+									{/* <DashboardCard
 										name='Fines & Penalties'
 										href={`${id}/fines`}
 										image={'/fineandpenal.png'}
 										description='Fine Driver & Check Fine Payment'
-									/>
+									/> */}
 								</>
 							)}
-							<DashboardCard
+							{/* <DashboardCard
 								name='Waiver Form'
 								href={`${id}/waiver`}
 								image={'/fineandpenal.png'}
 								description='Fill waiver form to process driver grace period'
-							/>
+							/> */}
 						</>
 					)}
 				</div>
