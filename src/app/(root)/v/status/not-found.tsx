@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-export default function AdminsPageNotFound() {
+export default function VehiclesPageNotFound() {
 	const router = useRouter();
 	return (
 		<div className='grid place-items-center w-full'>
