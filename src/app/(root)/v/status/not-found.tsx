@@ -4,11 +4,14 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export default function VehiclesPageNotFound() {
-	const router = useRouter();
 	return (
 		<div className='grid place-items-center w-full'>
-			<div className='flex flex-col items-center justify-center text-center'>
-				<h2>Sticker Not Attatched To A Vehicle</h2>
+			<div className='flex flex-col h-[80svh] items-center justify-center text-center'>
+				<h2 className='text-4xl text-center'>
+					Sticker Not Attached
+					<br />
+					To A Vehicle
+				</h2>
 				<Button
 					asChild
 					variant='link'
