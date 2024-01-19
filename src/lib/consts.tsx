@@ -1731,7 +1731,7 @@ export const SLIDES = [
 				development and progressive Environment'
 			images='/avater.png'
 			author='ISCE Digital Concepts'
-			title='Governor Anambra state'
+			title='Anambra state'
 		/>
 	</>,
 	<>
@@ -1739,7 +1739,7 @@ export const SLIDES = [
 			desc='We believe that accountability is fundamental for societal progress, and TRANSPAY stands as a testament to that ethos, offering a reliable and efficient means for commuters'
 			images='/avater.png'
 			author='ISCE Digital Concepts'
-			title='Governor Anambra state'
+			title='Anambra state'
 		/>
 	</>,
 	<>
@@ -1747,7 +1747,7 @@ export const SLIDES = [
 			desc='Just as development relies on being accountable for our actions, TRANSPAY cultivates an efficient and sustainable transit system, contributing to the growth and prosperity of our community.'
 			images='/avater.png'
 			author='ISCE Digital Concepts'
-			title='Governor Anambra state'
+			title='Anambra state'
 		/>
 	</>,
 ];
