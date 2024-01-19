@@ -22,8 +22,8 @@ export default async function SingularAdmin({
 }: {
 	params: { id: string };
 }) {
-	const ACTIVITIES = await getAllActivities();
-	if (!ACTIVITIES) return notFound();
+	const all_activities = await getAllActivities();
+	if (!all_activities) return notFound();
 	const admin = await getAdminById(params.id);
 	if (!admin) return notFound();
 	else
@@ -60,7 +60,7 @@ export default async function SingularAdmin({
 						<div>
 							<Card className='bg-secondary'>
 								<ActivityList
-									allActivities={ACTIVITIES.slice(
+									allActivities={all_activities.slice(
 										0,
 										3
 									)}

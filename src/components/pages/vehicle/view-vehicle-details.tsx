@@ -20,6 +20,7 @@ export default async function ViewVehicleDetails({ id }: { id: string }) {
 	if (!vehicle) {
 		notFound();
 	}
+	console.log(vehicle.tracker_id);
 	return (
 		<div className='h-full w-full p-6 flex flex-col gap-6 '>
 			<div className='flex items-center justify-between'>
@@ -43,19 +44,21 @@ export default async function ViewVehicleDetails({ id }: { id: string }) {
 						</Link>
 					</Button>
 				)} */}
-				<Button
-					className='justify-start  text-white rounded-xl bg-primary-800'
-					asChild
-					variant={'default'}
-				>
-					<Link
-						href={`/vehicles/${id}/location`}
-						className='shrink-0 whitespace-nowrap'
+				{vehicle.tracker_id && vehicle.tracker_id !== '' && (
+					<Button
+						className='justify-start  text-white rounded-xl bg-primary-800'
+						asChild
+						variant={'default'}
 					>
-						<MapPin className='mr-2 h-4 w-4 shrink-0' />
-						View live location
-					</Link>
-				</Button>
+						<Link
+							href={`/vehicles/${id}/location`}
+							className='shrink-0 whitespace-nowrap'
+						>
+							<MapPin className='mr-2 h-4 w-4 shrink-0' />
+							View live location
+						</Link>
+					</Button>
+				)}
 			</div>
 			<div className='  w-full'>
 				<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 w-full'>

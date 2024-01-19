@@ -26,8 +26,8 @@ export default async function SingularAgent({
 	const agent = await getAgentById(params.id);
 	if (!agent) return notFound();
 
-	const ACTIVITIES = await getAllActivities();
-	if (!ACTIVITIES) return notFound();
+	const all_activities = await getAllActivities();
+	if (!all_activities) return notFound();
 	return (
 		<div className='p-3 xs:p-5 gap-5 w-full h-full flex flex-col'>
 			<div className='flex justify-between items-center'>
@@ -75,7 +75,10 @@ export default async function SingularAgent({
 					<div>
 						<Card className='bg-secondary'>
 							<ActivityList
-								allActivities={ACTIVITIES.slice(0, 3)}
+								allActivities={all_activities.slice(
+									0,
+									3
+								)}
 							/>
 						</Card>
 					</div>

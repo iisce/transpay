@@ -137,14 +137,25 @@ interface IPage {
 }
 interface IDashboard {
 	data: {
-		pages: IPage[];
-		summary: {
-			revenue: {
-				months: any[];
-				names: any[];
-				changes: any[];
+		admins: {
+			blacklisted: IAdmin[];
+		};
+		chart: {
+			transactions: {
+				all: IVehicleTransaction[];
+				dailyFees: IVehicleTransaction[];
+				fines: any[];
+			};
+			total: {
+				dailyFees: number;
+				fines: number;
+				revenue: number;
 			};
 		};
+		activities: Pick<
+			IActivity,
+			'activity_id' | 'id' | 'name' | 'description'
+		>[];
 	};
 }
 interface IDriver {

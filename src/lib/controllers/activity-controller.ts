@@ -9,12 +9,12 @@ export const getAllActivities = async () => {
 		Authorization: `Bearer ${session.access_token}`,
 	};
 	const url = API + URLS.activity.all;
-	console.log({ url });
+	// console.log({ url });
 	const res = await fetch(url, { headers, cache: 'no-store' });
 	if (!res.ok) return undefined;
 
 	const data: Promise<IActivity[]> = await res.json();
-	console.log({ data: await data });
+	// console.log({ data: await data });
 	const activities = await data;
 	return activities;
 };

@@ -6,8 +6,8 @@ import { notFound } from 'next/navigation';
 import ActivityList from '@/components/pages/activities/activity-list';
 
 export default async function Activity() {
-	const ACTIVITIES = await getAllActivities();
-	if (!ACTIVITIES) return notFound();
+	const all_activities = await getAllActivities();
+	if (!all_activities) return notFound();
 	return (
 		<div className='w-full flex flex-col gap-3 mb-8 p-2 xs:p-5 '>
 			<div className='flex flex-col gap-2 mb-20'>
@@ -17,7 +17,7 @@ export default async function Activity() {
 					</div>
 				</div>
 				<Card className='bg-secondary'>
-					<ActivityList allActivities={ACTIVITIES} />
+					<ActivityList allActivities={all_activities} />
 				</Card>
 			</div>
 		</div>

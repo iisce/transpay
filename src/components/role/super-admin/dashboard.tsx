@@ -14,14 +14,17 @@ import {
 } from '@/lib/utils';
 import { format } from 'date-fns';
 import { getAllActivities } from '@/lib/controllers/activity-controller';
+import { getDashboard } from '@/lib/get-data';
+import { notFound } from 'next/navigation';
 
 export default async function DashboardSuperAdmin(user: { user: IUser }) {
-	const admins = await getAdmins();
-	const ACTIVITIES = (await getAllActivities())?.splice(0, 3);
-	const blackListed =
-		admins?.filter((admin) => admin.blacklisted === true) || [];
+	const all_activities = (await getAllActivities())?.splice(0, 3);
+	const dashboardDetails = await getDashboard();
+	const blackListed = dashboardDetails?.data.admins.blacklisted || [];
 
-	const transactions = await getTransactions();
+	if (!dashboardDetails) return notFound();
+	const transactions = dashboardDetails?.data.chart.transactions.all;
+	// const transactions = await getTransactions();
 	const dailyFees = transactions.filter(
 		(transaction) => transaction.transaction_type === 'DAILY_FEES'
 	);
@@ -48,52 +51,56 @@ export default async function DashboardSuperAdmin(user: { user: IUser }) {
 		<div className='w-full'>
 			<div className='grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5'>
 				<DashboardCard
-					type={
-						totalRevenueAmount < 0
-							? 'negative'
-							: totalRevenueAmount === 0
-							? 'neutral'
-							: 'positive'
-					}
+					// type={
+					// 	totalRevenueAmount < 0
+					// 		? 'negative'
+					// 		: totalRevenueAmount === 0
+					// 		? 'neutral'
+					// 		: 'positive'
+					// }
+					type='positive'
 					title='Total Revenue'
 					amount={totalDailyFeesAmount}
-					percent={10}
+					percent={0}
 				/>
 				<DashboardCard
-					type={
-						totalDailyFeesAmount < 0
-							? 'negative'
-							: totalDailyFeesAmount === 0
-							? 'neutral'
-							: 'positive'
-					}
+					// type={
+					// 	totalDailyFeesAmount < 0
+					// 		? 'negative'
+					// 		: totalDailyFeesAmount === 0
+					// 		? 'neutral'
+					// 		: 'positive'
+					// }
+					type='positive'
 					title='Daily Fees'
 					amount={totalDailyFeesAmount}
-					percent={10}
+					percent={0}
 				/>
 				<DashboardCard
-					type={
-						totalDailyFeesAmount < 0
-							? 'negative'
-							: totalDailyFeesAmount === 0
-							? 'neutral'
-							: 'positive'
-					}
+					// type={
+					// 	totalDailyFeesAmount < 0
+					// 		? 'negative'
+					// 		: totalDailyFeesAmount === 0
+					// 		? 'neutral'
+					// 		: 'positive'
+					// }
+					type='positive'
 					title='Monthly Fees'
 					amount={totalDailyFeesAmount * 21.67}
-					percent={10}
+					percent={0}
 				/>
 				<DashboardCard
-					type={
-						totalTrackerFeesAmount < 0
-							? 'negative'
-							: totalTrackerFeesAmount === 0
-							? 'neutral'
-							: 'positive'
-					}
+					// type={
+					// 	totalTrackerFeesAmount < 0
+					// 		? 'negative'
+					// 		: totalTrackerFeesAmount === 0
+					// 		? 'neutral'
+					// 		: 'positive'
+					// }
+					type='positive'
 					title='Tracker Fees'
 					amount={totalTrackerFeesAmount}
-					percent={10}
+					percent={0}
 				/>
 			</div>
 			<div className='flex w-full gap-5 mt-5'>
@@ -132,9 +139,10 @@ export default async function DashboardSuperAdmin(user: { user: IUser }) {
 					<div className='rounded-xl border bg-secondary flex flex-col gap-3 p-2 h-full'>
 						<div className='text-2xl px-3'>Activities</div>
 						<div className='grid gap-3'>
-							{ACTIVITIES &&
-								ACTIVITIES.splice(0, 3).map(
-									(activity, k) => (
+							{all_activities &&
+								all_activities
+									.splice(0, 3)
+									.map((activity, k) => (
 										<ActivityCard
 											key={k}
 											id={activity.id}
@@ -161,8 +169,7 @@ export default async function DashboardSuperAdmin(user: { user: IUser }) {
 												activity.user_role
 											}
 										/>
-									)
-								)}
+									))}
 						</div>
 					</div>
 				</div>

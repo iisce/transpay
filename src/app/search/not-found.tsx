@@ -21,9 +21,7 @@ const NotFound = () => {
 			</Link>
 			<div className='flex flex-col gap-5'>
 				<h3 className='uppercase text-center'>Vehicle not found</h3>
-				<span className='text-center'>
-					There is no vehicle found with this plate number.
-				</span>
+				<span className='text-center'>No vehicle found.</span>
 
 				<div className='h-96 aspect-square mx-auto'>
 					<Jap animation='/animations/1.json' />
