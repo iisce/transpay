@@ -37,9 +37,13 @@ const vehicleFormSchema = z.object({
 		.string({
 			required_error: 'Please enter a valid Category.',
 		})
-		.refine((value) => ['keke', 'shuttle'].includes(value), {
-			message: 'Invalid means of identification.',
-		}),
+		.refine(
+			(value) =>
+				['keke', 'small_shuttle', 'big_shuttle'].includes(value),
+			{
+				message: 'Invalid means of identification.',
+			}
+		),
 	vehicle_type: z.string({
 		required_error: 'Please enter a valid vehicle type.',
 	}),
@@ -181,8 +185,11 @@ export default function CreateVehicleForm() {
 										<SelectItem value='keke'>
 											Keke
 										</SelectItem>
-										<SelectItem value='shuttle'>
-											Shuttle
+										<SelectItem value='small_shuttle'>
+											Small Shuttle
+										</SelectItem>
+										<SelectItem value='big_shuttle'>
+											Big Shuttle
 										</SelectItem>
 									</SelectContent>
 								</Select>

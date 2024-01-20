@@ -30,6 +30,7 @@ import { subYears, startOfYear } from 'date-fns';
 
 export default async function Revenue() {
 	const revenueData = await getRevenueStats();
+	console.log(revenueData?.chart.transactions.all);
 	// const revenue = REVENUE_CHART_DATA;
 
 	if (!revenueData) return notFound();
