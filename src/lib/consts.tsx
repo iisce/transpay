@@ -1725,30 +1725,30 @@ export const URLS = {
 export const BUS_IMAGE_SAMPLE =
 	'https://images.unsplash.com/photo-1616792577902-f1d86383a21b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2803&q=80';
 export const SLIDES = [
-  <>
-    <CarouselSlides
-      desc="Accountability in a civilized society is the stepping stone to development and progressive environment"
-      images="/chukwuma.jpg"
-      author="His Excellency Chukwuma C. Soludo"
-      title="Governor of Anambra State"
-    />
-  </>,
-  <>
-    <CarouselSlides
-      desc="We believe that accountability is fundamental for societal progress, and TRANSPAY stands as a testament to that ethos, offering a reliable and efficient means for commuters"
-      images="/mbanefo.jpeg"
-      author="Hon. Afam Mbanefo"
-      title="Minister of Transport"
-    />
-  </>,
-  <>
-    <CarouselSlides
-      desc="Just as development relies on being accountable for our actions, TRANSPAY cultivates an efficient and sustainable transit system, contributing to the growth and prosperity of our community."
-      images="/ibezim.jpg"
-      author="Dr. Onyeka Ibezim"
-      title="Deputy Governor of Anambra State"
-    />
-  </>,
+	<>
+		<CarouselSlides
+			desc='Accountability in a civilized society is the stepping stone to development and progressive environment'
+			images='/avater.png'
+			author='ISCE Digital Concept'
+			title='Ananmbra State'
+		/>
+	</>,
+	// <>
+	// 	<CarouselSlides
+	// 		desc='We believe that accountability is fundamental for societal progress, and TRANSPAY stands as a testament to that ethos, offering a reliable and efficient means for commuters'
+	// 		images='/mbanefo.jpeg'
+	// 		author='Hon. Afam Mbanefo'
+	// 		title='Minister of Transport'
+	// 	/>
+	// </>,
+	// <>
+	// 	<CarouselSlides
+	// 		desc='Just as development relies on being accountable for our actions, TRANSPAY cultivates an efficient and sustainable transit system, contributing to the growth and prosperity of our community.'
+	// 		images='/ibezim.jpg'
+	// 		author='Dr. Onyeka Ibezim'
+	// 		title='Deputy Governor of Anambra State'
+	// 	/>
+	// </>,
 ];
 
 export const PROPERTIES: IProperty[] = [

@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { WAIVER_HISTORY } from '@/lib/consts';
 import { addIcon, successIcon } from '@/lib/icons';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 export default function AddNewWaiver({
@@ -17,6 +18,7 @@ export default function AddNewWaiver({
 }: {
 	params: { plate: string };
 }) {
+	const router = useRouter();
 	const vehicle = WAIVER_HISTORY.find(
 		(driver) => driver.timeline === params.plate
 	);
@@ -51,10 +53,10 @@ export default function AddNewWaiver({
 				<Button
 					variant={'outline'}
 					size='lg'
-					asChild
 					className='p-4 py-2 rounded-normal w-32'
+					onClick={() => router.back()}
 				>
-					<Link href={'/vehicles/waiver/history'}>Back</Link>
+					Back
 				</Button>
 
 				<AlertDialog

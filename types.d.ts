@@ -107,6 +107,7 @@ interface IDashboardCard {
 	amount: number;
 	type: 'positive' | 'negative' | 'neutral';
 	percent: number;
+	desc?: string;
 }
 interface IActivity {
 	id: number;
@@ -387,6 +388,20 @@ interface ICategories {
 	name: string;
 }
 
+interface IRevenue {
+	chart: {
+		transactions: {
+			all: IVehicleTransaction[];
+			dailyFees: IVehicleTransaction[];
+			fines: any[];
+		};
+		total: {
+			dailyFees: number;
+			fines: number;
+			revenue: number;
+		};
+	};
+}
 interface ICreateVehicleForm {
 	image: string;
 	category: string;

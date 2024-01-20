@@ -9,6 +9,7 @@ import { adminsColumns } from '@/components/ui/table/columns';
 import { getAdmins } from '@/lib/controllers/admin-controller';
 import { getTransactions } from '@/app/api/transactions/transactions';
 import {
+	transformTransactionsToDaysData,
 	transformTransactionsToMonthsData,
 	transformTransactionsToWeeksData,
 } from '@/lib/utils';
@@ -18,13 +19,22 @@ import { getDashboard } from '@/lib/get-data';
 import { notFound } from 'next/navigation';
 
 export default async function DashboardSuperAdmin(user: { user: IUser }) {
-	const all_activities = (await getAllActivities())?.splice(0, 3);
+	const all_activities = await getAllActivities();
+	all_activities &&
+		all_activities.sort(
+			(a, b) =>
+				new Date(b.createdAt).getTime() -
+				new Date(a.createdAt).getTime()
+		);
 	const dashboardDetails = await getDashboard();
 	const blackListed = dashboardDetails?.data.admins.blacklisted || [];
 
 	if (!dashboardDetails) return notFound();
-	// const transactions = dashboardDetails?.data.chart.transactions.all;
-	const transactions = await getTransactions();
+	const transactions = dashboardDetails?.data.chart.transactions.all;
+	// const transactions = await getTransactions();
+	const totalRevenueAmount = dashboardDetails?.data.chart.total.revenue;
+	const totalDailyFeesAmount = dashboardDetails?.data.chart.total.dailyFees;
+
 	const dailyFees = transactions.filter(
 		(transaction) => transaction.transaction_type === 'DAILY_FEES'
 	);
@@ -32,40 +42,35 @@ export default async function DashboardSuperAdmin(user: { user: IUser }) {
 		(transaction) => transaction.transaction_type === 'TRACKER_FEES'
 	);
 
-	const totalRevenueAmount = TRANSACTIONS.reduce(
-		(total, transaction) => total + transaction.amount,
-		0
-	);
-	const totalDailyFeesAmount = dailyFees.reduce(
-		(total, transaction) => total + transaction.amount,
-		0
-	);
 	const totalTrackerFeesAmount = trackerFees.reduce(
 		(total, transaction) => total + transaction.amount,
 		0
 	);
 	const chartDataMonth = transformTransactionsToMonthsData(transactions);
 	const chartDataWeek = transformTransactionsToWeeksData(transactions);
+	const chartDataDay = transformTransactionsToDaysData(transactions);
 
 	return (
 		<div className='w-full'>
+			{/* <pre>{JSON.stringify(dashboardDetails.data.chart, null, 2)}</pre> */}
 			<div className='grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5'>
 				<DashboardCard
 					type='positive'
-					title='Total Revenue'
-					amount={totalDailyFeesAmount}
+					title='Yearly Total Revenue'
+					amount={totalRevenueAmount}
+					percent={0}
+					desc='Year Till Date'
+				/>
+				<DashboardCard
+					type='positive'
+					title='Monthly Total Revenue'
+					amount={totalRevenueAmount}
 					percent={0}
 				/>
 				<DashboardCard
 					type='positive'
 					title='Daily Fees'
 					amount={totalDailyFeesAmount}
-					percent={0}
-				/>
-				<DashboardCard
-					type='positive'
-					title='Monthly Fees'
-					amount={totalDailyFeesAmount * 21.67}
 					percent={0}
 				/>
 				<DashboardCard
@@ -84,7 +89,7 @@ export default async function DashboardSuperAdmin(user: { user: IUser }) {
 						</div>
 						<div className='h-full'>
 							<SuperAdminRevenueCharts
-								data={chartDataWeek}
+								data={chartDataDay}
 							/>
 						</div>
 					</div>

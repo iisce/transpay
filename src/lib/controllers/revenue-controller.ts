@@ -9,12 +9,10 @@ export const getRevenueStats = async () => {
 		Authorization: `Bearer ${session.access_token}`,
 	};
 	const url = API + URLS.revenue.stats;
-	console.log(url, session.access_token, process.env.API_SECRET);
 	const res = await fetch(url, { headers, cache: 'no-store' });
+	const result = await res.json();
 	if (!res.ok) return undefined;
 
-	console.log(res.json());
-	const data: Promise<IAdminMe> = await res.json();
-	const admin = (await data).data.admin;
-	return admin;
+	const chart: IRevenue = result.data;
+	return chart;
 };

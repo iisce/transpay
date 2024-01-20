@@ -17,11 +17,52 @@ import StatsCard from '@/components/shared/statistics-card';
 import { Badge } from '@/components/ui/badge';
 import { getRevenueStats } from '@/lib/controllers/revenue-controller';
 import { REVENUE_CHART_DATA } from '../../../../data';
+import { notFound } from 'next/navigation';
+import {
+	calculatePercentageDifference,
+	calculateTransactionTotals,
+	filterTransactionsByDateRange,
+	LAST_YEAR_END_DATE,
+	LAST_YEAR_START_DATE,
+	NEW_YEAR_START_DATE,
+} from '@/lib/utils';
+import { subYears, startOfYear } from 'date-fns';
 
 export default async function Revenue() {
-	// const revenue = await getRevenueStats();
-	const revenue = REVENUE_CHART_DATA;
-	console.log(revenue);
+	const revenueData = await getRevenueStats();
+	// const revenue = REVENUE_CHART_DATA;
+
+	if (!revenueData) return notFound();
+	const revenue = revenueData.chart.transactions.all;
+
+	const lastYearTransactions = filterTransactionsByDateRange(
+		revenue,
+		LAST_YEAR_START_DATE,
+		LAST_YEAR_END_DATE
+	);
+	const newYearTransactions = filterTransactionsByDateRange(
+		revenue,
+		NEW_YEAR_START_DATE,
+		new Date()
+	);
+
+	const lastYearTotals = calculateTransactionTotals(lastYearTransactions);
+	const newYearTotals = calculateTransactionTotals(newYearTransactions);
+
+	const revPercentDiff = calculatePercentageDifference(
+		lastYearTotals.totalRevenue,
+		newYearTotals.totalRevenue
+	);
+	const dailyPercentDiff = calculatePercentageDifference(
+		lastYearTotals.totalDailyFees,
+		newYearTotals.totalDailyFees
+	);
+	const trackerPercentDiff = calculatePercentageDifference(
+		lastYearTotals.totalTrackerFees,
+		newYearTotals.totalTrackerFees
+	);
+
+	const revDetails = calculateTransactionTotals(revenue);
 	return (
 		<div className='p-5 w-full h-full flex flex-col gap-3'>
 			<div className='flex justify-between items-center'>
@@ -72,31 +113,31 @@ export default async function Revenue() {
 			<div className='flex flex-col gap-5 '>
 				<div className=' py-5 flex flex-row flex-wrap'>
 					<StatsCard
-						percentage={9.26}
+						percentage={100}
 						type='up'
 						title='Total Revenue'
-						amount='21,974,278'
+						amount={revDetails.totalRevenue.toString()}
 					>
 						<TotalRevenueCharts />
 					</StatsCard>
 					<StatsCard
-						percentage={4.72}
-						type='down'
+						percentage={100}
+						type='up'
 						title='Daily Fees Payment'
-						amount='7,500,278'
+						amount={revDetails.totalDailyFees.toString()}
 					>
 						<DailyFeesCharts />
 					</StatsCard>
 					<StatsCard
-						percentage={2.12}
+						percentage={100}
 						type='up'
-						title='Monthly Fees Payment'
-						amount='32,090,278'
+						title='Tracker Fees Payment'
+						amount={revDetails.totalTrackerFees.toString()}
 					>
 						<FinesPaymentCharts />
 					</StatsCard>
 					<StatsCard
-						percentage={1}
+						percentage={100}
 						title='Bank Charges'
 						amount='90,278'
 						type='up'
@@ -105,7 +146,7 @@ export default async function Revenue() {
 					</StatsCard>
 				</div>
 				<div className='bg-secondary rounded-3xl p-5 flex flex-col mb-20 gap-3'>
-					<div className='flex justify-between items-center'>
+					{/* <div className='flex justify-between items-center'>
 						<div className=''>Net</div>
 						<div className='flex'>
 							<div className='p-1'>1D</div>
@@ -115,7 +156,7 @@ export default async function Revenue() {
 							<div className='p-1'>6M</div>
 							<div className='p-1'>1Y</div>
 						</div>
-					</div>
+					</div> */}
 					<div className='flex gap-2'>
 						<div className='flex text-lg font-bold'>
 							₦1,783,933

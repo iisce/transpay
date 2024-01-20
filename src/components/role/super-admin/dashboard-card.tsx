@@ -6,6 +6,7 @@ export default function DashboardCard({
 	amount,
 	type,
 	percent,
+	desc,
 }: IDashboardCard) {
 	return (
 		<div className='h-32 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between'>
@@ -24,7 +25,7 @@ export default function DashboardCard({
 					</div>
 				)}
 				<div className='text-sm text-gray-400'>
-					previous 30 days
+					{desc || 'previous 30 days'}
 				</div>
 			</div>
 		</div>

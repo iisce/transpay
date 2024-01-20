@@ -1,4 +1,5 @@
 import { type ClassValue, clsx } from 'clsx';
+import { format, startOfYear, subYears } from 'date-fns';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
@@ -166,6 +167,35 @@ export function transformTransactionsToWeeksData(
 	}));
 	return transformedData;
 }
+export function transformTransactionsToDaysData(
+	transactions: IVehicleTransaction[]
+): { name: string; total: number }[] {
+	const totalByDay: { [day: string]: number } = {};
+
+	transactions.forEach((transaction: IVehicleTransaction) => {
+		const transactionDate = new Date(transaction.transaction_date);
+		// Using the transaction date directly as the key
+		const dayKey = format(
+			new Date(transactionDate.toISOString()),
+			'dd-mm'
+		);
+
+		if (!totalByDay[dayKey]) {
+			totalByDay[dayKey] = 0;
+		}
+		totalByDay[dayKey] += transaction.amount;
+	});
+
+	const transformedData: { name: string; total: number }[] = Object.entries(
+		totalByDay
+	).map(([day, total]) => ({
+		name: day,
+		total,
+	}));
+
+	return transformedData;
+}
+
 export function isUuid(input: string): boolean {
 	const uuidRegex =
 		/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -210,3 +240,82 @@ export function generateRandomLocation(): {
 export function generateRandomInteger(min: number, max: number): number {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+export function calculateTransactionTotals(
+	transactions: IVehicleTransaction[]
+): {
+	totalRevenue: number;
+	totalDailyFees: number;
+	totalTrackerFees: number;
+} {
+	let totalRevenue = 0;
+	let totalDailyFees = 0;
+	let totalTrackerFees = 0;
+
+	transactions.forEach((transaction: IVehicleTransaction) => {
+		totalRevenue += transaction.amount;
+
+		if (transaction.transaction_type === 'DAILY_FEES') {
+			totalDailyFees += transaction.amount;
+		} else if (transaction.transaction_type === 'TRACKER_FEES') {
+			totalTrackerFees += transaction.amount;
+		}
+	});
+
+	return {
+		totalRevenue,
+		totalDailyFees,
+		totalTrackerFees,
+	};
+}
+
+export function calculatePercentageDifference(
+	lastYearTotals: number,
+	newYearTotals: number
+): number {
+	if (lastYearTotals === 0) {
+		return 0;
+	}
+
+	return ((newYearTotals - lastYearTotals) / lastYearTotals) * 100;
+}
+
+export function filterTransactionsByDateRange(
+	transactions: IVehicleTransaction[],
+	startDate: Date,
+	endDate: Date
+): IVehicleTransaction[] {
+	return transactions.filter((transaction) => {
+		const transactionDate = new Date(transaction.transaction_date);
+		return transactionDate >= startDate && transactionDate <= endDate;
+	});
+}
+
+// Set last year dynamically
+export const LAST_YEAR_START_DATE = subYears(startOfYear(new Date()), 1); // Start of last year
+export const LAST_YEAR_END_DATE = new Date(
+	startOfYear(new Date()).getTime() - 1
+);
+export const NEW_YEAR_START_DATE = startOfYear(new Date()); // Start of current year
+
+export const createDataForTable = (transactions: IVehicleTransaction[]) => {
+	const yearlyTotals: { [year: string]: number } = {};
+
+	transactions.forEach((transaction: IVehicleTransaction) => {
+		const transactionDate = new Date(transaction.transaction_date);
+		const transactionYear = transactionDate.getFullYear().toString();
+
+		if (!yearlyTotals[transactionYear]) {
+			yearlyTotals[transactionYear] = 0;
+		}
+
+		yearlyTotals[transactionYear] += transaction.amount;
+	});
+
+	const dataForTable = Object.entries(yearlyTotals).map(([year, total]) => ({
+		name: year,
+		total,
+	}));
+
+	return dataForTable;
+};
