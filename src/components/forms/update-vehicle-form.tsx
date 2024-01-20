@@ -29,7 +29,7 @@ const vehicleFormSchema = z.object({
 		.string({
 			required_error: 'Please enter a valid Category.',
 		})
-		.refine((value) => ['keke', 'bus'].includes(value), {
+		.refine((value) => ['keke', 'shuttle'].includes(value), {
 			message: 'Invalid means of identification.',
 		}),
 	vehicle_type: z.string({
@@ -172,7 +172,7 @@ export function UpdateVehicleForm({ vehicle }: { vehicle: IVehicle }) {
 											<SelectItem value='keke'>
 												Keke
 											</SelectItem>
-											<SelectItem value='bus'>
+											<SelectItem value='shuttle'>
 												Bus
 											</SelectItem>
 										</SelectContent>

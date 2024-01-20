@@ -23,7 +23,7 @@ const driverFormSchema = z.object({
 		.string()
 		.refine(
 			(value) =>
-				['bus', 'car', 'keke', 'heavyVehicle'].includes(value),
+				['shuttle', 'car', 'keke', 'heavyVehicle'].includes(value),
 			{
 				message: 'Invalid means of identification.',
 			}
@@ -67,7 +67,7 @@ export default function DriverForm2() {
 										</SelectTrigger>
 									</FormControl>
 									<SelectContent>
-										<SelectItem value='bus'>
+										<SelectItem value='shuttle'>
 											Bus
 										</SelectItem>
 										<SelectItem value='car'>
