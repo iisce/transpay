@@ -12,7 +12,6 @@ export const getVehicles = async () => {
 	const url = API + URLS.vehicle.all;
 	const res = await fetch(url, { headers, cache: 'no-store' });
 	const data: Promise<IVehicles> = await res.json();
-	console.log(data);
 	if (!res.ok) return undefined;
 	const vehicles = (await data).data.vehicles;
 	return vehicles;
@@ -46,13 +45,6 @@ export const getVehicleSummary = async (plate_number: string) => {
 	if (!res.ok) return undefined;
 	const result: Promise<PrettyVehicleSummary> = await res.json();
 	const { data } = await result;
-	// console.log({
-	// 	RESULT: result,
-	// 	ID: plate_number,
-	// 	URL: url,
-	// 	HEADERS: headers,
-	// 	DATA: data.vehicle,
-	// });
 
 	if (!data) return undefined;
 	return data.vehicle;

@@ -39,9 +39,7 @@ export default function DriverForm2() {
 		mode: 'onChange',
 	});
 
-	const onSubmit = (data: DriverFormValues) => {
-		console.log(data);
-	};
+	const onSubmit = (data: DriverFormValues) => {};
 
 	return (
 		<Form {...form}>

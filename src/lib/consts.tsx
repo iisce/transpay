@@ -72,11 +72,11 @@ export const SIDEBAR_LINKS = [
 		href: '/revenue',
 		icon: revenueIcon,
 	},
-	{
-		title: 'Property',
-		href: '/property',
-		icon: <HomeIcon className='h-4 w-4' />,
-	},
+	// {
+	// 	title: 'Property',
+	// 	href: '/property',
+	// 	icon: <HomeIcon className='h-4 w-4' />,
+	// },
 	{
 		title: 'Settings',
 		href: '/settings',

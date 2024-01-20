@@ -139,7 +139,6 @@ export default function CreateVehicleForm() {
 				setOpen(true);
 				form.reset();
 				setNewVehicleId(result.data.vehicle_id);
-				console.log(result);
 				return NextResponse.json(result);
 			} else {
 				setIsLoading(false);

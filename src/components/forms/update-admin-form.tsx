@@ -45,7 +45,6 @@ const adminFormSchema = z.object({
 type AdminFormValues = z.infer<typeof adminFormSchema>;
 
 export function UpdateAdminForm({ admin }: { admin: IAdmin }) {
-	console.log(admin);
 	const [disabled, setDisabled] = React.useState<boolean>(true);
 	const defaultValues: Partial<AdminFormValues> = {
 		name: admin.name,
@@ -54,7 +53,6 @@ export function UpdateAdminForm({ admin }: { admin: IAdmin }) {
 		role: admin.role,
 		blacklisted: admin.blacklisted,
 	};
-	console.log('default value ', defaultValues);
 
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const { toast } = useToast();
@@ -65,7 +63,6 @@ export function UpdateAdminForm({ admin }: { admin: IAdmin }) {
 	});
 
 	async function onSubmit(data: AdminFormValues) {
-		console.log(data);
 		setIsLoading(true);
 		try {
 			const createAdminResponse = await fetch('/api/create-admin', {

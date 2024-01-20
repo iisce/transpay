@@ -87,7 +87,6 @@ export function UpdateVehicleForm({ vehicle }: { vehicle: IVehicle }) {
 		owners_name: vehicle.owners_name,
 		with_wallet: true,
 	};
-	console.log({ defaultValues, vehicle });
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const { toast } = useToast();
 	const form = useForm<VehicleFormValues>({
@@ -98,7 +97,6 @@ export function UpdateVehicleForm({ vehicle }: { vehicle: IVehicle }) {
 
 	async function onSubmit(data: VehicleFormValues) {
 		setIsLoading(true);
-		console.log(data);
 		try {
 			const createVehicleResponse = await fetch(
 				'/api/create-vehicle',

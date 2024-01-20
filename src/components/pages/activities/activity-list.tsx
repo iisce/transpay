@@ -63,30 +63,22 @@ export default function ActivityList({
 						</AccordionTrigger>
 						<AccordionContent>
 							{group.activities.map((activity) => (
-								<>
-									<ActivityCardGS
-										key={activity.id}
-										id={activity.id}
-										name={activity.name}
-										activity_id={
-											activity.activity_id
-										}
-										time={format(
-											new Date(
-												activity.createdAt
-											),
-											'h:mm a'
-										)}
-										date={new Date(
-											activity.createdAt
-										).toLocaleDateString()}
-										description={
-											activity.description
-										}
-										user_id={activity.user_id}
-										user_role={activity.user_role}
-									/>
-								</>
+								<ActivityCardGS
+									key={activity.id}
+									id={activity.id}
+									name={activity.name}
+									activity_id={activity.activity_id}
+									time={format(
+										new Date(activity.createdAt),
+										'h:mm a'
+									)}
+									date={new Date(
+										activity.createdAt
+									).toLocaleDateString()}
+									description={activity.description}
+									user_id={activity.user_id}
+									user_role={activity.user_role}
+								/>
 							))}
 						</AccordionContent>
 					</AccordionItem>

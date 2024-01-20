@@ -60,9 +60,7 @@ export default function VehicleInfoForm({ vehicle }: { vehicle: IVehicle }) {
 		mode: 'onChange',
 	});
 
-	const onSubmit = (data: VehicleFormValues) => {
-		console.log(data);
-	};
+	const onSubmit = (data: VehicleFormValues) => {};
 
 	return (
 		<Form {...form}>

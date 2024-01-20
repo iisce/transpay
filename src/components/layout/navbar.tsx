@@ -18,7 +18,6 @@ export default async function NavBar() {
 			: role?.toLowerCase() === 'greenengine_agent'
 			? await getGreenAgent()
 			: await getAdminMe();
-	console.log(user);
 	return (
 		<div className='h-16 w-full bg-secondary/60 backdrop-blur-sm pr-5 shrink-0 fixed z-50 '>
 			<div className='flex items-center justify-between h-full'>
