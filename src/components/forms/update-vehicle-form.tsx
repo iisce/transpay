@@ -173,7 +173,7 @@ export function UpdateVehicleForm({ vehicle }: { vehicle: IVehicle }) {
 												Keke
 											</SelectItem>
 											<SelectItem value='shuttle'>
-												Bus
+												Shuttle
 											</SelectItem>
 										</SelectContent>
 									</Select>

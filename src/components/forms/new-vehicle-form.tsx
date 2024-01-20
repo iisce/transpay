@@ -183,7 +183,7 @@ export default function CreateVehicleForm() {
 											Keke
 										</SelectItem>
 										<SelectItem value='shuttle'>
-											Bus
+											Shuttle
 										</SelectItem>
 									</SelectContent>
 								</Select>

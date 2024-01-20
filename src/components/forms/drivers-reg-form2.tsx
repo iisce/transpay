@@ -68,7 +68,7 @@ export default function DriverForm2() {
 									</FormControl>
 									<SelectContent>
 										<SelectItem value='shuttle'>
-											Bus
+											Shuttle
 										</SelectItem>
 										<SelectItem value='car'>
 											Car

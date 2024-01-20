@@ -92,7 +92,7 @@ export default function VehicleInfoForm({ vehicle }: { vehicle: IVehicle }) {
 									</FormControl>
 									<SelectContent>
 										<SelectItem value='shuttle'>
-											Bus
+											Shuttle
 										</SelectItem>
 										<SelectItem value='car'>
 											Car
