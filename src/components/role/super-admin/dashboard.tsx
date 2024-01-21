@@ -1,22 +1,18 @@
-import React from 'react';
-import DashboardCard from './dashboard-card';
+import ActivityCard from '@/components/shared/activity-card';
 import { SuperAdminRevenueCharts } from '@/components/shared/chats/super-admin-revenue-chart';
 import { Calendar } from '@/components/ui/calendar';
-import { REVENUE_CHART_DATA, TRANSACTIONS } from '../../../../data';
-import ActivityCard from '@/components/shared/activity-card';
-import { DataTable } from '@/components/ui/table/data-table';
 import { adminsColumns } from '@/components/ui/table/columns';
-import { getAdmins } from '@/lib/controllers/admin-controller';
-import { getTransactions } from '@/app/api/transactions/transactions';
+import { DataTable } from '@/components/ui/table/data-table';
+import { getAllActivities } from '@/lib/controllers/activity-controller';
+import { getDashboard } from '@/lib/get-data';
 import {
 	transformTransactionsToDaysData,
 	transformTransactionsToMonthsData,
 	transformTransactionsToWeeksData,
 } from '@/lib/utils';
 import { format } from 'date-fns';
-import { getAllActivities } from '@/lib/controllers/activity-controller';
-import { getDashboard } from '@/lib/get-data';
 import { notFound } from 'next/navigation';
+import DashboardCard from './dashboard-card';
 
 export default async function DashboardSuperAdmin(user: { user: IUser }) {
 	const all_activities = await getAllActivities();
@@ -27,6 +23,7 @@ export default async function DashboardSuperAdmin(user: { user: IUser }) {
 				new Date(a.createdAt).getTime()
 		);
 	const dashboardDetails = await getDashboard();
+	// console.log(dashboardDetails);
 	const blackListed = dashboardDetails?.data.admins.blacklisted || [];
 
 	if (!dashboardDetails) return notFound();

@@ -27,10 +27,11 @@ import {
 	NEW_YEAR_START_DATE,
 } from '@/lib/utils';
 import { subYears, startOfYear } from 'date-fns';
+import SplitPayment from '@/components/pages/activities/revenue/split-payment';
 
 export default async function Revenue() {
 	const revenueData = await getRevenueStats();
-	console.log(revenueData?.chart.transactions.all);
+	// console.log(revenueData?.chart.transactions.all);
 	// const revenue = REVENUE_CHART_DATA;
 
 	if (!revenueData) return notFound();
@@ -68,7 +69,7 @@ export default async function Revenue() {
 		<div className='p-5 w-full h-full flex flex-col gap-3'>
 			<div className='flex justify-between items-center'>
 				<div className='shrink-0 grow-0'>Revenue & Stats</div>
-				<div className='flex gap-4'>
+				{/* <div className='flex gap-4'>
 					<div className='shrink-0 grow-0'>
 						<Select defaultValue='this-week'>
 							<SelectTrigger className=''>
@@ -109,10 +110,10 @@ export default async function Revenue() {
 							</div>
 						</Button>
 					</div>
-				</div>
+				</div> */}
 			</div>
 			<div className='flex flex-col gap-5 '>
-				<div className=' py-5 flex flex-row flex-wrap'>
+				<div className='py-5 flex flex-row flex-wrap'>
 					<StatsCard
 						percentage={100}
 						type='up'
@@ -146,6 +147,7 @@ export default async function Revenue() {
 						<FinesPaymentCharts />
 					</StatsCard>
 				</div>
+				<SplitPayment />
 				<div className='bg-secondary rounded-3xl p-5 flex flex-col mb-20 gap-3'>
 					{/* <div className='flex justify-between items-center'>
 						<div className=''>Net</div>
