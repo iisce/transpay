@@ -12,6 +12,7 @@ export const getVehicles = async () => {
 	const url = API + URLS.vehicle.all;
 	const res = await fetch(url, { headers, cache: 'no-store' });
 	const data: Promise<IVehicles> = await res.json();
+	console.log({ data, url });
 	if (!res.ok) return undefined;
 	const vehicles = (await data).data.vehicles;
 	return vehicles;

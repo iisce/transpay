@@ -2,25 +2,15 @@ import DashboardCard from '@/components/layout/dashboard-card';
 import { CopyButton } from '@/components/shared/copy-button';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import {
-	debtColumns,
-	driversColumns,
-	viewDriversColumns,
-} from '@/components/ui/table/columns';
+import { debtColumns, driversColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { VIEW_DRIVER_TABLE } from '@/lib/consts';
-import {
-	getVehicleById,
-	getVehicleSummary,
-	searchVehicle,
-} from '@/lib/controllers/vehicle-controller';
+import { getVehicleSummary } from '@/lib/controllers/vehicle-controller';
 import { getSSession } from '@/lib/get-data';
 import { failureIcon, successIcon } from '@/lib/icons';
 import { MapPin } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import React from 'react';
 
 export default async function SearchVehicle({ id }: { id: string }) {
 	const { role } = await getSSession();

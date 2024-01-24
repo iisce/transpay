@@ -31,7 +31,7 @@ import SplitPayment from '@/components/pages/activities/revenue/split-payment';
 
 export default async function Revenue() {
 	const revenueData = await getRevenueStats();
-	// console.log(revenueData?.chart.transactions.all);
+	console.log(revenueData);
 	// const revenue = REVENUE_CHART_DATA;
 
 	if (!revenueData) return notFound();
@@ -131,7 +131,7 @@ export default async function Revenue() {
 						<DailyFeesCharts />
 					</StatsCard>
 					<StatsCard
-						percentage={100}
+						percentage={0}
 						type='up'
 						title='Tracker Fees Payment'
 						amount={revDetails.totalTrackerFees.toString()}
@@ -141,7 +141,7 @@ export default async function Revenue() {
 					<StatsCard
 						percentage={100}
 						title='Bank Charges'
-						amount='90,278'
+						amount='35.8'
 						type='up'
 					>
 						<FinesPaymentCharts />
@@ -162,14 +162,16 @@ export default async function Revenue() {
 					</div> */}
 					<div className='flex gap-2'>
 						<div className='flex text-lg font-bold'>
-							₦1,783,933
+							{`₦ ${revDetails.totalRevenue.toString()}`}
 						</div>
 						<Badge
 							variant={'awesome'}
 							className='gap-1'
 						>
-							<div className='h-2.5 w-2.5'>{downIcon}</div>
-							{`9.54%`}
+							<div className='h-2.5 w-2.5 rotate-180'>
+								{downIcon}
+							</div>
+							{`100%`}
 						</Badge>
 					</div>
 					<RevenueCharts />
