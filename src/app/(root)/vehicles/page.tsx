@@ -14,7 +14,7 @@ export default async function Vehicles() {
 		getSSession(),
 		getVehicles(),
 	]);
-	// console.log(vehicles && vehicles[0].wallet_balance);
+	// console.log(vehicles && vehicles[0]);
 	return (
 		<div className='p-5 w-full h-full flex flex-col'>
 			<div className='flex justify-between items-center uppercase font-bold'>
