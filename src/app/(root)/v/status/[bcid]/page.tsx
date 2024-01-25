@@ -22,9 +22,9 @@ export async function generateMetadata({
 	return {
 		title: `${
 			vehicle?.owners_name
-		}} - ${vehicle?.category.toLocaleUpperCase()}`,
-		description: `Vehicle is ${!isOwing && 'Cleared'}${
-			isOwing && 'Owing ' + totalPendingAmount
+		} - ${vehicle?.category.toLocaleUpperCase()}`,
+		description: `Vehicle is ${
+			!isOwing ? 'Cleared' : isOwing && 'Owing ' + totalPendingAmount
 		}`,
 	};
 }
