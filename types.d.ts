@@ -192,13 +192,9 @@ interface IDriver {
 
 interface IVehicle extends IWallet {
 	wallet_balance: {
-		status: string;
-		message: string;
-		data: {
-			currency: 'NGN';
-			available_balance: number;
-			ledger_balance: number;
-		};
+		currency: 'NGN';
+		available_balance: number;
+		ledger_balance: number;
 	};
 	id: number;
 	vehicle_id: string;

@@ -1,5 +1,6 @@
 import DashboardCard from '@/components/layout/dashboard-card';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import {
 	driversColumns,
 	paymentColumns,
@@ -17,49 +18,76 @@ import React from 'react';
 export default async function ViewVehicleDetails({ id }: { id: string }) {
 	const { role } = await getSSession();
 	const vehicle = await getVehicleById(id);
-	if (!vehicle) {
-		notFound();
-	}
+	if (!vehicle) return notFound();
+
+	const pendingPayments = vehicle.VehicleTransactions.filter(
+		(transaction) => transaction.payment_status === 'pending'
+	);
+	const successfulPayments = vehicle.VehicleTransactions.filter(
+		(transaction) => transaction.payment_status === 'successful'
+	);
+
+	const isOwing = pendingPayments.length > 0;
+	const totalPendingAmount = pendingPayments.reduce(
+		(acc, order) => acc + order.amount,
+		0
+	);
+	const totalSuccessfulAmount = successfulPayments.reduce(
+		(acc, order) => acc + order.amount,
+		0
+	);
 	return (
 		<div className='h-full w-full p-6 flex flex-col gap-6 '>
 			<div className='flex items-center justify-between'>
 				<div className='text-title1Bold'>
 					Vehicle Owner: Mr. {vehicle.owners_name}
 				</div>
-				{/* {role && role.toLowerCase() !== 'agent' && (
-					<Button
-						className='justify-start  text-white rounded-xl bg-primary-800'
-						asChild
-						variant={'default'}
-					>
-						<Link
-							href={`/vehicles/${id}/fines`}
-							className='shrink-0 whitespace-nowrap'
+				<div className='flex gap-2 items-center justify-center'>
+					{vehicle.tracker_id && vehicle.tracker_id !== '' && (
+						<Button
+							className='justify-start  text-white rounded-xl bg-primary-800'
+							asChild
+							variant={'default'}
 						>
-							<div className='mr-2 h-4 w-4 shrink-0'>
-								{addIcon}
-							</div>
-							Add 
-						</Link>
-					</Button>
-				)} */}
-				{vehicle.tracker_id && vehicle.tracker_id !== '' && (
-					<Button
-						className='justify-start  text-white rounded-xl bg-primary-800'
-						asChild
-						variant={'default'}
-					>
-						<Link
-							href={`/vehicles/${id}/location`}
-							className='shrink-0 whitespace-nowrap'
-						>
-							<MapPin className='mr-2 h-4 w-4 shrink-0' />
-							View live location
-						</Link>
-					</Button>
-				)}
+							<Link
+								href={`/vehicles/${id}/location`}
+								className='shrink-0 whitespace-nowrap'
+							>
+								<MapPin className='mr-2 h-4 w-4 shrink-0' />
+								View live location
+							</Link>
+						</Button>
+					)}
+				</div>
 			</div>
-			<div className='  w-full'>
+			<Card className=' max-w-lg'>
+				<CardHeader className='border-b text-awesome-foreground text-xl py-1'>
+					<div className='grid grid-cols-2'>
+						<div className=''>Wallet Balance:</div>
+						<div className='text-end'>
+							₦
+							{vehicle.wallet_balance.available_balance.toFixed(
+								2
+							)}
+						</div>
+					</div>
+				</CardHeader>
+				<CardContent className='grid gap-1 py-2 text-lg'>
+					<div className='grid grid-cols-2'>
+						<div className=''>Total Levy Paid:</div>
+						<div className='text-end'>
+							₦{totalSuccessfulAmount.toFixed(2)}
+						</div>
+					</div>
+					<div className='grid grid-cols-2 text-destructive-foreground'>
+						<div className=''>Total Levy Owed:</div>
+						<div className='text-end'>
+							₦{totalPendingAmount.toFixed(2)}
+						</div>
+					</div>
+				</CardContent>
+			</Card>
+			<div className=' w-full'>
 				<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 w-full'>
 					{role && (
 						<>

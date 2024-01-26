@@ -27,8 +27,9 @@ export const getVehicleById = async (id: string) => {
 	const url = `${API}${URLS.vehicle.all}/${id}`;
 	const res = await fetch(url, { headers, cache: 'no-store' });
 	if (!res.ok) return undefined;
-	const result: Promise<IResVehicle> = (await res.json()).data;
-	const { vehicle } = await result;
+
+	const result = await res.json();
+	const vehicle: IVehicle = result.data;
 	return vehicle;
 };
 
@@ -42,12 +43,14 @@ export const getVehicleSummary = async (plate_number: string) => {
 		? `${API}${URLS.vehicle.all}/summary?barcode=${plate_number}`
 		: `${API}${URLS.vehicle.all}/summary?plate_number=${plate_number}`;
 	const res = await fetch(url, { headers, cache: 'no-store' });
+	console.log({ url, result: await res.json() });
 	if (!res.ok) return undefined;
-	const result: Promise<PrettyVehicleSummary> = await res.json();
-	const { data } = await result;
 
-	if (!data) return undefined;
-	return data.vehicle;
+	const result = await res.json();
+	const summary: IVehicleSummary = result.data;
+
+	if (!summary) return undefined;
+	return summary;
 };
 
 export const searchVehicle = async (id: string) => {
@@ -62,8 +65,9 @@ export const searchVehicle = async (id: string) => {
 		? `${API}${URLS.vehicle.search}?id=${id}`
 		: `${API}${URLS.vehicle.search}?plate_number=${id}`;
 	const res = await fetch(url, { headers, cache: 'no-store' });
+	console.log({ url, result: await res.json() });
 	if (!res.ok) return undefined;
-	const result: Promise<IResVehicle> = (await res.json()).data;
-	const { vehicle } = await result;
+	const result = await res.json();
+	const vehicle = result.data;
 	return vehicle;
 };
