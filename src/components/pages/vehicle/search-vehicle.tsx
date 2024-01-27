@@ -1,7 +1,7 @@
 import DashboardCard from '@/components/layout/dashboard-card';
 import { CopyButton } from '@/components/shared/copy-button';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { debtColumns, driversColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -16,7 +16,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 	const { role } = await getSSession();
 	// const vehicle = await getVehicleById(id);
 	const vehicle = await getVehicleSummary(id);
-	console.log(vehicle);
+	// console.log(vehicle);
 	const onWaiver = vehicle?.status === 'inactive';
 	if (!vehicle) {
 		notFound();
@@ -24,9 +24,16 @@ export default async function SearchVehicle({ id }: { id: string }) {
 	const pendingPayments = vehicle.VehicleTransactions.filter(
 		(transaction) => transaction.payment_status === 'pending'
 	);
+	const successfulPayments = vehicle.VehicleTransactions.filter(
+		(transaction) => transaction.payment_status === 'successful'
+	);
 
 	const isOwing = pendingPayments.length > 0;
 	const totalPendingAmount = pendingPayments.reduce(
+		(acc, order) => acc + order.amount,
+		0
+	);
+	const totalSuccessfulAmount = successfulPayments.reduce(
 		(acc, order) => acc + order.amount,
 		0
 	);
@@ -46,6 +53,43 @@ export default async function SearchVehicle({ id }: { id: string }) {
 						{vehicle.plate_number}
 					</div>
 				</div>
+				<div className='text-sm uppercase'>
+					<div className=''>Wallet Balance</div>
+					<div className='text-xl font-bold text-awesome-foreground'>
+						₦
+						{vehicle.wallet_balance.available_balance.toFixed(
+							2
+						)}
+					</div>
+				</div>
+
+				{/* <Card className='max-w-xl mx-auto w-full'>
+					<CardHeader className='border-b text-awesome-foreground text-xl py-1'>
+						<div className='grid grid-cols-2'>
+							<div className=''>Wallet Balance:</div>
+							<div className='text-end'>
+								₦
+								{vehicle.wallet_balance.available_balance.toFixed(
+									2
+								)}
+							</div>
+						</div>
+					</CardHeader>
+					<CardContent className='grid gap-1 py-2 text-lg'>
+						<div className='grid grid-cols-2'>
+							<div className=''>Total Levy Paid:</div>
+							<div className='text-end'>
+								₦{totalSuccessfulAmount.toFixed(2)}
+							</div>
+						</div>
+						<div className='grid grid-cols-2 text-destructive-foreground'>
+							<div className=''>Total Levy Owed:</div>
+							<div className='text-end'>
+								₦{totalPendingAmount.toFixed(2)}
+							</div>
+						</div>
+					</CardContent>
+				</Card> */}
 				{role &&
 					vehicle.tracker_id &&
 					vehicle.tracker_id !== '' && (

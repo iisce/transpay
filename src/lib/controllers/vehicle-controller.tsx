@@ -43,13 +43,10 @@ export const getVehicleSummary = async (plate_number: string) => {
 		? `${API}${URLS.vehicle.all}/summary?barcode=${plate_number}`
 		: `${API}${URLS.vehicle.all}/summary?plate_number=${plate_number}`;
 	const res = await fetch(url, { headers, cache: 'no-store' });
-	console.log({ url, result: await res.json() });
 	if (!res.ok) return undefined;
 
 	const result = await res.json();
-	const summary: IVehicleSummary = result.data;
-
-	if (!summary) return undefined;
+	const summary: IVehicleSummary = result;
 	return summary;
 };
 
