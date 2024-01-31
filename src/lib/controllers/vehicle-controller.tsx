@@ -2,6 +2,9 @@ import { API, URLS } from '../consts';
 import { getSSession } from '../get-data';
 import { isBarcodeId, isURL, isUUID } from '../utils';
 
+export const runtime = 'edge'; // 'nodejs' is the default
+export const dynamic = 'force-dynamic';
+
 export const getVehicles = async () => {
 	const session = await getSSession();
 	const headers = {
@@ -10,6 +13,7 @@ export const getVehicles = async () => {
 		Authorization: `Bearer ${session.access_token}`,
 	};
 	const url = API + URLS.vehicle.all;
+	console.log({ url, session });
 	const res = await fetch(url, { headers, cache: 'no-store' });
 	const data: Promise<IVehicles> = await res.json();
 	if (!res.ok) return undefined;
