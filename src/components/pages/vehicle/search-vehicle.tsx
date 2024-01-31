@@ -14,9 +14,7 @@ import { notFound } from 'next/navigation';
 
 export default async function SearchVehicle({ id }: { id: string }) {
 	const { role } = await getSSession();
-	// const vehicle = await getVehicleById(id);
 	const vehicle = await getVehicleSummary(id);
-	// console.log(vehicle);
 	const onWaiver = vehicle?.status === 'inactive';
 	if (!vehicle) {
 		notFound();
