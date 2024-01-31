@@ -37,21 +37,48 @@ export const getVehicleById = async (id: string) => {
 	return vehicle;
 };
 
+// export const getVehicleSummary = async (plate_number: string) => {
+// 	const headers = {
+// 		'Content-Type': 'application/json',
+// 	};
+// 	const url = isUUID(plate_number)
+// 		? `${API}${URLS.vehicle.all}/summary?id=${plate_number}`
+// 		: isBarcodeId(plate_number)
+// 		? `${API}${URLS.vehicle.all}/summary?barcode=${plate_number}`
+// 		: `${API}${URLS.vehicle.all}/summary?plate_number=${plate_number}`;
+// 	const res = await fetch(url, { headers, cache: 'no-store' });
+
+// 	console.log({ vehiclesummary: await res.json() });
+// 	if (!res.ok) return undefined;
+
+// 	const result = await res.json();
+// 	const summary: IVehicleSummary = result;
+// 	return summary;
+// };
+
 export const getVehicleSummary = async (plate_number: string) => {
 	const headers = {
 		'Content-Type': 'application/json',
 	};
-	const url = isUUID(plate_number)
-		? `${API}${URLS.vehicle.all}/summary?id=${plate_number}`
-		: isBarcodeId(plate_number)
-		? `${API}${URLS.vehicle.all}/summary?barcode=${plate_number}`
-		: `${API}${URLS.vehicle.all}/summary?plate_number=${plate_number}`;
+
+	let url;
+	if (isUUID(plate_number)) {
+		url = `${API}${URLS.vehicle.all}/summary?id=${plate_number}`;
+	} else if (isBarcodeId(plate_number)) {
+		url = `${API}${URLS.vehicle.all}/summary?barcode=${plate_number}`;
+	} else {
+		url = `${API}${URLS.vehicle.all}/summary?plate_number=${plate_number}`;
+	}
+
 	const res = await fetch(url, { headers, cache: 'no-store' });
-
-	console.log({ vehiclesummary: await res.json() });
-	if (!res.ok) return undefined;
-
 	const result = await res.json();
+
+	console.log({ vehicleSummary: result });
+
+	if (!res.ok) {
+		return undefined;
+	}
+
 	const summary: IVehicleSummary = result;
 	return summary;
 };
