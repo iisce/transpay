@@ -22,7 +22,7 @@ export default function Error({
 
 	return (
 		<>
-			<div className='h-[100svh] grid place-items-center p-4 w-full max-w-2xl mx-auto text-center'>
+			<div className='h-[75svh] grid place-items-center p-4 w-full max-w-2xl mx-auto text-center'>
 				<div className='flex flex-col items-center justify-center'>
 					<h1 className='text-2xl font-bold'>
 						Oops! Something Went Wrong !

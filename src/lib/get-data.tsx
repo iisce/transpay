@@ -35,18 +35,53 @@ export const getUserMe = async () => {
 	}
 };
 
+// export const getDashboard = async () => {
+// 	const session = await getSSession();
+// 	const headers = {
+// 		'Content-Type': 'application/json',
+// 		'api-secret': process.env.API_SECRET || '',
+// 		Authorization: `Bearer ${session.access_token}`,
+// 	};
+// 	// const url = API + URLS.dashboard + '?period=1M';
+// 	const url = API + URLS.dashboard;
+// 	const res = await fetch(url, { headers, cache: 'no-store' });
+// 	if (!res.ok) return undefined;
+// 	const data: Promise<IDashboard> = await res.json();
+// 	console.log({ url, data });
+// 	return data;
+// };
+
 export const getDashboard = async () => {
-	const session = await getSSession();
-	const headers = {
-		'Content-Type': 'application/json',
-		'api-secret': process.env.API_SECRET || '',
-		Authorization: `Bearer ${session.access_token}`,
-	};
-	const url = API + URLS.dashboard + '?period=1M';
-	// const url = API + URLS.dashboard;
-	const res = await fetch(url, { headers, cache: 'no-store' });
-	if (!res.ok) return undefined;
-	const data: Promise<IDashboard> = await res.json();
-	// console.log({ url, data: (await data).data.chart });
-	return data;
+	try {
+		const session = await getSSession();
+		const headers = {
+			'Content-Type': 'application/json',
+			'api-secret': process.env.API_SECRET || '',
+			Authorization: `Bearer ${session.access_token}`,
+		};
+		const url = API + URLS.dashboard;
+		const res = await fetch(url, { headers, cache: 'no-store' });
+
+		if (!res.ok) {
+			// Handle non-2xx HTTP errors
+			if (res.status === 429) {
+				// Handle 429 (Too Many Requests) error
+				console.error(
+					'Too Many Requests. Please retry after a while.'
+				);
+			} else {
+				console.error(`HTTP error! Status: ${res.status}`);
+			}
+
+			return undefined;
+		}
+
+		const data: Promise<IDashboard> = await res.json();
+		console.log({ url, data });
+		return data;
+	} catch (error: any) {
+		// Handle other errors (e.g., network issues, JSON parsing errors)
+		console.error('An error occurred:', error.message);
+		return undefined;
+	}
 };
