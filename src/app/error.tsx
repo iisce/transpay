@@ -64,7 +64,7 @@ export default function Error({
 								causing the issue.
 							</span>{' '}
 						</li>
-						<li>
+						{/* <li>
 							<span className='font-bold'>
 								Explore Other Areas:{' '}
 							</span>
@@ -73,7 +73,7 @@ export default function Error({
 								parts of TransPay? You might discover
 								something new and interesting.
 							</span>{' '}
-						</li>
+						</li> */}
 					</ol>
 					<h2 className='text-xl font-bold'>Need Assistance?</h2>
 					<div className='mb-2'>
@@ -82,7 +82,7 @@ export default function Error({
 						help. Feel free to contact us
 					</div>
 					<div className='flex items-center justify-center flex-wrap gap-2 mb-5'>
-						<Link
+						{/* <Link
 							href={'/#'}
 							className={cn(buttonVariants(), 'gap-2')}
 						>
@@ -93,7 +93,7 @@ export default function Error({
 							className={cn(buttonVariants(), 'gap-2')}
 						>
 							<InstagramIcon /> Instagram
-						</Link>
+						</Link> */}
 						<a
 							href={'sms:+2348163453826'}
 							className={cn(buttonVariants(), 'gap-2')}
