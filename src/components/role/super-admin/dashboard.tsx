@@ -15,14 +15,16 @@ import { notFound } from 'next/navigation';
 import DashboardCard from './dashboard-card';
 
 export default async function DashboardSuperAdmin(user: { user: IUser }) {
-	const all_activities = await getAllActivities();
+	const [all_activities, dashboardDetails] = await Promise.all([
+		getAllActivities(),
+		getDashboard(),
+	]);
 	all_activities &&
 		all_activities.sort(
 			(a, b) =>
 				new Date(b.createdAt).getTime() -
 				new Date(a.createdAt).getTime()
 		);
-	const dashboardDetails = await getDashboard();
 	// console.log(dashboardDetails);
 	const blackListed = dashboardDetails?.data.admins.blacklisted || [];
 
