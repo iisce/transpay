@@ -82,7 +82,7 @@ export default function Error({
 						help. Feel free to contact us
 					</div>
 					<div className='flex items-center justify-center flex-wrap gap-2 mb-5'>
-						<Link
+						{/* <Link
 							href={'/#'}
 							className={cn(buttonVariants(), 'gap-2')}
 						>
@@ -93,7 +93,7 @@ export default function Error({
 							className={cn(buttonVariants(), 'gap-2')}
 						>
 							<InstagramIcon /> Instagram
-						</Link>
+						</Link> */}
 						<a
 							href={'sms:+2348163453826'}
 							className={cn(buttonVariants(), 'gap-2')}
