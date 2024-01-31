@@ -59,7 +59,7 @@ export const getDashboard = async () => {
 			'api-secret': process.env.API_SECRET || '',
 			Authorization: `Bearer ${session.access_token}`,
 		};
-		const url = API + URLS.dashboard;
+		const url = API + URLS.dashboard + '?period=1M';
 		const res = await fetch(url, { headers, cache: 'no-store' });
 
 		if (!res.ok) {
