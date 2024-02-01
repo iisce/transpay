@@ -35,23 +35,7 @@ export const getUserMe = async () => {
 	}
 };
 
-// export const getDashboard = async () => {
-// 	const session = await getSSession();
-// 	const headers = {
-// 		'Content-Type': 'application/json',
-// 		'api-secret': process.env.API_SECRET || '',
-// 		Authorization: `Bearer ${session.access_token}`,
-// 	};
-// 	// const url = API + URLS.dashboard + '?period=1M';
-// 	const url = API + URLS.dashboard;
-// 	const res = await fetch(url, { headers, cache: 'no-store' });
-// 	if (!res.ok) return undefined;
-// 	const data: Promise<IDashboard> = await res.json();
-// 	console.log({ url, data });
-// 	return data;
-// };
-
-export const getDashboard = async () => {
+export const getDashboard = async (duration?: '1D' | '1M' | '1Y') => {
 	try {
 		const session = await getSSession();
 		const headers = {
@@ -59,7 +43,10 @@ export const getDashboard = async () => {
 			'api-secret': process.env.API_SECRET || '',
 			Authorization: `Bearer ${session.access_token}`,
 		};
-		const url = API + URLS.dashboard + '?period=1M';
+		const url =
+			API +
+			URLS.dashboard +
+			`${duration ? '?period=' + duration : ''}`;
 		const res = await fetch(url, { headers, cache: 'no-store' });
 
 		if (!res.ok) {

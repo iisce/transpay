@@ -15,10 +15,13 @@ import { notFound } from 'next/navigation';
 import DashboardCard from './dashboard-card';
 
 export default async function DashboardSuperAdmin(user: { user: IUser }) {
-	const [all_activities, dashboardDetails] = await Promise.all([
-		getAllActivities(),
-		getDashboard(),
-	]);
+	const [all_activities, dashboardDetails, monthDetails, dayDetails] =
+		await Promise.all([
+			getAllActivities(),
+			getDashboard('1Y'),
+			getDashboard('1M'),
+			getDashboard('1D'),
+		]);
 	all_activities &&
 		all_activities.sort(
 			(a, b) =>
@@ -32,6 +35,8 @@ export default async function DashboardSuperAdmin(user: { user: IUser }) {
 	const transactions = dashboardDetails?.data.chart.transactions.all;
 	// const transactions = await getTransactions();
 	const totalRevenueAmount = dashboardDetails?.data.chart.total.revenue;
+	const totalMonthlyRevenue = monthDetails?.data.chart.total.revenue;
+	const totalDailyRevenue = dayDetails?.data.chart.total.revenue;
 	const totalDailyFeesAmount = dashboardDetails?.data.chart.total.dailyFees;
 
 	const dailyFees = transactions.filter(
@@ -63,13 +68,13 @@ export default async function DashboardSuperAdmin(user: { user: IUser }) {
 				<DashboardCard
 					type='positive'
 					title='Monthly Total Revenue'
-					amount={totalRevenueAmount}
+					amount={totalMonthlyRevenue || 0}
 					percent={0}
 				/>
 				<DashboardCard
 					type='positive'
-					title='Daily Fees'
-					amount={totalDailyFeesAmount}
+					title='Daily Total Revenue'
+					amount={totalDailyRevenue || 0}
 					percent={0}
 				/>
 				<DashboardCard
