@@ -17,6 +17,7 @@ export default async function NoLoginSearch({
 	plate_number: string;
 }) {
 	const vehicle = await getVehicleSummary(plate_number);
+	console.log('TEST......', vehicle);
 	if (!vehicle) {
 		notFound();
 	}

@@ -53,11 +53,10 @@ export const getVehicleSummary = async (plate_number: string) => {
 	const res = await fetch(url, { headers, cache: 'no-store' });
 	const result = await res.json();
 
-	console.log({ vehicleSummary: result });
-
-	if (!res.ok || !result.success) {
+	if (!res.ok) {
 		return undefined;
 	}
+	console.log(result);
 
 	const summary: IVehicleSummary = result;
 	return summary;
