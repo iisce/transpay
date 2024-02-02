@@ -64,7 +64,6 @@ export const getDashboard = async (duration?: '1D' | '1M' | '1Y') => {
 		}
 
 		const data: Promise<IDashboard> = await res.json();
-		console.log({ url, data });
 		return data;
 	} catch (error: any) {
 		// Handle other errors (e.g., network issues, JSON parsing errors)
