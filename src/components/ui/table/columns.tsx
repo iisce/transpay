@@ -80,14 +80,7 @@ export const paymentColumns: ColumnDef<IVehiclePayment>[] = [
 		),
 		cell: ({ row }) => {
 			const payment = row.original;
-			return (
-				<Link
-					href={`/vehicles/${payment.vehicle_id}/payments/${payment.vehicle_transaction_id}`}
-					className=''
-				>
-					{formatDate(payment.transaction_date)}
-				</Link>
-			);
+			return formatDate(payment.transaction_date);
 		},
 		sortDescFirst: true,
 	},
@@ -167,13 +160,6 @@ export const paymentColumns: ColumnDef<IVehiclePayment>[] = [
 									</DialogFooter>
 								</DialogContent>
 							</Dialog>
-						</DropdownMenuItem>
-						<DropdownMenuItem asChild>
-							<Link
-								href={`/vehicles/${payment.vehicle_id}/payments/${payment.vehicle_transaction_id}`}
-							>
-								View payment details
-							</Link>
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>

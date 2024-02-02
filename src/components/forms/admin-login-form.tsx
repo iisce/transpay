@@ -51,7 +51,7 @@ const defaultValues: Partial<AgentFormValues> = {
 	password: '',
 };
 
-export function LoginForm({ error }: { error?: string }) {
+export function AdminLoginForm({ error }: { error?: string }) {
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const router = useRouter();
 
@@ -69,7 +69,7 @@ export function LoginForm({ error }: { error?: string }) {
 			const signInResponse = await signIn('credentials', {
 				email: data.email,
 				password: data.password,
-				role: 'agent',
+				role: 'admin',
 				redirect: true,
 				callbackUrl: '/dashboard',
 			});
@@ -94,7 +94,7 @@ export function LoginForm({ error }: { error?: string }) {
 				<div className='grid gap-5'>
 					{error && (
 						<div className='text-destructive-foreground text-center text-xs'>
-							Incorrect email or password
+							{error}
 						</div>
 					)}
 					<FormField
@@ -155,51 +155,6 @@ export function LoginForm({ error }: { error?: string }) {
 						</Link>
 					</div>
 				</div>
-
-				<AlertDialog
-					open={open}
-					onOpenChange={setOpen}
-				>
-					<AlertDialogContent className='bg-secondary'>
-						<div className='w-60 mx-auto flex-col'>
-							<div className='flex flex-col items-center gap-5 mb-5'>
-								<div className='h-20 w-20 text-awesome-foreground'>
-									{successIcon}
-								</div>
-								<div className='text-xl'>
-									Agent Account Created
-								</div>
-							</div>
-							<div className='flex flex-col text-left whitespace-nowrap  mb-5'>
-								<div className=''>
-									Email: {form.getValues().email}
-								</div>
-								<div className=''>
-									Password:{' '}
-									{form.getValues().password}
-								</div>
-							</div>
-							<div className='flex flex-col gap-3'>
-								<AlertDialogAction
-									asChild
-									className='rounded-xl'
-								>
-									<Link href={`/agents/agentId`}>
-										View Account
-									</Link>
-								</AlertDialogAction>
-								<AlertDialogCancel
-									asChild
-									className='rounded-xl'
-								>
-									<Link href={`/agents`}>
-										Dashboard
-									</Link>
-								</AlertDialogCancel>
-							</div>
-						</div>
-					</AlertDialogContent>
-				</AlertDialog>
 			</form>
 		</Form>
 	);

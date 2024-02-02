@@ -70,18 +70,21 @@ export default async function DashboardSuperAdmin(user: { user: IUser }) {
 					title='Monthly Total Revenue'
 					amount={totalMonthlyRevenue || 0}
 					percent={0}
+					desc='Month Till Date'
 				/>
 				<DashboardCard
 					type='positive'
 					title='Daily Total Revenue'
 					amount={totalDailyRevenue || 0}
 					percent={0}
+					desc='Today'
 				/>
 				<DashboardCard
 					type='positive'
 					title='Tracker Fees'
 					amount={totalTrackerFeesAmount}
 					percent={0}
+					desc='Total tracker fees'
 				/>
 			</div>
 			<div className='flex w-full gap-5 mt-5'>
@@ -93,7 +96,7 @@ export default async function DashboardSuperAdmin(user: { user: IUser }) {
 						</div>
 						<div className='h-full'>
 							<SuperAdminRevenueCharts
-								data={chartDataDay}
+								data={chartDataWeek}
 							/>
 						</div>
 					</div>

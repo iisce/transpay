@@ -2003,3 +2003,12 @@ export const PROPERTIES: IProperty[] = [
 		],
 	},
 ];
+
+export const BANK_RATE = 0.0043;
+export const TRANSPAY = 0.08;
+export const AIRS = 0.92;
+
+export const FNTC = new Intl.NumberFormat('en-NG', {
+	currency: 'NGN',
+	style: 'currency',
+});

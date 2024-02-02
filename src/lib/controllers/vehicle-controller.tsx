@@ -56,7 +56,7 @@ export const getVehicleSummary = async (plate_number: string) => {
 	if (!res.ok) {
 		return undefined;
 	}
-	console.log(result);
+	// console.log(result);
 
 	const summary: IVehicleSummary = result;
 	return summary;

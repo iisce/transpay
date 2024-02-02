@@ -28,6 +28,7 @@ import {
 } from '@/lib/utils';
 import { subYears, startOfYear } from 'date-fns';
 import SplitPayment from '@/components/pages/activities/revenue/split-payment';
+import { BANK_RATE, FNTC } from '@/lib/consts';
 
 export default async function Revenue() {
 	const revenueData = await getRevenueStats();
@@ -115,33 +116,39 @@ export default async function Revenue() {
 			<div className='flex flex-col gap-5 '>
 				<div className='py-5 flex flex-row flex-wrap'>
 					<StatsCard
+						desc='All revenue year till date'
 						percentage={100}
 						type='up'
 						title='Total Revenue'
-						amount={revDetails.totalRevenue.toString()}
+						amount={FNTC.format(revDetails.totalRevenue)}
 					>
 						<TotalRevenueCharts />
 					</StatsCard>
 					<StatsCard
+						desc='All daily fees year till date'
 						percentage={100}
 						type='up'
 						title='Daily Fees Payment'
-						amount={revDetails.totalDailyFees.toString()}
+						amount={FNTC.format(revDetails.totalDailyFees)}
 					>
 						<DailyFeesCharts />
 					</StatsCard>
 					<StatsCard
+						desc='All tracker fees year till date'
 						percentage={0}
 						type='up'
 						title='Tracker Fees Payment'
-						amount={revDetails.totalTrackerFees.toString()}
+						amount={FNTC.format(revDetails.totalTrackerFees)}
 					>
 						<FinesPaymentCharts />
 					</StatsCard>
 					<StatsCard
+						desc='All bank charges year till date'
 						percentage={100}
 						title='Bank Charges'
-						amount='35.8'
+						amount={FNTC.format(
+							revDetails.totalRevenue * BANK_RATE
+						)}
 						type='up'
 					>
 						<FinesPaymentCharts />
@@ -180,3 +187,4 @@ export default async function Revenue() {
 		</div>
 	);
 }
+// ${FNTC.format(revenueData?.chart.total.revenue)}
