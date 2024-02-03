@@ -45,9 +45,11 @@ export const getDashboard = async (duration?: '1D' | '1M' | '1Y') => {
 		};
 		const url =
 			API +
-			URLS.dashboard +
+			// URLS.dashboard +
+			URLS.dashboard.default +
 			`${duration ? '?period=' + duration : ''}`;
-		const res = await fetch(url, { headers, cache: 'no-store' });
+		// const res = await fetch(url, { headers, cache: 'no-store' });
+		const res = await fetch(url, { headers });
 
 		if (!res.ok) {
 			// Handle non-2xx HTTP errors
@@ -65,6 +67,251 @@ export const getDashboard = async (duration?: '1D' | '1M' | '1Y') => {
 
 		const data: Promise<IDashboard> = await res.json();
 		return data;
+	} catch (error: any) {
+		// Handle other errors (e.g., network issues, JSON parsing errors)
+		console.error('An error occurred:', error.message);
+		return undefined;
+	}
+};
+
+export const getDashboardTotalRevenue = async () => {
+	try {
+		const session = await getSSession();
+		const headers = {
+			'Content-Type': 'application/json',
+			'api-secret': process.env.API_SECRET || '',
+			Authorization: `Bearer ${session.access_token}`,
+		};
+		const url = API + URLS.dashboard.total_revenue_yearly;
+		const res = await fetch(url, { headers, cache: 'no-store' });
+
+		if (!res.ok) {
+			// Handle non-2xx HTTP errors
+			if (res.status === 429) {
+				// Handle 429 (Too Many Requests) error
+				console.error(
+					'Too Many Requests. Please retry after a while.'
+				);
+			} else {
+				console.error(`HTTP error! Status: ${res.status}`);
+			}
+
+			return undefined;
+		}
+
+		const { data } = await res.json();
+		const revenueYearlyTotal: number = data.total;
+		return revenueYearlyTotal;
+	} catch (error: any) {
+		// Handle other errors (e.g., network issues, JSON parsing errors)
+		console.error('An error occurred:', error.message);
+		return undefined;
+	}
+};
+
+export const getDashboardTotalMonthlyRevenue = async () => {
+	try {
+		const session = await getSSession();
+		const headers = {
+			'Content-Type': 'application/json',
+			'api-secret': process.env.API_SECRET || '',
+			Authorization: `Bearer ${session.access_token}`,
+		};
+		const url = API + URLS.dashboard.total_revenue_monthly;
+		const res = await fetch(url, { headers, cache: 'no-store' });
+
+		if (!res.ok) {
+			// Handle non-2xx HTTP errors
+			if (res.status === 429) {
+				// Handle 429 (Too Many Requests) error
+				console.error(
+					'Too Many Requests. Please retry after a while.'
+				);
+			} else {
+				console.error(`HTTP error! Status: ${res.status}`);
+			}
+
+			return undefined;
+		}
+
+		const { data } = await res.json();
+		const revenueMonthlyTotal: number = data.total;
+		return revenueMonthlyTotal;
+	} catch (error: any) {
+		// Handle other errors (e.g., network issues, JSON parsing errors)
+		console.error('An error occurred:', error.message);
+		return undefined;
+	}
+};
+
+export const getDashboardTotalDailyRevenue = async () => {
+	try {
+		const session = await getSSession();
+		const headers = {
+			'Content-Type': 'application/json',
+			'api-secret': process.env.API_SECRET || '',
+			Authorization: `Bearer ${session.access_token}`,
+		};
+		const url = API + URLS.dashboard.total_revenue_daily;
+		const res = await fetch(url, { headers, cache: 'no-store' });
+
+		if (!res.ok) {
+			// Handle non-2xx HTTP errors
+			if (res.status === 429) {
+				// Handle 429 (Too Many Requests) error
+				console.error(
+					'Too Many Requests. Please retry after a while.'
+				);
+			} else {
+				console.error(`HTTP error! Status: ${res.status}`);
+			}
+
+			return undefined;
+		}
+
+		const { data } = await res.json();
+		const revenueDailyTotal: number = data.total;
+		return revenueDailyTotal;
+	} catch (error: any) {
+		// Handle other errors (e.g., network issues, JSON parsing errors)
+		console.error('An error occurred:', error.message);
+		return undefined;
+	}
+};
+
+export const getDashboardTotalTrackerFees = async () => {
+	try {
+		const session = await getSSession();
+		const headers = {
+			'Content-Type': 'application/json',
+			'api-secret': process.env.API_SECRET || '',
+			Authorization: `Bearer ${session.access_token}`,
+		};
+		const url = API + URLS.dashboard.total_tracker_yearly;
+		const res = await fetch(url, { headers, cache: 'no-store' });
+
+		if (!res.ok) {
+			// Handle non-2xx HTTP errors
+			if (res.status === 429) {
+				// Handle 429 (Too Many Requests) error
+				console.error(
+					'Too Many Requests. Please retry after a while.'
+				);
+			} else {
+				console.error(`HTTP error! Status: ${res.status}`);
+			}
+
+			return undefined;
+		}
+
+		const { data } = await res.json();
+		const trackerTotal: number = data.sum;
+		return trackerTotal;
+	} catch (error: any) {
+		// Handle other errors (e.g., network issues, JSON parsing errors)
+		console.error('An error occurred:', error.message);
+		return undefined;
+	}
+};
+
+export const getDashboardBlacklistedAdmin = async () => {
+	try {
+		const session = await getSSession();
+		const headers = {
+			'Content-Type': 'application/json',
+			'api-secret': process.env.API_SECRET || '',
+			Authorization: `Bearer ${session.access_token}`,
+		};
+		const url = API + URLS.dashboard.blacklisted_admin;
+		const res = await fetch(url, { headers, cache: 'no-store' });
+
+		if (!res.ok) {
+			// Handle non-2xx HTTP errors
+			if (res.status === 429) {
+				// Handle 429 (Too Many Requests) error
+				console.error(
+					'Too Many Requests. Please retry after a while.'
+				);
+			} else {
+				console.error(`HTTP error! Status: ${res.status}`);
+			}
+
+			return undefined;
+		}
+
+		const { data } = await res.json();
+		const blacklistedAdmins: IAdmin[] = data.blacklisted_admins;
+		return blacklistedAdmins;
+	} catch (error: any) {
+		// Handle other errors (e.g., network issues, JSON parsing errors)
+		console.error('An error occurred:', error.message);
+		return undefined;
+	}
+};
+
+export const getDashboardActivities = async (amount: string) => {
+	try {
+		const session = await getSSession();
+		const headers = {
+			'Content-Type': 'application/json',
+			'api-secret': process.env.API_SECRET || '',
+			Authorization: `Bearer ${session.access_token}`,
+		};
+		const url = API + URLS.dashboard.activities_with_limit + `/${amount}`;
+		const res = await fetch(url, { headers, cache: 'no-store' });
+
+		if (!res.ok) {
+			// Handle non-2xx HTTP errors
+			if (res.status === 429) {
+				// Handle 429 (Too Many Requests) error
+				console.error(
+					'Too Many Requests. Please retry after a while.'
+				);
+			} else {
+				console.error(`HTTP error! Status: ${res.status}`);
+			}
+
+			return undefined;
+		}
+
+		const { data } = await res.json();
+		const all_activities: IActivity[] = data.activities;
+		return all_activities;
+	} catch (error: any) {
+		// Handle other errors (e.g., network issues, JSON parsing errors)
+		console.error('An error occurred:', error.message);
+		return undefined;
+	}
+};
+
+export const getDashboardEarningRevenueChart = async () => {
+	try {
+		const session = await getSSession();
+		const headers = {
+			'Content-Type': 'application/json',
+			'api-secret': process.env.API_SECRET || '',
+			Authorization: `Bearer ${session.access_token}`,
+		};
+		const url = API + URLS.dashboard.activities_with_limit;
+		const res = await fetch(url, { headers, cache: 'no-store' });
+
+		if (!res.ok) {
+			// Handle non-2xx HTTP errors
+			if (res.status === 429) {
+				// Handle 429 (Too Many Requests) error
+				console.error(
+					'Too Many Requests. Please retry after a while.'
+				);
+			} else {
+				console.error(`HTTP error! Status: ${res.status}`);
+			}
+
+			return undefined;
+		}
+
+		const { data } = await res.json();
+		const all_activities: IActivity[] = data.activities;
+		return all_activities;
 	} catch (error: any) {
 		// Handle other errors (e.g., network issues, JSON parsing errors)
 		console.error('An error occurred:', error.message);

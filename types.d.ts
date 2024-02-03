@@ -123,12 +123,12 @@ interface IActivity {
 interface IActivityCard {
 	id: number;
 	activity_id: string;
-	user_role: string;
-	user_id: string;
+	user_role?: string;
+	user_id?: string;
 	name: string;
 	description: string;
-	date: string;
-	time: string;
+	date?: string;
+	time?: string;
 }
 
 interface IPage {

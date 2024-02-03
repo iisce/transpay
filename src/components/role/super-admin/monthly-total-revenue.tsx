@@ -1,15 +1,13 @@
-import React from 'react';
+import { getDashboardTotalMonthlyRevenue } from '@/lib/get-data';
 import DashboardCard from './dashboard-card';
-import { getDashboard } from '@/lib/get-data';
 
 export default async function MonthlyTotalRevenue() {
-	const dashboardDetails = await getDashboard('1M');
-	const totalMonthlyRevenue = dashboardDetails?.data.chart.total.revenue;
+	const monthlyRevenueTotal = await getDashboardTotalMonthlyRevenue();
 	return (
 		<DashboardCard
 			type='positive'
 			title='Monthly Total Revenue'
-			amount={totalMonthlyRevenue || 0}
+			amount={monthlyRevenueTotal || 0}
 			percent={0}
 			desc='Month Till Date'
 		/>

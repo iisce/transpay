@@ -1,22 +1,13 @@
 import { Calendar } from '@/components/ui/calendar';
 import { Skeleton } from '@/components/ui/skeleton';
-import { adminsColumns } from '@/components/ui/table/columns';
-import { DataTable } from '@/components/ui/table/data-table';
-import { getDashboard } from '@/lib/get-data';
-import {
-	transformTransactionsToDaysData,
-	transformTransactionsToMonthsData,
-	transformTransactionsToWeeksData,
-} from '@/lib/utils';
-import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 import DailyTotalRevenue from './daily-total-revenue';
 import DashboardActivities from './dashboard-activities';
+import DashboardBlacklisted from './dashboard-blacklisted';
 import DashboardEarningRevenue from './dashboard-earning-revenue';
 import MonthlyTotalRevenue from './monthly-total-revenue';
 import TotalTrackerRevenue from './total-tracker-fee';
 import YearlyTotalRevenue from './yearly-total-revenue';
-import DashboardBlacklisted from './dashboard-blacklisted';
 
 export default function DashboardSuperAdmin(user: { user: IUser }) {
 	return (
@@ -78,7 +69,7 @@ export default function DashboardSuperAdmin(user: { user: IUser }) {
 					/>
 					<Suspense
 						fallback={
-							<Skeleton className='rounded-xl border bg-secondary flex flex-col gap-3 p-2 h-full' />
+							<Skeleton className='rounded-xl border bg-secondary flex flex-col gap-3 p-2 h-64' />
 						}
 					>
 						<DashboardActivities />

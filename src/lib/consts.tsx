@@ -1706,7 +1706,16 @@ export const URLS = {
 			agent: '/api/v1/agents/login',
 		},
 	},
-	dashboard: '/api/v1/dashboard',
+	dashboard: {
+		default: '/api/v1/dashboard',
+		total_revenue_yearly: '/api/v1/dashboard/total-revenue',
+		total_revenue_monthly: '/api/v1/dashboard/total-month-revenue',
+		total_revenue_daily: '/api/v1/dashboard/total-day-revenue',
+		total_tracker_yearly: '/api/v1/dashboard/total-trackers-revenue',
+		activities_with_limit: '/api/v1/dashboard/all-activities',
+		blacklisted_admin: '/api/v1/dashboard/blacklisted-admins',
+		chart: '/api/v1/dashboard/chart',
+	},
 	driver: {
 		all: '/api/v1/drivers',
 		blacklist: '/api/v1/drivers/blacklist', // add vehicle to blacklist
