@@ -12,7 +12,6 @@ import YearlyTotalRevenue from './yearly-total-revenue';
 export default function DashboardSuperAdmin(user: { user: IUser }) {
 	return (
 		<div className='w-full'>
-			{/* <pre>{JSON.stringify(dashboardDetails.data.chart, null, 2)}</pre> */}
 			<div className='grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5'>
 				<Suspense
 					fallback={
