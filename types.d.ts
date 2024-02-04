@@ -191,38 +191,76 @@ interface IDriver {
 }
 
 interface IVehicle extends IWallet {
-	wallet_balance: {
-		currency: 'NGN';
-		available_balance: number;
-		ledger_balance: number;
-	};
 	id: number;
 	vehicle_id: string;
 	color: string;
 	category: string;
 	plate_number: string;
-	image?: string;
+	image: string;
 	user_role: string;
 	user_id: string;
 	blacklisted: boolean;
-	current_driver?: IDriver;
+	current_driver: string;
 	status: string;
+	deleted: boolean;
+	vehicle_type: string;
+	vin: string;
+	barcode_string: string;
 	owners_phone_number: string;
 	owners_name: string;
-	vin: string;
-	vehicle_type: string;
-	barcode_string: string;
 	tracker_id: string;
-	deleted: boolean;
 	createdAt: string;
 	updatedAt: string;
 	Drivers: IDriver[];
-	VehicleTransactions: IVehicleTransaction[];
+	VehicleTransactions: {
+		id: number;
+		vehicle_transaction_id: string;
+		vehicle_id: string;
+		transaction_date: string;
+		description: string;
+		payment_gateway_name: string;
+		transaction_type: string;
+		amount: number;
+		currency: string;
+		invoice_number: string;
+		invoice_prefix: string;
+		invoice_details: string;
+		payment_type: string;
+		user_role: string;
+		user_id: string;
+		payment_status: string;
+		status: boolean;
+		transfer_id: string;
+		last_message: string;
+		deficit: number;
+		createdAt: string;
+		updatedAt: string;
+	}[];
 	VehicleFines: [];
-	VehicleTracker: string;
 	VehicleWaivers: [];
-	VehicleWallet: Omit<IWallet, 'vehicle_id'>;
-	with_wallet: boolean;
+	VehicleWallet: {
+		vehicle_id: string;
+		nuban: string;
+		account_name: string;
+		bank_name: string;
+	};
+	VehicleBalance: {
+		id: number;
+		vehicle_balance_id: string;
+		vehicle_id: string;
+		wallet_balance: number;
+		deficit_balance: number;
+		net_total: number;
+		next_transaction_date: string;
+		createdAt: string;
+		updatedAt: string;
+	};
+	VehicleTracker: null;
+	wallet_balance: {
+		currency: string;
+		available_balance: number;
+		ledger_balance: number;
+	};
 }
 
 interface IWallet {

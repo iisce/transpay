@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { getVehicleSummary } from '@/lib/controllers/vehicle-controller';
 import { getSSession } from '@/lib/get-data';
 import { failureIcon, successIcon } from '@/lib/icons';
+import { format } from 'date-fns';
 import { MapPin } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -15,26 +16,13 @@ import { notFound } from 'next/navigation';
 export default async function SearchVehicle({ id }: { id: string }) {
 	const { role } = await getSSession();
 	const vehicle = await getVehicleSummary(id);
+	console.log(vehicle);
 	const onWaiver = vehicle?.status === 'inactive';
 	if (!vehicle) {
 		notFound();
 	}
-	const pendingPayments = vehicle.VehicleTransactions.filter(
-		(transaction) => transaction.payment_status === 'pending'
-	);
-	const successfulPayments = vehicle.VehicleTransactions.filter(
-		(transaction) => transaction.payment_status === 'successful'
-	);
 
-	const isOwing = pendingPayments.length > 0;
-	const totalPendingAmount = pendingPayments.reduce(
-		(acc, order) => acc + order.amount,
-		0
-	);
-	const totalSuccessfulAmount = successfulPayments.reduce(
-		(acc, order) => acc + order.amount,
-		0
-	);
+	const isOwing = vehicle.VehicleBalance?.deficit_balance > 0 || false;
 
 	return (
 		<div className='h-full w-full p-6 flex flex-col gap-6 '>
@@ -60,34 +48,29 @@ export default async function SearchVehicle({ id }: { id: string }) {
 						)}
 					</div>
 				</div>
+				{vehicle.VehicleBalance && (
+					<div className='text-sm uppercase'>
+						<div className=''>Next Payment Date</div>
+						<div className='text-xl font-bold text-awesome-foreground'>
+							{format(
+								new Date(
+									vehicle.VehicleBalance.next_transaction_date
+								),
+								'MMMM d, yyyy'
+							)}
+						</div>
+					</div>
+				)}
+				{vehicle.VehicleBalance && (
+					<div className='text-sm uppercase'>
+						<div className=''>Total Payment</div>
+						<div className='text-xl font-bold text-awesome-foreground'>
+							₦
+							{vehicle.VehicleBalance.net_total.toFixed(2)}
+						</div>
+					</div>
+				)}
 
-				{/* <Card className='max-w-xl mx-auto w-full'>
-					<CardHeader className='border-b text-awesome-foreground text-xl py-1'>
-						<div className='grid grid-cols-2'>
-							<div className=''>Wallet Balance:</div>
-							<div className='text-end'>
-								₦
-								{vehicle.wallet_balance.available_balance.toFixed(
-									2
-								)}
-							</div>
-						</div>
-					</CardHeader>
-					<CardContent className='grid gap-1 py-2 text-lg'>
-						<div className='grid grid-cols-2'>
-							<div className=''>Total Levy Paid:</div>
-							<div className='text-end'>
-								₦{totalSuccessfulAmount.toFixed(2)}
-							</div>
-						</div>
-						<div className='grid grid-cols-2 text-destructive-foreground'>
-							<div className=''>Total Levy Owed:</div>
-							<div className='text-end'>
-								₦{totalPendingAmount.toFixed(2)}
-							</div>
-						</div>
-					</CardContent>
-				</Card> */}
 				{role &&
 					vehicle.tracker_id &&
 					vehicle.tracker_id !== '' && (
@@ -173,11 +156,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 											Vehicle is Owing!
 										</div>
 										<div className='text-destructive-foreground font-bold text-4xl'>
-											{`₦${
-												totalPendingAmount +
-												pendingPayments.length *
-													20
-											}`}
+											{`₦${vehicle.VehicleBalance.deficit_balance}`}
 										</div>
 									</div>
 								</div>

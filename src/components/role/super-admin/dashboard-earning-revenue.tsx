@@ -25,7 +25,6 @@ export default async function DashboardEarningRevenue() {
 		{ name: '31-00', total: 800 },
 		{ name: '01-00', total: 400 },
 	];
-	console.log({ chartDataDay, chartDataWeek, chartDataMonth });
 	return (
 		<div className='flex flex-col w-full aspect-[3/2] xl:aspect-[2/1] bg-secondary rounded-xl p-3 md:p-5'>
 			<div className='text-2xl mb-2'>

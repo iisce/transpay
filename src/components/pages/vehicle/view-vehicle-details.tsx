@@ -1,41 +1,19 @@
 import DashboardCard from '@/components/layout/dashboard-card';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import {
-	driversColumns,
-	paymentColumns,
-	viewDriversColumns,
-} from '@/components/ui/table/columns';
+import { driversColumns, paymentColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
-import { VIEW_DRIVER_TABLE } from '@/lib/consts';
 import { getVehicleById } from '@/lib/controllers/vehicle-controller';
 import { getSSession } from '@/lib/get-data';
-import { MapIcon, MapPin } from 'lucide-react';
+import { format } from 'date-fns';
+import { MapPin } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import React from 'react';
 
 export default async function ViewVehicleDetails({ id }: { id: string }) {
 	const { role } = await getSSession();
 	const vehicle = await getVehicleById(id);
 	if (!vehicle) return notFound();
-
-	const pendingPayments = vehicle.VehicleTransactions.filter(
-		(transaction) => transaction.payment_status === 'pending'
-	);
-	const successfulPayments = vehicle.VehicleTransactions.filter(
-		(transaction) => transaction.payment_status === 'successful'
-	);
-
-	const isOwing = pendingPayments.length > 0;
-	const totalPendingAmount = pendingPayments.reduce(
-		(acc, order) => acc + order.amount,
-		0
-	);
-	const totalSuccessfulAmount = successfulPayments.reduce(
-		(acc, order) => acc + order.amount,
-		0
-	);
 	return (
 		<div className='h-full w-full p-6 flex flex-col gap-6 '>
 			<div className='flex items-center justify-between'>
@@ -66,7 +44,7 @@ export default async function ViewVehicleDetails({ id }: { id: string }) {
 						<div className=''>Wallet Balance:</div>
 						<div className='text-end'>
 							₦
-							{vehicle.wallet_balance.available_balance.toFixed(
+							{vehicle.VehicleBalance.wallet_balance.toFixed(
 								2
 							)}
 						</div>
@@ -76,17 +54,36 @@ export default async function ViewVehicleDetails({ id }: { id: string }) {
 					<div className='grid grid-cols-2'>
 						<div className=''>Total Levy Paid:</div>
 						<div className='text-end'>
-							₦{totalSuccessfulAmount.toFixed(2)}
+							₦
+							{vehicle.VehicleBalance.net_total.toFixed(2)}
+						</div>
+					</div>
+					<div className='grid grid-cols-2'>
+						<div className=''>Next Payment Date:</div>
+						<div className='text-end'>
+							{format(
+								new Date(
+									vehicle.VehicleBalance.next_transaction_date
+								),
+								'MMMM d, yyyy'
+							)}
 						</div>
 					</div>
 					<div className='grid grid-cols-2 text-destructive-foreground'>
 						<div className=''>Total Levy Owed:</div>
 						<div className='text-end'>
-							₦{totalPendingAmount.toFixed(2)}
+							₦
+							{vehicle.VehicleBalance.deficit_balance.toFixed(
+								2
+							)}
 						</div>
 					</div>
 				</CardContent>
 			</Card>
+			<div className='text-[10px] uppercase text-red-500'>
+				** Maintenance is still ongoing and all previous debts
+				accrued by customers will be updated before morning
+			</div>
 			<div className=' w-full'>
 				<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 w-full'>
 					{role && (
