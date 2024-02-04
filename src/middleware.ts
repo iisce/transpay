@@ -14,7 +14,7 @@ export const config = {
 		// '/drivers/:path*',
 		// '/property/:path*',
 		// '/green-engine/:path*',
-		'/((?!maintenance).*)',
+		'/((?!api|_next/static|_next/image|favicon.ico|maintenance).*)',
 	],
 };
 // export default withAuth(
