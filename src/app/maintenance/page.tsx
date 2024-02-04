@@ -12,7 +12,7 @@ export default function MaintenancePage() {
 		<>
 			<div className='h-[100svh] grid place-items-center p-4 w-full max-w-2xl mx-auto text-center'>
 				<div className='flex flex-col items-center justify-center'>
-					<Link
+					{/* <Link
 						href={'/'}
 						className='w-52 shrink-0 px-5'
 					>
@@ -23,7 +23,7 @@ export default function MaintenancePage() {
 							className='shrink-0'
 							alt='Transpay Logo'
 						/>
-					</Link>
+					</Link> */}
 					<h1 className='text-2xl font-bold mb-8'>
 						System Update in Progress!
 					</h1>
