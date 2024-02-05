@@ -1,29 +1,16 @@
-import SearchDriver from '@/app/info/page';
-import DashboardCard from '@/components/layout/dashboard-card';
 import QRScan from '@/components/pages/admin/scan';
 import GreenSearchVehicle from '@/components/pages/green/search-vehicle';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogFooter,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Card, CardContent } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
 
 import { getGreenAgent } from '@/lib/controllers/agent-controller';
 import { notFound } from 'next/navigation';
-import React from 'react';
 
 export default async function GreenEnginePage() {
 	const user: IUser | undefined = await getGreenAgent();
 	if (!user) return notFound();
+	console.log(user);
 	return (
 		<div className='w-full p-3 md:p-5 flex flex-col gap-5'>
 			<div className=' text-title2Bold md:text-h5Bold'>

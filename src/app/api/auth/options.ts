@@ -40,7 +40,7 @@ export const options: NextAuthOptions = {
 						);
 					} else {
 						let user = result?.data;
-						console.log(user);
+						console.log('login...', user);
 						return user;
 					}
 				} catch (error: any) {

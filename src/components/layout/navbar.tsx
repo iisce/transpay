@@ -1,14 +1,12 @@
-import React from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { Input } from '../ui/input';
-import { searchIcon } from '@/lib/icons';
-import { UserNav } from '../shared/user-nav-bar';
-import { Notification } from '../shared/notification';
-import { getSSession } from '@/lib/get-data';
-import { Button } from '../ui/button';
-import { getAgentMe, getGreenAgent } from '@/lib/controllers/agent-controller';
 import { getAdminMe } from '@/lib/controllers/admin-controller';
+import { getAgentMe, getGreenAgent } from '@/lib/controllers/agent-controller';
+import { getSSession } from '@/lib/get-data';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Notification } from '../shared/notification';
+import { UserNav } from '../shared/user-nav-bar';
+import { Button } from '../ui/button';
+import { notFound } from 'next/navigation';
 
 export default async function NavBar() {
 	const { role } = await getSSession();
@@ -18,6 +16,10 @@ export default async function NavBar() {
 			: role?.toLowerCase() === 'greenengine_agent'
 			? await getGreenAgent()
 			: await getAdminMe();
+
+	console.log('navbar...', user);
+
+	if (!user) return notFound();
 	return (
 		<div className='h-16 w-full bg-secondary/60 backdrop-blur-sm pr-5 shrink-0 fixed z-50 '>
 			<div className='flex items-center justify-between h-full'>

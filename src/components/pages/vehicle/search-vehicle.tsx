@@ -93,7 +93,8 @@ export default async function SearchVehicle({ id }: { id: string }) {
 				defaultValue='overview'
 				className='w-full max-w-xl mx-auto'
 			>
-				<TabsList className='grid grid-cols-2'>
+				{/* <TabsList className='grid grid-cols-2'> */}
+				<TabsList className='grid grid-cols-1'>
 					<TabsTrigger value='overview'>OVERVIEW</TabsTrigger>
 					{isOwing && (
 						<TabsTrigger value='days-owed'>

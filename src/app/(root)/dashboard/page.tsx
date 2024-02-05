@@ -10,6 +10,7 @@ import DashboardGreen from '@/components/role/agent/green-dashboard';
 
 export default async function DashboardPage() {
 	const { role } = await getSSession();
+	console.log('role..', role);
 	if (role?.toLowerCase() === 'greenengine_agent') redirect('/green-engine');
 	const user: IUser | undefined =
 		role?.toLowerCase() === 'agent'
@@ -18,23 +19,23 @@ export default async function DashboardPage() {
 			? await getGreenAgent()
 			: await getAdminMe();
 	if (!user) return notFound();
-	else
-		return (
-			<div className='w-full p-3 md:p-5 flex flex-col gap-5'>
-				<div className=' text-title2Bold md:text-h5Bold'>
-					Welcome Back, {user.name}
-				</div>
-				<div className='w-full'>
-					{role === 'superadmin' ? (
-						<DashboardSuperAdmin user={user} />
-					) : role === 'admin' ? (
-						<DashboardAdmin user={user} />
-					) : role === 'greenengine_agent' ? (
-						<DashboardGreen user={user} />
-					) : (
-						<DashboardAgent user={user} />
-					)}
-				</div>
+	console.log('dash...', user);
+	return (
+		<div className='w-full p-3 md:p-5 flex flex-col gap-5'>
+			<div className=' text-title2Bold md:text-h5Bold'>
+				Welcome Back, {user.name}
 			</div>
-		);
+			<div className='w-full'>
+				{role === 'superadmin' ? (
+					<DashboardSuperAdmin user={user} />
+				) : role === 'admin' ? (
+					<DashboardAdmin user={user} />
+				) : role === 'greenengine_agent' ? (
+					<DashboardGreen user={user} />
+				) : (
+					<DashboardAgent user={user} />
+				)}
+			</div>
+		</div>
+	);
 }

@@ -17,7 +17,6 @@ import { notFound } from 'next/navigation';
 
 export async function Notification() {
 	const all_activities = await getAllActivities();
-	if (!all_activities) return notFound();
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
@@ -40,7 +39,7 @@ export async function Notification() {
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
-					<ActivityList allActivities={all_activities} />
+					<ActivityList allActivities={all_activities || []} />
 				</DropdownMenuGroup>
 			</DropdownMenuContent>
 		</DropdownMenu>

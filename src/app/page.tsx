@@ -1,15 +1,11 @@
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import SignOutBtn from './(auth)/_components/sign-out-button';
-import { getSSession } from '@/lib/get-data';
-import { getAgentMe } from '@/lib/controllers/agent-controller';
-import { getAdminMe } from '@/lib/controllers/admin-controller';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { getInitials } from '@/lib/utils';
-import NavBar from '@/components/layout/navbar';
-import Image from 'next/image';
 import { UserNav } from '@/components/shared/user-nav-bar';
+import { Button } from '@/components/ui/button';
 import Searchbar from '@/components/ui/searchbar';
+import { getAdminMe } from '@/lib/controllers/admin-controller';
+import { getAgentMe } from '@/lib/controllers/agent-controller';
+import { getSSession } from '@/lib/get-data';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default async function Home() {
 	const { role } = await getSSession();
