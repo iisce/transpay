@@ -17,7 +17,9 @@ export default async function NavBar() {
 			? await getGreenAgent()
 			: await getAdminMe();
 
-	console.log('navbar...', user);
+	const isAgent =
+		user?.role.toLowerCase() !== 'admin' ||
+		user?.role.toLowerCase() !== 'superadmin';
 
 	if (!user) return notFound();
 	return (
@@ -35,21 +37,10 @@ export default async function NavBar() {
 						alt='Transpay Logo'
 					/>
 				</Link>
-				{/* <div className='w-full hidden md:block pr-5'>
-					<div className='max-w-[500px] relative flex  items-center justify-start'>
-						<div className='h-6 w-6 left-2 opacity-60 shrink-0 absolute'>
-							{searchIcon}
-						</div>
-						<Input
-							className='pl-10 bg-background'
-							placeholder='Search anything here'
-						/>
-					</div>
-				</div> */}
 				<div className='flex gap-3 items-center text-primary-700'>
 					{user ? (
 						<>
-							<Notification />
+							{!isAgent && <Notification />}
 							<UserNav user={user} />
 						</>
 					) : (
