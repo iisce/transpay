@@ -16,13 +16,13 @@ import { notFound } from 'next/navigation';
 export default async function SearchVehicle({ id }: { id: string }) {
 	const { role } = await getSSession();
 	const vehicle = await getVehicleSummary(id);
-	console.log(vehicle);
+	console.log('modified...', vehicle);
 	const onWaiver = vehicle?.status === 'inactive';
 	if (!vehicle) {
 		notFound();
 	}
 
-	const isOwing = vehicle.VehicleBalance?.deficit_balance > 0 || false;
+	const isOwing = vehicle.VehicleBalance?.deficit_balance < 0;
 
 	return (
 		<div className='h-full w-full p-6 flex flex-col gap-6 '>
@@ -49,9 +49,15 @@ export default async function SearchVehicle({ id }: { id: string }) {
 					</div>
 				</div>
 				{vehicle.VehicleBalance && (
-					<div className='text-sm uppercase'>
+					<div
+						className={`text-sm uppercase ${
+							isOwing
+								? 'text-red-500'
+								: 'text-awesome-foreground'
+						}`}
+					>
 						<div className=''>Next Payment Date</div>
-						<div className='text-xl font-bold text-awesome-foreground'>
+						<div className='text-xl font-bold '>
 							{format(
 								new Date(
 									vehicle.VehicleBalance.next_transaction_date
@@ -93,8 +99,12 @@ export default async function SearchVehicle({ id }: { id: string }) {
 				defaultValue='overview'
 				className='w-full max-w-xl mx-auto'
 			>
-				{/* <TabsList className='grid grid-cols-2'> */}
-				<TabsList className='grid grid-cols-1'>
+				<TabsList
+					className={`grid ${
+						isOwing ? 'grid-cols-2' : 'grid-cols-1'
+					}`}
+				>
+					{/* <TabsList className='grid grid-cols-1'> */}
 					<TabsTrigger value='overview'>OVERVIEW</TabsTrigger>
 					{isOwing && (
 						<TabsTrigger value='days-owed'>
@@ -157,7 +167,9 @@ export default async function SearchVehicle({ id }: { id: string }) {
 											Vehicle is Owing!
 										</div>
 										<div className='text-destructive-foreground font-bold text-4xl'>
-											{`₦${vehicle.VehicleBalance.deficit_balance}`}
+											{`₦${-vehicle
+												.VehicleBalance
+												.deficit_balance}`}
 										</div>
 									</div>
 								</div>

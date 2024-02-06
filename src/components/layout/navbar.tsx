@@ -20,8 +20,6 @@ export default async function NavBar() {
 	const isAgent =
 		user?.role.toLowerCase() !== 'admin' ||
 		user?.role.toLowerCase() !== 'superadmin';
-
-	if (!user) return notFound();
 	return (
 		<div className='h-16 w-full bg-secondary/60 backdrop-blur-sm pr-5 shrink-0 fixed z-50 '>
 			<div className='flex items-center justify-between h-full'>
