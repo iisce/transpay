@@ -27,7 +27,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 		vehicle.VehicleBalance.next_transaction_date.split('T')[0]
 	);
 	const fee =
-		vehicle.vehicle_type === 'keke'
+		vehicle.vehicle_type.toLowerCase() === 'keke'
 			? '200'
 			: vehicle.vehicle_type === 'small_shuttle'
 			? '250'
