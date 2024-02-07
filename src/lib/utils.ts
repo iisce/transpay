@@ -325,7 +325,10 @@ interface DaysOwedObject {
 	transaction_type: string;
 }
 
-export function generateDaysOwedArray(dateSupplied: Date): DaysOwedObject[] {
+export function generateDaysOwedArray(
+	dateSupplied: Date,
+	fee: '200' | '250' | '300'
+): DaysOwedObject[] {
 	const presentDate = new Date();
 	const timeDiff = Math.ceil(
 		(dateSupplied.getTime() - presentDate.getTime()) /
@@ -334,13 +337,13 @@ export function generateDaysOwedArray(dateSupplied: Date): DaysOwedObject[] {
 
 	const daysOwedArray: DaysOwedObject[] = [];
 
-	for (let i = 1; i <= -timeDiff + 1; i++) {
+	for (let i = 1; i <= -timeDiff; i++) {
 		const transactionDate = new Date(presentDate);
-		transactionDate.setDate(presentDate.getDate() + timeDiff + i - 1);
+		transactionDate.setDate(presentDate.getDate() + timeDiff + i);
 
 		const daysOwedObject: DaysOwedObject = {
 			transaction_date: transactionDate.toISOString().split('T')[0],
-			amount: '200', // Replace with the actual amount
+			amount: fee, // Replace with the actual amount
 			transaction_type: 'DAILY_FEES',
 		};
 

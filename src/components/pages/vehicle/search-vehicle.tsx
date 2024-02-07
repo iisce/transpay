@@ -24,12 +24,18 @@ export default async function SearchVehicle({ id }: { id: string }) {
 
 	const isOwing = vehicle.VehicleBalance?.deficit_balance < 0;
 	const dateSupplied = new Date(
-		vehicle.VehicleBalance.next_transaction_date
+		vehicle.VehicleBalance.next_transaction_date.split('T')[0]
 	);
+	const fee =
+		vehicle.vehicle_type === 'keke'
+			? '200'
+			: vehicle.vehicle_type === 'small_shuttle'
+			? '250'
+			: '300';
 	// const isOwing = vehicle.VehicleBalance?.deficit_balance < 0;
 	// const daysOwed = Array.from
 
-	const daysOwed = generateDaysOwedArray(dateSupplied);
+	const daysOwed = generateDaysOwedArray(dateSupplied, fee);
 	daysOwed.sort(
 		(a, b) =>
 			new Date(b.transaction_date).getTime() -
