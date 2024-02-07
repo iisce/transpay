@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { Notification } from '../shared/notification';
 import { UserNav } from '../shared/user-nav-bar';
 import { Button } from '../ui/button';
-import { notFound } from 'next/navigation';
 
 export default async function NavBar() {
 	const { role } = await getSSession();

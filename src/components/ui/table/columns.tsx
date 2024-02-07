@@ -1,38 +1,36 @@
 'use client';
+import { UpdateSettingsForm } from '@/components/forms/update-settings-form';
+import Receipt from '@/components/shared/receipt/vehicle-transaction';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import {
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
+import { deleteIcon, editIcon, paymentIcon, printIcon } from '@/lib/icons';
+import { formatDate } from '@/lib/utils';
 import {
 	DropdownMenu,
 	DropdownMenuTrigger,
 } from '@radix-ui/react-dropdown-menu';
 import { ColumnDef } from '@tanstack/react-table';
+import { format } from 'date-fns';
 import {
 	EyeIcon,
 	MapPinIcon,
 	MoreHorizontal,
 	MoreVertical,
 } from 'lucide-react';
-import { DataTableColumnHeader } from './data-column-table-header';
-import { deleteIcon, editIcon, paymentIcon, printIcon } from '@/lib/icons';
-import Pill from '../pill';
 import Link from 'next/link';
 import Cbadge from '../category-badge';
-import DeleteAdminButton from '@/components/shared/delete-buttons/delete-admin-button';
-import { formatDate } from '@/lib/utils';
 import { Dialog, DialogContent, DialogFooter, DialogTrigger } from '../dialog';
-import Receipt from '@/components/shared/receipt/vehicle-transaction';
-import { UpdateSettingsForm } from '@/components/forms/update-settings-form';
-import { format } from 'date-fns';
+import Pill from '../pill';
+import { DataTableColumnHeader } from './data-column-table-header';
 
 export const debtColumns: ColumnDef<IVehiclePayment>[] = [
 	{
-		accessorKey: 'transaction_date',
+		accessorKey: ' ',
 		header: ({ column }) => (
 			<DataTableColumnHeader
 				column={column}
@@ -50,7 +48,6 @@ export const debtColumns: ColumnDef<IVehiclePayment>[] = [
 				</div>
 			);
 		},
-		sortDescFirst: true,
 	},
 	{
 		accessorKey: 'amount',

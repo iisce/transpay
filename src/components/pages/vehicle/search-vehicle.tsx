@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { getVehicleSummary } from '@/lib/controllers/vehicle-controller';
 import { getSSession } from '@/lib/get-data';
 import { failureIcon, successIcon } from '@/lib/icons';
+import { generateDaysOwedArray } from '@/lib/utils';
 import { format } from 'date-fns';
 import { MapPin } from 'lucide-react';
 import Link from 'next/link';
@@ -16,13 +17,28 @@ import { notFound } from 'next/navigation';
 export default async function SearchVehicle({ id }: { id: string }) {
 	const { role } = await getSSession();
 	const vehicle = await getVehicleSummary(id);
-	console.log('modified...', vehicle);
 	const onWaiver = vehicle?.status === 'inactive';
 	if (!vehicle) {
 		notFound();
 	}
 
 	const isOwing = vehicle.VehicleBalance?.deficit_balance < 0;
+	const dateSupplied = new Date(
+		vehicle.VehicleBalance.next_transaction_date
+	);
+	// const isOwing = vehicle.VehicleBalance?.deficit_balance < 0;
+	// const daysOwed = Array.from
+
+	const daysOwed = generateDaysOwedArray(dateSupplied);
+	daysOwed.sort(
+		(a, b) =>
+			new Date(b.transaction_date).getTime() -
+			new Date(a.transaction_date).getTime()
+	);
+	const totalPendingAmount = daysOwed.reduce(
+		(a, b) => a + parseFloat(b.amount),
+		0
+	);
 
 	return (
 		<div className='h-full w-full p-6 flex flex-col gap-6 '>
@@ -167,9 +183,13 @@ export default async function SearchVehicle({ id }: { id: string }) {
 											Vehicle is Owing!
 										</div>
 										<div className='text-destructive-foreground font-bold text-4xl'>
-											{`₦${-vehicle
+											{`₦${
+												totalPendingAmount +
+												daysOwed.length * 20
+											}`}
+											{/* {`₦${-vehicle
 												.VehicleBalance
-												.deficit_balance}`}
+												.deficit_balance}`} */}
 										</div>
 									</div>
 								</div>
@@ -194,10 +214,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 							<DataTable
 								showPagination
 								columns={debtColumns}
-								data={vehicle.VehicleTransactions.slice(
-									0,
-									10
-								)}
+								data={daysOwed}
 							/>
 						</div>
 					</TabsContent>

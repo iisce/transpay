@@ -6,15 +6,8 @@ import React from 'react';
 export async function generateMetadata({ params }: { params: { id: string } }) {
 	const vehicle = await getVehicleById(params.id);
 	if (!vehicle) return notFound();
-	const pendingPayments = vehicle.VehicleTransactions.filter(
-		(transaction) => transaction.payment_status === 'pending'
-	);
-
-	const isOwing = pendingPayments.length > 0;
-	const totalPendingAmount = pendingPayments.reduce(
-		(acc, order) => acc + order.amount,
-		0
-	);
+	const isOwing = vehicle.VehicleBalance.deficit_balance < 0;
+	const totalPendingAmount = -vehicle.VehicleBalance.deficit_balance;
 	return {
 		title: `${
 			vehicle?.owners_name

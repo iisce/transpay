@@ -319,3 +319,33 @@ export const createDataForTable = (transactions: IVehicleTransaction[]) => {
 
 	return dataForTable;
 };
+interface DaysOwedObject {
+	transaction_date: string;
+	amount: string;
+	transaction_type: string;
+}
+
+export function generateDaysOwedArray(dateSupplied: Date): DaysOwedObject[] {
+	const presentDate = new Date();
+	const timeDiff = Math.ceil(
+		(dateSupplied.getTime() - presentDate.getTime()) /
+			(1000 * 60 * 60 * 24)
+	);
+
+	const daysOwedArray: DaysOwedObject[] = [];
+
+	for (let i = 1; i <= -timeDiff + 1; i++) {
+		const transactionDate = new Date(presentDate);
+		transactionDate.setDate(presentDate.getDate() + timeDiff + i - 1);
+
+		const daysOwedObject: DaysOwedObject = {
+			transaction_date: transactionDate.toISOString().split('T')[0],
+			amount: '200', // Replace with the actual amount
+			transaction_type: 'DAILY_FEES',
+		};
+
+		daysOwedArray.push(daysOwedObject);
+	}
+	console.log({ presentDate, timeDiff, daysOwedArray });
+	return daysOwedArray;
+}
