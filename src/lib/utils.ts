@@ -349,6 +349,6 @@ export function generateDaysOwedArray(
 
 		daysOwedArray.push(daysOwedObject);
 	}
-	console.log({ presentDate, timeDiff, daysOwedArray });
+	// console.log({ presentDate, timeDiff, daysOwedArray });
 	return daysOwedArray;
 }
