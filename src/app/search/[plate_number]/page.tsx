@@ -1,6 +1,4 @@
 import SearchVehicle from '@/components/pages/vehicle/search-vehicle';
-import NoLoginSearch from '@/components/role/rider/no-login-search';
-import React from 'react';
 
 export default function SearchPage({
 	params,

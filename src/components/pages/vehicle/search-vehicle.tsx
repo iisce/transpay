@@ -1,7 +1,7 @@
 import DashboardCard from '@/components/layout/dashboard-card';
 import { CopyButton } from '@/components/shared/copy-button';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { debtColumns, driversColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -26,6 +26,8 @@ export default async function SearchVehicle({ id }: { id: string }) {
 	const dateSupplied = new Date(
 		vehicle.VehicleBalance.next_transaction_date.split('T')[0]
 	);
+	dateSupplied.setUTCHours(0, 0, 0, 0);
+
 	const fee =
 		vehicle.category.toLowerCase() === 'keke'
 			? '200'
