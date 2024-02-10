@@ -24,45 +24,40 @@ export default function WaiverButton({
 	vehicle: IVehicleSummary;
 }) {
 	const isDesktop = useMediaQuery('(min-width: 768px)');
-	const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
 	if (isDesktop)
 		return (
-			<Dialog open={isOpen}>
+			<Dialog>
+				<DialogTrigger>
+					<Button
+						className='justify-start rounded-xl'
+						variant={'default'}
+					>
+						<PlusIcon className='mr-1 h-4 w-4 shrink-0' />
+						New Waiver
+					</Button>
+				</DialogTrigger>
+				<DialogContent className='sm:max-w-[425px]'>
+					<DialogTitle>Request New Waiver</DialogTitle>
+					<NewWaiverForm vehicle={vehicle} />
+				</DialogContent>
+			</Dialog>
+		);
+	return (
+		<Drawer>
+			<DrawerTrigger>
 				<Button
-					onClick={() => setIsOpen(!isOpen)}
 					className='justify-start rounded-xl'
 					variant={'default'}
 				>
 					<PlusIcon className='mr-1 h-4 w-4 shrink-0' />
 					New Waiver
 				</Button>
-				<DialogContent className='sm:max-w-[425px]'>
-					<DialogTitle>Request New Waiver</DialogTitle>
-					<NewWaiverForm
-						setIsOpen={setIsOpen}
-						vehicle={vehicle}
-					/>
-				</DialogContent>
-			</Dialog>
-		);
-	return (
-		<Drawer open={isOpen}>
-			<Button
-				onClick={() => setIsOpen(!isOpen)}
-				className='justify-start rounded-xl'
-				variant={'default'}
-			>
-				<PlusIcon className='mr-1 h-4 w-4 shrink-0' />
-				New Waiver
-			</Button>
+			</DrawerTrigger>
 			<DrawerContent>
 				<DrawerHeader className='gap-5'>
 					<DrawerTitle>Request New Waiver</DrawerTitle>
-					<NewWaiverForm
-						setIsOpen={setIsOpen}
-						vehicle={vehicle}
-					/>
+					<NewWaiverForm vehicle={vehicle} />
 				</DrawerHeader>
 			</DrawerContent>
 		</Drawer>

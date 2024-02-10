@@ -46,13 +46,7 @@ const waiverFormSchema = z.object({
 export type waiverFormValues = z.infer<typeof waiverFormSchema>;
 
 // This can come from your database or API.
-export function NewWaiverForm({
-	vehicle,
-	setIsOpen,
-}: {
-	vehicle: IVehicleSummary;
-	setIsOpen: any;
-}) {
+export function NewWaiverForm({ vehicle }: { vehicle: IVehicleSummary }) {
 	const defaultValues: Partial<waiverFormValues> = {
 		reason: '',
 		id: vehicle.vehicle_id,
@@ -89,13 +83,11 @@ export function NewWaiverForm({
 					title: 'waiver Created Successfully',
 				});
 				setIsLoading(false);
-				setIsOpen(false);
 				form.reset();
 				router.refresh();
 				return NextResponse.json(result);
 			} else {
 				setIsLoading(false);
-				setIsOpen(false);
 				toast({
 					title: 'waiver NOT Created',
 				});
@@ -103,7 +95,6 @@ export function NewWaiverForm({
 			}
 		} catch (error: any) {
 			setIsLoading(false);
-			setIsOpen(false);
 			toast({ title: 'Feature Coming soon' });
 		}
 	}
