@@ -43,9 +43,28 @@ export default function WaiverButton({
 				</DialogContent>
 			</Dialog>
 		);
+	// return (
+	// 	<Drawer>
+	// 		<DrawerTrigger>
+	// 			<Button
+	// 				className='justify-start rounded-xl'
+	// 				variant={'default'}
+	// 			>
+	// 				<PlusIcon className='mr-1 h-4 w-4 shrink-0' />
+	// 				New Waiver
+	// 			</Button>
+	// 		</DrawerTrigger>
+	// 		<DrawerContent>
+	// 			<DrawerHeader className='gap-5'>
+	// 				<DrawerTitle>Request New Waiver</DrawerTitle>
+	// 				<NewWaiverForm vehicle={vehicle} />
+	// 			</DrawerHeader>
+	// 		</DrawerContent>
+	// 	</Drawer>
+	// );
 	return (
-		<Drawer>
-			<DrawerTrigger>
+		<Dialog>
+			<DialogTrigger>
 				<Button
 					className='justify-start rounded-xl'
 					variant={'default'}
@@ -53,13 +72,11 @@ export default function WaiverButton({
 					<PlusIcon className='mr-1 h-4 w-4 shrink-0' />
 					New Waiver
 				</Button>
-			</DrawerTrigger>
-			<DrawerContent>
-				<DrawerHeader className='gap-5'>
-					<DrawerTitle>Request New Waiver</DrawerTitle>
-					<NewWaiverForm vehicle={vehicle} />
-				</DrawerHeader>
-			</DrawerContent>
-		</Drawer>
+			</DialogTrigger>
+			<DialogContent className='sm:max-w-[425px]'>
+				<DialogTitle>Request New Waiver</DialogTitle>
+				<NewWaiverForm vehicle={vehicle} />
+			</DialogContent>
+		</Dialog>
 	);
 }

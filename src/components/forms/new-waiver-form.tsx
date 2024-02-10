@@ -91,10 +91,12 @@ export function NewWaiverForm({ vehicle }: { vehicle: IVehicleSummary }) {
 				toast({
 					title: 'waiver NOT Created',
 				});
+				form.reset();
 				return null;
 			}
 		} catch (error: any) {
 			setIsLoading(false);
+			form.reset();
 			toast({ title: 'Feature Coming soon' });
 		}
 	}
