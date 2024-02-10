@@ -1,7 +1,5 @@
 import SearchVehicle from '@/components/pages/vehicle/search-vehicle';
 import { getVehicleSummary } from '@/lib/controllers/vehicle-controller';
-import { notFound } from 'next/navigation';
-import React from 'react';
 
 export async function generateMetadata({
 	params,

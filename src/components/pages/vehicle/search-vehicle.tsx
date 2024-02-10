@@ -9,7 +9,7 @@ import { getVehicleSummary } from '@/lib/controllers/vehicle-controller';
 import { getSSession } from '@/lib/get-data';
 import { failureIcon, successIcon } from '@/lib/icons';
 import { generateDaysOwedArray } from '@/lib/utils';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import { MapPin } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -22,11 +22,14 @@ export default async function SearchVehicle({ id }: { id: string }) {
 		notFound();
 	}
 
-	const isOwing = vehicle.VehicleBalance?.deficit_balance < 0;
+	const isOwing = vehicle.VehicleBalance?.deficit_balance <= 0;
 	const dateSupplied = new Date(
-		vehicle.VehicleBalance.next_transaction_date.split('T')[0]
+		vehicle.VehicleBalance.next_transaction_date
 	);
-	dateSupplied.setUTCHours(0, 0, 0, 0);
+	dateSupplied.setUTCHours(dateSupplied.getUTCHours() + 2);
+
+	// Access only the date portion and format as desired
+	const formattedDate = format(dateSupplied, 'yyyy-MM-dd');
 
 	const fee =
 		vehicle.category.toLowerCase() === 'keke'
@@ -34,8 +37,6 @@ export default async function SearchVehicle({ id }: { id: string }) {
 			: vehicle.category === 'small_shuttle'
 			? '250'
 			: '300';
-	// const isOwing = vehicle.VehicleBalance?.deficit_balance < 0;
-	// const daysOwed = Array.from
 
 	const daysOwed = generateDaysOwedArray(dateSupplied, fee);
 	daysOwed.sort(
@@ -47,7 +48,14 @@ export default async function SearchVehicle({ id }: { id: string }) {
 		(a, b) => a + parseFloat(b.amount),
 		0
 	);
-
+	console.log('SearchVehicle Component......', {
+		// role,
+		// fee,
+		// daysOwed,
+		// formattedDate,
+		// vehicle,
+		// transactions: vehicle.VehicleTransactions,
+	});
 	return (
 		<div className='h-full w-full p-6 flex flex-col gap-6 '>
 			<div className='flex flex-col text-center justify-between w-full gap-1'>

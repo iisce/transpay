@@ -337,7 +337,7 @@ export function generateDaysOwedArray(
 
 	const daysOwedArray: DaysOwedObject[] = [];
 
-	for (let i = 1; i <= -timeDiff; i++) {
+	for (let i = 0; i <= -timeDiff; i++) {
 		const transactionDate = new Date(presentDate);
 		transactionDate.setDate(presentDate.getDate() + timeDiff + i);
 
