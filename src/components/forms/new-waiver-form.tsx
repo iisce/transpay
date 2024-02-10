@@ -256,7 +256,7 @@ export function NewWaiverForm({
 					<Button
 						className=''
 						type='submit'
-						disabled
+						// disabled
 					>
 						{isLoading ? loadingSpinner : 'Add waiver'}
 					</Button>
