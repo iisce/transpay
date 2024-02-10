@@ -41,6 +41,14 @@ interface DriverPayment {
 	payment_type: 'Cash' | 'Transfer' | 'Bank Transfer' | 'Mobile Transfer';
 	status: 'pending' | 'processing' | 'successful' | 'failed';
 }
+interface IWaiver {
+	start_date: string;
+	end_date: string;
+	reason: string;
+	status: string;
+	generated_by: string;
+	approved: boolean;
+}
 interface DriverT {
 	name: string;
 	phone_number: number;

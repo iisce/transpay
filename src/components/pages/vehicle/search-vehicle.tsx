@@ -1,8 +1,13 @@
 import DashboardCard from '@/components/layout/dashboard-card';
+import WaiverButton from '@/components/role/rider/waiver-button';
 import { CopyButton } from '@/components/shared/copy-button';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { debtColumns, driversColumns } from '@/components/ui/table/columns';
+import {
+	debtColumns,
+	driversColumns,
+	viewWaiverColumns,
+} from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { getVehicleSummary } from '@/lib/controllers/vehicle-controller';
@@ -10,7 +15,7 @@ import { getSSession } from '@/lib/get-data';
 import { failureIcon, successIcon } from '@/lib/icons';
 import { generateDaysOwedArray } from '@/lib/utils';
 import { format, parseISO } from 'date-fns';
-import { MapPin } from 'lucide-react';
+import { MapPin, PlusIcon } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -48,14 +53,14 @@ export default async function SearchVehicle({ id }: { id: string }) {
 		(a, b) => a + parseFloat(b.amount),
 		0
 	);
-	console.log('SearchVehicle Component......', {
-		// role,
-		// fee,
-		// daysOwed,
-		// formattedDate,
-		// vehicle,
-		// transactions: vehicle.VehicleTransactions,
-	});
+	// console.log('SearchVehicle Component......', {
+	// 	role,
+	// 	fee,
+	// 	daysOwed,
+	// 	formattedDate,
+	// 	vehicle,
+	// 	transactions: vehicle.VehicleTransactions,
+	// });
 	return (
 		<div className='h-full w-full p-6 flex flex-col gap-6 '>
 			<div className='flex flex-col text-center justify-between w-full gap-1'>
@@ -131,16 +136,16 @@ export default async function SearchVehicle({ id }: { id: string }) {
 			>
 				<TabsList
 					className={`grid ${
-						isOwing ? 'grid-cols-2' : 'grid-cols-1'
+						isOwing ? 'grid-cols-3' : 'grid-cols-2'
 					}`}
 				>
-					{/* <TabsList className='grid grid-cols-1'> */}
 					<TabsTrigger value='overview'>OVERVIEW</TabsTrigger>
 					{isOwing && (
 						<TabsTrigger value='days-owed'>
 							DAYS OWED
 						</TabsTrigger>
 					)}
+					<TabsTrigger value='waiver'>WAIVER</TabsTrigger>
 				</TabsList>
 				<TabsContent value='overview'>
 					<Card className='grid gap-2 w-full p-3 bg-secondary text-xs lg:text-base'>
@@ -233,6 +238,20 @@ export default async function SearchVehicle({ id }: { id: string }) {
 						</div>
 					</TabsContent>
 				)}
+				<TabsContent value='waiver'>
+					<div className='flex justify-between items-end mb-3'>
+						<div className=''>
+							<p className=' text-title2Bold'>
+								Waiver History
+							</p>
+						</div>
+						<WaiverButton vehicle={vehicle} />
+					</div>
+					<DataTable
+						columns={viewWaiverColumns}
+						data={vehicle.VehicleWaivers || []}
+					/>
+				</TabsContent>
 			</Tabs>
 			<div className='  w-full'>
 				<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 w-full'>
