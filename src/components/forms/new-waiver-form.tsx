@@ -156,7 +156,6 @@ export function NewWaiverForm({ vehicle }: { vehicle: IVehicleSummary }) {
 													) ||
 												date < new Date()
 											}
-											initialFocus
 										/>
 									</PopoverContent>
 								</Popover>
@@ -218,7 +217,6 @@ export function NewWaiverForm({ vehicle }: { vehicle: IVehicleSummary }) {
 														'start_date'
 													)
 											}
-											initialFocus
 										/>
 									</PopoverContent>
 								</Popover>
