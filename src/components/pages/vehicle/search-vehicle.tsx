@@ -91,9 +91,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 						<div className=''>Next Payment Date</div>
 						<div className='text-xl font-bold '>
 							{format(
-								new Date(
-									vehicle.VehicleBalance.next_transaction_date
-								),
+								new Date(dateSupplied),
 								'MMMM d, yyyy'
 							)}
 						</div>
