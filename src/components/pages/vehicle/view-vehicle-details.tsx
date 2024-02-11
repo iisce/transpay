@@ -203,7 +203,7 @@ export default async function ViewVehicleDetails({ id }: { id: string }) {
 							</>
 						)}
 
-						<div className='flex flex-col gap-2 mb-20'>
+						{/* <div className='flex flex-col gap-2 mb-20'>
 							<div className='flex justify-between py-2'>
 								<div className='shrink-0 grow-0 text-title1Bold'>
 									Drivers
@@ -227,7 +227,7 @@ export default async function ViewVehicleDetails({ id }: { id: string }) {
 									data={vehicle.Drivers.slice(0, 3)}
 								/>
 							</div>
-						</div>
+						</div> */}
 					</div>
 				)}
 			</div>

@@ -205,17 +205,17 @@ export function NewWaiverForm({ vehicle }: { vehicle: IVehicleSummary }) {
 											selected={field.value}
 											onSelect={field.onChange}
 											disabled={(date) =>
-												date >
-													addDays(
-														form.getValues(
-															'start_date'
-														),
-														5
-													) ||
+												// date >
+												// 	addDays(
+												// 		form.getValues(
+												// 			'start_date'
+												// 		),
+												// 		5
+												// 	) ||
 												date <=
-													form.getValues(
-														'start_date'
-													)
+												form.getValues(
+													'start_date'
+												)
 											}
 										/>
 									</PopoverContent>
