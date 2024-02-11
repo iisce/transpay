@@ -3,19 +3,15 @@ import WaiverButton from '@/components/role/rider/waiver-button';
 import { CopyButton } from '@/components/shared/copy-button';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import {
-	debtColumns,
-	driversColumns,
-	viewWaiverColumns,
-} from '@/components/ui/table/columns';
+import { debtColumns, viewWaiverColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { getVehicleSummary } from '@/lib/controllers/vehicle-controller';
 import { getSSession } from '@/lib/get-data';
 import { failureIcon, successIcon } from '@/lib/icons';
 import { generateDaysOwedArray } from '@/lib/utils';
-import { format, parseISO } from 'date-fns';
-import { MapPin, PlusIcon } from 'lucide-react';
+import { format, isBefore } from 'date-fns';
+import { MapPin } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -27,7 +23,10 @@ export default async function SearchVehicle({ id }: { id: string }) {
 		notFound();
 	}
 
-	const isOwing = vehicle.VehicleBalance?.deficit_balance <= 0;
+	const isOwing = isBefore(
+		new Date(vehicle.VehicleBalance.next_transaction_date),
+		new Date()
+	);
 	const dateSupplied = new Date(
 		vehicle.VehicleBalance.next_transaction_date
 	);
