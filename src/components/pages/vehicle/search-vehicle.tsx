@@ -76,7 +76,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 						{vehicle.plate_number}
 					</div>
 				</div>
-				<div className='text-sm uppercase'>
+				{/* <div className='text-sm uppercase'>
 					<div className=''>Wallet Balance</div>
 					<div className='text-xl font-bold text-awesome-foreground'>
 						₦
@@ -84,7 +84,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 							2
 						)}
 					</div>
-				</div>
+				</div> */}
 				{vehicle.VehicleBalance && (
 					<div
 						className={`text-sm uppercase ${
