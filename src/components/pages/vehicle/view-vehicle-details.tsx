@@ -5,7 +5,7 @@ import { driversColumns, paymentColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
 import { getVehicleById } from '@/lib/controllers/vehicle-controller';
 import { getSSession } from '@/lib/get-data';
-import { format, isBefore } from 'date-fns';
+import { addDays, format, isBefore } from 'date-fns';
 import { MapPin } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
