@@ -10,7 +10,7 @@ import { getVehicleSummary } from '@/lib/controllers/vehicle-controller';
 import { getSSession } from '@/lib/get-data';
 import { failureIcon, successIcon } from '@/lib/icons';
 import { generateDaysOwedArray } from '@/lib/utils';
-import { format, isBefore } from 'date-fns';
+import { addDays, format, isBefore } from 'date-fns';
 import { MapPin } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -24,7 +24,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 	}
 
 	const isOwing = isBefore(
-		new Date(vehicle.VehicleBalance.next_transaction_date),
+		addDays(new Date(vehicle.VehicleBalance.next_transaction_date), 1),
 		new Date()
 	);
 	const dateSupplied = new Date(

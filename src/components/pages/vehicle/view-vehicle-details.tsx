@@ -16,7 +16,7 @@ export default async function ViewVehicleDetails({ id }: { id: string }) {
 	if (!vehicle) return notFound();
 
 	const isOwing = isBefore(
-		new Date(vehicle.VehicleBalance.next_transaction_date),
+		addDays(new Date(vehicle.VehicleBalance.next_transaction_date), 1),
 		new Date()
 	);
 	console.log('.........', vehicle.VehicleBalance);
