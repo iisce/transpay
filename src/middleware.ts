@@ -25,7 +25,6 @@ export default withAuth(
 			'accessToken',
 			request.nextauth.token?.access_token as string
 		);
-		console.log('middleware...', request.nextauth.token?.access_token);
 		response.cookies.set('role', request.nextauth.token?.role as string);
 	},
 	{

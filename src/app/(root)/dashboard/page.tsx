@@ -10,7 +10,6 @@ import DashboardGreen from '@/components/role/agent/green-dashboard';
 
 export default async function DashboardPage() {
 	const { role } = await getSSession();
-	console.log('role..', role);
 	if (role?.toLowerCase() === 'greenengine_agent') redirect('/green-engine');
 	const user: IUser | undefined =
 		role?.toLowerCase() === 'agent'
@@ -19,7 +18,6 @@ export default async function DashboardPage() {
 			? await getGreenAgent()
 			: await getAdminMe();
 	if (!user) return notFound();
-	console.log('dash...', user);
 	return (
 		<div className='w-full p-3 md:p-5 flex flex-col gap-5'>
 			<div className=' text-title2Bold md:text-h5Bold'>

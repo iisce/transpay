@@ -5,7 +5,7 @@ import { driversColumns, paymentColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
 import { getVehicleById } from '@/lib/controllers/vehicle-controller';
 import { getSSession } from '@/lib/get-data';
-import { format } from 'date-fns';
+import { format, isBefore } from 'date-fns';
 import { MapPin } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -14,6 +14,11 @@ export default async function ViewVehicleDetails({ id }: { id: string }) {
 	const { role } = await getSSession();
 	const vehicle = await getVehicleById(id);
 	if (!vehicle) return notFound();
+
+	const isOwing = isBefore(
+		new Date(vehicle.VehicleBalance.next_transaction_date),
+		new Date()
+	);
 	return (
 		<div className='h-full w-full p-6 flex flex-col gap-6 '>
 			<div className='flex items-center justify-between'>
@@ -58,7 +63,11 @@ export default async function ViewVehicleDetails({ id }: { id: string }) {
 							{vehicle.VehicleBalance.net_total.toFixed(2)}
 						</div>
 					</div>
-					<div className='grid grid-cols-2'>
+					<div
+						className={`grid grid-cols-2 ${
+							isOwing ? 'text-red-500' : ''
+						}`}
+					>
 						<div className=''>Next Payment Date:</div>
 						<div className='text-end'>
 							{format(
@@ -69,7 +78,7 @@ export default async function ViewVehicleDetails({ id }: { id: string }) {
 							)}
 						</div>
 					</div>
-					<div className='grid grid-cols-2 text-destructive-foreground'>
+					{/* <div className='grid grid-cols-2 text-destructive-foreground'>
 						<div className=''>Total Levy Owed:</div>
 						<div className='text-end'>
 							₦
@@ -77,7 +86,7 @@ export default async function ViewVehicleDetails({ id }: { id: string }) {
 								2
 							)}
 						</div>
-					</div>
+					</div> */}
 				</CardContent>
 			</Card>
 			{/* <div className='text-[10px] uppercase text-red-500'>
