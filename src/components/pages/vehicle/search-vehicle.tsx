@@ -52,14 +52,6 @@ export default async function SearchVehicle({ id }: { id: string }) {
 		(a, b) => a + parseFloat(b.amount),
 		0
 	);
-	// console.log('SearchVehicle Component......', {
-	// 	role,
-	// 	fee,
-	// 	daysOwed,
-	// 	formattedDate,
-	// 	vehicle,
-	// 	transactions: vehicle.VehicleTransactions,
-	// });
 	return (
 		<div className='h-full w-full p-6 flex flex-col gap-6 '>
 			<div className='flex flex-col text-center justify-between w-full gap-1'>
@@ -75,15 +67,6 @@ export default async function SearchVehicle({ id }: { id: string }) {
 						{vehicle.plate_number}
 					</div>
 				</div>
-				{/* <div className='text-sm uppercase'>
-					<div className=''>Wallet Balance</div>
-					<div className='text-xl font-bold text-awesome-foreground'>
-						₦
-						{vehicle.wallet_balance.available_balance.toFixed(
-							2
-						)}
-					</div>
-				</div> */}
 				{vehicle.VehicleBalance && (
 					<div
 						className={`text-sm uppercase ${

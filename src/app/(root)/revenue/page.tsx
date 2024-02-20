@@ -1,39 +1,27 @@
 // 'use client';
-import { TotalRevenueCharts } from '@/components/shared/chats/total-revenue';
-import { RevenueCharts } from '@/components/shared/chats/revenue-chart';
-import { Button } from '@/components/ui/button';
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from '@/components/ui/select';
-import { addIcon, downIcon, filterIcon } from '@/lib/icons';
-import React from 'react';
+import SplitPayment from '@/components/pages/activities/revenue/split-payment';
 import { DailyFeesCharts } from '@/components/shared/chats/daily-fees';
 import { FinesPaymentCharts } from '@/components/shared/chats/fines-and-penalties';
+import { RevenueCharts } from '@/components/shared/chats/revenue-chart';
+import { TotalRevenueCharts } from '@/components/shared/chats/total-revenue';
 import StatsCard from '@/components/shared/statistics-card';
 import { Badge } from '@/components/ui/badge';
+import { BANK_RATE, FNTC } from '@/lib/consts';
 import { getRevenueStats } from '@/lib/controllers/revenue-controller';
-import { REVENUE_CHART_DATA } from '../../../../data';
-import { notFound } from 'next/navigation';
+import { downIcon } from '@/lib/icons';
 import {
-	calculatePercentageDifference,
-	calculateTransactionTotals,
-	filterTransactionsByDateRange,
 	LAST_YEAR_END_DATE,
 	LAST_YEAR_START_DATE,
 	NEW_YEAR_START_DATE,
+	calculatePercentageDifference,
+	calculateTransactionTotals,
+	filterTransactionsByDateRange,
 } from '@/lib/utils';
-import { subYears, startOfYear } from 'date-fns';
-import SplitPayment from '@/components/pages/activities/revenue/split-payment';
-import { BANK_RATE, FNTC } from '@/lib/consts';
+import { notFound } from 'next/navigation';
 
 export default async function Revenue() {
 	const revenueData = await getRevenueStats();
 	console.log(revenueData);
-	// const revenue = REVENUE_CHART_DATA;
 
 	if (!revenueData) return notFound();
 	const revenue = revenueData.chart.transactions.all;
@@ -51,67 +39,11 @@ export default async function Revenue() {
 
 	const lastYearTotals = calculateTransactionTotals(lastYearTransactions);
 	const newYearTotals = calculateTransactionTotals(newYearTransactions);
-
-	const revPercentDiff = calculatePercentageDifference(
-		lastYearTotals.totalRevenue,
-		newYearTotals.totalRevenue
-	);
-	const dailyPercentDiff = calculatePercentageDifference(
-		lastYearTotals.totalDailyFees,
-		newYearTotals.totalDailyFees
-	);
-	const trackerPercentDiff = calculatePercentageDifference(
-		lastYearTotals.totalTrackerFees,
-		newYearTotals.totalTrackerFees
-	);
-
 	const revDetails = calculateTransactionTotals(revenue);
 	return (
 		<div className='p-5 w-full h-full flex flex-col gap-3'>
 			<div className='flex justify-between items-center'>
 				<div className='shrink-0 grow-0'>Revenue & Stats</div>
-				{/* <div className='flex gap-4'>
-					<div className='shrink-0 grow-0'>
-						<Select defaultValue='this-week'>
-							<SelectTrigger className=''>
-								<div className='mr-2 h-4 w-4 shrink-0'>
-									{filterIcon}
-								</div>
-								<div className='hidden xs:flex'>
-									<SelectValue placeholder='Theme' />
-								</div>
-							</SelectTrigger>
-							<SelectContent className='w-40'>
-								<SelectItem value='this-week'>
-									This Week
-								</SelectItem>
-								<SelectItem value='last-week'>
-									Last Week
-								</SelectItem>
-								<SelectItem value='this-month'>
-									This Month
-								</SelectItem>
-								<SelectItem value='last-month'>
-									Last Month
-								</SelectItem>
-							</SelectContent>
-						</Select>
-					</div>
-					<div className='shrink-0 grow-0'>
-						<Button
-							className='justify-start rounded-xl h-12'
-							variant={'default'}
-							// onClick={() => console.log('Hello Button')}
-						>
-							<div className='h-4 w-4 shrink-0'>
-								{addIcon}
-							</div>
-							<div className='ml-2 hidden xs:flex'>
-								Generate Report
-							</div>
-						</Button>
-					</div>
-				</div> */}
 			</div>
 			<div className='flex flex-col gap-5 '>
 				<div className='py-5 flex flex-row flex-wrap'>
@@ -156,17 +88,6 @@ export default async function Revenue() {
 				</div>
 				<SplitPayment />
 				<div className='bg-secondary rounded-3xl p-5 flex flex-col mb-20 gap-3'>
-					{/* <div className='flex justify-between items-center'>
-						<div className=''>Net</div>
-						<div className='flex'>
-							<div className='p-1'>1D</div>
-							<div className='p-1'>1W</div>
-							<div className='p-1'>1M</div>
-							<div className='p-1'>2M</div>
-							<div className='p-1'>6M</div>
-							<div className='p-1'>1Y</div>
-						</div>
-					</div> */}
 					<div className='flex gap-2'>
 						<div className='flex text-lg font-bold'>
 							{`₦ ${revDetails.totalRevenue.toString()}`}

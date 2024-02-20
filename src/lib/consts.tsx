@@ -1709,6 +1709,7 @@ export const URLS = {
 	dashboard: {
 		default: '/api/v1/dashboard',
 		total_revenue_yearly: '/api/v1/dashboard/total-revenue',
+		net_total: '/api/v1/dashboard/net-total',
 		total_revenue_monthly: '/api/v1/dashboard/total-month-revenue',
 		total_revenue_daily: '/api/v1/dashboard/total-day-revenue',
 		total_tracker_yearly: '/api/v1/dashboard/total-trackers-revenue',

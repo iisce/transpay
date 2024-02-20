@@ -82,7 +82,7 @@ export const getDashboardTotalRevenue = async () => {
 			'api-secret': process.env.API_SECRET || '',
 			Authorization: `Bearer ${session.access_token}`,
 		};
-		const url = API + URLS.dashboard.total_revenue_yearly;
+		const url = API + URLS.dashboard.net_total;
 		const res = await fetch(url, { headers, cache: 'no-store' });
 
 		if (!res.ok) {
