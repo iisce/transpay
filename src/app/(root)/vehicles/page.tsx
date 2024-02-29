@@ -8,12 +8,14 @@ import { vehiclesColumns } from '@/components/ui/table/columns';
 import { getSSession } from '@/lib/get-data';
 import { getVehicles } from '@/lib/controllers/vehicle-controller';
 import AgentSearchBar from '@/components/ui/agent-search-bar';
+import { getMyVehicles } from '@/lib/controllers/vehicle.controller';
 
 export default async function Vehicles() {
 	const [session, vehicles] = await Promise.all([
 		getSSession(),
-		getVehicles(),
+		getMyVehicles('vehicle_id,owners_name,plate_number,status,category'),
 	]);
+	console.log(vehicles);
 	return (
 		<div className='p-5 w-full h-full flex flex-col'>
 			<div className='flex justify-between items-center uppercase font-bold'>
@@ -82,7 +84,7 @@ export default async function Vehicles() {
 								columns={vehiclesColumns}
 								data={vehicles.filter(
 									(vehicle) =>
-										vehicle.status === 'active'
+										vehicle?.status === 'active'
 								)}
 							/>
 						</TabsContent>
@@ -96,7 +98,7 @@ export default async function Vehicles() {
 								columns={vehiclesColumns}
 								data={vehicles.filter(
 									(vehicle) =>
-										vehicle.status === 'inactive'
+										vehicle?.status === 'inactive'
 								)}
 							/>
 						</TabsContent>
@@ -110,7 +112,7 @@ export default async function Vehicles() {
 								columns={vehiclesColumns}
 								data={vehicles.filter(
 									(vehicle) =>
-										vehicle.status === 'waived'
+										vehicle?.status === 'waived'
 								)}
 							/>
 						</TabsContent>

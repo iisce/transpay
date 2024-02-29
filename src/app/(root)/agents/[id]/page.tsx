@@ -1,15 +1,12 @@
 import { UpdateAgentForm } from '@/components/forms/update-agent-form';
+import ActivityList from '@/components/pages/activities/activity-list';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
+import { getAllActivities } from '@/lib/controllers/activity-controller';
 import { getAgentById } from '@/lib/controllers/agent-controller';
 import { addIcon } from '@/lib/icons';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import React from 'react';
-import ActivityCard from '@/components/shared/activity-card';
-import { getAllActivities } from '@/lib/controllers/activity-controller';
-import ActivityList from '@/components/pages/activities/activity-list';
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
 	const agent = await getAgentById(params.id);
@@ -33,17 +30,6 @@ export default async function SingularAgent({
 			<div className='flex justify-between items-center'>
 				<div className='shrink-0 grow-0'>
 					{agent?.name.toLocaleUpperCase()}
-				</div>
-				<div className='shrink-0 grow-0'>
-					<Button
-						asChild
-						variant={'default'}
-					>
-						<div className='justify-start rounded-xl flex gap-2'>
-							<Checkbox className='border-secondary text-primary bg-secondary' />
-							Make Admin
-						</div>
-					</Button>
 				</div>
 			</div>
 			<div className='flex flex-col gap-3 xs:gap-5'>

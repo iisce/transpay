@@ -59,8 +59,9 @@ export const getGreenVehicleByPlate = async (plate: string) => {
 	};
 	const url = `${API + URLS.green.search}?plate_number=${plate}`;
 	const res = await fetch(url, { headers, cache: 'no-store' });
+	const result: Promise<IResVehicle> = await res.json();
+	console.log({ result, url });
 	if (!res.ok) return undefined;
-	const result: Promise<IResVehicle> = (await res.json()).data;
 	const { vehicle } = await result;
 	return vehicle;
 };

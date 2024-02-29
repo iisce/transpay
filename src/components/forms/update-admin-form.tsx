@@ -64,17 +64,18 @@ export function UpdateAdminForm({ admin }: { admin: IAdmin }) {
 
 	async function onSubmit(data: AdminFormValues) {
 		setIsLoading(true);
+		const payload = {
+			admin_id: admin.admin_id,
+			name: data.name,
+			email: data.email,
+			phone: data.phone,
+			role: data.role,
+			blacklisted: data.blacklisted,
+		};
 		try {
 			const createAdminResponse = await fetch('/api/create-admin', {
 				method: 'PUT',
-				body: JSON.stringify({
-					admin_id: admin.admin_id,
-					name: data.name,
-					email: data.email,
-					phone: data.phone,
-					role: data.role,
-					blacklisted: data.blacklisted,
-				}),
+				body: JSON.stringify(payload),
 			});
 			const result = await createAdminResponse.json();
 			if (

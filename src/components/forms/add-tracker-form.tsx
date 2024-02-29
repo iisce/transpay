@@ -24,7 +24,7 @@ const vehicleTrackerFormSchema = z.object({
 
 type VehicleFormValues = z.infer<typeof vehicleTrackerFormSchema>;
 
-export function AddTrackerForm({ vehicle }: { vehicle: IVehicle }) {
+export function AddTrackerForm({ vehicle }: { vehicle: IVehicleSummary }) {
 	const router = useRouter();
 	const hasTracker =
 		vehicle.tracker_id !== null || vehicle.tracker_id === '';

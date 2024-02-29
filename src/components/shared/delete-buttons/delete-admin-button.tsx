@@ -19,20 +19,18 @@ export default function DeleteAdminButton({ id }: { id: string }) {
 				}),
 			});
 			const result = await createAdminResponse.json();
-			if (
-				createAdminResponse.status > 199 &&
-				createAdminResponse.status < 299
-			) {
+			if (result.success) {
 				toast({
-					title: 'Updated Successfully',
+					title: 'Deleted Successfully',
 				});
 				setIsLoading(false);
+				console.log({ result });
 				router.push(`/admins`);
 				return NextResponse.json(result);
 			} else {
 				setIsLoading(false);
 				toast({
-					title: 'Not Updated',
+					title: result.message,
 				});
 				throw new Error(
 					`Something Went wrong ${result.statusText}`

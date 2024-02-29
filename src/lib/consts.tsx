@@ -2022,3 +2022,31 @@ export const FNTC = new Intl.NumberFormat('en-NG', {
 	currency: 'NGN',
 	style: 'currency',
 });
+
+export const ALLOWED_VEHICLE_FIELDS = [
+	'id',
+	'vehicle_id',
+	'color',
+	'category',
+	'plate_number',
+	'image',
+	'user_role',
+	'user_id',
+	'blacklisted',
+	'current_driver',
+	'status',
+	'deleted',
+	'vehicle_type',
+	'vin',
+	'barcode_string',
+	'owners_phone_number',
+	'owners_name',
+	'tracker_id',
+	'createdAt',
+	'updatedAt',
+];
+
+export const BASE_URL =
+	process.env.NODE_ENV === 'production'
+		? 'https://transpay.vercel.app'
+		: 'http://localhost:8726';

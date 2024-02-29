@@ -8,6 +8,7 @@ import DashboardEarningRevenue from './dashboard-earning-revenue';
 import MonthlyTotalRevenue from './monthly-total-revenue';
 import TotalTrackerRevenue from './total-tracker-fee';
 import YearlyTotalRevenue from './yearly-total-revenue';
+import WeeklyTotalRevenue from './weekly-total-revenue';
 
 export default function DashboardSuperAdmin(user: { user: IUser }) {
 	return (
@@ -32,7 +33,21 @@ export default function DashboardSuperAdmin(user: { user: IUser }) {
 						<Skeleton className='h-32 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between' />
 					}
 				>
+					<WeeklyTotalRevenue />
+				</Suspense>
+				<Suspense
+					fallback={
+						<Skeleton className='h-32 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between' />
+					}
+				>
 					<DailyTotalRevenue />
+				</Suspense>
+				{/* <Suspense
+					fallback={
+						<Skeleton className='h-32 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between' />
+					}
+				>
+					<TotalTrackerRevenue />
 				</Suspense>
 				<Suspense
 					fallback={
@@ -41,6 +56,20 @@ export default function DashboardSuperAdmin(user: { user: IUser }) {
 				>
 					<TotalTrackerRevenue />
 				</Suspense>
+				<Suspense
+					fallback={
+						<Skeleton className='h-32 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between' />
+					}
+				>
+					<TotalTrackerRevenue />
+				</Suspense>
+				<Suspense
+					fallback={
+						<Skeleton className='h-32 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between' />
+					}
+				>
+					<TotalTrackerRevenue />
+				</Suspense> */}
 			</div>
 			<div className='flex w-full gap-5 mt-5'>
 				<div className='w-full flex flex-col gap-5'>

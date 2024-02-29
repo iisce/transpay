@@ -11,7 +11,7 @@ export default function SignInGeneral({
 	return (
 		<div>
 			<div className=' capitalize text-h5Bold md:text-h4Bold mb-5 grid place-items-center'>
-				Login
+				Admin Login
 			</div>
 			<AdminLoginForm />
 			<div>

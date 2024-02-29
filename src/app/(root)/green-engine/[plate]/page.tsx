@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { getGreenVehicleByPlate } from '@/lib/controllers/green-controller';
+import { getVehicleSummary } from '@/lib/controllers/vehicle-controller';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import React from 'react';
@@ -9,7 +9,8 @@ export default async function GreenVehicleInfoPage({
 }: {
 	params: { plate: string };
 }) {
-	const vehicle = await getGreenVehicleByPlate(params.plate);
+	const vehicle = await getVehicleSummary(params.plate);
+	console.log({ vehicle, plate: params.plate });
 	if (!vehicle) return notFound();
 	const hasTracker =
 		vehicle.tracker_id !== null || vehicle.tracker_id === '';

@@ -52,6 +52,7 @@ export async function PUT(req: NextRequest) {
 			body: JSON.stringify(body),
 		});
 		const result = await response.json();
+		console.log({ body, result, url });
 		if (!response.ok) {
 			throw new Error(`Something Went wrong ${response.statusText}`);
 		} else {
