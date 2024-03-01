@@ -10,7 +10,7 @@ export default async function LocationPage({
 	const vehicle = await getVehicleSummary(params.id);
 	if (!vehicle) return notFound();
 	return (
-		<div className='px-5 lg:px-10 flex flex-col'>
+		<div className='px-5 lg:px-10 flex flex-col '>
 			<MapView vehicle={vehicle} />
 		</div>
 	);
