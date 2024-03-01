@@ -33,7 +33,7 @@ export default function MapView({ vehicle }: { vehicle?: IVehicleSummary }) {
 		<APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}>
 			<Map
 				className='w-full rounded-2xl overflow-clip border h-[90svh]'
-				zoom={15}
+				zoom={14}
 				center={position}
 				gestureHandling={'greedy'}
 				onClick={() => setInfowindowOpen(true)}
