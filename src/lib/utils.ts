@@ -221,10 +221,10 @@ export function generateRandomLocation(): {
 	lat: number;
 	lng: number;
 } {
-	const minlat: number = 5.8255;
-	const maxlat: number = 6.8998;
-	const minLng: number = 6.4101;
-	const maxLng: number = 7.1849;
+	const minlat: number = 6.0233;
+	const maxlat: number = 6.2322;
+	const minLng: number = 7.0733;
+	const maxLng: number = 7.2822;
 
 	// Generate random lat and lng
 	const lat: number = parseFloat(

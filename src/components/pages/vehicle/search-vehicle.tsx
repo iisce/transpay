@@ -93,6 +93,17 @@ export default async function SearchVehicle({ id }: { id: string }) {
 						</div>
 					</div>
 				)}
+				{vehicle.VehicleBalance && (
+					<div className='text-sm uppercase'>
+						<div className=''>Wallet Balance</div>
+						<div className='text-xl font-bold text-awesome-foreground'>
+							₦
+							{vehicle.VehicleBalance.wallet_balance.toFixed(
+								2
+							)}
+						</div>
+					</div>
+				)}
 
 				{role &&
 					vehicle.tracker_id &&
