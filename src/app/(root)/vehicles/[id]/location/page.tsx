@@ -1,13 +1,13 @@
-import { getVehicleById } from '@/lib/controllers/vehicle-controller';
-import MapView from './map-view';
+import { getVehicleSummary } from '@/lib/controllers/vehicle-controller';
 import { notFound } from 'next/navigation';
+import MapView from './map-view';
 
 export default async function LocationPage({
 	params,
 }: {
 	params: { id: string };
 }) {
-	const vehicle = await getVehicleById(params.id);
+	const vehicle = await getVehicleSummary(params.id);
 	if (!vehicle) return notFound();
 	return (
 		<div className='px-5 lg:px-10 flex flex-col'>
