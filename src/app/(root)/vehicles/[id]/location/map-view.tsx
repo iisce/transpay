@@ -25,7 +25,7 @@ export default function MapView({ vehicle }: { vehicle?: IVehicleSummary }) {
 			const lng = position.lng + speed * Math.sin(randomDirection);
 
 			setPosition({ lat, lng });
-		}, 200);
+		}, 1000);
 
 		return () => clearInterval(interval);
 	});
