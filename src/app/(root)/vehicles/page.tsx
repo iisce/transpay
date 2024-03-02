@@ -1,24 +1,27 @@
+import AgentSearchBar from '@/components/ui/agent-search-bar';
 import { Button } from '@/components/ui/button';
+import { vehiclesColumns } from '@/components/ui/table/columns';
+import { DataTable } from '@/components/ui/table/data-table';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { getVehicles } from '@/lib/controllers/vehicle-controller';
+import { getSSession } from '@/lib/get-data';
 import { addIcon } from '@/lib/icons';
 import Link from 'next/link';
-import React from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { DataTable } from '@/components/ui/table/data-table';
-import { vehiclesColumns } from '@/components/ui/table/columns';
-import { getSSession } from '@/lib/get-data';
-import { getVehicles } from '@/lib/controllers/vehicle-controller';
-import AgentSearchBar from '@/components/ui/agent-search-bar';
 
 export default async function Vehicles() {
 	const [session, vehicles] = await Promise.all([
 		getSSession(),
 		getVehicles(),
 	]);
+	// const miniVehicle = await getMyVehicles(
+	// 	'vehicle_id,owners_name,plate_number,status,category'
+	// );
+	// console.log(miniVehicle);
 	return (
 		<div className='p-5 w-full h-full flex flex-col'>
 			<div className='flex justify-between items-center uppercase font-bold'>
 				<div className='shrink-0 grow-0'>VEHICLES</div>
-				{session.role?.toLowerCase() !== 'greenengine_agent' && (
+				{session?.role?.toLowerCase() !== 'greenengine_agent' && (
 					<div className='shrink-0 grow-0'>
 						<Button
 							className='justify-start text-white rounded-xl bg-primary-800'
@@ -38,7 +41,7 @@ export default async function Vehicles() {
 					</div>
 				)}
 			</div>
-			{vehicles && session.role?.toLowerCase() !== 'agent' ? (
+			{vehicles && session?.role?.toLowerCase() !== 'agent' ? (
 				<div className='flex flex-col gap-5 '>
 					<Tabs
 						defaultValue='all'

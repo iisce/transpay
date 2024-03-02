@@ -21,9 +21,15 @@ export default function VehicleInfoForm({ vehicle }: { vehicle: IVehicle }) {
 			.string({
 				required_error: 'Please enter a valid Category.',
 			})
-			.refine((value) => ['keke', 'shuttle'].includes(value), {
-				message: 'Invalid means of identification.',
-			}),
+			.refine(
+				(value) =>
+					['keke', 'small_shuttle', 'big_shuttle'].includes(
+						value
+					),
+				{
+					message: 'Invalid means of identification.',
+				}
+			),
 		color: z
 			.string({
 				required_error: 'Please enter a valid Color.',
@@ -49,7 +55,7 @@ export default function VehicleInfoForm({ vehicle }: { vehicle: IVehicle }) {
 	type VehicleFormValues = z.infer<typeof vehicleFormSchema>;
 
 	const defaultValues: Partial<VehicleFormValues> = {
-		category: 'shuttle',
+		category: 'small_shuttle',
 		color: '',
 		image: '',
 		plate_number: '',
@@ -60,9 +66,7 @@ export default function VehicleInfoForm({ vehicle }: { vehicle: IVehicle }) {
 		mode: 'onChange',
 	});
 
-	const onSubmit = (data: VehicleFormValues) => {
-		console.log(data);
-	};
+	const onSubmit = (data: VehicleFormValues) => {};
 
 	return (
 		<Form {...form}>
@@ -91,8 +95,11 @@ export default function VehicleInfoForm({ vehicle }: { vehicle: IVehicle }) {
 										</SelectTrigger>
 									</FormControl>
 									<SelectContent>
-										<SelectItem value='shuttle'>
-											Shuttle
+										<SelectItem value='small_shuttle'>
+											Small Shuttle
+										</SelectItem>
+										<SelectItem value='big_shuttle'>
+											Big Shuttle
 										</SelectItem>
 										<SelectItem value='car'>
 											Car

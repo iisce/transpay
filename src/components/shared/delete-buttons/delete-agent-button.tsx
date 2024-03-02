@@ -19,12 +19,10 @@ export default function DeleteAgentButton({ id }: { id: string }) {
 				}),
 			});
 			const result = await createAgentResponse.json();
-			if (
-				createAgentResponse.status > 199 &&
-				createAgentResponse.status < 299
-			) {
+			console.log({ result });
+			if (result.success) {
 				toast({
-					title: 'Updated Successfully',
+					title: 'Deleted Successfully',
 				});
 				setIsLoading(false);
 				router.push(`/agents`);
@@ -32,8 +30,8 @@ export default function DeleteAgentButton({ id }: { id: string }) {
 			} else {
 				setIsLoading(false);
 				toast({
-					title: 'Not Updated',
-					description: 'Something went wrong',
+					title: 'Not Deleted',
+					description: result.message,
 				});
 				throw new Error(
 					`Something Went wrong ${result.statusText}`

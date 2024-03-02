@@ -5,6 +5,7 @@ import { Lato } from 'next/font/google';
 import { Toaster } from '@/components/ui/toaster';
 import NextTopLoader from 'nextjs-toploader';
 import Provider from '@/lib/session-provider';
+import { Analytics } from '@vercel/analytics/react';
 
 const lato = Lato({
 	weight: ['100', '300', '400', '700', '900'],
@@ -48,6 +49,7 @@ export default function RootLayout({
 							<Toaster />
 						</div>
 					</ThemeProvider>
+					<Analytics />
 				</body>
 			</Provider>
 		</html>

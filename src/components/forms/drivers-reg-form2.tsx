@@ -23,7 +23,13 @@ const driverFormSchema = z.object({
 		.string()
 		.refine(
 			(value) =>
-				['shuttle', 'car', 'keke', 'heavyVehicle'].includes(value),
+				[
+					'small_shuttle',
+					'big_shuttle',
+					'car',
+					'keke',
+					'heavyVehicle',
+				].includes(value),
 			{
 				message: 'Invalid means of identification.',
 			}
@@ -39,9 +45,7 @@ export default function DriverForm2() {
 		mode: 'onChange',
 	});
 
-	const onSubmit = (data: DriverFormValues) => {
-		console.log(data);
-	};
+	const onSubmit = (data: DriverFormValues) => {};
 
 	return (
 		<Form {...form}>
@@ -67,8 +71,11 @@ export default function DriverForm2() {
 										</SelectTrigger>
 									</FormControl>
 									<SelectContent>
-										<SelectItem value='shuttle'>
-											Shuttle
+										<SelectItem value='small_shuttle'>
+											Small Shuttle
+										</SelectItem>
+										<SelectItem value='big_shuttle'>
+											Big Shuttle
 										</SelectItem>
 										<SelectItem value='car'>
 											Car

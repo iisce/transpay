@@ -1,5 +1,6 @@
 'use client';
 
+import { FNTC } from '@/lib/consts';
 import {
 	Area,
 	AreaChart,
@@ -21,7 +22,9 @@ export const CustomTooltip = ({
 	if (active && payload && payload.length) {
 		return (
 			<div className='w-40 h-16 flex flex-col text-primary border-2 rounded-xl border-primary bg-secondary p-2'>
-				<p className='label'>{`${label} : ${payload[0].value}`}</p>
+				<p className='label'>{`${FNTC.format(
+					payload[0].value
+				)}`}</p>
 				<p className='intro'>{label}</p>
 			</div>
 		);

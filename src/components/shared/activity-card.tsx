@@ -20,10 +20,12 @@ export default function ActivityCard({
 			<div className=' truncate text-ellipsis text-xs line-clamp-2'>
 				{description}
 			</div>
-			<div className='flex text-xs justify-between'>
-				<div className=''>{date}</div>
-				<div className=''>{time}</div>
-			</div>
+			{date && (
+				<div className='flex text-xs justify-between'>
+					<div className=''>{date}</div>
+					<div className=''>{time}</div>
+				</div>
+			)}
 		</Link>
 	);
 }

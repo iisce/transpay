@@ -9,21 +9,24 @@ export default function StatsCard({
 	amount,
 	type,
 	percentage,
+	desc,
 }: {
 	children: React.ReactNode;
 	title: string;
 	amount: string;
 	type?: 'up' | 'down' | '';
 	percentage: string | number;
+	desc?: string;
 }) {
 	return (
 		<div className='p-2 w-full md:w-1/2 lg:w-1/3 xl:w-1/4'>
 			<Card className=' overflow-hidden p-5 shadow-md hover:shadow-xl transition-all'>
 				<div className='mb-5'>
 					<div className=''>{title}</div>
+					<div className='text-xs'>{desc}</div>
 					<div className='flex gap-2'>
 						<div className='flex text-lg font-bold'>
-							₦{amount}
+							{amount}
 						</div>
 						<Badge
 							variant={

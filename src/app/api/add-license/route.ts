@@ -25,7 +25,6 @@ export async function PUT(req: NextRequest) {
 		});
 		const result = await response.json();
 		if (!response.ok) {
-			console.log(NextResponse.json(result));
 			throw new Error(`Something Went wrong ${response.statusText}`);
 		} else {
 			return NextResponse.json(result);

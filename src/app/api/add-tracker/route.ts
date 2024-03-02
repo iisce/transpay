@@ -13,7 +13,6 @@ export async function PUT(req: NextRequest) {
 
 	try {
 		const url = `${API}${URLS.green.all}/${body.vehicle_id}/add-tracker`;
-		console.log(url, body);
 		const response = await fetch(url, {
 			method: 'PUT',
 			headers,

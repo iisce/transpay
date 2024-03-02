@@ -1,15 +1,13 @@
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import SignOutBtn from './(auth)/_components/sign-out-button';
-import { getSSession } from '@/lib/get-data';
-import { getAgentMe } from '@/lib/controllers/agent-controller';
-import { getAdminMe } from '@/lib/controllers/admin-controller';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { getInitials } from '@/lib/utils';
-import NavBar from '@/components/layout/navbar';
-import Image from 'next/image';
+import MaxWidthWrapper from '@/components/layout/max-width-wrapper';
 import { UserNav } from '@/components/shared/user-nav-bar';
+import { Button } from '@/components/ui/button';
 import Searchbar from '@/components/ui/searchbar';
+import { getAdminMe } from '@/lib/controllers/admin-controller';
+import { getAgentMe } from '@/lib/controllers/agent-controller';
+import { getSSession } from '@/lib/get-data';
+import { NigeriaIcon } from '@/lib/icons';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default async function Home() {
 	const { role } = await getSSession();
@@ -18,51 +16,74 @@ export default async function Home() {
 			? await getAgentMe()
 			: await getAdminMe();
 	return (
-		<main className='gap-5 h-[100svh] relative'>
-			<div className='h-16 w-full pr-5 shrink-0 fixed z-50 '>
-				<div className='flex items-center justify-end h-full gap-1'>
-					<Button
-						asChild
-						className='rounded'
-						variant={'link'}
+		<main className=''>
+			<div className='h-20 w-full shrink-0'>
+				<MaxWidthWrapper className='flex items-center justify-between h-full w-full gap-1'>
+					<Link
+						href={'/'}
+						className='w-52 shrink-0 px-5'
 					>
-						<Link href={'/scan'}>Scan QR</Link>
-					</Button>
-					<div className='flex gap-3 items-center text-primary-700'>
-						{user ? (
-							<>
-								<Button
-									asChild
-									className='rounded'
-								>
-									<Link href={'/dashboard'}>
-										Dashboard
-									</Link>
-								</Button>
-								<UserNav user={user} />
-							</>
-						) : (
-							<Button
-								asChild
-								className='rounded'
-							>
-								<Link href='/sign-in'>Login</Link>
-							</Button>
-						)}
-					</div>
-				</div>
-			</div>
-
-			<div className='h-full grid p-3 lg:p-20'>
-				<div className='w-full max-w-xl mx-auto flex flex-col items-center px-5 pt-24 gap-10 '>
-					<div className='w-60 h-18 shrink-0 px-5'>
 						<Image
 							src={'/logo.png'}
-							height={60}
+							height={30}
 							width={150}
-							className='h-full w-full'
+							className='shrink-0'
 							alt='Transpay Logo'
 						/>
+					</Link>
+					<div className='flex items-center h-full gap-3'>
+						<Button
+							asChild
+							className='rounded-lg w-24 lg:w-32 bg-transparent'
+							variant={'outline'}
+						>
+							<Link href={'/scan'}>Scan QR</Link>
+						</Button>
+						<div className='flex gap-3 items-center text-primary-700'>
+							{user ? (
+								<>
+									<Button
+										asChild
+										className='rounded-lg w-24 lg:w-32'
+									>
+										<Link href={'/dashboard'}>
+											Dashboard
+										</Link>
+									</Button>
+									<UserNav user={user} />
+								</>
+							) : (
+								<Button
+									asChild
+									className='rounded-lg w-24 lg:w-32'
+								>
+									<Link href='/sign-in'>Login</Link>
+								</Button>
+							)}
+						</div>
+					</div>
+				</MaxWidthWrapper>
+			</div>
+
+			<div className='h-[100svh] flex flex-col items-start relative'>
+				<NigeriaIcon className='absolute top-0 w-[50svw] h-full object-contain ' />
+				<div className='w-full max-w-lg lg:max-w-3xl mx-auto flex flex-col items-center px-5 lg:px-20 pt-5 gap-10 relative'>
+					<div className='shrink-0 flex flex-col items-center gap-2 lg:gap-5'>
+						<div className='flex flex-col items-center'>
+							<div className='text-2xl lg:text-5xl font-bold'>
+								Your All-In-One Solution;
+							</div>
+							<div className='text-2xl lg:text-5xl font-bold'>
+								Streamline, Track and Pay.
+							</div>
+						</div>
+						<p className='text-center text-sm'>
+							Transpay is a smart app that helps manage
+							fees from bus and keke drivers, making
+							everything easy for administrators with tools
+							to check info, register drivers, and handle
+							payments.
+						</p>
 					</div>
 					<Searchbar
 						placeholder='Search Vehicle'
@@ -71,7 +92,7 @@ export default async function Home() {
 				</div>
 			</div>
 
-			<div className='bg-secondary w-full shrink-0 fixed bottom-0 z-50 '>
+			<div className='bg-secondary w-full shrink-0 relative '>
 				<div className='w-full h-10 bg-primary/20 flex justify-between items-center px-3 lg:px-9 '>
 					<div className=''>Anambra</div>
 					<div className=''>Nigeria</div>
@@ -114,93 +135,6 @@ export default async function Home() {
 					</div>
 				</div>
 			</div>
-			{/* <div className='text-h4 text-primary font-bold uppercase'>
-				Transpay
-			</div>
-			<div className='grid gap-3 uppercase w-full max-w-sm p-5'>
-				{role ? (
-					<div className='grid gap-3'>
-						<Avatar className='h-32 w-32 mx-auto border shadow-lg'>
-							<AvatarImage
-								src={user?.image || '/anambara.png'}
-								alt={user?.name || 'User Name'}
-							/>
-							<AvatarFallback>
-								{getInitials(user?.name || 'User Name')}
-							</AvatarFallback>
-						</Avatar>
-						<SignOutBtn />
-					</div>
-				) : (
-					<>
-						<Button asChild>
-							<Link
-								className='w-full'
-								href={'/sign-in'}
-							>
-								{`Admin Sign In`}
-							</Link>
-						</Button>
-						<Button asChild>
-							<Link
-								className='w-full'
-								href={'/sign-in'}
-							>
-								{`Agent Sign In`}
-							</Link>
-						</Button>
-					</>
-				)}
-				<Button asChild>
-					<Link
-						className='w-full'
-						href={'/dashboard'}
-					>
-						{`Dashboard`}
-					</Link>
-				</Button>
-				<Button asChild>
-					<Link
-						className='w-full'
-						href={'/admins'}
-					>
-						{`Admin`}
-					</Link>
-				</Button>
-				<Button asChild>
-					<Link
-						className='w-full'
-						href={'/agents'}
-					>
-						{`Agents`}
-					</Link>
-				</Button>
-
-				<Button asChild>
-					<Link
-						className='w-full'
-						href={'/scan'}
-					>
-						{`Scan`}
-					</Link>
-				</Button>
-				<Button asChild>
-					<Link
-						className='w-full'
-						href={'/search'}
-					>
-						{`Search Vehicle`}
-					</Link>
-				</Button>
-				<Button asChild>
-					<Link
-						className='w-full'
-						href={'/manage'}
-					>
-						{`Manage Account`}
-					</Link>
-				</Button>
-			</div> */}
 		</main>
 	);
 }

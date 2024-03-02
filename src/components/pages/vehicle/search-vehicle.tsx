@@ -1,25 +1,19 @@
 import DashboardCard from '@/components/layout/dashboard-card';
+import WaiverButton from '@/components/role/rider/waiver-button';
 import { CopyButton } from '@/components/shared/copy-button';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import {
-	debtColumns,
-	driversColumns,
-	viewDriversColumns,
-} from '@/components/ui/table/columns';
+import { debtColumns, viewWaiverColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { VIEW_DRIVER_TABLE } from '@/lib/consts';
-import {
-	getVehicleSummary,
-	searchVehicle,
-} from '@/lib/controllers/vehicle-controller';
+import { getVehicleSummary } from '@/lib/controllers/vehicle-controller';
 import { getSSession } from '@/lib/get-data';
 import { failureIcon, successIcon } from '@/lib/icons';
+import { generateDaysOwedArray } from '@/lib/utils';
+import { addDays, format, isBefore } from 'date-fns';
 import { MapPin } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import React from 'react';
 
 export default async function SearchVehicle({ id }: { id: string }) {
 	const { role } = await getSSession();
@@ -28,16 +22,36 @@ export default async function SearchVehicle({ id }: { id: string }) {
 	if (!vehicle) {
 		notFound();
 	}
-	const pendingPayments = vehicle.VehicleTransactions.filter(
-		(transaction) => transaction.payment_status === 'pending'
-	);
 
-	const isOwing = pendingPayments.length > 0;
-	const totalPendingAmount = pendingPayments.reduce(
-		(acc, order) => acc + order.amount,
+	const isOwing = isBefore(
+		addDays(new Date(vehicle.VehicleBalance.next_transaction_date), 1),
+		new Date()
+	);
+	const dateSupplied = new Date(
+		vehicle.VehicleBalance.next_transaction_date
+	);
+	dateSupplied.setUTCHours(dateSupplied.getUTCHours() + 2);
+
+	// Access only the date portion and format as desired
+	const formattedDate = format(dateSupplied, 'yyyy-MM-dd');
+
+	const fee =
+		vehicle.category.toLowerCase() === 'keke'
+			? '200'
+			: vehicle.category === 'small_shuttle'
+			? '250'
+			: '300';
+
+	const daysOwed = generateDaysOwedArray(dateSupplied, fee);
+	daysOwed.sort(
+		(a, b) =>
+			new Date(b.transaction_date).getTime() -
+			new Date(a.transaction_date).getTime()
+	);
+	const totalPendingAmount = daysOwed.reduce(
+		(a, b) => a + parseFloat(b.amount),
 		0
 	);
-
 	return (
 		<div className='h-full w-full p-6 flex flex-col gap-6 '>
 			<div className='flex flex-col text-center justify-between w-full gap-1'>
@@ -53,6 +67,44 @@ export default async function SearchVehicle({ id }: { id: string }) {
 						{vehicle.plate_number}
 					</div>
 				</div>
+				{vehicle.VehicleBalance && (
+					<div
+						className={`text-sm uppercase ${
+							isOwing
+								? 'text-red-500'
+								: 'text-awesome-foreground'
+						}`}
+					>
+						<div className=''>Next Payment Date</div>
+						<div className='text-xl font-bold '>
+							{format(
+								new Date(dateSupplied),
+								'MMMM d, yyyy'
+							)}
+						</div>
+					</div>
+				)}
+				{vehicle.VehicleBalance && (
+					<div className='text-sm uppercase'>
+						<div className=''>Total Payment</div>
+						<div className='text-xl font-bold text-awesome-foreground'>
+							₦
+							{vehicle.VehicleBalance.net_total.toFixed(2)}
+						</div>
+					</div>
+				)}
+				{vehicle.VehicleBalance && (
+					<div className='text-sm uppercase'>
+						<div className=''>Wallet Balance</div>
+						<div className='text-xl font-bold text-awesome-foreground'>
+							₦
+							{vehicle.VehicleBalance.wallet_balance.toFixed(
+								2
+							)}
+						</div>
+					</div>
+				)}
+
 				{role &&
 					vehicle.tracker_id &&
 					vehicle.tracker_id !== '' && (
@@ -75,9 +127,18 @@ export default async function SearchVehicle({ id }: { id: string }) {
 				defaultValue='overview'
 				className='w-full max-w-xl mx-auto'
 			>
-				<TabsList className='grid grid-cols-2'>
+				<TabsList
+					className={`grid ${
+						isOwing ? 'grid-cols-3' : 'grid-cols-2'
+					}`}
+				>
 					<TabsTrigger value='overview'>OVERVIEW</TabsTrigger>
-					<TabsTrigger value='history'>HISTORY</TabsTrigger>
+					{isOwing && (
+						<TabsTrigger value='days-owed'>
+							DAYS OWED
+						</TabsTrigger>
+					)}
+					<TabsTrigger value='waiver'>WAIVER</TabsTrigger>
 				</TabsList>
 				<TabsContent value='overview'>
 					<Card className='grid gap-2 w-full p-3 bg-secondary text-xs lg:text-base'>
@@ -134,7 +195,13 @@ export default async function SearchVehicle({ id }: { id: string }) {
 											Vehicle is Owing!
 										</div>
 										<div className='text-destructive-foreground font-bold text-4xl'>
-											{`₦${totalPendingAmount}`}
+											{`₦${
+												totalPendingAmount +
+												daysOwed.length * 20
+											}`}
+											{/* {`₦${-vehicle
+												.VehicleBalance
+												.deficit_balance}`} */}
 										</div>
 									</div>
 								</div>
@@ -153,17 +220,30 @@ export default async function SearchVehicle({ id }: { id: string }) {
 						)}
 					</div>
 				</TabsContent>
-				<TabsContent value='history'>
-					<div className='w-full grid'>
-						<DataTable
-							showPagination
-							columns={debtColumns}
-							data={vehicle.VehicleTransactions.slice(
-								0,
-								10
-							)}
-						/>
+				{isOwing && (
+					<TabsContent value='days-owed'>
+						<div className='w-full grid'>
+							<DataTable
+								showPagination
+								columns={debtColumns}
+								data={daysOwed}
+							/>
+						</div>
+					</TabsContent>
+				)}
+				<TabsContent value='waiver'>
+					<div className='flex justify-between items-end mb-3'>
+						<div className=''>
+							<p className=' text-title2Bold'>
+								Waiver History
+							</p>
+						</div>
+						<WaiverButton vehicle={vehicle} />
 					</div>
+					<DataTable
+						columns={viewWaiverColumns}
+						data={vehicle.VehicleWaivers || []}
+					/>
 				</TabsContent>
 			</Tabs>
 			<div className='  w-full'>
@@ -239,7 +319,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 										/>
 									</div>
 								</div> */}
-								<div className='flex flex-col gap-2 '>
+								{/* <div className='flex flex-col gap-2 '>
 									<div className='flex justify-between py-2'>
 										<div className='shrink-0 grow-0 text-title1Bold'>
 											Payment History
@@ -266,11 +346,11 @@ export default async function SearchVehicle({ id }: { id: string }) {
 											)}
 										/>
 									</div>
-								</div>
+								</div> */}
 							</>
 						)}
 
-						<div className='flex flex-col gap-2 mb-20'>
+						{/* <div className='flex flex-col gap-2 mb-20'>
 							{vehicle.Drivers && (
 								<>
 									<div className='flex justify-between py-2'>
@@ -301,7 +381,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 									</div>
 								</>
 							)}
-						</div>
+						</div> */}
 					</div>
 				)}
 			</div>

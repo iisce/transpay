@@ -40,16 +40,7 @@ const agentFormSchema = z.object({
 			required_error: 'Please enter an email.',
 		})
 		.email(),
-	password: z.string().refine((password) => {
-		return (
-			password.length >= 8
-			// && /[A-Z]/.test(password) &&
-			// /\d/.test(password)
-		);
-	}, 'The password must contain at least one uppercase letter and one number and be at least 8 characters long.'),
-	role: z.string({
-		required_error: 'Choose Role',
-	}),
+	password: z.string(),
 });
 
 type AgentFormValues = z.infer<typeof agentFormSchema>;
@@ -58,7 +49,6 @@ type AgentFormValues = z.infer<typeof agentFormSchema>;
 const defaultValues: Partial<AgentFormValues> = {
 	email: '',
 	password: '',
-	role: 'agent',
 };
 
 export function LoginForm({ error }: { error?: string }) {
@@ -79,12 +69,11 @@ export function LoginForm({ error }: { error?: string }) {
 			const signInResponse = await signIn('credentials', {
 				email: data.email,
 				password: data.password,
-				role: data.role,
+				role: 'agent',
 				redirect: true,
 				callbackUrl: '/dashboard',
 			});
 			router.push('/dashboard');
-			setIsLoading(false);
 			return signInResponse;
 		} catch (error: any) {
 			console.log(error);
@@ -105,7 +94,7 @@ export function LoginForm({ error }: { error?: string }) {
 				<div className='grid gap-5'>
 					{error && (
 						<div className='text-destructive-foreground text-center text-xs'>
-							{error}
+							Incorrect email or password
 						</div>
 					)}
 					<FormField
@@ -137,34 +126,6 @@ export function LoginForm({ error }: { error?: string }) {
 										{...field}
 									/>
 								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name='role'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Role</FormLabel>
-								<Select
-									onValueChange={field.onChange}
-									defaultValue={field.value}
-								>
-									<FormControl>
-										<SelectTrigger>
-											<SelectValue placeholder='' />
-										</SelectTrigger>
-									</FormControl>
-									<SelectContent>
-										<SelectItem value='agent'>
-											Agent
-										</SelectItem>
-										<SelectItem value='admin'>
-											Admin
-										</SelectItem>
-									</SelectContent>
-								</Select>
 								<FormMessage />
 							</FormItem>
 						)}

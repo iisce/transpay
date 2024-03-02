@@ -1,23 +1,18 @@
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { getAllActivities } from '@/lib/controllers/activity-controller';
+import { notificationIcon } from '@/lib/icons';
+import Link from 'next/link';
+import ActivityList from '../pages/activities/activity-list';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuGroup,
-	DropdownMenuItem,
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
-import Link from 'next/link';
-import { notificationIcon } from '@/lib/icons';
-import ActivityCard from './activity-card';
-import ActivityList from '../pages/activities/activity-list';
-import { getAllActivities } from '@/lib/controllers/activity-controller';
-import { notFound } from 'next/navigation';
 
 export async function Notification() {
 	const all_activities = await getAllActivities();
-	if (!all_activities) return notFound();
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
@@ -28,7 +23,6 @@ export async function Notification() {
 			<DropdownMenuContent
 				className='w-72'
 				align='end'
-				// forceMount
 			>
 				<DropdownMenuLabel className='font-normal'>
 					<Link
@@ -40,7 +34,7 @@ export async function Notification() {
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
-					<ActivityList allActivities={all_activities} />
+					<ActivityList allActivities={all_activities || []} />
 				</DropdownMenuGroup>
 			</DropdownMenuContent>
 		</DropdownMenu>

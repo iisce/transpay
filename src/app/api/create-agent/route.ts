@@ -84,8 +84,8 @@ export async function DELETE(req: NextRequest) {
 			headers,
 		});
 		const result = await response.json();
-		if (!response.ok) {
-			throw new Error(`Something Went wrong ${response.statusText}`);
+		if (!result.success) {
+			return NextResponse.json(result);
 		} else {
 			return NextResponse.json(result);
 		}

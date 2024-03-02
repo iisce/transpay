@@ -1,11 +1,11 @@
 const { sql } = require('@vercel/postgres');
 import { vehicles } from '../src/lib/data.js';
 
-// console.log({
-//   POSTGRES_URL: process.env.POSTGRES_URL,
-//   POSTGRES_URL_NON_POOLING: process.env.POSTGRES_URL_NON_POOLING,
-//   VEHICLE: vehicles
-// });
+console.log({
+  POSTGRES_URL: process.env.POSTGRES_URL,
+  POSTGRES_URL_NON_POOLING: process.env.POSTGRES_URL_NON_POOLING,
+  VEHICLE: vehicles
+});
 
 
 async function seedVehicles() {

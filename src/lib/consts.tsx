@@ -72,11 +72,11 @@ export const SIDEBAR_LINKS = [
 		href: '/revenue',
 		icon: revenueIcon,
 	},
-	{
-		title: 'Property',
-		href: '/property',
-		icon: <HomeIcon className='h-4 w-4' />,
-	},
+	// {
+	// 	title: 'Property',
+	// 	href: '/property',
+	// 	icon: <HomeIcon className='h-4 w-4' />,
+	// },
 	{
 		title: 'Settings',
 		href: '/settings',
@@ -1707,7 +1707,17 @@ export const URLS = {
 			agent: '/api/v1/agents/login',
 		},
 	},
-	dashboard: '/api/v1/dashboard',
+	dashboard: {
+		default: '/api/v1/dashboard',
+		total_revenue_yearly: '/api/v1/dashboard/total-revenue',
+		net_total: '/api/v1/dashboard/net-total',
+		total_revenue_monthly: '/api/v1/dashboard/total-month-revenue',
+		total_revenue_daily: '/api/v1/dashboard/total-day-revenue',
+		total_tracker_yearly: '/api/v1/dashboard/total-trackers-revenue',
+		activities_with_limit: '/api/v1/dashboard/all-activities',
+		blacklisted_admin: '/api/v1/dashboard/blacklisted-admins',
+		chart: '/api/v1/dashboard/chart',
+	},
 	driver: {
 		all: '/api/v1/drivers',
 		blacklist: '/api/v1/drivers/blacklist', // add vehicle to blacklist
@@ -2004,3 +2014,40 @@ export const PROPERTIES: IProperty[] = [
 		],
 	},
 ];
+
+export const BANK_RATE = 0.0043;
+export const TRANSPAY = 0.08;
+export const AIRS = 0.92;
+
+export const FNTC = new Intl.NumberFormat('en-NG', {
+	currency: 'NGN',
+	style: 'currency',
+});
+
+export const ALLOWED_VEHICLE_FIELDS = [
+	'id',
+	'vehicle_id',
+	'color',
+	'category',
+	'plate_number',
+	'image',
+	'user_role',
+	'user_id',
+	'blacklisted',
+	'current_driver',
+	'status',
+	'deleted',
+	'vehicle_type',
+	'vin',
+	'barcode_string',
+	'owners_phone_number',
+	'owners_name',
+	'tracker_id',
+	'createdAt',
+	'updatedAt',
+];
+
+export const BASE_URL =
+	process.env.NODE_ENV === 'production'
+		? 'https://transpay.vercel.app'
+		: 'http://localhost:8726';

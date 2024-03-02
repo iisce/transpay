@@ -1,4 +1,4 @@
-import { type ClassValue, clsx } from 'clsx';
+import { clsx, type ClassValue } from 'clsx';
 import { format, startOfYear, subYears } from 'date-fns';
 import { twMerge } from 'tailwind-merge';
 
@@ -221,10 +221,10 @@ export function generateRandomLocation(): {
 	lat: number;
 	lng: number;
 } {
-	const minlat: number = 5.8255;
-	const maxlat: number = 6.8998;
-	const minLng: number = 6.4101;
-	const maxLng: number = 7.1849;
+	const minlat: number = 6.0233;
+	const maxlat: number = 6.2322;
+	const minLng: number = 7.0733;
+	const maxLng: number = 7.2822;
 
 	// Generate random lat and lng
 	const lat: number = parseFloat(
@@ -319,3 +319,36 @@ export const createDataForTable = (transactions: IVehicleTransaction[]) => {
 
 	return dataForTable;
 };
+interface DaysOwedObject {
+	transaction_date: string;
+	amount: string;
+	transaction_type: string;
+}
+
+export function generateDaysOwedArray(
+	dateSupplied: Date,
+	fee: '200' | '250' | '300'
+): DaysOwedObject[] {
+	const presentDate = new Date();
+	const timeDiff = Math.ceil(
+		(dateSupplied.getTime() - presentDate.getTime()) /
+			(1000 * 60 * 60 * 24)
+	);
+
+	const daysOwedArray: DaysOwedObject[] = [];
+
+	for (let i = 0; i <= -timeDiff; i++) {
+		const transactionDate = new Date(presentDate);
+		transactionDate.setDate(presentDate.getDate() + timeDiff + i);
+
+		const daysOwedObject: DaysOwedObject = {
+			transaction_date: transactionDate.toISOString().split('T')[0],
+			amount: fee, // Replace with the actual amount
+			transaction_type: 'DAILY_FEES',
+		};
+
+		daysOwedArray.push(daysOwedObject);
+	}
+	// console.log({ presentDate, timeDiff, daysOwedArray });
+	return daysOwedArray;
+}

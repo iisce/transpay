@@ -29,9 +29,13 @@ const vehicleFormSchema = z.object({
 		.string({
 			required_error: 'Please enter a valid Category.',
 		})
-		.refine((value) => ['keke', 'shuttle'].includes(value), {
-			message: 'Invalid means of identification.',
-		}),
+		.refine(
+			(value) =>
+				['keke', 'small_shuttle', 'big_shuttle'].includes(value),
+			{
+				message: 'Invalid means of identification.',
+			}
+		),
 	vehicle_type: z.string({
 		required_error: 'Please enter a valid vehicle type.',
 	}),
@@ -72,6 +76,7 @@ const vehicleFormSchema = z.object({
 type VehicleFormValues = z.infer<typeof vehicleFormSchema>;
 
 export function UpdateVehicleForm({ vehicle }: { vehicle: IVehicle }) {
+	console.log({ vehicle });
 	const [disabled, setDisabled] = React.useState<boolean>(true);
 	const defaultValues: Partial<VehicleFormValues> = {
 		category: vehicle.category,
@@ -87,7 +92,6 @@ export function UpdateVehicleForm({ vehicle }: { vehicle: IVehicle }) {
 		owners_name: vehicle.owners_name,
 		with_wallet: true,
 	};
-	console.log({ defaultValues, vehicle });
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const { toast } = useToast();
 	const form = useForm<VehicleFormValues>({
@@ -98,7 +102,6 @@ export function UpdateVehicleForm({ vehicle }: { vehicle: IVehicle }) {
 
 	async function onSubmit(data: VehicleFormValues) {
 		setIsLoading(true);
-		console.log(data);
 		try {
 			const createVehicleResponse = await fetch(
 				'/api/create-vehicle',
@@ -172,8 +175,11 @@ export function UpdateVehicleForm({ vehicle }: { vehicle: IVehicle }) {
 											<SelectItem value='keke'>
 												Keke
 											</SelectItem>
-											<SelectItem value='shuttle'>
-												Shuttle
+											<SelectItem value='small_shuttle'>
+												Small Shuttle
+											</SelectItem>
+											<SelectItem value='big_shuttle'>
+												Big Shuttle
 											</SelectItem>
 										</SelectContent>
 									</Select>
