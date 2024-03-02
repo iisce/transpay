@@ -16,56 +16,56 @@ export default function DashboardSuperAdmin(user: { user: IUser }) {
 			<div className='grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5'>
 				<Suspense
 					fallback={
-						<Skeleton className='h-32 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between' />
+						<Skeleton className='h-24 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between' />
 					}
 				>
 					<YearlyTotalRevenue />
 				</Suspense>
 				<Suspense
 					fallback={
-						<Skeleton className='h-32 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between' />
+						<Skeleton className='h-24 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between' />
 					}
 				>
 					<MonthlyTotalRevenue />
 				</Suspense>
 				<Suspense
 					fallback={
-						<Skeleton className='h-32 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between' />
+						<Skeleton className='h-24 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between' />
 					}
 				>
 					<WeeklyTotalRevenue />
 				</Suspense>
 				<Suspense
 					fallback={
-						<Skeleton className='h-32 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between' />
+						<Skeleton className='h-24 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between' />
 					}
 				>
 					<DailyTotalRevenue />
 				</Suspense>
 				{/* <Suspense
 					fallback={
-						<Skeleton className='h-32 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between' />
+						<Skeleton className='h-24 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between' />
 					}
 				>
 					<TotalTrackerRevenue />
 				</Suspense>
 				<Suspense
 					fallback={
-						<Skeleton className='h-32 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between' />
+						<Skeleton className='h-24 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between' />
 					}
 				>
 					<TotalTrackerRevenue />
 				</Suspense>
 				<Suspense
 					fallback={
-						<Skeleton className='h-32 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between' />
+						<Skeleton className='h-24 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between' />
 					}
 				>
 					<TotalTrackerRevenue />
 				</Suspense>
 				<Suspense
 					fallback={
-						<Skeleton className='h-32 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between' />
+						<Skeleton className='h-24 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between' />
 					}
 				>
 					<TotalTrackerRevenue />

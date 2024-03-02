@@ -65,7 +65,7 @@ export default async function Home() {
 				</MaxWidthWrapper>
 			</div>
 
-			<div className='h-[100svh] flex flex-col items-start relative'>
+			<div className='h-[90svh] flex flex-col items-start relative'>
 				<NigeriaIcon className='absolute top-0 w-[50svw] h-full object-contain ' />
 				<div className='w-full max-w-lg lg:max-w-3xl mx-auto flex flex-col items-center px-5 lg:px-20 pt-5 gap-10 relative'>
 					<div className='shrink-0 flex flex-col items-center gap-2 lg:gap-5'>
