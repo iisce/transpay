@@ -1,14 +1,14 @@
 import { getDashboardTotalYearlyRevenue } from '@/lib/get-data';
 import DashboardCard from './dashboard-card';
 
-export default async function YearlyTotalRevenue() {
+export default async function YearlyTotalTracker() {
 	const yearlyRevenueTotal = await getDashboardTotalYearlyRevenue(
-		'DAILY_FEES'
+		'TRACKER_FEES'
 	);
 	return (
 		<DashboardCard
 			type='positive'
-			title='Yearly Total Revenue'
+			title='Yearly Total Tracker'
 			amount={yearlyRevenueTotal || 0}
 			percent={0}
 			desc='Year Till Date'

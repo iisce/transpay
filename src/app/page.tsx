@@ -1,7 +1,10 @@
 import MaxWidthWrapper from '@/components/layout/max-width-wrapper';
+import CarouselContainer from '@/components/pages/home/carousel';
+import CarouselCard from '@/components/pages/home/carousel-card';
 import { UserNav } from '@/components/shared/user-nav-bar';
 import { Button } from '@/components/ui/button';
 import Searchbar from '@/components/ui/searchbar';
+import { BUS_IMAGE_SAMPLE } from '@/lib/consts';
 import { getAdminMe } from '@/lib/controllers/admin-controller';
 import { getAgentMe } from '@/lib/controllers/agent-controller';
 import { getSSession } from '@/lib/get-data';
@@ -17,7 +20,7 @@ export default async function Home() {
 			: await getAdminMe();
 	return (
 		<main className=''>
-			<div className='h-20 w-full shrink-0'>
+			<div className='h-20 w-full shrink-0 fixed bg-white/50 backdrop-blur z-50'>
 				<MaxWidthWrapper className='flex items-center justify-between h-full w-full gap-1'>
 					<Link
 						href={'/'}
@@ -65,7 +68,7 @@ export default async function Home() {
 				</MaxWidthWrapper>
 			</div>
 
-			<div className='h-[90svh] flex flex-col items-start relative'>
+			<div className='h-[100svh] flex flex-col items-start justify-between relative pt-24 gap-10'>
 				<NigeriaIcon className='absolute top-0 w-[50svw] h-full object-contain ' />
 				<div className='w-full max-w-lg lg:max-w-3xl mx-auto flex flex-col items-center px-5 lg:px-20 pt-5 gap-10 relative'>
 					<div className='shrink-0 flex flex-col items-center gap-2 lg:gap-5'>
@@ -89,6 +92,9 @@ export default async function Home() {
 						placeholder='Search Vehicle'
 						variant='secondary'
 					/>
+				</div>
+				<div className='w-full h-[50svh] relative flex gap-3'>
+					<CarouselContainer />
 				</div>
 			</div>
 

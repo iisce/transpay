@@ -1,19 +1,14 @@
-import React from 'react';
+import { getDashboardTotalWeeklyRevenue } from '@/lib/get-data';
 import DashboardCard from './dashboard-card';
-import {
-	getDashboard,
-	getDashboardTotalDailyRevenue,
-	getDashboardTotalWeeklyRevenue,
-} from '@/lib/get-data';
 
-export default async function WeeklyTotalRevenue() {
+export default async function WeeklyTotalTracker() {
 	const weeklyTotalRevenue = await getDashboardTotalWeeklyRevenue(
-		'DAILY_FEES'
+		'TRACKER_FEES'
 	);
 	return (
 		<DashboardCard
 			type='positive'
-			title='Weekly Total Revenue'
+			title='Weekly Total Tracker'
 			amount={weeklyTotalRevenue || 0}
 			percent={0}
 			desc='Today'

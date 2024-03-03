@@ -6,9 +6,14 @@ import DashboardActivities from './dashboard-activities';
 import DashboardBlacklisted from './dashboard-blacklisted';
 import DashboardEarningRevenue from './dashboard-earning-revenue';
 import MonthlyTotalRevenue from './monthly-total-revenue';
-import TotalTrackerRevenue from './total-tracker-fee';
+import TotalTrackerRevenue from './yearly-total-tracker';
 import YearlyTotalRevenue from './yearly-total-revenue';
 import WeeklyTotalRevenue from './weekly-total-revenue';
+import YearlyTotalTracker from './yearly-total-tracker';
+import MonthlyTotalTracker from './monthly-total-tracker';
+import WeeklyTotalTracker from './weekly-total-tracker';
+import DailyTotalTracker from './daily-total-tracker';
+import { Separator } from '@/components/ui/separator';
 
 export default function DashboardSuperAdmin(user: { user: IUser }) {
 	return (
@@ -42,35 +47,36 @@ export default function DashboardSuperAdmin(user: { user: IUser }) {
 				>
 					<DailyTotalRevenue />
 				</Suspense>
-				{/* <Suspense
+				<Suspense
 					fallback={
 						<Skeleton className='h-24 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between' />
 					}
 				>
-					<TotalTrackerRevenue />
+					<YearlyTotalTracker />
 				</Suspense>
 				<Suspense
 					fallback={
 						<Skeleton className='h-24 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between' />
 					}
 				>
-					<TotalTrackerRevenue />
+					<MonthlyTotalTracker />
 				</Suspense>
 				<Suspense
 					fallback={
 						<Skeleton className='h-24 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between' />
 					}
 				>
-					<TotalTrackerRevenue />
+					<WeeklyTotalTracker />
 				</Suspense>
 				<Suspense
 					fallback={
 						<Skeleton className='h-24 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between' />
 					}
 				>
-					<TotalTrackerRevenue />
-				</Suspense> */}
+					<DailyTotalTracker />
+				</Suspense>
 			</div>
+			<Separator className='my-5' />
 			<div className='flex w-full gap-5 mt-5'>
 				<div className='w-full flex flex-col gap-5'>
 					<Suspense

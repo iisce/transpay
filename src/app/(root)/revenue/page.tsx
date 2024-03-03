@@ -24,7 +24,7 @@ export default async function Revenue() {
 	console.log(revenueData);
 
 	if (!revenueData) return notFound();
-	const revenue = revenueData.chart.transactions.all;
+	const revenue = revenueData.transactions.all;
 
 	const lastYearTransactions = filterTransactionsByDateRange(
 		revenue,
@@ -108,4 +108,3 @@ export default async function Revenue() {
 		</div>
 	);
 }
-// ${FNTC.format(revenueData?.chart.total.revenue)}
