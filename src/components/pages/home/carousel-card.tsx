@@ -22,7 +22,7 @@ export default function CarouselCard({
 				width={1200}
 				className={`${
 					isActive ? 'h-full' : 'h-[95%]'
-				} rounded-2xl w-full object-cover object-bottom transition-all duration-1000`}
+				} rounded-2xl w-full object-cover object-top transition-all duration-1000`}
 			/>
 		</div>
 	);

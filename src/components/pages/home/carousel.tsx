@@ -4,15 +4,15 @@ import CarouselCard from './carousel-card';
 
 const images = [
 	{
-		src: 'https://via.placeholder.com/600x300?text=Image+1',
+		src: '/slide-one.png',
 		altText: 'Slide 1',
 	},
 	{
-		src: 'https://via.placeholder.com/600x300?text=Image+2',
+		src: '/slide-two.png',
 		altText: 'Slide 2',
 	},
 	{
-		src: 'https://via.placeholder.com/600x300?text=Image+3',
+		src: '/slide-three.png',
 		altText: 'Slide 3',
 	},
 ];
@@ -32,7 +32,7 @@ export default function CarouselContainer() {
 			{images.map((item, index) => (
 				<CarouselCard
 					key={index}
-					// image={item.src}
+					image={item.src}
 					isActive={index === activeIndex}
 				/>
 			))}
