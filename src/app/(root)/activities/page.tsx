@@ -1,21 +1,10 @@
-import React from 'react';
-import { ACTIVITIES } from '../../../../data';
-import ActivityCard from '@/components/shared/activity-card';
+import { getAllActivities } from '@/lib/controllers/activity-controller';
+import ActivityList from '@/components/pages/activities/activity-list';
+import { notFound } from 'next/navigation';
 
-export default function Activities() {
-	return (
-		<div className='px-3 lg:px-5 flex flex-col gap-2'>
-			{ACTIVITIES.map((activity, k) => (
-				<ActivityCard
-					key={k}
-					id={activity.id}
-					name={activity.name}
-					activity_id={activity.activity_id}
-					time={activity.time}
-					date={activity.date}
-					description={activity.description}
-				/>
-			))}
-		</div>
-	);
+export default async function Activities() {
+	const all_activities = await getAllActivities();
+	if (!all_activities) return notFound();
+
+	return <ActivityList allActivities={all_activities} />;
 }

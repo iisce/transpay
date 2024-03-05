@@ -1,5 +1,5 @@
 import { withAuth } from 'next-auth/middleware';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export const config = {
 	matcher: [
@@ -12,8 +12,12 @@ export const config = {
 		'/revenue/:path*',
 		'/vehicles/:path*',
 		'/drivers/:path*',
+		'/property/:path*',
+		'/green-engine/:path*',
+		// '/((?!api|_next/static|_next/image|favicon.ico|maintenance).*)',
 	],
 };
+
 export default withAuth(
 	function middleware(request) {
 		const response = NextResponse.next();
@@ -27,3 +31,7 @@ export default withAuth(
 		callbacks: { authorized: ({ token }) => !!token },
 	}
 );
+
+// export function middleware(request: NextRequest) {
+// 	return NextResponse.redirect(new URL('/maintenance', request.url));
+// }

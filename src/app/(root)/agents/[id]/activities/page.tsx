@@ -1,9 +1,13 @@
 import { Card } from '@/components/ui/card';
 import React from 'react';
-import { ACTIVITIES } from '../../../../../../data';
 import ActivityCard from '@/components/shared/activity-card';
+import { getAllActivities } from '@/lib/controllers/activity-controller';
+import { notFound } from 'next/navigation';
+import ActivityList from '@/components/pages/activities/activity-list';
 
-export default function Activity() {
+export default async function Activity() {
+	const all_activities = await getAllActivities();
+	if (!all_activities) return notFound();
 	return (
 		<div className='w-full flex flex-col gap-3 mb-8 p-2 xs:p-5 '>
 			<div className='flex flex-col gap-2 mb-20'>
@@ -13,17 +17,7 @@ export default function Activity() {
 					</div>
 				</div>
 				<Card className='bg-secondary'>
-					{ACTIVITIES.map((activity, k) => (
-						<ActivityCard
-							key={k}
-							id={activity.id}
-							name={activity.name}
-							activity_id={activity.activity_id}
-							time={activity.time}
-							date={activity.date}
-							description={activity.description}
-						/>
-					))}
+					<ActivityList allActivities={all_activities} />
 				</Card>
 			</div>
 		</div>

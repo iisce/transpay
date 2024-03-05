@@ -1,4 +1,9 @@
-import { ActivitySquareIcon, CarTaxiFront, SettingsIcon } from 'lucide-react';
+import {
+	ActivitySquareIcon,
+	CarTaxiFront,
+	HomeIcon,
+	SettingsIcon,
+} from 'lucide-react';
 import {
 	adminIcon,
 	agentDriverIcon,
@@ -67,6 +72,11 @@ export const SIDEBAR_LINKS = [
 		href: '/revenue',
 		icon: revenueIcon,
 	},
+	// {
+	// 	title: 'Property',
+	// 	href: '/property',
+	// 	icon: <HomeIcon className='h-4 w-4' />,
+	// },
 	{
 		title: 'Settings',
 		href: '/settings',
@@ -125,6 +135,23 @@ export const SIDEBAR_LINKS_AGENT = [
 		title: 'Search',
 		href: '/search',
 		icon: searchIcon,
+	},
+];
+export const SIDEBAR_LINKS_GREEN = [
+	{
+		title: 'Dashboard',
+		href: '/dashboard',
+		icon: dashboardIcon,
+	},
+	{
+		title: 'Vehicles',
+		href: '/green-engine/vehicles',
+		icon: driverIcon,
+	},
+	{
+		title: 'Scan',
+		href: '/scan',
+		icon: scanIcon,
 	},
 ];
 export const MANAGE_SIDEBAR_LINKS = [
@@ -1657,6 +1684,9 @@ export const LGA = [
 ];
 export const API = 'https://squid-app-ruxoz.ondigitalocean.app';
 export const URLS = {
+	activity: {
+		all: '/api/v1/activities',
+	},
 	admin: {
 		all: '/api/v1/admins',
 		me: '/api/v1/admins/me',
@@ -1665,16 +1695,35 @@ export const URLS = {
 		all: '/api/v1/agents',
 		me: '/api/v1/agents/me',
 	},
+	green: {
+		all: '/api/v1/greenengine',
+		me: '/api/v1/greenengine/me',
+		search: '/api/v1/greenengine/search',
+	},
 	auth: {
 		signin: {
 			admin: '/api/v1/admins/login',
 			agent: '/api/v1/agents/login',
 		},
 	},
-	dashboard: '/api/v1/dashboard',
+	dashboard: {
+		default: '/api/v1/dashboard',
+		total_revenue_yearly: '/api/v1/dashboard/total-revenue',
+		net_total: '/api/v1/dashboard/net-total',
+		total_revenue_monthly: '/api/v1/dashboard/total-month-revenue',
+		total_revenue_daily: '/api/v1/dashboard/total-day-revenue',
+		total_tracker_yearly: '/api/v1/dashboard/total-trackers-revenue',
+		activities_with_limit: '/api/v1/dashboard/all-activities',
+		blacklisted_admin: '/api/v1/dashboard/blacklisted-admins',
+		chart: '/api/v1/dashboard/chart',
+	},
 	driver: {
 		all: '/api/v1/drivers',
 		blacklist: '/api/v1/drivers/blacklist', // add vehicle to blacklist
+	},
+	revenue: {
+		stats: '/api/v1/revenue/stats',
+		report: '/api/v1/revenue/report',
 	},
 	vehicle: {
 		all: '/api/v1/vehicles',
@@ -1685,31 +1734,336 @@ export const URLS = {
 };
 export const BUS_IMAGE_SAMPLE =
 	'https://images.unsplash.com/photo-1616792577902-f1d86383a21b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2803&q=80';
-export const SLIDES= [
-		<>
-		  <CarouselSlides
-			desc="Accountability in a civilized society is the stepping stone to
-				development and progressive Environment"
-			images="/avater.png"
-			author="ISCE Digital Concepts"
-			title="Governor Anambra state"
-		  />
-		</>,
-		<>
-		  <CarouselSlides
-			desc="We believe that accountability is fundamental for societal progress, and TRANSPAY stands as a testament to that ethos, offering a reliable and efficient means for commuters"
-			images="/avater.png"
-			author="ISCE Digital Concepts"
-			title="Governor Anambra state"
-		  />
-		</>,
-		<>
-		  <CarouselSlides
-			desc="Just as development relies on being accountable for our actions, TRANSPAY cultivates an efficient and sustainable transit system, contributing to the growth and prosperity of our community."
-			images="/avater.png"
-			author="ISCE Digital Concepts"
-			title="Governor Anambra state"
-		  />
-		</>,
-	  ];
-	
+export const SLIDES = [
+	<>
+		<CarouselSlides
+			desc='Accountability in a civilized society is the stepping stone to development and progressive environment'
+			images='/avater.png'
+			author='ISCE Digital Concept'
+			title='Ananmbra State'
+		/>
+	</>,
+	// <>
+	// 	<CarouselSlides
+	// 		desc='We believe that accountability is fundamental for societal progress, and TRANSPAY stands as a testament to that ethos, offering a reliable and efficient means for commuters'
+	// 		images='/mbanefo.jpeg'
+	// 		author='Hon. Afam Mbanefo'
+	// 		title='Minister of Transport'
+	// 	/>
+	// </>,
+	// <>
+	// 	<CarouselSlides
+	// 		desc='Just as development relies on being accountable for our actions, TRANSPAY cultivates an efficient and sustainable transit system, contributing to the growth and prosperity of our community.'
+	// 		images='/ibezim.jpg'
+	// 		author='Dr. Onyeka Ibezim'
+	// 		title='Deputy Governor of Anambra State'
+	// 	/>
+	// </>,
+];
+
+export const PROPERTIES: IProperty[] = [
+	{
+		propertyId: 'ABC123',
+		ownerName: 'John Doe',
+		address: '123 Main Street',
+		propertyType: 'Residential',
+		assessmentValue: 250000,
+		taxRate: 0.02,
+		taxAmount: 5000,
+		paymentDueDate: '2023-12-31',
+		isPaid: false,
+		paymentRecords: [
+			{
+				paymentDate: '2023-01-15',
+				amountPaid: 2000,
+			},
+			{
+				paymentDate: '2023-02-28',
+				amountPaid: 3000,
+			},
+			{
+				paymentDate: '2023-04-15',
+				amountPaid: 2500,
+			},
+		],
+	},
+	{
+		propertyId: 'DEF456',
+		ownerName: 'Jane Smith',
+		address: '456 Oak Avenue',
+		propertyType: 'Commercial',
+		assessmentValue: 500000,
+		taxRate: 0.03,
+		taxAmount: 15000,
+		paymentDueDate: '2023-11-15',
+		isPaid: true,
+		paymentRecords: [
+			{
+				paymentDate: '2023-01-15',
+				amountPaid: 2000,
+			},
+			{
+				paymentDate: '2023-02-28',
+				amountPaid: 3000,
+			},
+			{
+				paymentDate: '2023-04-15',
+				amountPaid: 2500,
+			},
+		],
+	},
+	{
+		propertyId: 'GHI789',
+		ownerName: 'Bob Johnson',
+		address: '789 Pine Street',
+		propertyType: 'Residential',
+		assessmentValue: 300000,
+		taxRate: 0.025,
+		taxAmount: 7500,
+		paymentDueDate: '2023-10-31',
+		isPaid: false,
+		paymentRecords: [
+			{
+				paymentDate: '2023-01-15',
+				amountPaid: 2000,
+			},
+			{
+				paymentDate: '2023-02-28',
+				amountPaid: 3000,
+			},
+			{
+				paymentDate: '2023-04-15',
+				amountPaid: 2500,
+			},
+		],
+	},
+	{
+		propertyId: 'JKL012',
+		ownerName: 'Alice Williams',
+		address: '12 Cedar Avenue',
+		propertyType: 'Commercial',
+		assessmentValue: 700000,
+		taxRate: 0.035,
+		taxAmount: 24500,
+		paymentDueDate: '2023-09-15',
+		isPaid: true,
+		paymentRecords: [
+			{
+				paymentDate: '2023-01-15',
+				amountPaid: 2000,
+			},
+			{
+				paymentDate: '2023-02-28',
+				amountPaid: 3000,
+			},
+			{
+				paymentDate: '2023-04-15',
+				amountPaid: 2500,
+			},
+		],
+	},
+	{
+		propertyId: 'MNO345',
+		ownerName: 'Charlie Brown',
+		address: '345 Elm Street',
+		propertyType: 'Residential',
+		assessmentValue: 400000,
+		taxRate: 0.03,
+		taxAmount: 12000,
+		paymentDueDate: '2023-08-31',
+		isPaid: false,
+		paymentRecords: [
+			{
+				paymentDate: '2023-01-15',
+				amountPaid: 2000,
+			},
+			{
+				paymentDate: '2023-02-28',
+				amountPaid: 3000,
+			},
+			{
+				paymentDate: '2023-04-15',
+				amountPaid: 2500,
+			},
+		],
+	},
+	{
+		propertyId: 'PQR678',
+		ownerName: 'Eva Davis',
+		address: '678 Maple Avenue',
+		propertyType: 'Commercial',
+		assessmentValue: 600000,
+		taxRate: 0.04,
+		taxAmount: 24000,
+		paymentDueDate: '2023-07-15',
+		isPaid: true,
+		paymentRecords: [
+			{
+				paymentDate: '2023-01-15',
+				amountPaid: 2000,
+			},
+			{
+				paymentDate: '2023-02-28',
+				amountPaid: 3000,
+			},
+			{
+				paymentDate: '2023-04-15',
+				amountPaid: 2500,
+			},
+		],
+	},
+	{
+		propertyId: 'STU901',
+		ownerName: 'David Wilson',
+		address: '901 Oak Street',
+		propertyType: 'Residential',
+		assessmentValue: 350000,
+		taxRate: 0.028,
+		taxAmount: 9800,
+		paymentDueDate: '2023-06-30',
+		isPaid: false,
+		paymentRecords: [
+			{
+				paymentDate: '2023-01-15',
+				amountPaid: 2000,
+			},
+			{
+				paymentDate: '2023-02-28',
+				amountPaid: 3000,
+			},
+			{
+				paymentDate: '2023-04-15',
+				amountPaid: 2500,
+			},
+		],
+	},
+	{
+		propertyId: 'VWX234',
+		ownerName: 'Grace Taylor',
+		address: '234 Birch Avenue',
+		propertyType: 'Commercial',
+		assessmentValue: 800000,
+		taxRate: 0.045,
+		taxAmount: 36000,
+		paymentDueDate: '2023-05-15',
+		isPaid: true,
+		paymentRecords: [
+			{
+				paymentDate: '2023-01-15',
+				amountPaid: 2000,
+			},
+			{
+				paymentDate: '2023-02-28',
+				amountPaid: 3000,
+			},
+			{
+				paymentDate: '2023-04-15',
+				amountPaid: 2500,
+			},
+		],
+	},
+	{
+		propertyId: 'YZA567',
+		ownerName: 'Frank Miller',
+		address: '567 Pine Street',
+		propertyType: 'Residential',
+		assessmentValue: 450000,
+		taxRate: 0.032,
+		taxAmount: 14400,
+		paymentDueDate: '2023-04-30',
+		isPaid: false,
+		paymentRecords: [
+			{
+				paymentDate: '2023-01-15',
+				amountPaid: 2000,
+			},
+			{
+				paymentDate: '2023-02-28',
+				amountPaid: 3000,
+			},
+			{
+				paymentDate: '2023-04-15',
+				amountPaid: 2500,
+			},
+		],
+	},
+	{
+		propertyId: 'BCD890',
+		ownerName: 'Helen Clark',
+		address: '890 Elm Avenue',
+		propertyType: 'Commercial',
+		assessmentValue: 900000,
+		taxRate: 0.05,
+		taxAmount: 45000,
+		paymentDueDate: '2023-03-15',
+		isPaid: true,
+		paymentRecords: [
+			{
+				paymentDate: '2023-01-15',
+				amountPaid: 2000,
+			},
+			{
+				paymentDate: '2023-02-28',
+				amountPaid: 3000,
+			},
+			{
+				paymentDate: '2023-04-15',
+				amountPaid: 2500,
+			},
+		],
+	},
+];
+
+export const BANK_RATE = 0.0043;
+export const TRANSPAY = 0.08;
+export const AIRS = 0.92;
+
+export const FNTC = new Intl.NumberFormat('en-NG', {
+	currency: 'NGN',
+	style: 'currency',
+});
+
+
+export const DURATIONREVENUESUMMARY: IDurationSummary[] = [
+  {
+    duration: "YEARLY",
+    totalDurationKekeRev: 1000,
+    totalDurationSmallShuttleRev: 2000,
+    totalDurationBigShuttleRev: 3000,
+    totalDurationTrackerRev: 1000,
+    lgaRevenueSummary: [
+      {
+        lga: "LGA 1",
+        totalRev: 200,
+        kekeRev: 300,
+        smallshuttleRev: 400,
+        bigshuttleRev: 400,
+        trackerRev: 400,
+      },
+      {
+        lga: "LGA 2",
+        totalRev: 200,
+        kekeRev: 300,
+        smallshuttleRev: 400,
+        bigshuttleRev: 400,
+        trackerRev: 400,
+      },
+      {
+        lga: "LGA 3",
+        totalRev: 200,
+        kekeRev: 300,
+        smallshuttleRev: 400,
+        bigshuttleRev: 400,
+        trackerRev: 400,
+      },
+      {
+        lga: "LGA 4",
+        totalRev: 200,
+        kekeRev: 300,
+        smallshuttleRev: 400,
+        bigshuttleRev: 400,
+        trackerRev: 400,
+      },
+    ],
+  },
+];

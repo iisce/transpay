@@ -1,32 +1,36 @@
 'use client';
+import { UpdateSettingsForm } from '@/components/forms/update-settings-form';
+import Receipt from '@/components/shared/receipt/vehicle-transaction';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import {
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
+import { deleteIcon, editIcon, paymentIcon, printIcon } from '@/lib/icons';
+import { formatDate } from '@/lib/utils';
 import {
 	DropdownMenu,
 	DropdownMenuTrigger,
 } from '@radix-ui/react-dropdown-menu';
 import { ColumnDef } from '@tanstack/react-table';
-import { EyeIcon, MoreHorizontal, MoreVertical } from 'lucide-react';
-import { DataTableColumnHeader } from './data-column-table-header';
-import { deleteIcon, editIcon, paymentIcon, printIcon } from '@/lib/icons';
-import Pill from '../pill';
+import { format } from 'date-fns';
+import {
+	EyeIcon,
+	MapPinIcon,
+	MoreHorizontal,
+	MoreVertical,
+} from 'lucide-react';
 import Link from 'next/link';
 import Cbadge from '../category-badge';
-import DeleteAdminButton from '@/components/shared/delete-buttons/delete-admin-button';
-import { formatDate } from '@/lib/utils';
 import { Dialog, DialogContent, DialogFooter, DialogTrigger } from '../dialog';
-import Receipt from '@/components/shared/receipt/vehicle-transaction';
-import { UpdateSettingsForm } from '@/components/forms/update-settings-form';
+import Pill from '../pill';
+import { DataTableColumnHeader } from './data-column-table-header';
 
 export const debtColumns: ColumnDef<IVehiclePayment>[] = [
 	{
-		accessorKey: 'transaction_date',
+		accessorKey: ' ',
 		header: ({ column }) => (
 			<DataTableColumnHeader
 				column={column}
@@ -35,9 +39,15 @@ export const debtColumns: ColumnDef<IVehiclePayment>[] = [
 		),
 		cell: ({ row }) => {
 			const payment = row.original;
-			return <div>{payment.transaction_date}</div>;
+			return (
+				<div>
+					{format(
+						new Date(payment.transaction_date),
+						'MMM, dd yyyy'
+					)}
+				</div>
+			);
 		},
-		sortDescFirst: true,
 	},
 	{
 		accessorKey: 'amount',
@@ -67,14 +77,7 @@ export const paymentColumns: ColumnDef<IVehiclePayment>[] = [
 		),
 		cell: ({ row }) => {
 			const payment = row.original;
-			return (
-				<Link
-					href={`/vehicles/${payment.vehicle_id}/payments/${payment.vehicle_transaction_id}`}
-					className=''
-				>
-					{formatDate(payment.transaction_date)}
-				</Link>
-			);
+			return formatDate(payment.transaction_date);
 		},
 		sortDescFirst: true,
 	},
@@ -154,13 +157,6 @@ export const paymentColumns: ColumnDef<IVehiclePayment>[] = [
 									</DialogFooter>
 								</DialogContent>
 							</Dialog>
-						</DropdownMenuItem>
-						<DropdownMenuItem asChild>
-							<Link
-								href={`/vehicles/${payment.vehicle_id}/payments/${payment.vehicle_transaction_id}`}
-							>
-								View payment details
-							</Link>
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
@@ -263,23 +259,23 @@ export const agentsColumns: ColumnDef<IAgent>[] = [
 		),
 	},
 	{
-		accessorKey: 'location',
+		accessorKey: 'role',
 		header: ({ column }) => (
 			<DataTableColumnHeader
 				column={column}
-				title='Location'
+				title='Type'
 			/>
 		),
 	},
 	{
-		accessorKey: 'phone',
+		accessorKey: 'email',
 		header: ({ column }) => (
 			<DataTableColumnHeader
 				column={column}
-				title='Phone'
+				title='Email'
 			/>
 		),
-		cell: ({ row }) => <div>{row.original.phone}</div>,
+		cell: ({ row }) => <div>{row.original.email}</div>,
 	},
 	{
 		accessorKey: 'is_active',
@@ -412,6 +408,17 @@ export const vehiclesColumns: ColumnDef<IVehicle>[] = [
 								View Vehicle
 							</Link>
 						</DropdownMenuItem>
+						<DropdownMenuItem
+							className='border-b border-black rounded-none'
+							asChild
+						>
+							<Link
+								href={`/vehicles/${vehicle.vehicle_id}/location`}
+							>
+								<MapPinIcon className='h-4 w-4 mr-3' />
+								View Location
+							</Link>
+						</DropdownMenuItem>
 						{/* <DropdownMenuItem
 							className='border-b border-black rounded-none'
 							asChild
@@ -455,6 +462,140 @@ export const vehiclesColumns: ColumnDef<IVehicle>[] = [
 				</DropdownMenu>
 			);
 		},
+	},
+];
+export const propertiesColumns: ColumnDef<IProperty>[] = [
+	{
+		accessorKey: 'propertyId',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Property ID'
+			/>
+		),
+		cell: ({ row }) => (
+			<Link
+				href={`/property/${row.original.propertyId}`}
+				className=''
+			>
+				{row.original.propertyId}
+			</Link>
+		),
+	},
+	{
+		accessorKey: 'ownerName',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Owner'
+			/>
+		),
+		cell: ({ row }) => (
+			<div className='uppercase'>{row.original.ownerName}</div>
+		),
+	},
+	// {
+	// 	accessorKey: 'isPaid',
+	// 	header: ({ column }) => (
+	// 		<DataTableColumnHeader
+	// 			column={column}
+	// 			title='Status'
+	// 		/>
+	// 	),
+	// 	cell: ({ row }) => (
+	// 		<div className='uppercase'>{row.original.isPaid.valueOf()}</div>
+	// 	),
+	// },
+	{
+		accessorKey: 'paymentDueDate',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Due Date'
+			/>
+		),
+		cell: ({ row }) => (
+			<div className='uppercase'>{row.original.paymentDueDate}</div>
+		),
+	},
+	{
+		id: 'actions',
+		cell: ({ row }) => {
+			const property = row.original;
+			return (
+				<DropdownMenu>
+					<DropdownMenuTrigger>
+						<MoreVertical className='h-4 w-4' />
+					</DropdownMenuTrigger>
+					<DropdownMenuContent
+						className='border border-black'
+						align='end'
+					>
+						<DropdownMenuItem
+							className='border-b border-black rounded-none'
+							asChild
+						>
+							<Link
+								href={`/property/${property.propertyId}`}
+							>
+								<span className='h-4 w-4 mr-3'>
+									{editIcon}
+								</span>
+								View Vehicle
+							</Link>
+						</DropdownMenuItem>
+						<DropdownMenuItem
+							className='border-b border-black rounded-none'
+							asChild
+						>
+							<Link
+								href={`/property/${property.propertyId}/location`}
+							>
+								<MapPinIcon className='h-4 w-4 mr-3' />
+								View Location
+							</Link>
+						</DropdownMenuItem>
+						<DropdownMenuItem className='text-destructive'>
+							Delete Property
+						</DropdownMenuItem>
+						<DropdownMenuItem
+							className=''
+							onClick={() =>
+								navigator.clipboard.writeText(
+									property.propertyId
+								)
+							}
+						>
+							Copy Property ID
+						</DropdownMenuItem>
+					</DropdownMenuContent>
+				</DropdownMenu>
+			);
+		},
+	},
+];
+export const propertyPaymentColumns: ColumnDef<IPropertyPaymentRecord>[] = [
+	{
+		accessorKey: 'amountPaid',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Amount Paid'
+			/>
+		),
+		cell: ({ row }) => <div className=''>{row.original.amountPaid}</div>,
+	},
+	{
+		accessorKey: 'paymentDate',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Date Paid'
+			/>
+		),
+		cell: ({ row }) => (
+			<div className='uppercase'>{row.original.paymentDate}</div>
+		),
 	},
 ];
 export const agentPaymentColumns: ColumnDef<AgentPayment>[] = [
@@ -808,39 +949,57 @@ export const viewWebAgentDriversColumns: ColumnDef<DriverPayment>[] = [
 	},
 ];
 //Waiver History
-export const viewWaiverColumns: ColumnDef<DriverPayment>[] = [
+//  start_date: string;
+//  end_date: string;
+//  reason: string;
+//  status: string;
+//  generated_by: string;
+//  approved: boolean;
+export const viewWaiverColumns: ColumnDef<IWaiver>[] = [
 	{
-		accessorKey: 'timeline',
+		accessorKey: 'start_date',
 		header: 'Timeline',
+		cell: ({ row }) => {
+			const startDate = row.original.start_date;
+			const endDate = row.original.end_date;
+			return (
+				<div className='text-center font-medium'>{`${startDate}`}</div>
+			);
+		},
 	},
 	{
-		accessorKey: 'amount_NGN',
+		accessorKey: 'reason',
 		header: () => <div className='text-center'>Reason</div>,
 		cell: ({ row }) => {
-			const status = row.getValue('status');
+			const reason = row.original.reason;
 			return (
-				<div className='text-center font-medium'>{`${status}`}</div>
+				<div className='text-center font-medium'>{`${reason}`}</div>
 			);
 		},
 	},
 	{
 		accessorKey: 'status',
-		header: 'Status',
+		header: () => <div className='text-center'>Status</div>,
 		cell: ({ row }) => {
-			const status = row.original.payment_type;
+			const status = row.original.status;
 
 			return <div className={`uppercase`}>{status}</div>;
 		},
 	},
 
-	{
-		accessorKey: 'generated_by',
-		header: 'Generated By',
-	},
+	// {
+	// 	accessorKey: 'generated_by',
+	// 	header: 'Generated By',
+	// 	cell: ({ row }) => {
+	// 		const generatedBy = row.original.generated_by;
+
+	// 		return <div className={`uppercase`}>{status}</div>;
+	// 	},
+	// },
 	{
 		id: 'actions',
 		cell: ({ row }) => {
-			const payment = row.original;
+			const waiver = row.original;
 			return (
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>

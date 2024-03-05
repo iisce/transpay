@@ -16,6 +16,7 @@ export default async function Payments({ params }: { params: { id: string } }) {
 			<div className='flex flex-col gap-2 mb-20'>
 				<div className=''>
 					<DataTable
+						showPagination
 						columns={paymentColumns}
 						data={vehicle.VehicleTransactions}
 					/>

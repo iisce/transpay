@@ -1,19 +1,18 @@
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { getAllActivities } from '@/lib/controllers/activity-controller';
+import { notificationIcon } from '@/lib/icons';
+import Link from 'next/link';
+import ActivityList from '../pages/activities/activity-list';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuGroup,
-	DropdownMenuItem,
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
-import Link from 'next/link';
-import { notificationIcon } from '@/lib/icons';
-import { ACTIVITIES } from '../../../data';
-import ActivityCard from './activity-card';
 
-export function Notification() {
+export async function Notification() {
+	const all_activities = await getAllActivities();
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
@@ -24,7 +23,6 @@ export function Notification() {
 			<DropdownMenuContent
 				className='w-72'
 				align='end'
-				// forceMount
 			>
 				<DropdownMenuLabel className='font-normal'>
 					<Link
@@ -36,23 +34,7 @@ export function Notification() {
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
-					{ACTIVITIES.map((activity, k) => (
-						<DropdownMenuItem
-							className=''
-							asChild
-							key={k}
-						>
-							<Link href={`/activities/${activity.id}`}>
-								<ActivityCard
-									key={k}
-									id={activity.id}
-									name={activity.name}
-									time={activity.time}
-									date={activity.date}
-								/>
-							</Link>
-						</DropdownMenuItem>
-					))}
+					<ActivityList allActivities={all_activities || []} />
 				</DropdownMenuGroup>
 			</DropdownMenuContent>
 		</DropdownMenu>

@@ -3,12 +3,13 @@ import {
 	SIDEBAR_LINKS,
 	SIDEBAR_LINKS_ADMIN,
 	SIDEBAR_LINKS_AGENT,
+	SIDEBAR_LINKS_GREEN,
 } from '@/lib/consts';
 import { ModeToggle } from '../dark-mode-toggle';
 import { Separator } from '../ui/separator';
 import { NavbarButton } from './navbar-button';
 import { getSSession } from '@/lib/get-data';
-import { getAgentMe } from '@/lib/controllers/agent-controller';
+import { getAgentMe, getGreenAgent } from '@/lib/controllers/agent-controller';
 import { getAdminMe } from '@/lib/controllers/admin-controller';
 
 export default async function Sidebar() {
@@ -16,6 +17,8 @@ export default async function Sidebar() {
 	const user =
 		role?.toLowerCase() === 'agent'
 			? await getAgentMe()
+			: role?.toLowerCase() === 'greenengine_agent'
+			? await getGreenAgent()
 			: await getAdminMe();
 	if (role) {
 		return (
@@ -23,6 +26,8 @@ export default async function Sidebar() {
 				<div className='flex flex-col gap-3 pt-20 h-full w-full'>
 					{(user?.role.toLowerCase() === 'agent'
 						? SIDEBAR_LINKS_AGENT
+						: user?.role.toLowerCase() === 'greenengine_agent'
+						? SIDEBAR_LINKS_GREEN
 						: user?.role.toLowerCase() === 'admin'
 						? SIDEBAR_LINKS_ADMIN
 						: SIDEBAR_LINKS

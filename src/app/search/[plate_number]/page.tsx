@@ -1,5 +1,4 @@
-import NoLoginSearch from '@/components/role/rider/no-login-search';
-import React from 'react';
+import SearchVehicle from '@/components/pages/vehicle/search-vehicle';
 
 export default function SearchPage({
 	params,
@@ -8,7 +7,8 @@ export default function SearchPage({
 }) {
 	return (
 		<div className='w-full'>
-			<NoLoginSearch plate_number={params.plate_number} />
+			{/* <NoLoginSearch plate_number={params.plate_number} /> */}
+			<SearchVehicle id={params.plate_number} />
 		</div>
 	);
 }

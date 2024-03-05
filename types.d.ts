@@ -41,6 +41,14 @@ interface DriverPayment {
 	payment_type: 'Cash' | 'Transfer' | 'Bank Transfer' | 'Mobile Transfer';
 	status: 'pending' | 'processing' | 'successful' | 'failed';
 }
+interface IWaiver {
+	start_date: string;
+	end_date: string;
+	reason: string;
+	status: string;
+	generated_by: string;
+	approved: boolean;
+}
 interface DriverT {
 	name: string;
 	phone_number: number;
@@ -107,15 +115,30 @@ interface IDashboardCard {
 	amount: number;
 	type: 'positive' | 'negative' | 'neutral';
 	percent: number;
+	desc?: string;
 }
-interface IActivities {
+interface IActivity {
 	id: number;
 	activity_id: string;
+	user_role: string;
+	user_id: string;
 	name: string;
-	time: string;
-	date: string;
 	description: string;
+	createdAt: string;
+	updatedAt: string;
 }
+
+interface IActivityCard {
+	id: number;
+	activity_id: string;
+	user_role?: string;
+	user_id?: string;
+	name: string;
+	description: string;
+	date?: string;
+	time?: string;
+}
+
 interface IPage {
 	name: string;
 	href: string;
@@ -123,14 +146,25 @@ interface IPage {
 }
 interface IDashboard {
 	data: {
-		pages: IPage[];
-		summary: {
-			revenue: {
-				months: any[];
-				names: any[];
-				changes: any[];
+		admins: {
+			blacklisted: IAdmin[];
+		};
+		chart: {
+			transactions: {
+				all: IVehicleTransaction[];
+				dailyFees: IVehicleTransaction[];
+				fines: any[];
+			};
+			total: {
+				dailyFees: number;
+				fines: number;
+				revenue: number;
 			};
 		};
+		activities: Pick<
+			IActivity,
+			'activity_id' | 'id' | 'name' | 'description'
+		>[];
 	};
 }
 interface IDriver {
@@ -170,29 +204,73 @@ interface IVehicle extends IWallet {
 	color: string;
 	category: string;
 	plate_number: string;
-	image?: string;
+	image: string;
 	user_role: string;
 	user_id: string;
 	blacklisted: boolean;
-	current_driver?: IDriver;
+	current_driver: string;
 	status: string;
+	deleted: boolean;
+	vehicle_type: string;
+	vin: string;
+	barcode_string: string;
 	owners_phone_number: string;
 	owners_name: string;
-	vin: string;
-	vehicle_type: string;
-	barcode_string: string;
 	tracker_id: string;
-	deleted: boolean;
 	createdAt: string;
 	updatedAt: string;
 	Drivers: IDriver[];
-	VehicleTransactions: IVehicleTransaction[];
+	VehicleTransactions: {
+		id: number;
+		vehicle_transaction_id: string;
+		vehicle_id: string;
+		transaction_date: string;
+		description: string;
+		payment_gateway_name: string;
+		transaction_type: string;
+		amount: number;
+		currency: string;
+		invoice_number: string;
+		invoice_prefix: string;
+		invoice_details: string;
+		payment_type: string;
+		user_role: string;
+		user_id: string;
+		payment_status: string;
+		status: boolean;
+		transfer_id: string;
+		last_message: string;
+		deficit: number;
+		createdAt: string;
+		updatedAt: string;
+	}[];
 	VehicleFines: [];
-	VehicleTracker: string;
 	VehicleWaivers: [];
-	VehicleWallet: Omit<IWallet, 'vehicle_id'>;
-	with_wallet: boolean;
+	VehicleWallet: {
+		vehicle_id: string;
+		nuban: string;
+		account_name: string;
+		bank_name: string;
+	};
+	VehicleBalance: {
+		id: number;
+		vehicle_balance_id: string;
+		vehicle_id: string;
+		wallet_balance: number;
+		deficit_balance: number;
+		net_total: number;
+		next_transaction_date: string;
+		createdAt: string;
+		updatedAt: string;
+	};
+	VehicleTracker: null;
+	wallet_balance: {
+		currency: string;
+		available_balance: number;
+		ledger_balance: number;
+	};
 }
+
 interface IWallet {
 	vehicle_id: string;
 	nuban: number;
@@ -361,6 +439,20 @@ interface ICategories {
 	name: string;
 }
 
+interface IRevenue {
+	chart: {
+		transactions: {
+			all: IVehicleTransaction[];
+			dailyFees: IVehicleTransaction[];
+			fines: any[];
+		};
+		total: {
+			dailyFees: number;
+			fines: number;
+			revenue: number;
+		};
+	};
+}
 interface ICreateVehicleForm {
 	image: string;
 	category: string;
@@ -581,3 +673,72 @@ interface IToken {
 //         ]
 //     }
 // }
+
+// SAMPLE OF INTERSTATE
+interface IInterStateVehicle {
+	id: number;
+	plate: string;
+	ownername: string;
+	owneraddress: string;
+	ischeckedin: boolean;
+	checkintime?: string;
+	checkouttime?: string;
+}
+
+interface NFCCard {
+	plate: string;
+}
+
+interface CheckInRecord {
+	plate: string;
+	checkintime: Date;
+}
+
+interface CheckOutRecord {
+	plate: string;
+	checkouttime: Date;
+	fee: number;
+}
+
+interface Database {
+	getVehicleById(plate: string): Vehicle | null;
+	saveCheckInRecord(record: CheckInRecord): void;
+	saveCheckOutRecord(record: CheckOutRecord): void;
+}
+
+interface IPropertyPaymentRecord {
+	paymentDate: string;
+	amountPaid: number;
+}
+
+interface IProperty {
+	propertyId: string;
+	ownerName: string;
+	address: string;
+	propertyType: string;
+	assessmentValue: number;
+	taxRate: number;
+	taxAmount: number;
+	paymentDueDate: string;
+	isPaid: boolean;
+	paymentRecords: IPropertyPaymentRecord[];
+}
+
+
+interface IDurationSummary {
+  duration: string;
+  totalDurationKekeRev: number;
+  totalDurationSmallShuttleRev: number;
+  totalDurationBigShuttleRev: number;
+  totalDurationTrackerRev: number;
+  lgaRevenueSummary: ILGARevenueSummary[];
+}
+
+interface ILGARevenueSummary {
+  lga: string;
+  totalRev: number;
+  kekeRev: number;
+  smallshuttleRev: number;
+  bigshuttleRev: number;
+  trackerRev: number;
+}

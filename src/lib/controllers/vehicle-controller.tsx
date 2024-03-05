@@ -1,6 +1,9 @@
 import { API, URLS } from '../consts';
 import { getSSession } from '../get-data';
-import { isUUID } from '../utils';
+import { isBarcodeId, isURL, isUUID } from '../utils';
+
+export const runtime = 'edge'; // 'nodejs' is the default
+export const dynamic = 'force-dynamic';
 
 export const getVehicles = async () => {
 	const session = await getSSession();
@@ -12,7 +15,6 @@ export const getVehicles = async () => {
 	const url = API + URLS.vehicle.all;
 	const res = await fetch(url, { headers, cache: 'no-store' });
 	const data: Promise<IVehicles> = await res.json();
-	console.log(data);
 	if (!res.ok) return undefined;
 	const vehicles = (await data).data.vehicles;
 	return vehicles;
@@ -28,8 +30,9 @@ export const getVehicleById = async (id: string) => {
 	const url = `${API}${URLS.vehicle.all}/${id}`;
 	const res = await fetch(url, { headers, cache: 'no-store' });
 	if (!res.ok) return undefined;
-	const result: Promise<IResVehicle> = (await res.json()).data;
-	const { vehicle } = await result;
+
+	const result = await res.json();
+	const vehicle: IVehicle = result.data;
 	return vehicle;
 };
 
@@ -37,14 +40,26 @@ export const getVehicleSummary = async (plate_number: string) => {
 	const headers = {
 		'Content-Type': 'application/json',
 	};
-	const url = isUUID(plate_number)
-		? `${API}${URLS.vehicle.all}/summary?id=${plate_number}`
-		: `${API}${URLS.vehicle.all}/summary?plate_number=${plate_number}`;
+
+	let url;
+	if (isUUID(plate_number)) {
+		url = `${API}${URLS.vehicle.all}/summary?id=${plate_number}`;
+	} else if (isBarcodeId(plate_number)) {
+		url = `${API}${URLS.vehicle.all}/summary?barcode=${plate_number}`;
+	} else {
+		url = `${API}${URLS.vehicle.all}/summary?plate_number=${plate_number}`;
+	}
+
 	const res = await fetch(url, { headers, cache: 'no-store' });
-	if (!res.ok) return undefined;
-	const result: Promise<PrettyVehicleSummary> = await res.json();
-	const { data } = await result;
-	return data.vehicle;
+	const result = await res.json();
+
+	if (!res.ok) {
+		return undefined;
+	}
+	// console.log(result);
+
+	const summary: IVehicleSummary = result;
+	return summary;
 };
 
 export const searchVehicle = async (id: string) => {
@@ -59,8 +74,9 @@ export const searchVehicle = async (id: string) => {
 		? `${API}${URLS.vehicle.search}?id=${id}`
 		: `${API}${URLS.vehicle.search}?plate_number=${id}`;
 	const res = await fetch(url, { headers, cache: 'no-store' });
+	console.log({ url, result: await res.json() });
 	if (!res.ok) return undefined;
-	const result: Promise<IResVehicle> = (await res.json()).data;
-	const { vehicle } = await result;
+	const result = await res.json();
+	const vehicle = result.data;
 	return vehicle;
 };

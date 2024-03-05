@@ -8,7 +8,7 @@ export default function AdminsPageNotFound() {
 	const router = useRouter();
 	return (
 		<div className='grid place-items-center w-full'>
-			<div className='flex flex-col items-center justify-center text-center'>
+			{/* <div className='flex flex-col items-center justify-center text-center'>
 				<div className='h-16'>
 					<Image
 						className='object-contain h-full w-full dark:invert'
@@ -32,7 +32,7 @@ export default function AdminsPageNotFound() {
 				>
 					<Link href='/dashboard'>Go to Dashboard</Link>
 				</Button>
-			</div>
+			</div> */}
 		</div>
 	);
 }

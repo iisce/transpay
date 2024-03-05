@@ -7,8 +7,9 @@ import { addIcon } from '@/lib/icons';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import React from 'react';
-import { ACTIVITIES } from '../../../../../data';
 import ActivityCard from '@/components/shared/activity-card';
+import { getAllActivities } from '@/lib/controllers/activity-controller';
+import ActivityList from '@/components/pages/activities/activity-list';
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
 	const agent = await getAgentById(params.id);
@@ -24,6 +25,9 @@ export default async function SingularAgent({
 }) {
 	const agent = await getAgentById(params.id);
 	if (!agent) return notFound();
+
+	const all_activities = await getAllActivities();
+	if (!all_activities) return notFound();
 	return (
 		<div className='p-3 xs:p-5 gap-5 w-full h-full flex flex-col'>
 			<div className='flex justify-between items-center'>
@@ -70,23 +74,12 @@ export default async function SingularAgent({
 					</div>
 					<div>
 						<Card className='bg-secondary'>
-							{ACTIVITIES.slice(0, 3).map(
-								(activity, k) => (
-									<ActivityCard
-										key={k}
-										id={activity.id}
-										name={activity.name}
-										activity_id={
-											activity.activity_id
-										}
-										time={activity.time}
-										date={activity.date}
-										description={
-											activity.description
-										}
-									/>
-								)
-							)}
+							<ActivityList
+								allActivities={all_activities.slice(
+									0,
+									3
+								)}
+							/>
 						</Card>
 					</div>
 				</div>

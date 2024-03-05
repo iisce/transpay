@@ -37,9 +37,13 @@ const vehicleFormSchema = z.object({
 		.string({
 			required_error: 'Please enter a valid Category.',
 		})
-		.refine((value) => ['keke', 'bus'].includes(value), {
-			message: 'Invalid means of identification.',
-		}),
+		.refine(
+			(value) =>
+				['keke', 'small_shuttle', 'big_shuttle'].includes(value),
+			{
+				message: 'Invalid means of identification.',
+			}
+		),
 	vehicle_type: z.string({
 		required_error: 'Please enter a valid vehicle type.',
 	}),
@@ -139,7 +143,6 @@ export default function CreateVehicleForm() {
 				setOpen(true);
 				form.reset();
 				setNewVehicleId(result.data.vehicle_id);
-				console.log(result);
 				return NextResponse.json(result);
 			} else {
 				setIsLoading(false);
@@ -182,8 +185,11 @@ export default function CreateVehicleForm() {
 										<SelectItem value='keke'>
 											Keke
 										</SelectItem>
-										<SelectItem value='bus'>
-											Bus
+										<SelectItem value='small_shuttle'>
+											Small Shuttle
+										</SelectItem>
+										<SelectItem value='big_shuttle'>
+											Big Shuttle
 										</SelectItem>
 									</SelectContent>
 								</Select>
@@ -339,6 +345,27 @@ export default function CreateVehicleForm() {
 										{...field}
 										type='text'
 										placeholder='T-01'
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						name='tracker_id'
+						control={form.control}
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel className='text-title1Bold pl-4'>
+									Tracker ID
+								</FormLabel>
+
+								<FormControl>
+									<Input
+										className='relative text-body flex  items-center h-14 rounded-2xl'
+										{...field}
+										type='text'
+										placeholder='Enter tracker ID'
 									/>
 								</FormControl>
 								<FormMessage />

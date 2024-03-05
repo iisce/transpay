@@ -29,9 +29,13 @@ const vehicleFormSchema = z.object({
 		.string({
 			required_error: 'Please enter a valid Category.',
 		})
-		.refine((value) => ['keke', 'bus'].includes(value), {
-			message: 'Invalid means of identification.',
-		}),
+		.refine(
+			(value) =>
+				['keke', 'small_shuttle', 'big_shuttle'].includes(value),
+			{
+				message: 'Invalid means of identification.',
+			}
+		),
 	vehicle_type: z.string({
 		required_error: 'Please enter a valid vehicle type.',
 	}),
@@ -82,10 +86,10 @@ export function UpdateVehicleForm({ vehicle }: { vehicle: IVehicle }) {
 		vehicle_type: vehicle.vehicle_type,
 		vin: vehicle.vin,
 		barcode_string: vehicle.barcode_string,
-		tracker_id: vehicle.tracker_id,
+		tracker_id: vehicle.tracker_id ? vehicle.tracker_id : '',
 		owners_phone_number: vehicle.owners_phone_number,
 		owners_name: vehicle.owners_name,
-		with_wallet: vehicle.with_wallet,
+		with_wallet: true,
 	};
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const { toast } = useToast();
@@ -120,10 +124,7 @@ export function UpdateVehicleForm({ vehicle }: { vehicle: IVehicle }) {
 				}
 			);
 			const result = await createVehicleResponse.json();
-			if (
-				createVehicleResponse.status > 199 &&
-				createVehicleResponse.status < 299
-			) {
+			if (createVehicleResponse.ok) {
 				toast({
 					title: 'Vehicle Updated Successfully',
 				});
@@ -151,8 +152,8 @@ export function UpdateVehicleForm({ vehicle }: { vehicle: IVehicle }) {
 				>
 					<div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
 						<FormField
-							control={form.control}
 							name='category'
+							control={form.control}
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel className='text-title1Bold pl-4'>
@@ -173,8 +174,11 @@ export function UpdateVehicleForm({ vehicle }: { vehicle: IVehicle }) {
 											<SelectItem value='keke'>
 												Keke
 											</SelectItem>
-											<SelectItem value='bus'>
-												Bus
+											<SelectItem value='small_shuttle'>
+												Small Shuttle
+											</SelectItem>
+											<SelectItem value='big_shuttle'>
+												Big Shuttle
 											</SelectItem>
 										</SelectContent>
 									</Select>
@@ -342,28 +346,28 @@ export function UpdateVehicleForm({ vehicle }: { vehicle: IVehicle }) {
 								</FormItem>
 							)}
 						/>
+						<FormField
+							name='tracker_id'
+							control={form.control}
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel className='text-title1Bold pl-4'>
+										Tracker ID
+									</FormLabel>
 
-						{/* <FormField
-						name='barcode_string'
-						control={form.control}
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel className='text-title1Bold pl-4'>
-									Barcode String
-								</FormLabel>
-
-								<FormControl>
-									<Input
-										className='relative text-body flex  items-center h-14 rounded-2xl'
-										{...field}
-										type='text'
-										placeholder='Barcode String'
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/> */}
+									<FormControl>
+										<Input
+											disabled={disabled}
+											className='relative text-body flex  items-center h-14 rounded-2xl'
+											{...field}
+											type='text'
+											placeholder='Enter tracker ID'
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
 					</div>
 					<div className=''>
 						{!disabled && (

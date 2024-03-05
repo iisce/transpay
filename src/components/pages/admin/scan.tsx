@@ -11,7 +11,7 @@ import localforage from 'localforage';
 import { Separator } from '@/components/ui/separator';
 import { useRouter } from 'next/navigation';
 
-export default function QRScan() {
+export default function QRScan({ role }: { role?: string }) {
 	const { toast } = useToast();
 	const [result, setResult] = useState<string | null>(null);
 	const [open, setOpen] = useState(false);
@@ -39,7 +39,7 @@ export default function QRScan() {
 	};
 
 	const handleScanResult = (result: string) => {
-		router.push(`/vehicle/search/${result.toLowerCase()}`);
+		router.push(result.toLowerCase());
 		setResult(result);
 		setOpen(true);
 		setScanning(false);
