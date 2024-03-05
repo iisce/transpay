@@ -1,10 +1,11 @@
 import DashboardCard from '@/components/layout/dashboard-card';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { driversColumns, paymentColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
 import { getVehicleById } from '@/lib/controllers/vehicle-controller';
 import { getSSession } from '@/lib/get-data';
+import { cn } from '@/lib/utils';
 import { addDays, format, isBefore } from 'date-fns';
 import { MapPin } from 'lucide-react';
 import Link from 'next/link';
@@ -19,7 +20,6 @@ export default async function ViewVehicleDetails({ id }: { id: string }) {
 		addDays(new Date(vehicle.VehicleBalance.next_transaction_date), 1),
 		new Date()
 	);
-	console.log('.........', vehicle.VehicleBalance);
 	return (
 		<div className='h-full w-full p-6 flex flex-col gap-6 '>
 			<div className='flex items-center justify-between'>
@@ -42,6 +42,12 @@ export default async function ViewVehicleDetails({ id }: { id: string }) {
 							</Link>
 						</Button>
 					)}
+					<Link
+						href={`/vehicles/${id}/new-driver`}
+						className={cn(buttonVariants())}
+					>
+						Add Driver
+					</Link>
 				</div>
 			</div>
 			<Card className=' max-w-lg'>

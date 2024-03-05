@@ -1,3 +1,4 @@
+import { Meteors } from '@/components/ui/animation/meteors';
 import { ArrowDown, ArrowUp } from 'lucide-react';
 import React from 'react';
 
@@ -9,7 +10,7 @@ export default function DashboardCard({
 	desc,
 }: IDashboardCard) {
 	return (
-		<div className='h-24 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between'>
+		<div className='h-24 rounded-2xl shadow-md w-full bg-secondary p-3 flex flex-col justify-between relative overflow-clip'>
 			<div className=''>
 				<div className='text-primary text-sm line-clamp-1'>
 					{title}
@@ -30,6 +31,7 @@ export default function DashboardCard({
 					{desc || 'previous 30 days'}
 				</div>
 			</div>
+			<Meteors number={20} />
 		</div>
 	);
 }

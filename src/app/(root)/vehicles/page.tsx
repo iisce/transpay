@@ -13,10 +13,6 @@ export default async function Vehicles() {
 		getSSession(),
 		getVehicles(),
 	]);
-	// const miniVehicle = await getMyVehicles(
-	// 	'vehicle_id,owners_name,plate_number,status,category'
-	// );
-	// console.log(miniVehicle);
 	return (
 		<div className='p-5 w-full h-full flex flex-col'>
 			<div className='flex justify-between items-center uppercase font-bold'>
@@ -63,6 +59,9 @@ export default async function Vehicles() {
 							<TabsTrigger value='waived'>
 								Waived
 							</TabsTrigger>
+							<TabsTrigger value='pending'>
+								Pending
+							</TabsTrigger>
 						</TabsList>
 						<TabsContent value='all'>
 							<DataTable
@@ -85,7 +84,9 @@ export default async function Vehicles() {
 								columns={vehiclesColumns}
 								data={vehicles.filter(
 									(vehicle) =>
-										vehicle.status === 'active'
+										vehicle.VehicleBalance &&
+										vehicle.VehicleBalance
+											.deficit_balance >= 0
 								)}
 							/>
 						</TabsContent>
@@ -99,7 +100,9 @@ export default async function Vehicles() {
 								columns={vehiclesColumns}
 								data={vehicles.filter(
 									(vehicle) =>
-										vehicle.status === 'inactive'
+										vehicle.VehicleBalance &&
+										vehicle.VehicleBalance
+											.deficit_balance < 0
 								)}
 							/>
 						</TabsContent>
@@ -113,7 +116,21 @@ export default async function Vehicles() {
 								columns={vehiclesColumns}
 								data={vehicles.filter(
 									(vehicle) =>
-										vehicle.status === 'waived'
+										vehicle.status === 'inactive'
+								)}
+							/>
+						</TabsContent>
+						<TabsContent value='pending'>
+							<DataTable
+								showSearch
+								searchWith='plate_number'
+								searchWithPlaceholder='Search with plate number'
+								showColumns
+								showPagination
+								columns={vehiclesColumns}
+								data={vehicles.filter(
+									(vehicle) =>
+										!vehicle.VehicleBalance
 								)}
 							/>
 						</TabsContent>
