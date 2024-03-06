@@ -308,6 +308,9 @@ type PrettyVehicles = Prettify<IVehicles>;
 interface IVehicles {
 	data: {
 		vehicles: IVehicle[];
+		page: number;
+		limit: number;
+		total: number;
 	};
 }
 
@@ -440,11 +443,7 @@ interface ICategories {
 }
 
 interface IRevenue {
-	transactions: {
-		all: IVehicleTransaction[];
-		dailyFees: IVehicleTransaction[];
-		fines: any[];
-	};
+	transactions: IVehicleTransaction[];
 	total: {
 		dailyFees: number;
 		fines: number;

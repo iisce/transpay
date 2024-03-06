@@ -44,7 +44,7 @@ export const SIDEBAR_LINKS = [
 	},
 	{
 		title: 'Vehicles',
-		href: '/vehicles',
+		href: '/vehicles?page=1&limit=15',
 		icon: <CarTaxiFront className='h-5 w-5' />,
 	},
 	{
@@ -96,7 +96,7 @@ export const SIDEBAR_LINKS_ADMIN = [
 	},
 	{
 		title: 'Vehicles',
-		href: '/vehicles',
+		href: '/vehicles?page=1&limit=15',
 		icon: driverIcon,
 	},
 	// {
@@ -123,7 +123,7 @@ export const SIDEBAR_LINKS_AGENT = [
 	},
 	{
 		title: 'Vehicles',
-		href: '/vehicles',
+		href: '/vehicles?page=1&limit=15',
 		icon: driverIcon,
 	},
 	{
@@ -190,7 +190,7 @@ export const DRIVERS_CARD = [
 	{
 		name: 'Personal Information',
 		description: 'Edit Drivers information',
-		href: '/vehicles',
+		href: '/vehicles?page=1&limit=15',
 		image: '/personalinfo.png',
 	},
 	{
@@ -220,7 +220,7 @@ export const DASHBOARD_CARD = [
 		description: 'Drivers list & Update',
 		icon: peopleIcon,
 		number: '9,200',
-		href: '/vehicles',
+		href: '/vehicles?page=1&limit=15',
 		image: '/tricycle.jpg',
 	},
 	// {
@@ -255,7 +255,7 @@ export const AGENT_DASHBOARD_CARD = [
 		description: 'Drivers list & Update',
 		icon: peopleIcon,
 		number: '9,200',
-		href: '/vehicles',
+		href: '/vehicles?page=1&limit=15',
 		image: '/tricycle.jpg',
 	},
 	// {

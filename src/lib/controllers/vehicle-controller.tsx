@@ -5,18 +5,22 @@ import { isBarcodeId, isURL, isUUID } from '../utils';
 export const runtime = 'edge'; // 'nodejs' is the default
 export const dynamic = 'force-dynamic';
 
-export const getVehicles = async () => {
+export const getVehicles = async (page?: string, limit?: string) => {
 	const session = await getSSession();
 	const headers = {
 		'Content-Type': 'application/json',
 		'api-secret': process.env.API_SECRET || '',
 		Authorization: `Bearer ${session.access_token}`,
 	};
-	const url = API + URLS.vehicle.all;
+	const url = `${API}${URLS.vehicle.all}?page=${page ?? 1}&limit=${
+		limit ?? 10
+	}`;
+
 	const res = await fetch(url, { headers, cache: 'no-store' });
 	const data: Promise<IVehicles> = await res.json();
+	console.log({ url, data });
 	if (!res.ok) return undefined;
-	const vehicles = (await data).data.vehicles;
+	const vehicles = (await data).data;
 	return vehicles;
 };
 

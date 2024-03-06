@@ -4,14 +4,12 @@ import { Badge } from '../ui/badge';
 import { dashIcon, downIcon, upIcon } from '@/lib/icons';
 
 export default function StatsCard({
-	children,
 	title,
 	amount,
 	type,
 	percentage,
 	desc,
 }: {
-	children: React.ReactNode;
 	title: string;
 	amount: string;
 	type?: 'up' | 'down' | '';
@@ -48,9 +46,6 @@ export default function StatsCard({
 							{`${percentage}%`}
 						</Badge>
 					</div>
-				</div>
-				<div className='w-full h-[130px] object-cover'>
-					{children}
 				</div>
 			</Card>
 		</div>
