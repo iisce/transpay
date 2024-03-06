@@ -74,7 +74,9 @@ export const getDashboard = async (duration?: '1D' | '1M' | '1Y') => {
 	}
 };
 
-export const getDashboardTotalRevenue = async () => {
+export const getDashboardTotalYearlyRevenue = async (
+	type?: ITotalDashboard
+) => {
 	try {
 		const session = await getSSession();
 		const headers = {
@@ -82,7 +84,9 @@ export const getDashboardTotalRevenue = async () => {
 			'api-secret': process.env.API_SECRET || '',
 			Authorization: `Bearer ${session.access_token}`,
 		};
-		const url = API + URLS.dashboard.net_total;
+		const url = `${API}${URLS.dashboard.total_revenue_yearly}${
+			type ? '?type=' + type : ''
+		}`;
 		const res = await fetch(url, { headers, cache: 'no-store' });
 
 		if (!res.ok) {
@@ -108,8 +112,9 @@ export const getDashboardTotalRevenue = async () => {
 		return undefined;
 	}
 };
-
-export const getDashboardTotalMonthlyRevenue = async () => {
+export const getDashboardTotalMonthlyRevenue = async (
+	type?: ITotalDashboard
+) => {
 	try {
 		const session = await getSSession();
 		const headers = {
@@ -117,7 +122,9 @@ export const getDashboardTotalMonthlyRevenue = async () => {
 			'api-secret': process.env.API_SECRET || '',
 			Authorization: `Bearer ${session.access_token}`,
 		};
-		const url = API + URLS.dashboard.total_revenue_monthly;
+		const url = `${API}${URLS.dashboard.total_revenue_monthly}${
+			type ? '?type=' + type : ''
+		}`;
 		const res = await fetch(url, { headers, cache: 'no-store' });
 
 		if (!res.ok) {
@@ -143,8 +150,9 @@ export const getDashboardTotalMonthlyRevenue = async () => {
 		return undefined;
 	}
 };
-
-export const getDashboardTotalDailyRevenue = async () => {
+export const getDashboardTotalWeeklyRevenue = async (
+	type?: ITotalDashboard
+) => {
 	try {
 		const session = await getSSession();
 		const headers = {
@@ -152,7 +160,47 @@ export const getDashboardTotalDailyRevenue = async () => {
 			'api-secret': process.env.API_SECRET || '',
 			Authorization: `Bearer ${session.access_token}`,
 		};
-		const url = API + URLS.dashboard.total_revenue_daily;
+
+		const url = `${API}${URLS.dashboard.total_revenue_weekly}${
+			type ? '?type=' + type : ''
+		}`;
+		const res = await fetch(url, { headers, cache: 'no-store' });
+
+		if (!res.ok) {
+			// Handle non-2xx HTTP errors
+			if (res.status === 429) {
+				// Handle 429 (Too Many Requests) error
+				console.error(
+					'Too Many Requests. Please retry after a while.'
+				);
+			} else {
+				console.error(`HTTP error! Status: ${res.status}`);
+			}
+
+			return undefined;
+		}
+
+		const { data } = await res.json();
+		const revenueMonthlyTotal: number = data.total;
+		return revenueMonthlyTotal;
+	} catch (error: any) {
+		// Handle other errors (e.g., network issues, JSON parsing errors)
+		console.error('An error occurred:', error.message);
+		return undefined;
+	}
+};
+export const getDashboardTotalDailyRevenue = async (type?: ITotalDashboard) => {
+	try {
+		const session = await getSSession();
+		const headers = {
+			'Content-Type': 'application/json',
+			'api-secret': process.env.API_SECRET || '',
+			Authorization: `Bearer ${session.access_token}`,
+		};
+
+		const url = `${API}${URLS.dashboard.total_revenue_daily}${
+			type ? '?type=' + type : ''
+		}`;
 		const res = await fetch(url, { headers, cache: 'no-store' });
 
 		if (!res.ok) {

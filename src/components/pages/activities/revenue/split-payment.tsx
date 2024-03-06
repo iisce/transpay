@@ -7,7 +7,7 @@ export default async function SplitPayment() {
 	const revenueData = await getRevenueStats();
 	if (!revenueData) return <></>;
 
-	const totRev = revenueData?.chart.total.revenue;
+	const totRev = revenueData?.total.revenue;
 	const totBc = totRev * BANK_RATE;
 	// const totBc = 35.8;
 	const totSplitable = totRev - totBc;
@@ -51,7 +51,7 @@ export default async function SplitPayment() {
 				<div className='flex flex-col gap-1 text-2xl text-awesome-foreground'>
 					<div className='underline'>Total Revenue</div>
 					<div className=' text-3xl'>{`${FNTC.format(
-						revenueData?.chart.total.revenue
+						revenueData?.total.revenue
 					)} `}</div>
 				</div>
 			</div>

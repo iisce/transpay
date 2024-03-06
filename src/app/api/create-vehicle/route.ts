@@ -10,26 +10,28 @@ export async function POST(req: NextRequest) {
 		'api-secret': process.env.API_SECRET || '',
 		Authorization: `Bearer ${access_token}`,
 	};
+	const payload = {
+		category: body.category,
+		color: body.color,
+		image: body.image,
+		plate_number: body.plate_number,
+		status: body.status,
+		vehicle_type: body.vehicle_type,
+		owners_phone_number: body.owners_phone_number,
+		owners_name: body.owners_name,
+		with_wallet: body.with_wallet,
+		vin: body.vin,
+		barcode_string: body.barcode_string,
+		tracker_id: body.tracker_id,
+	};
+	console.log({ payload });
 
 	try {
 		const url = API + URLS.vehicle.all;
 		const response = await fetch(url, {
 			method: 'POST',
 			headers,
-			body: JSON.stringify({
-				category: body.category,
-				color: body.color,
-				image: body.image,
-				plate_number: body.plate_number,
-				status: body.status,
-				vehicle_type: body.vehicle_type,
-				owners_phone_number: body.owners_phone_number,
-				owners_name: body.owners_name,
-				with_wallet: body.with_wallet,
-				vin: body.vin,
-				barcode_string: body.barcode_string,
-				tracker_id: body.tracker_id,
-			}),
+			body: JSON.stringify(payload),
 		});
 
 		const result = await response.json();
@@ -60,11 +62,6 @@ export async function PUT(req: NextRequest) {
 			body: JSON.stringify(body),
 		});
 		const result = await response.json();
-		// console.log({
-		// 	RESULT: result,
-		// 	URL: url,
-		// 	BODY: body,
-		// });
 		if (!response.ok) {
 			throw new Error(`Something Went wrong ${response.statusText}`);
 		} else {

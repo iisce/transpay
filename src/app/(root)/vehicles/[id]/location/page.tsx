@@ -1,35 +1,17 @@
-'use client';
-import { generateRandomInteger } from '@/lib/utils';
-// import { generateRandomLocation } from '@/lib/utils';
-// import { APIProvider, Map } from '@vis.gl/react-google-maps';
-import Image from 'next/image';
-import React from 'react';
+import { getVehicleSummary } from '@/lib/controllers/vehicle-controller';
+import { notFound } from 'next/navigation';
+import MapView from './map-view';
 
-export default function LocationPage() {
-	// const location = generateRandomLocation();
-	const image = generateRandomInteger(1, 5);
+export default async function LocationPage({
+	params,
+}: {
+	params: { id: string };
+}) {
+	const vehicle = await getVehicleSummary(params.id);
+	if (!vehicle) return notFound();
 	return (
-		// <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}>
-		// 	<div className='px-5 lg:px-10 flex flex-col'>
-		// 		<div className=''>
-		// 			Latitude: {location.lat}, Longitude: {location.lng}
-		// 		</div>
-		// 		<Map
-		// 			zoom={9}
-		// 			center={location}
-		// 		></Map>
-		// 	</div>
-		// </APIProvider>
-		<div className='px-5 lg:px-10'>
-			<div className='rounded-2xl overflow-clip border aspect-video'>
-				<Image
-					src={`/maps/${image}.png`}
-					className='w-full h-full '
-					alt='map location'
-					height={900}
-					width={1600}
-				/>
-			</div>
+		<div className='px-5 lg:px-10 flex flex-col '>
+			<MapView vehicle={vehicle} />
 		</div>
 	);
 }

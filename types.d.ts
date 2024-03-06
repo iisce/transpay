@@ -440,17 +440,15 @@ interface ICategories {
 }
 
 interface IRevenue {
-	chart: {
-		transactions: {
-			all: IVehicleTransaction[];
-			dailyFees: IVehicleTransaction[];
-			fines: any[];
-		};
-		total: {
-			dailyFees: number;
-			fines: number;
-			revenue: number;
-		};
+	transactions: {
+		all: IVehicleTransaction[];
+		dailyFees: IVehicleTransaction[];
+		fines: any[];
+	};
+	total: {
+		dailyFees: number;
+		fines: number;
+		revenue: number;
 	};
 }
 interface ICreateVehicleForm {
@@ -742,3 +740,4 @@ interface ILGARevenueSummary {
   bigshuttleRev: number;
   trackerRev: number;
 }
+type ITotalDashboard = 'DAILY_FEES' | 'TOTAL' | 'TRACKER_FEES';

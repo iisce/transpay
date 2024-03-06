@@ -76,6 +76,7 @@ const vehicleFormSchema = z.object({
 type VehicleFormValues = z.infer<typeof vehicleFormSchema>;
 
 export function UpdateVehicleForm({ vehicle }: { vehicle: IVehicle }) {
+	console.log({ vehicle });
 	const [disabled, setDisabled] = React.useState<boolean>(true);
 	const defaultValues: Partial<VehicleFormValues> = {
 		category: vehicle.category,

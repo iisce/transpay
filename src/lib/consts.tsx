@@ -1682,7 +1682,8 @@ export const LGA = [
 	'Orumba South',
 	'Oyi',
 ];
-export const API = 'https://squid-app-ruxoz.ondigitalocean.app';
+// export const API = 'https://squid-app-ruxoz.ondigitalocean.app';
+export const API = 'https://guided-adequately-hare.ngrok-free.app';
 export const URLS = {
 	activity: {
 		all: '/api/v1/activities',
@@ -1708,10 +1709,11 @@ export const URLS = {
 	},
 	dashboard: {
 		default: '/api/v1/dashboard',
-		total_revenue_yearly: '/api/v1/dashboard/total-revenue',
-		net_total: '/api/v1/dashboard/net-total',
+		total_revenue_yearly: '/api/v1/dashboard/total-year-revenue',
 		total_revenue_monthly: '/api/v1/dashboard/total-month-revenue',
+		total_revenue_weekly: '/api/v1/dashboard/total-week-revenue',
 		total_revenue_daily: '/api/v1/dashboard/total-day-revenue',
+		net_total: '/api/v1/dashboard/net-total',
 		total_tracker_yearly: '/api/v1/dashboard/total-trackers-revenue',
 		activities_with_limit: '/api/v1/dashboard/all-activities',
 		blacklisted_admin: '/api/v1/dashboard/blacklisted-admins',
@@ -2023,47 +2025,73 @@ export const FNTC = new Intl.NumberFormat('en-NG', {
 	style: 'currency',
 });
 
-
 export const DURATIONREVENUESUMMARY: IDurationSummary[] = [
-  {
-    duration: "YEARLY",
-    totalDurationKekeRev: 1000,
-    totalDurationSmallShuttleRev: 2000,
-    totalDurationBigShuttleRev: 3000,
-    totalDurationTrackerRev: 1000,
-    lgaRevenueSummary: [
-      {
-        lga: "LGA 1",
-        totalRev: 200,
-        kekeRev: 300,
-        smallshuttleRev: 400,
-        bigshuttleRev: 400,
-        trackerRev: 400,
-      },
-      {
-        lga: "LGA 2",
-        totalRev: 200,
-        kekeRev: 300,
-        smallshuttleRev: 400,
-        bigshuttleRev: 400,
-        trackerRev: 400,
-      },
-      {
-        lga: "LGA 3",
-        totalRev: 200,
-        kekeRev: 300,
-        smallshuttleRev: 400,
-        bigshuttleRev: 400,
-        trackerRev: 400,
-      },
-      {
-        lga: "LGA 4",
-        totalRev: 200,
-        kekeRev: 300,
-        smallshuttleRev: 400,
-        bigshuttleRev: 400,
-        trackerRev: 400,
-      },
-    ],
-  },
+	{
+		duration: 'YEARLY',
+		totalDurationKekeRev: 1000,
+		totalDurationSmallShuttleRev: 2000,
+		totalDurationBigShuttleRev: 3000,
+		totalDurationTrackerRev: 1000,
+		lgaRevenueSummary: [
+			{
+				lga: 'LGA 1',
+				totalRev: 200,
+				kekeRev: 300,
+				smallshuttleRev: 400,
+				bigshuttleRev: 400,
+				trackerRev: 400,
+			},
+			{
+				lga: 'LGA 2',
+				totalRev: 200,
+				kekeRev: 300,
+				smallshuttleRev: 400,
+				bigshuttleRev: 400,
+				trackerRev: 400,
+			},
+			{
+				lga: 'LGA 3',
+				totalRev: 200,
+				kekeRev: 300,
+				smallshuttleRev: 400,
+				bigshuttleRev: 400,
+				trackerRev: 400,
+			},
+			{
+				lga: 'LGA 4',
+				totalRev: 200,
+				kekeRev: 300,
+				smallshuttleRev: 400,
+				bigshuttleRev: 400,
+				trackerRev: 400,
+			},
+		],
+	},
 ];
+export const ALLOWED_VEHICLE_FIELDS = [
+	'id',
+	'vehicle_id',
+	'color',
+	'category',
+	'plate_number',
+	'image',
+	'user_role',
+	'user_id',
+	'blacklisted',
+	'current_driver',
+	'status',
+	'deleted',
+	'vehicle_type',
+	'vin',
+	'barcode_string',
+	'owners_phone_number',
+	'owners_name',
+	'tracker_id',
+	'createdAt',
+	'updatedAt',
+];
+
+export const BASE_URL =
+	process.env.NODE_ENV === 'production'
+		? 'https://transpay.vercel.app'
+		: 'http://localhost:8726';

@@ -768,14 +768,7 @@ export const settingsColumns: ColumnDef<ISettings>[] = [
 				title='Name'
 			/>
 		),
-		cell: ({ row }) => (
-			<Link
-				href={`/settings/${row.original.setting_id}`}
-				className=''
-			>
-				{row.original.name}
-			</Link>
-		),
+		cell: ({ row }) => <div className=''>{row.original.name}</div>,
 	},
 	{
 		accessorKey: 'value',
