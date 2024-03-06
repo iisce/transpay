@@ -108,3 +108,4 @@ export default async function Revenue() {
 		</div>
 	);
 }
+// ${FNTC.format(revenueData?.chart.total.revenue)}
