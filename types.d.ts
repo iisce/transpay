@@ -721,4 +721,22 @@ interface IProperty {
 	paymentRecords: IPropertyPaymentRecord[];
 }
 
+
+interface IDurationSummary {
+  duration: string;
+  totalDurationKekeRev: number;
+  totalDurationSmallShuttleRev: number;
+  totalDurationBigShuttleRev: number;
+  totalDurationTrackerRev: number;
+  lgaRevenueSummary: ILGARevenueSummary[];
+}
+
+interface ILGARevenueSummary {
+  lga: string;
+  totalRev: number;
+  kekeRev: number;
+  smallshuttleRev: number;
+  bigshuttleRev: number;
+  trackerRev: number;
+}
 type ITotalDashboard = 'DAILY_FEES' | 'TOTAL' | 'TRACKER_FEES';
