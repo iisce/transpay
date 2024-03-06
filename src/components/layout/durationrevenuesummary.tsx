@@ -36,7 +36,7 @@ export default function DurationRevenueSummary({
       <div className="rounded mt-[20px] bg-secondary">
         <table className="table-fixed w-full">
           <thead className="border-b text-[14px] text-left text-[#78716C]">
-            <tr>
+            <tr className="hover:bg-primary-200">
               <td className="px-[20px] py-[15px]">L.G.A.</td>
               <td className="px-[20px] py-[15px]">Total Revenue</td>
               <td className="px-[20px] py-[15px]">Keke Revenue</td>
@@ -47,13 +47,21 @@ export default function DurationRevenueSummary({
           </thead>
           <tbody>
             {lgaRevenueSummary.map((lga, k) => (
-              <tr key={k}>
-                <td className="px-[20px] py-[15px]">{lga.lga}</td>
-                <td className="px-[20px] py-[15px]">{lga.totalRev}</td>
-                <td className="px-[20px] py-[15px]">{lga.kekeRev}</td>
-                <td className="px-[20px] py-[15px]"> {lga.smallshuttleRev} </td>
-                <td className="px-[20px] py-[15px]"> {lga.bigshuttleRev} </td>
-                <td className="px-[20px] py-[15px]">{lga.trackerRev}</td>
+              <tr className="hover:bg-primary-200 cursor-pointer " key={k}>
+                <td className="px-[20px] border-b py-[15px]">{lga.lga}</td>
+                <td className="px-[20px] border-b py-[15px]">{lga.totalRev}</td>
+                <td className="px-[20px] border-b py-[15px]">{lga.kekeRev}</td>
+                <td className="px-[20px] border-b py-[15px]">
+                  {" "}
+                  {lga.smallshuttleRev}{" "}
+                </td>
+                <td className="px-[20px] border-b py-[15px]">
+                  {" "}
+                  {lga.bigshuttleRev}{" "}
+                </td>
+                <td className="px-[20px] border-b py-[15px]">
+                  {lga.trackerRev}
+                </td>
               </tr>
             ))}
           </tbody>
