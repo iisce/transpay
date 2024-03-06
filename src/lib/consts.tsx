@@ -2025,6 +2025,49 @@ export const FNTC = new Intl.NumberFormat('en-NG', {
 	style: 'currency',
 });
 
+export const DURATIONREVENUESUMMARY: IDurationSummary[] = [
+	{
+		duration: 'YEARLY',
+		totalDurationKekeRev: 1000,
+		totalDurationSmallShuttleRev: 2000,
+		totalDurationBigShuttleRev: 3000,
+		totalDurationTrackerRev: 1000,
+		lgaRevenueSummary: [
+			{
+				lga: 'LGA 1',
+				totalRev: 200,
+				kekeRev: 300,
+				smallshuttleRev: 400,
+				bigshuttleRev: 400,
+				trackerRev: 400,
+			},
+			{
+				lga: 'LGA 2',
+				totalRev: 200,
+				kekeRev: 300,
+				smallshuttleRev: 400,
+				bigshuttleRev: 400,
+				trackerRev: 400,
+			},
+			{
+				lga: 'LGA 3',
+				totalRev: 200,
+				kekeRev: 300,
+				smallshuttleRev: 400,
+				bigshuttleRev: 400,
+				trackerRev: 400,
+			},
+			{
+				lga: 'LGA 4',
+				totalRev: 200,
+				kekeRev: 300,
+				smallshuttleRev: 400,
+				bigshuttleRev: 400,
+				trackerRev: 400,
+			},
+		],
+	},
+];
 export const ALLOWED_VEHICLE_FIELDS = [
 	'id',
 	'vehicle_id',
