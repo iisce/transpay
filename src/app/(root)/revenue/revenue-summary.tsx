@@ -2,17 +2,27 @@ import StatsCard from '@/components/shared/statistics-card';
 import { getRevenueStats } from '@/lib/controllers/revenue-controller';
 import React from 'react';
 
-export default async function RevenueSummary() {
-	const revenueData = await getRevenueStats();
+export default async function RevenueSummary({
+	start,
+	end,
+	type,
+	title,
+	description,
+}: {
+	start: string;
+	end: string;
+	type: string;
+	title: string;
+	description?: string;
+}) {
+	const revenueData = await getRevenueStats(start, end, type);
 	return (
-		<div className='py-5 flex flex-row flex-wrap'>
-			<StatsCard
-				desc='All revenue year till date'
-				percentage={100}
-				type='up'
-				title='Total Revenue'
-				amount={String(revenueData!.total)}
-			/>
-		</div>
+		<StatsCard
+			desc={description}
+			percentage={100}
+			type='up'
+			title={title}
+			amount={String(revenueData!.total)}
+		/>
 	);
 }

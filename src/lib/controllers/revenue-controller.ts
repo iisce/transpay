@@ -1,8 +1,12 @@
-import { format, subDays } from 'date-fns';
+import { format, subDays, subMonths, subWeeks } from 'date-fns';
 import { API, URLS } from '../consts';
 import { getSSession } from '../get-data';
 
-export const getRevenueStats = async (start?: string, end?: string) => {
+export const getRevenueStats = async (
+	start?: string,
+	end?: string,
+	type?: string
+) => {
 	const session = await getSSession();
 	const headers = {
 		'Content-Type': 'application/json',
@@ -10,14 +14,15 @@ export const getRevenueStats = async (start?: string, end?: string) => {
 		Authorization: `Bearer ${session.access_token}`,
 	};
 	const today = new Date();
-	const oneWeekAgo = subDays(today, 7);
+	const oneMonthAgo = subMonths(today, 1);
 
 	const url = `${API}${URLS.revenue.stats}?start_date=${
-		start ?? format(oneWeekAgo, 'yyyy-MM-dd')
-	}&end_date=${end ?? format(today, 'yyyy-MM-dd')}`;
+		start ?? format(oneMonthAgo, 'yyyy-MM-dd')
+	}&end_date=${end ?? format(today, 'yyyy-MM-dd')}${
+		type ? '&type=' + type : ''
+	}`;
 	const res = await fetch(url, { headers, cache: 'no-store' });
 	const result = await res.json();
-	console.log({ url, result });
 	if (!res.ok) return undefined;
 
 	const chart: IRevenue = result.data;

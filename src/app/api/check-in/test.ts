@@ -14,7 +14,6 @@ export async function getVehicleByPlate(
 			{ cache: 'no-store' }
 		);
 		const vehicle = await v.json();
-		// console.log(vehicle.v);
 		return vehicle.v;
 	} catch (error) {
 		console.error('Failed to fetch Vehicle:', error);

@@ -19,9 +19,6 @@ import React from 'react';
 export default async function SuperAdminSettingsPage() {
 	const settings = await getSettings();
 	// const gary = await mainJobs();
-
-	// console.log(settings);
-	// console.log(gary);
 	return (
 		<div className='w-full flex flex-col px-3'>
 			<div className='w-full flex gap-5 justify-between'>
