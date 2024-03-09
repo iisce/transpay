@@ -24,7 +24,6 @@ export async function POST(req: NextRequest) {
 		barcode_string: body.barcode_string,
 		tracker_id: body.tracker_id,
 	};
-	console.log({ payload });
 
 	try {
 		const url = API + URLS.vehicle.all;

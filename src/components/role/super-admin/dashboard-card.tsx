@@ -31,7 +31,7 @@ export default function DashboardCard({
 					{desc || 'previous 30 days'}
 				</div>
 			</div>
-			<Meteors number={20} />
+			{/* <Meteors number={10} /> */}
 		</div>
 	);
 }

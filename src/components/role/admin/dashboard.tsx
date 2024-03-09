@@ -24,7 +24,7 @@ export default function DashboardAdmin(user: { user: IUser }) {
 					Revenue & Statistics
 				</div>
 				<div className='bg-secondary rounded-3xl p-2 md:p-5'>
-					<RevenueCharts />
+					{/* <RevenueCharts /> */}
 				</div>
 			</div>
 		</div>

@@ -28,7 +28,6 @@ export async function GET(request: Request) {
 			.from(vehicle)
 			.limit(limit)
 			.offset(offset);
-		console.log('....', { vehicleResult });
 		return NextResponse.json(vehicleResult, { status: 200 });
 	} catch (error) {
 		return NextResponse.json(error, { status: 500 });

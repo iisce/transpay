@@ -1,141 +1,53 @@
+import { PaginationISCE } from '@/components/shared/pagination-isce';
 import AgentSearchBar from '@/components/ui/agent-search-bar';
-import { Button } from '@/components/ui/button';
 import { vehiclesColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { getVehicles } from '@/lib/controllers/vehicle-controller';
 import { getSSession } from '@/lib/get-data';
-import { addIcon } from '@/lib/icons';
-import Link from 'next/link';
 
-export default async function Vehicles() {
+export default async function Vehicles({
+	searchParams,
+}: {
+	searchParams: { [key: string]: string | undefined };
+}) {
+	const page = searchParams['page'] ?? '1';
+	const limit = searchParams['limit'] ?? '15';
+
 	const [session, vehicles] = await Promise.all([
 		getSSession(),
-		getVehicles(),
+		getVehicles(page, limit),
 	]);
+
+	const start = (Number(page) - 1) * Number(limit);
+	const end = start + Number(limit);
 	return (
-		<div className='p-5 w-full h-full flex flex-col'>
-			<div className='flex justify-between items-center uppercase font-bold'>
-				<div className='shrink-0 grow-0'>VEHICLES</div>
-				{session?.role?.toLowerCase() !== 'greenengine_agent' && (
-					<div className='shrink-0 grow-0'>
-						<Button
-							className='justify-start text-white rounded-xl bg-primary-800'
-							asChild
-							variant={'default'}
-						>
-							<Link
-								href={'/vehicles/new-vehicle'}
-								className='shrink-0 whitespace-nowrap'
-							>
-								<div className='mr-2 h-4 w-4 shrink-0'>
-									{addIcon}
-								</div>
-								NEW VEHICLE
-							</Link>
-						</Button>
-					</div>
-				)}
+		<>
+			<div className='inline-flex h-10 items-end justify-start text-muted-foreground w-full bg-background border-b border-primary'>
+				<div className='inline-flex items-center justify-center whitespace-nowrap px-3 py-1.5 text-sm font-bold ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:border-b-2 border-primary data-[state=active]:text-foreground data-[state=active]:shadow-sm'>
+					All Vehicles
+				</div>
 			</div>
 			{vehicles && session?.role?.toLowerCase() !== 'agent' ? (
-				<div className='flex flex-col gap-5 '>
-					<Tabs
-						defaultValue='all'
-						className='w-full'
-					>
-						<TabsList>
-							<TabsTrigger
-								className=''
-								value='all'
-							>
-								All Vehicles
-							</TabsTrigger>
-							<TabsTrigger value='cleared'>
-								Cleared
-							</TabsTrigger>
-							<TabsTrigger value='debtors'>
-								Debtors
-							</TabsTrigger>
-							<TabsTrigger value='waived'>
-								Waived
-							</TabsTrigger>
-							<TabsTrigger value='pending'>
-								Pending
-							</TabsTrigger>
-						</TabsList>
-						<TabsContent value='all'>
-							<DataTable
-								showSearch
-								searchWith='plate_number'
-								searchWithPlaceholder='Search with plate number'
-								showColumns
-								showPagination
-								columns={vehiclesColumns}
-								data={vehicles}
-							/>
-						</TabsContent>
-						<TabsContent value='cleared'>
-							<DataTable
-								showSearch
-								searchWith='plate_number'
-								searchWithPlaceholder='Search with plate number'
-								showColumns
-								showPagination
-								columns={vehiclesColumns}
-								data={vehicles.filter(
-									(vehicle) =>
-										vehicle.VehicleBalance &&
-										vehicle.VehicleBalance
-											.deficit_balance >= 0
-								)}
-							/>
-						</TabsContent>
-						<TabsContent value='debtors'>
-							<DataTable
-								showSearch
-								searchWith='plate_number'
-								searchWithPlaceholder='Search with plate number'
-								showColumns
-								showPagination
-								columns={vehiclesColumns}
-								data={vehicles.filter(
-									(vehicle) =>
-										vehicle.VehicleBalance &&
-										vehicle.VehicleBalance
-											.deficit_balance < 0
-								)}
-							/>
-						</TabsContent>
-						<TabsContent value='waived'>
-							<DataTable
-								showSearch
-								searchWith='plate_number'
-								searchWithPlaceholder='Search with plate number'
-								showColumns
-								showPagination
-								columns={vehiclesColumns}
-								data={vehicles.filter(
-									(vehicle) =>
-										vehicle.status === 'inactive'
-								)}
-							/>
-						</TabsContent>
-						<TabsContent value='pending'>
-							<DataTable
-								showSearch
-								searchWith='plate_number'
-								searchWithPlaceholder='Search with plate number'
-								showColumns
-								showPagination
-								columns={vehiclesColumns}
-								data={vehicles.filter(
-									(vehicle) =>
-										!vehicle.VehicleBalance
-								)}
-							/>
-						</TabsContent>
-					</Tabs>
-				</div>
+				<>
+					<div className='flex flex-col gap-5 mb-10'>
+						<DataTable
+							showSearch
+							searchWith='plate_number'
+							searchWithPlaceholder='Search with plate number'
+							showColumns
+							columns={vehiclesColumns}
+							data={vehicles.vehicles}
+						/>
+					</div>
+					<PaginationISCE
+						hasNextPage={end < vehicles.total}
+						hasPrevPage={start > 0}
+						page={vehicles.page}
+						limit={vehicles.limit}
+						total={vehicles.total}
+						hrefPrefix='/vehicles'
+					/>
+				</>
 			) : (
 				<div className='max-w-[500px] w-full h-full mx-auto grid place-items-center mt-10'>
 					<AgentSearchBar
@@ -144,6 +56,6 @@ export default async function Vehicles() {
 					/>
 				</div>
 			)}
-		</div>
+		</>
 	);
 }

@@ -10,7 +10,6 @@ export default async function GreenVehicleInfoPage({
 	params: { plate: string };
 }) {
 	const vehicle = await getVehicleSummary(params.plate);
-	console.log({ vehicle, plate: params.plate });
 	if (!vehicle) return notFound();
 	const hasTracker =
 		vehicle.tracker_id !== null || vehicle.tracker_id === '';
