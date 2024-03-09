@@ -308,6 +308,9 @@ type PrettyVehicles = Prettify<IVehicles>;
 interface IVehicles {
 	data: {
 		vehicles: IVehicle[];
+		page: number;
+		limit: number;
+		total: number;
 	};
 }
 
@@ -440,17 +443,11 @@ interface ICategories {
 }
 
 interface IRevenue {
-	chart: {
-		transactions: {
-			all: IVehicleTransaction[];
-			dailyFees: IVehicleTransaction[];
-			fines: any[];
-		};
-		total: {
-			dailyFees: number;
-			fines: number;
-			revenue: number;
-		};
+	transactions: IVehicleTransaction[];
+	total: {
+		dailyFees: number;
+		fines: number;
+		revenue: number;
 	};
 }
 interface ICreateVehicleForm {
@@ -519,162 +516,6 @@ interface IToken {
 	token: string;
 	secret: string;
 }
-
-// {
-//     "success": true,
-//     "message": "SuperAdmin Dashboard",
-//     "data": {
-//         "admins": {
-//             "blacklisted": []
-//         },
-//         "transactions": [
-//             {
-//                 "vehicle_id": "a71dd8f6-f4ac-4d05-876c-1a211c5c33fc",
-//                 "transaction_type": "DAILY_FEES",
-//                 "transaction_date": "2023-10-05T01:11:10.000Z",
-//                 "payment_gateway_name": "flutterwave",
-//                 "amount": 100,
-//                 "currency": "NGN",
-//                 "payment_status": "successful",
-//                 "last_message": null
-//             },
-//             {
-//                 "vehicle_id": "a71dd8f6-f4ac-4d05-876c-1a211c5c33fc",
-//                 "transaction_type": "TRACKER_FEES",
-//                 "transaction_date": "2023-10-06T23:33:39.000Z",
-//                 "payment_gateway_name": "flutterwave",
-//                 "amount": 50,
-//                 "currency": "NGN",
-//                 "payment_status": "successful",
-//                 "last_message": null
-//             },
-//             {
-//                 "vehicle_id": "a71dd8f6-f4ac-4d05-876c-1a211c5c33fc",
-//                 "transaction_type": "TRACKER_FEES",
-//                 "transaction_date": "2023-10-14T10:07:00.000Z",
-//                 "payment_gateway_name": "flutterwave",
-//                 "amount": 50,
-//                 "currency": "NGN",
-//                 "payment_status": "successful",
-//                 "last_message": null
-//             },
-//             {
-//                 "vehicle_id": "a71dd8f6-f4ac-4d05-876c-1a211c5c33fc",
-//                 "transaction_type": "TRACKER_FEES",
-//                 "transaction_date": "2023-10-14T23:19:07.000Z",
-//                 "payment_gateway_name": "flutterwave",
-//                 "amount": 50,
-//                 "currency": "NGN",
-//                 "payment_status": "successful",
-//                 "last_message": null
-//             },
-//             {
-//                 "vehicle_id": "a71dd8f6-f4ac-4d05-876c-1a211c5c33fc",
-//                 "transaction_type": "DAILY_FEES",
-//                 "transaction_date": "2023-10-20T06:11:30.000Z",
-//                 "payment_gateway_name": "flutterwave",
-//                 "amount": 100,
-//                 "currency": "NGN",
-//                 "payment_status": "successful",
-//                 "last_message": null
-//             },
-//             {
-//                 "vehicle_id": "a71dd8f6-f4ac-4d05-876c-1a211c5c33fc",
-//                 "transaction_type": "TRACKER_FEES",
-//                 "transaction_date": "2023-10-20T06:11:30.000Z",
-//                 "payment_gateway_name": "flutterwave",
-//                 "amount": 50,
-//                 "currency": "NGN",
-//                 "payment_status": "successful",
-//                 "last_message": null
-//             },
-//             {
-//                 "vehicle_id": "a71dd8f6-f4ac-4d05-876c-1a211c5c33fc",
-//                 "transaction_type": "DAILY_FEES",
-//                 "transaction_date": "2023-10-30T01:52:10.000Z",
-//                 "payment_gateway_name": "flutterwave",
-//                 "amount": 100,
-//                 "currency": "NGN",
-//                 "payment_status": "successful",
-//                 "last_message": null
-//             },
-//             {
-//                 "vehicle_id": "a71dd8f6-f4ac-4d05-876c-1a211c5c33fc",
-//                 "transaction_type": "TRACKER_FEES",
-//                 "transaction_date": "2023-10-30T01:52:10.000Z",
-//                 "payment_gateway_name": "flutterwave",
-//                 "amount": 50,
-//                 "currency": "NGN",
-//                 "payment_status": "successful",
-//                 "last_message": null
-//             }
-//         ],
-//         "activities": [
-//             {
-//                 "id": 1,
-//                 "activity_id": "f093bfff-6ba9-4869-97cb-8ada1a1fea9b",
-//                 "name": "TTest",
-//                 "description": "working here"
-//             },
-//             {
-//                 "id": 2,
-//                 "activity_id": "ceb7f6f6-48f5-471b-95f3-4688995f972c",
-//                 "name": "update-admin",
-//                 "description": "Johnny doe updated the database"
-//             },
-//             {
-//                 "id": 3,
-//                 "activity_id": "d653d62a-d36f-4359-80d1-2f668dca5682",
-//                 "name": "create-admin",
-//                 "description": "Mark Cuban doe created an admin"
-//             },
-//             {
-//                 "id": 4,
-//                 "activity_id": "5c0fa80e-3cb0-491d-9563-d02550da7aa9",
-//                 "name": "create-driver",
-//                 "description": "Mark Cuban doe created a driver"
-//             },
-//             {
-//                 "id": 5,
-//                 "activity_id": "4bb89356-bb02-4249-a2b1-4a9b48a7b102",
-//                 "name": "create-vehicle",
-//                 "description": "Mark Cuban doe vehicle created"
-//             },
-//             {
-//                 "id": 6,
-//                 "activity_id": "ed324c5e-907f-4d9c-ba0a-bce3803d7eab",
-//                 "name": "banks",
-//                 "description": "fetched description"
-//             },
-//             {
-//                 "id": 7,
-//                 "activity_id": "413a3c83-5f68-4aeb-b36f-f5c3864fe55a",
-//                 "name": "banks",
-//                 "description": "fetched description"
-//             },
-//             {
-//                 "id": 8,
-//                 "activity_id": "31f59799-510f-4569-b43b-b644e9113e72",
-//                 "name": "banks",
-//                 "description": "fetched description"
-//             },
-//             {
-//                 "id": 9,
-//                 "activity_id": "eb54c94c-749c-47ab-b977-b0e0344468e1",
-//                 "name": "banks",
-//                 "description": "fetched description"
-//             },
-//             {
-//                 "id": 10,
-//                 "activity_id": "8979cba6-a389-4923-b18d-e7f08d23e745",
-//                 "name": "banks",
-//                 "description": "fetched description"
-//             }
-//         ]
-//     }
-// }
-
-// SAMPLE OF INTERSTATE
 interface IInterStateVehicle {
 	id: number;
 	plate: string;
@@ -723,3 +564,22 @@ interface IProperty {
 	isPaid: boolean;
 	paymentRecords: IPropertyPaymentRecord[];
 }
+
+interface IDurationSummary {
+	duration: string;
+	totalDurationKekeRev: number;
+	totalDurationSmallShuttleRev: number;
+	totalDurationBigShuttleRev: number;
+	totalDurationTrackerRev: number;
+	lgaRevenueSummary: ILGARevenueSummary[];
+}
+
+interface ILGARevenueSummary {
+	lga: string;
+	totalRev: number;
+	kekeRev: number;
+	smallshuttleRev: number;
+	bigshuttleRev: number;
+	trackerRev: number;
+}
+type ITotalDashboard = 'DAILY_FEES' | 'TOTAL' | 'TRACKER_FEES';

@@ -1,9 +1,15 @@
 import React from 'react';
 import DashboardCard from './dashboard-card';
-import { getDashboard, getDashboardTotalDailyRevenue } from '@/lib/get-data';
+import {
+	getDashboard,
+	getDashboardTotalDailyRevenue,
+	getDashboardTotalWeeklyRevenue,
+} from '@/lib/get-data';
 
 export default async function WeeklyTotalRevenue() {
-	const weeklyTotalRevenue = await getDashboardTotalDailyRevenue();
+	const weeklyTotalRevenue = await getDashboardTotalWeeklyRevenue(
+		'DAILY_FEES'
+	);
 	return (
 		<DashboardCard
 			type='positive'

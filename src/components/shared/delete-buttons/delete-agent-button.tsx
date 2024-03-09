@@ -19,7 +19,6 @@ export default function DeleteAgentButton({ id }: { id: string }) {
 				}),
 			});
 			const result = await createAgentResponse.json();
-			console.log({ result });
 			if (result.success) {
 				toast({
 					title: 'Deleted Successfully',

@@ -3,7 +3,9 @@ import DashboardCard from './dashboard-card';
 import { getDashboard, getDashboardTotalDailyRevenue } from '@/lib/get-data';
 
 export default async function DailyTotalRevenue() {
-	const dailyRevenueTotal = await getDashboardTotalDailyRevenue();
+	const dailyRevenueTotal = await getDashboardTotalDailyRevenue(
+		'DAILY_FEES'
+	);
 	return (
 		<DashboardCard
 			type='positive'

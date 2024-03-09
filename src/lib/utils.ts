@@ -1,5 +1,13 @@
 import { clsx, type ClassValue } from 'clsx';
-import { format, startOfYear, subYears } from 'date-fns';
+import {
+	differenceInDays,
+	differenceInMonths,
+	differenceInWeeks,
+	differenceInYears,
+	format,
+	startOfYear,
+	subYears,
+} from 'date-fns';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
@@ -137,6 +145,35 @@ export function transformTransactionsToMonthsData(
 
 	return transformedData;
 }
+export function transformTransactionsToYearsData(
+	transactions: IVehicleTransaction[]
+): { name: string; total: number }[] {
+	const totalByYear: { [year: string]: number } = {};
+
+	transactions.forEach((transaction: IVehicleTransaction) => {
+		const transactionDate = new Date(transaction.transaction_date);
+		const year = transactionDate.getFullYear().toString(); // Get the full year
+
+		// Initialize total for the year if not present
+		if (!totalByYear[year]) {
+			totalByYear[year] = 0;
+		}
+
+		// Add transaction amount to the total for the year
+		totalByYear[year] += transaction.amount;
+	});
+
+	// Convert totalByYear object to the required format
+	const transformedData: { name: string; total: number }[] = Object.entries(
+		totalByYear
+	).map(([year, total]) => ({
+		name: year,
+		total,
+	}));
+
+	return transformedData;
+}
+
 function getWeekNumber(date: Date): number {
 	const startOfYear = new Date(date.getFullYear(), 0, 1);
 	const diffInDays = Math.floor(
@@ -145,26 +182,61 @@ function getWeekNumber(date: Date): number {
 	const weekNumber = Math.ceil((diffInDays + startOfYear.getDay() + 1) / 7);
 	return weekNumber;
 }
+// export function transformTransactionsToWeeksData(
+// 	transactions: IVehicleTransaction[]
+// ): { name: string; total: number }[] {
+// 	const totalByWeek: { [week: string]: number } = {};
+
+// 	transactions.forEach((transaction: IVehicleTransaction) => {
+// 		const transactionDate = new Date(transaction.transaction_date);
+// 		const weekNumber = getWeekNumber(transactionDate);
+// 		const weekKey = `Week ${weekNumber}`;
+// 		if (!totalByWeek[weekKey]) {
+// 			totalByWeek[weekKey] = 0;
+// 		}
+// 		totalByWeek[weekKey] += transaction.amount;
+// 	});
+// 	const transformedData: { name: string; total: number }[] = Object.entries(
+// 		totalByWeek
+// 	).map(([week, total]) => ({
+// 		name: week,
+// 		total,
+// 	}));
+// 	return transformedData;
+// }
+
 export function transformTransactionsToWeeksData(
 	transactions: IVehicleTransaction[]
 ): { name: string; total: number }[] {
-	const totalByWeek: { [week: string]: number } = {};
+	const totalByWeek: { [weekKey: string]: number } = {};
 
-	transactions.forEach((transaction: IVehicleTransaction) => {
+	transactions.forEach((transaction) => {
 		const transactionDate = new Date(transaction.transaction_date);
+
+		// Get the ISO week number (1-52/53) considering year rollover
 		const weekNumber = getWeekNumber(transactionDate);
-		const weekKey = `Week ${weekNumber}`;
+		const year = transactionDate.getFullYear().toString();
+
+		// Combine year and week for unique key
+		const weekKey = `week ${weekNumber}-${year}`;
+
+		// Initialize total for the week if not present
 		if (!totalByWeek[weekKey]) {
 			totalByWeek[weekKey] = 0;
 		}
+
+		// Add transaction amount to the total for the week
 		totalByWeek[weekKey] += transaction.amount;
 	});
+
+	// Convert totalByWeek object to the required format
 	const transformedData: { name: string; total: number }[] = Object.entries(
 		totalByWeek
-	).map(([week, total]) => ({
-		name: week,
+	).map(([weekKey, total]) => ({
+		name: weekKey,
 		total,
 	}));
+
 	return transformedData;
 }
 export function transformTransactionsToDaysData(
@@ -194,6 +266,40 @@ export function transformTransactionsToDaysData(
 	}));
 
 	return transformedData;
+}
+export function transformTransactionsToHoursData(
+	transactions: IVehicleTransaction[]
+): { name: string; total: number }[] {
+	// Hourly data might not be practical due to large datasets. Consider grouping by day instead.
+
+	const totalByHour: { [hour: string]: number } = {};
+
+	transactions.forEach((transaction) => {
+		const transactionDate = new Date(transaction.transaction_date);
+		const hour = transactionDate.getHours().toString(); // 0-23
+
+		// Initialize total for the hour if not present
+		if (!totalByHour[hour]) {
+			totalByHour[hour] = 0;
+		}
+
+		// Add transaction amount to the total for the hour
+		totalByHour[hour] += transaction.amount;
+	});
+
+	// Convert totalByHour object to the required format
+	const transformedData: { name: string; total: number }[] = Object.entries(
+		totalByHour
+	).map(([hour, total]) => ({
+		name: hour,
+		total,
+	}));
+
+	return transformedData;
+
+	throw new Error(
+		'transformTransactionsToHoursData: Hourly data might be too granular. Consider using transformTransactionsToDaysData instead.'
+	);
 }
 
 export function isUuid(input: string): boolean {
@@ -349,6 +455,31 @@ export function generateDaysOwedArray(
 
 		daysOwedArray.push(daysOwedObject);
 	}
-	// console.log({ presentDate, timeDiff, daysOwedArray });
 	return daysOwedArray;
+}
+
+export function compareDates(
+	date1: string,
+	date2: string
+): 'daily' | 'weekly' | 'monthly' | 'yearly' | 'hourly' {
+	const parsedDate1 = new Date(date1);
+	const parsedDate2 = new Date(date2);
+
+	// Calculate differences using date-fns for accuracy and convenience
+	const daysDifference = differenceInDays(parsedDate2, parsedDate1);
+	const weeksDifference = differenceInWeeks(parsedDate2, parsedDate1);
+	const monthsDifference = differenceInMonths(parsedDate2, parsedDate1);
+	const yearsDifference = differenceInYears(parsedDate2, parsedDate1);
+
+	if (daysDifference <= 1) {
+		return 'hourly';
+	} else if (daysDifference <= 7) {
+		return 'daily';
+	} else if (weeksDifference <= 8) {
+		return 'weekly';
+	} else if (monthsDifference <= 12) {
+		return 'monthly';
+	} else {
+		return 'yearly';
+	}
 }

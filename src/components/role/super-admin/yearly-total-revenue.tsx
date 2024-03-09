@@ -1,8 +1,10 @@
-import { getDashboardTotalRevenue } from '@/lib/get-data';
+import { getDashboardTotalYearlyRevenue } from '@/lib/get-data';
 import DashboardCard from './dashboard-card';
 
 export default async function YearlyTotalRevenue() {
-	const yearlyRevenueTotal = await getDashboardTotalRevenue();
+	const yearlyRevenueTotal = await getDashboardTotalYearlyRevenue(
+		'DAILY_FEES'
+	);
 	return (
 		<DashboardCard
 			type='positive'

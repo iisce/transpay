@@ -25,7 +25,6 @@ export const getSettings = async () => {
 // 	};
 // 	const url = API + URLS.settings + '/cron-all?runnable=true';
 // 	const res = await fetch(url, { headers, next: { revalidate: 0 } });
-// 	console.log({ url, result: await res.json() });
 
 // 	if (!res.ok) return undefined;
 // 	const data: Promise<IResSettings> = await res.json();

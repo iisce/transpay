@@ -5,18 +5,21 @@ import { isBarcodeId, isURL, isUUID } from '../utils';
 export const runtime = 'edge'; // 'nodejs' is the default
 export const dynamic = 'force-dynamic';
 
-export const getVehicles = async () => {
+export const getVehicles = async (page?: string, limit?: string) => {
 	const session = await getSSession();
 	const headers = {
 		'Content-Type': 'application/json',
 		'api-secret': process.env.API_SECRET || '',
 		Authorization: `Bearer ${session.access_token}`,
 	};
-	const url = API + URLS.vehicle.all;
+	const url = `${API}${URLS.vehicle.all}?page=${page ?? 1}&limit=${
+		limit ?? 10
+	}`;
+
 	const res = await fetch(url, { headers, cache: 'no-store' });
 	const data: Promise<IVehicles> = await res.json();
 	if (!res.ok) return undefined;
-	const vehicles = (await data).data.vehicles;
+	const vehicles = (await data).data;
 	return vehicles;
 };
 
@@ -56,7 +59,6 @@ export const getVehicleSummary = async (plate_number: string) => {
 	if (!res.ok) {
 		return undefined;
 	}
-	// console.log(result);
 
 	const summary: IVehicleSummary = result;
 	return summary;
@@ -74,7 +76,6 @@ export const searchVehicle = async (id: string) => {
 		? `${API}${URLS.vehicle.search}?id=${id}`
 		: `${API}${URLS.vehicle.search}?plate_number=${id}`;
 	const res = await fetch(url, { headers, cache: 'no-store' });
-	console.log({ url, result: await res.json() });
 	if (!res.ok) return undefined;
 	const result = await res.json();
 	const vehicle = result.data;

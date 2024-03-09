@@ -1,7 +1,10 @@
 import MaxWidthWrapper from '@/components/layout/max-width-wrapper';
+import CarouselContainer from '@/components/pages/home/carousel';
+import CarouselCard from '@/components/pages/home/carousel-card';
 import { UserNav } from '@/components/shared/user-nav-bar';
 import { Button } from '@/components/ui/button';
 import Searchbar from '@/components/ui/searchbar';
+import { BUS_IMAGE_SAMPLE } from '@/lib/consts';
 import { getAdminMe } from '@/lib/controllers/admin-controller';
 import { getAgentMe } from '@/lib/controllers/agent-controller';
 import { getSSession } from '@/lib/get-data';
@@ -17,7 +20,7 @@ export default async function Home() {
 			: await getAdminMe();
 	return (
 		<main className=''>
-			<div className='h-20 w-full shrink-0'>
+			<div className='h-20 w-full shrink-0 fixed bg-white/50 backdrop-blur z-50'>
 				<MaxWidthWrapper className='flex items-center justify-between h-full w-full gap-1'>
 					<Link
 						href={'/'}
@@ -65,7 +68,7 @@ export default async function Home() {
 				</MaxWidthWrapper>
 			</div>
 
-			<div className='h-[100svh] flex flex-col items-start relative'>
+			<div className='h-[100svh] flex flex-col items-start justify-between relative pt-24 gap-10'>
 				<NigeriaIcon className='absolute top-0 w-[50svw] h-full object-contain ' />
 				<div className='w-full max-w-lg lg:max-w-3xl mx-auto flex flex-col items-center px-5 lg:px-20 pt-5 gap-10 relative'>
 					<div className='shrink-0 flex flex-col items-center gap-2 lg:gap-5'>
@@ -90,8 +93,57 @@ export default async function Home() {
 						variant='secondary'
 					/>
 				</div>
+				<div className='w-full h-[50svh] relative flex gap-3'>
+					<CarouselContainer />
+				</div>
 			</div>
-
+			<div className='h-[100svh] flex flex-col items-start justify-between relative pt-24 gap-10'>
+				<NigeriaIcon className='absolute top-0 left-1/2 -translate-x-1/2 w-[50svw] h-full object-contain ' />
+				<div className='w-full h-full max-w-lg lg:max-w-3xl mx-auto flex flex-col items-center justify-between px-5 lg:px-20 gap-3 relative overflow-clip'>
+					<div className='flex flex-col items-center justify-center gap-5'>
+						<h1 className=' font-bold text-2xl lg:text-4xl'>
+							Download Transpay
+						</h1>
+						<p className='text-center'>
+							Experience the future of transportation fee
+							management at your fingertips! Download the
+							Transpay mobile application now to streamline
+							administrative tasks, check driver
+							information, process payments, and
+							revolutionize your daily fee management.
+							Don&apos;t miss out on the seamless and
+							transformative tools – download the app and
+							elevate your transport management journey
+							today
+						</p>
+						<div className='flex gap-5 justify-between'>
+							<Image
+								src='/app-store.png'
+								alt='transpay app '
+								height={600}
+								width={600}
+								className=' object-contain object-top h-14 w-fit '
+							/>
+							<Image
+								src='/play-store.png'
+								alt='transpay app'
+								height={600}
+								width={600}
+								className=' object-contain object-top h-14 w-fit '
+							/>
+						</div>
+					</div>
+					<div className='w-full h-[65svh] relative flex gap-3'>
+						<Image
+							src='/hand.png'
+							alt='transpay app'
+							height={600}
+							width={600}
+							className=' object-cover object-top'
+						/>
+					</div>
+				</div>
+			</div>
 			<div className='bg-secondary w-full shrink-0 relative '>
 				<div className='w-full h-10 bg-primary/20 flex justify-between items-center px-3 lg:px-9 '>
 					<div className=''>Anambra</div>
