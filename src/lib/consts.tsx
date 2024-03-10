@@ -1682,8 +1682,8 @@ export const LGA = [
 	'Orumba South',
 	'Oyi',
 ];
-// export const API = 'https://squid-app-ruxoz.ondigitalocean.app';
-export const API = 'http://localhost:5000';
+export const API = 'https://squid-app-ruxoz.ondigitalocean.app';
+// export const API = 'http://localhost:5000';
 // export const API = 'https://guided-adequately-hare.ngrok-free.app';
 export const URLS = {
 	activity: {
