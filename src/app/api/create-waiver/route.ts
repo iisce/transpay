@@ -13,13 +13,13 @@ export async function POST(req: NextRequest) {
 	};
 
 	const payload = {
+		vehicle_id: body.id,
 		reason: body.reason,
-		additional_info: '',
-		image: '',
+		additional_info: body.additional_info,
 		start_date: body.start_date,
 		end_date: body.end_date,
 	};
-	const url = API + URLS.vehicle.all + '/' + body.id + '/add-waiver';
+	const url = API + URLS.vehicle.all + '/' + body.id + '/waiver';
 	console.log('create-waiver api endpoint... ', { payload, body, url });
 	try {
 		const response = await fetch(url, {

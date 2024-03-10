@@ -41,6 +41,7 @@ const waiverFormSchema = z.object({
 			message: 'Reason must not be longer than 50 characters.',
 		}),
 	id: z.string({ required_error: 'No vehicle detected' }),
+	additional_info: z.string({ required_error: 'No vehicle detected' }),
 });
 
 export type waiverFormValues = z.infer<typeof waiverFormSchema>;
@@ -48,8 +49,8 @@ export type waiverFormValues = z.infer<typeof waiverFormSchema>;
 // This can come from your database or API.
 export function NewWaiverForm({ vehicle }: { vehicle: IVehicleSummary }) {
 	const defaultValues: Partial<waiverFormValues> = {
-		reason: '',
 		id: vehicle.vehicle_id,
+		additional_info: 'Additional Info',
 	};
 	const router = useRouter();
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -67,6 +68,7 @@ export function NewWaiverForm({ vehicle }: { vehicle: IVehicleSummary }) {
 			start_date: data.start_date,
 			end_date: data.end_date,
 			reason: data.reason,
+			additional_info: data.additional_info,
 		};
 		console.log('new waiver form client... ', { payload });
 		try {
