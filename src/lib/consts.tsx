@@ -1684,7 +1684,8 @@ export const LGA = [
 ];
 export const API = 'https://squid-app-ruxoz.ondigitalocean.app';
 // export const API = 'http://localhost:5000';
-// export const API = 'https://guided-adequately-hare.ngrok-free.app';
+// export const API = 'https://guided-adequately-hare.ngrok-free.app'; // Abdullah PC
+// export const API = 'https://pig-crisp-logically.ngrok-free.app'; // Rex PC
 export const URLS = {
 	activity: {
 		all: '/api/v1/activities',
@@ -2100,4 +2101,10 @@ export const BASE_URL =
 export enum TRANSACTION_TYPE {
 	daily = 'DAILY_FEES',
 	tracker = 'TRACKER_FEES',
+}
+export enum WAIVER_STATUS {
+	approved = 'APPROVED',
+	declined = 'DECLINED',
+	pending = 'PENDING',
+	cancelled = 'CANCELLED',
 }

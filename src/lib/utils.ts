@@ -7,6 +7,11 @@ import {
 	format,
 	startOfYear,
 	subYears,
+	getHours,
+	startOfDay,
+	addHours,
+	addDays,
+	isEqual,
 } from 'date-fns';
 import { twMerge } from 'tailwind-merge';
 
@@ -239,67 +244,114 @@ export function transformTransactionsToWeeksData(
 
 	return transformedData;
 }
+
+// export function transformTransactionsToDaysData(
+// 	transactions: IVehicleTransaction[]
+// ): { name: string; total: number }[] {
+// 	const totalByDay: { [day: string]: number } = {};
+
+// 	transactions.forEach((transaction: IVehicleTransaction) => {
+// 		console.log({
+// 			date: format(
+// 				new Date(transaction.transaction_date),
+// 				'yyyy-MM-dd'
+// 			),
+// 			amount: transaction.amount,
+// 		});
+// 		const transactionDate = new Date(transaction.transaction_date);
+// 		// Using the transaction date directly as the key
+// 		const dayKey = format(new Date(transactionDate), 'dd-mm');
+
+// 		if (!totalByDay[dayKey]) {
+// 			totalByDay[dayKey] = 0;
+// 		}
+// 		totalByDay[dayKey] += transaction.amount;
+// 	});
+
+// 	const transformedData: { name: string; total: number }[] = Object.entries(
+// 		totalByDay
+// 	).map(([day, total]) => ({
+// 		name: day,
+// 		total,
+// 	}));
+
+// 	return transformedData;
+// }
+
 export function transformTransactionsToDaysData(
 	transactions: IVehicleTransaction[]
 ): { name: string; total: number }[] {
-	const totalByDay: { [day: string]: number } = {};
+	// 1. Get the range of days
+	const earliestTransaction = transactions.reduce((min, t) =>
+		new Date(t.transaction_date) < new Date(min.transaction_date)
+			? t
+			: min
+	);
+	const latestTransaction = transactions.reduce((max, t) =>
+		new Date(t.transaction_date) > new Date(max.transaction_date)
+			? t
+			: max
+	);
 
-	transactions.forEach((transaction: IVehicleTransaction) => {
-		const transactionDate = new Date(transaction.transaction_date);
-		// Using the transaction date directly as the key
-		const dayKey = format(
-			new Date(transactionDate.toISOString()),
-			'dd-mm'
+	let currentDate = startOfDay(
+		new Date(earliestTransaction.transaction_date)
+	);
+	const endDate = startOfDay(new Date(latestTransaction.transaction_date));
+
+	// 2. Initialize the daily data
+	const dailyData: { name: string; total: number }[] = [];
+	while (currentDate <= endDate) {
+		dailyData.push({
+			name: format(currentDate, 'MMM d'), // Format like 'Mar 10'
+			total: 0,
+		});
+		currentDate = addDays(currentDate, 1);
+	}
+
+	// 3. Aggregate transactions into daily buckets
+	transactions.forEach((t) => {
+		const transactionDate = startOfDay(new Date(t.transaction_date));
+		const matchingDay = dailyData.find((d) =>
+			isEqual(transactionDate, new Date(d.name))
 		);
-
-		if (!totalByDay[dayKey]) {
-			totalByDay[dayKey] = 0;
+		if (matchingDay) {
+			matchingDay.total += t.amount;
 		}
-		totalByDay[dayKey] += transaction.amount;
 	});
 
-	const transformedData: { name: string; total: number }[] = Object.entries(
-		totalByDay
-	).map(([day, total]) => ({
-		name: day,
-		total,
-	}));
-
-	return transformedData;
+	return dailyData;
 }
+
 export function transformTransactionsToHoursData(
 	transactions: IVehicleTransaction[]
 ): { name: string; total: number }[] {
-	// Hourly data might not be practical due to large datasets. Consider grouping by day instead.
+	// 1. Get the start of the day from the earliest transaction
+	const earliestTransaction = transactions.reduce((min, t) =>
+		new Date(t.transaction_date) < new Date(min.transaction_date)
+			? t
+			: min
+	);
+	const startOfChartDay = startOfDay(
+		new Date(earliestTransaction.transaction_date)
+	);
 
-	const totalByHour: { [hour: string]: number } = {};
+	// 2. Initialize the hourly data
+	let hourlyData: { name: string; total: number }[] = [];
+	for (let i = 0; i < 24; i++) {
+		const hourStart = addHours(startOfChartDay, i);
+		hourlyData.push({
+			name: format(hourStart, 'h a'), // Format like '9 AM', '10 AM', etc.
+			total: 0,
+		});
+	}
 
-	transactions.forEach((transaction) => {
-		const transactionDate = new Date(transaction.transaction_date);
-		const hour = transactionDate.getHours().toString(); // 0-23
-
-		// Initialize total for the hour if not present
-		if (!totalByHour[hour]) {
-			totalByHour[hour] = 0;
-		}
-
-		// Add transaction amount to the total for the hour
-		totalByHour[hour] += transaction.amount;
+	// 3. Aggregate transactions into hourly buckets
+	transactions.forEach((t) => {
+		const transactionHour = getHours(new Date(t.transaction_date));
+		hourlyData[transactionHour].total += t.amount;
 	});
 
-	// Convert totalByHour object to the required format
-	const transformedData: { name: string; total: number }[] = Object.entries(
-		totalByHour
-	).map(([hour, total]) => ({
-		name: hour,
-		total,
-	}));
-
-	return transformedData;
-
-	throw new Error(
-		'transformTransactionsToHoursData: Hourly data might be too granular. Consider using transformTransactionsToDaysData instead.'
-	);
+	return hourlyData;
 }
 
 export function isUuid(input: string): boolean {
@@ -471,11 +523,11 @@ export function compareDates(
 	const monthsDifference = differenceInMonths(parsedDate2, parsedDate1);
 	const yearsDifference = differenceInYears(parsedDate2, parsedDate1);
 
-	if (daysDifference <= 1) {
+	if (daysDifference < 2) {
 		return 'hourly';
-	} else if (daysDifference <= 7) {
+	} else if (daysDifference <= 31) {
 		return 'daily';
-	} else if (weeksDifference <= 8) {
+	} else if (weeksDifference <= 16) {
 		return 'weekly';
 	} else if (monthsDifference <= 12) {
 		return 'monthly';

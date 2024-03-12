@@ -1,5 +1,6 @@
 'use client';
 import { NewWaiverForm } from '@/components/forms/new-waiver-form';
+import { UpdateWaiverForm } from '@/components/forms/update-waiver-form';
 import { Button } from '@/components/ui/button';
 import {
 	Dialog,
@@ -18,11 +19,7 @@ import { PlusIcon } from 'lucide-react';
 import React from 'react';
 import { useMediaQuery } from 'usehooks-ts';
 
-export default function WaiverButton({
-	vehicle,
-}: {
-	vehicle: IVehicleSummary;
-}) {
+export default function UpdateWaiverButton({ waiver }: { waiver: IWaiver }) {
 	const isDesktop = useMediaQuery('(min-width: 768px)');
 
 	if (isDesktop)
@@ -39,7 +36,7 @@ export default function WaiverButton({
 				</DialogTrigger>
 				<DialogContent className='sm:max-w-[425px]'>
 					<DialogTitle>Request New Waiver</DialogTitle>
-					<NewWaiverForm vehicle={vehicle} />
+					<UpdateWaiverForm waiver={waiver} />
 				</DialogContent>
 			</Dialog>
 		);
@@ -57,7 +54,7 @@ export default function WaiverButton({
 			<DrawerContent>
 				<DrawerHeader className='gap-5'>
 					<DrawerTitle>Request New Waiver</DrawerTitle>
-					<NewWaiverForm vehicle={vehicle} />
+					<UpdateWaiverForm waiver={waiver} />
 				</DrawerHeader>
 			</DrawerContent>
 		</Drawer>

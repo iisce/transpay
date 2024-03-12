@@ -6,7 +6,9 @@ import { Card } from '@/components/ui/card';
 import { debtColumns, viewWaiverColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { WAIVER_STATUS } from '@/lib/consts';
 import { getVehicleSummary } from '@/lib/controllers/vehicle-controller';
+import { getVehicleWaiver } from '@/lib/controllers/waiver.controller';
 import { getSSession } from '@/lib/get-data';
 import { failureIcon, successIcon } from '@/lib/icons';
 import { generateDaysOwedArray } from '@/lib/utils';
@@ -18,7 +20,10 @@ import { notFound } from 'next/navigation';
 export default async function SearchVehicle({ id }: { id: string }) {
 	const { role } = await getSSession();
 	const vehicle = await getVehicleSummary(id);
-	const onWaiver = vehicle?.status === 'inactive';
+	const waivers = await getVehicleWaiver(id);
+	const onWaiver = waivers?.waivers.some(
+		(waiver) => waiver.status === WAIVER_STATUS.approved
+	);
 	if (!vehicle) {
 		notFound();
 	}
@@ -27,6 +32,8 @@ export default async function SearchVehicle({ id }: { id: string }) {
 		addDays(new Date(vehicle.VehicleBalance.next_transaction_date), 1),
 		new Date()
 	);
+	const hasTracker =
+		vehicle.tracker_id === '' || vehicle.tracker_id !== null;
 	const dateSupplied = new Date(
 		vehicle.VehicleBalance.next_transaction_date
 	);
@@ -129,7 +136,11 @@ export default async function SearchVehicle({ id }: { id: string }) {
 			>
 				<TabsList
 					className={`grid ${
-						isOwing ? 'grid-cols-3' : 'grid-cols-2'
+						isOwing && hasTracker
+							? 'grid-cols-3'
+							: isOwing || hasTracker
+							? 'grid-cols-2'
+							: 'grid-cols-1'
 					}`}
 				>
 					<TabsTrigger value='overview'>OVERVIEW</TabsTrigger>
@@ -138,7 +149,9 @@ export default async function SearchVehicle({ id }: { id: string }) {
 							DAYS OWED
 						</TabsTrigger>
 					)}
-					<TabsTrigger value='waiver'>WAIVER</TabsTrigger>
+					{hasTracker && (
+						<TabsTrigger value='waiver'>WAIVER</TabsTrigger>
+					)}
 				</TabsList>
 				<TabsContent value='overview'>
 					<Card className='grid gap-2 w-full p-3 bg-secondary text-xs lg:text-base'>
@@ -231,20 +244,22 @@ export default async function SearchVehicle({ id }: { id: string }) {
 						</div>
 					</TabsContent>
 				)}
-				<TabsContent value='waiver'>
-					<div className='flex justify-between items-end mb-3'>
-						<div className=''>
-							<p className=' text-title2Bold'>
-								Waiver History
-							</p>
+				{hasTracker && (
+					<TabsContent value='waiver'>
+						<div className='flex justify-between items-end mb-3'>
+							<div className=''>
+								<p className=' text-title2Bold'>
+									Waiver History
+								</p>
+							</div>
+							<WaiverButton vehicle={vehicle} />
 						</div>
-						<WaiverButton vehicle={vehicle} />
-					</div>
-					<DataTable
-						columns={viewWaiverColumns}
-						data={vehicle.VehicleWaivers || []}
-					/>
-				</TabsContent>
+						<DataTable
+							columns={viewWaiverColumns}
+							data={waivers?.waivers || []}
+						/>
+					</TabsContent>
+				)}
 			</Tabs>
 			<div className='  w-full'>
 				<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 w-full'>
