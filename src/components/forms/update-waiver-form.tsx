@@ -111,19 +111,18 @@ const waiverFormSchema = z.object({
 	id: z.string({ required_error: 'No vehicle detected' }),
 	additional_info: z.string(),
 	indefinite: z.boolean().default(false).optional(),
+	status: z.string(),
 });
 
 export type waiverFormValues = z.infer<typeof waiverFormSchema>;
 
 // This can come from your database or API.
-export function NewWaiverForm({ vehicle }: { vehicle: IVehicleSummary }) {
+export function UpdateWaiverForm({ waiver }: { waiver: IWaiver }) {
 	const defaultValues: Partial<waiverFormValues> = {
-		reason: 'Vehicle Maintenance',
-		id: vehicle.vehicle_id,
-		indefinite: false,
-		additional_info: '',
-		start_date: addDays(new Date(), 1),
-		end_date: addDays(new Date(), 2),
+		status: waiver.status,
+		id: waiver.vehicle_id,
+		start_date: new Date(waiver.start_date),
+		end_date: new Date(waiver.end_date),
 	};
 	const router = useRouter();
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -164,7 +163,10 @@ export function NewWaiverForm({ vehicle }: { vehicle: IVehicleSummary }) {
 				body: JSON.stringify(payload),
 			});
 			const result = await createWaiverResponse.json();
-			if (result.success) {
+			if (
+				createWaiverResponse.status > 199 &&
+				createWaiverResponse.status < 299
+			) {
 				toast({
 					title: 'waiver Created Successfully',
 				});
@@ -175,8 +177,9 @@ export function NewWaiverForm({ vehicle }: { vehicle: IVehicleSummary }) {
 			} else {
 				setIsLoading(false);
 				toast({
-					title: result.message,
+					title: 'waiver NOT Created',
 				});
+				form.reset();
 				return null;
 			}
 		} catch (error: any) {

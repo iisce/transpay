@@ -47,6 +47,6 @@ export default async function RevenueChartContainer({
 					revenueData?.transactions ?? []
 			  );
 
-	console.log(formattedData);
+	console.log({ scope, formattedData });
 	return <RevenueCharts data={formattedData} />;
 }

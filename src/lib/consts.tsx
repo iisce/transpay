@@ -1682,8 +1682,8 @@ export const LGA = [
 	'Orumba South',
 	'Oyi',
 ];
-export const API = 'https://squid-app-ruxoz.ondigitalocean.app';
-// export const API = 'http://localhost:5000';
+// export const API = 'https://squid-app-ruxoz.ondigitalocean.app';
+export const API = 'http://localhost:5000';
 // export const API = 'https://guided-adequately-hare.ngrok-free.app';
 export const URLS = {
 	activity: {
@@ -2100,4 +2100,10 @@ export const BASE_URL =
 export enum TRANSACTION_TYPE {
 	daily = 'DAILY_FEES',
 	tracker = 'TRACKER_FEES',
+}
+export enum WAIVER_STATUS {
+	approved = 'APPROVED',
+	declined = 'DECLINED',
+	pending = 'PENDING',
+	cancelled = 'CANCELLED',
 }

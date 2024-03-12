@@ -42,12 +42,19 @@ interface DriverPayment {
 	status: 'pending' | 'processing' | 'successful' | 'failed';
 }
 interface IWaiver {
+	id: number;
+	vehicle_waiver_id: string;
+	vehicle_id: string;
+	reason: string;
+	additional_info: string;
 	start_date: string;
 	end_date: string;
-	reason: string;
+	image: string;
 	status: string;
-	generated_by: string;
-	approved: boolean;
+	user_role: string;
+	user_id: string;
+	createdAt: string;
+	updatedAt: string;
 }
 interface DriverT {
 	name: string;
@@ -341,6 +348,13 @@ interface IResAgent {
 
 interface IVehicleSummary extends Omit<IVehicle, ''> {
 	current_driver?: string;
+}
+interface IWaiverResponse {
+	vehicle: IVehicle;
+	waivers: IWaiver[];
+	page: number;
+	limit: number;
+	total: number;
 }
 
 interface IResVehicleSummary {

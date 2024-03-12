@@ -21,6 +21,7 @@ export const getRevenueStats = async (
 	}&end_date=${end ?? format(today, 'yyyy-MM-dd')}${
 		type ? '&type=' + type : ''
 	}`;
+	// console.log({ url, type });
 	const res = await fetch(url, { headers, cache: 'no-store' });
 	const result = await res.json();
 	if (!res.ok) return undefined;
