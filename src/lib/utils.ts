@@ -325,31 +325,35 @@ export function transformTransactionsToDaysData(
 export function transformTransactionsToHoursData(
 	transactions: IVehicleTransaction[]
 ): { name: string; total: number }[] {
-	// 1. Get the start of the day from the earliest transaction
-	const earliestTransaction = transactions.reduce((min, t) =>
-		new Date(t.transaction_date) < new Date(min.transaction_date)
-			? t
-			: min
-	);
-	const startOfChartDay = startOfDay(
-		new Date(earliestTransaction.transaction_date)
-	);
-
-	// 2. Initialize the hourly data
 	let hourlyData: { name: string; total: number }[] = [];
-	for (let i = 0; i < 24; i++) {
-		const hourStart = addHours(startOfChartDay, i);
-		hourlyData.push({
-			name: format(hourStart, 'h a'), // Format like '9 AM', '10 AM', etc.
-			total: 0,
-		});
-	}
+	// 1. Get the start of the day from the earliest transaction
+	if (transactions.length !== 0) {
+		const earliestTransaction = transactions.reduce((min, t) =>
+			new Date(t.transaction_date) < new Date(min.transaction_date)
+				? t
+				: min
+		);
+		const startOfChartDay = startOfDay(
+			new Date(earliestTransaction.transaction_date)
+		);
 
-	// 3. Aggregate transactions into hourly buckets
-	transactions.forEach((t) => {
-		const transactionHour = getHours(new Date(t.transaction_date));
-		hourlyData[transactionHour].total += t.amount;
-	});
+		// 2. Initialize the hourly data
+		for (let i = 0; i < 24; i++) {
+			const hourStart = addHours(startOfChartDay, i);
+			hourlyData.push({
+				name: format(hourStart, 'h a'), // Format like '9 AM', '10 AM', etc.
+				total: 0,
+			});
+		}
+
+		// 3. Aggregate transactions into hourly buckets
+		transactions.forEach((t) => {
+			const transactionHour = getHours(new Date(t.transaction_date));
+			hourlyData[transactionHour].total += t.amount;
+		});
+
+		return hourlyData;
+	}
 
 	return hourlyData;
 }

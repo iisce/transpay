@@ -36,130 +36,72 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
+import { WAIVER_STATUS } from '@/lib/consts';
 
-const reasons = [
-	{
-		id: 1,
-		title: 'Vehicle Maintenance',
-		description:
-			'The vehicle requires critical repairs, scheduled servicing, or upgrades that make it temporarily unsuitable for commercial use.',
-	},
-	{
-		id: 2,
-		title: 'Personal Health',
-		description:
-			'The driver is experiencing illness or injury that prevents them from operating the vehicle safely.',
-	},
-	{
-		id: 3,
-		title: 'Family Emergency',
-		description:
-			"An urgent family situation requires the driver/owner's full attention.",
-	},
-	{
-		id: 4,
-		title: 'Licensing Issues',
-		description:
-			'Expired licenses need renewal, outstanding fines need resolution, or permits are temporarily suspended.',
-	},
-	{
-		id: 5,
-		title: 'Route Disruptions',
-		description:
-			'The usual route is inaccessible due to construction, flooding, or security concerns.',
-	},
-	{
-		id: 6,
-		title: 'Financial Hardship',
-		description:
-			'The driver/owner lacks sufficient funds to cover fuel costs or temporary maintenance expenses.',
-	},
-	{
-		id: 7,
-		title: 'Religious/Cultural Obligations',
-		description:
-			'The driver/owner needs to observe periods of fasting, pilgrimage, or significant cultural events that prevent regular operation.',
-	},
-	{
-		id: 7,
-		title: 'Others',
-		description:
-			'The driver/owner needs to observe periods of fasting, pilgrimage, or significant cultural events that prevent regular operation.',
-	},
-];
-
-const waiverFormSchema = z.object({
+const updateWaiverFormSchema = z.object({
 	start_date: z.date({ required_error: 'Enter Start Date' }),
 	end_date: z.date({ required_error: 'Enter End Date' }),
-	reason: z
-		.string({
-			required_error: 'Please enter a valid reason.',
-		})
-		.min(3, {
-			message: 'Reason must be at least 3 characters.',
-		})
-		.max(50, {
-			message: 'Reason must not be longer than 50 characters.',
-		})
-		.refine(
-			(value) =>
-				reasons.some((reason) => reason.title.includes(value)),
-			{
-				message: 'Reason Selected does not exist',
-			}
-		),
+	reason: z.string({
+		required_error: 'Please enter a valid reason.',
+	}),
 	id: z.string({ required_error: 'No vehicle detected' }),
 	additional_info: z.string(),
 	indefinite: z.boolean().default(false).optional(),
-	status: z.string(),
+	status: z
+		.string()
+		.refine(
+			(value) =>
+				[
+					WAIVER_STATUS.approved,
+					WAIVER_STATUS.cancelled,
+					WAIVER_STATUS.declined,
+					WAIVER_STATUS.pending,
+				].includes(value as WAIVER_STATUS),
+			{
+				message: 'Invalid status',
+			}
+		),
 });
 
-export type waiverFormValues = z.infer<typeof waiverFormSchema>;
+export type updateWaiverFormValues = z.infer<typeof updateWaiverFormSchema>;
 
 // This can come from your database or API.
 export function UpdateWaiverForm({ waiver }: { waiver: IWaiver }) {
-	const defaultValues: Partial<waiverFormValues> = {
+	const defaultValues: Partial<updateWaiverFormValues> = {
 		status: waiver.status,
 		id: waiver.vehicle_id,
 		start_date: new Date(waiver.start_date),
 		end_date: new Date(waiver.end_date),
+		reason: waiver.reason,
+		indefinite: waiver.end_date === '9999-01-01T00:00:00.000Z',
+		additional_info: waiver.additional_info,
 	};
 	const router = useRouter();
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const { toast } = useToast();
 
-	const form = useForm<waiverFormValues>({
-		resolver: zodResolver(waiverFormSchema),
+	const form = useForm<updateWaiverFormValues>({
+		resolver: zodResolver(updateWaiverFormSchema),
 		defaultValues,
 		mode: 'onChange',
 	});
 
 	const isIndefinite = form.getValues('indefinite');
-	const isOthers =
-		form.getValues('reason').toLowerCase().trim() === 'others';
-	const selectedReasonId = form.getValues('reason');
-	const selectedReason = reasons.find(
-		(reason) =>
-			reason.title.toLowerCase() === selectedReasonId.toLowerCase()
-	);
-	// form.setValue('additional_info', selectedReason?.description || '');
-	async function onSubmit(data: waiverFormValues) {
+	async function onSubmit(data: updateWaiverFormValues) {
 		setIsLoading(true);
 		const payload = {
 			id: data.id,
+			status: data.status,
 			reason: data.reason,
 			start_date: format(data.start_date, 'yyyy-MM-dd'),
 			end_date: isIndefinite
 				? format(new Date('9999-01-01'), 'yyyy-MM-dd')
 				: format(data.end_date, 'yyyy-MM-dd'),
-			// additional_info: isOthers
-			// 	? data.additional_info
-			// 	: selectedReason?.description,
 		};
-		console.log('new waiver form client... ', { payload });
+		console.log('update waiver form client... ', { payload });
 		try {
 			const createWaiverResponse = await fetch('/api/create-waiver', {
-				method: 'POST',
+				method: 'PUT',
 				body: JSON.stringify(payload),
 			});
 			const result = await createWaiverResponse.json();
@@ -168,7 +110,7 @@ export function UpdateWaiverForm({ waiver }: { waiver: IWaiver }) {
 				createWaiverResponse.status < 299
 			) {
 				toast({
-					title: 'waiver Created Successfully',
+					title: 'Waiver Approved',
 				});
 				setIsLoading(false);
 				form.reset();
@@ -177,7 +119,7 @@ export function UpdateWaiverForm({ waiver }: { waiver: IWaiver }) {
 			} else {
 				setIsLoading(false);
 				toast({
-					title: 'waiver NOT Created',
+					title: 'Waiver NOT Approved',
 				});
 				form.reset();
 				return null;
@@ -185,7 +127,7 @@ export function UpdateWaiverForm({ waiver }: { waiver: IWaiver }) {
 		} catch (error: any) {
 			setIsLoading(false);
 			form.reset();
-			toast({ title: 'Feature Coming soon' });
+			toast({ title: 'Waiver Not Approved' });
 		}
 	}
 
@@ -262,13 +204,6 @@ export function UpdateWaiverForm({ waiver }: { waiver: IWaiver }) {
 										checked={field.value}
 										onCheckedChange={
 											field.onChange
-										}
-										onChange={() =>
-											form.setValue(
-												'additional_info',
-												selectedReason?.description ||
-													''
-											)
 										}
 									/>
 								</FormControl>
@@ -353,7 +288,7 @@ export function UpdateWaiverForm({ waiver }: { waiver: IWaiver }) {
 
 					<FormField
 						control={form.control}
-						name='reason'
+						name='status'
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel>Reason</FormLabel>
@@ -363,32 +298,28 @@ export function UpdateWaiverForm({ waiver }: { waiver: IWaiver }) {
 								>
 									<FormControl>
 										<SelectTrigger>
-											<SelectValue placeholder='Choose a reason' />
+											<SelectValue
+												className='uppercase'
+												placeholder='Choose a reason'
+											/>
 										</SelectTrigger>
 									</FormControl>
 									<SelectContent>
 										<SelectGroup>
-											{reasons.map(
-												(reason, key) => (
-													<SelectItem
-														key={key}
-														value={
-															reason.title
-														}
-														onChange={() =>
-															form.setValue(
-																'additional_info',
-																selectedReason?.description ||
-																	''
-															)
-														}
-													>
-														{
-															reason.title
-														}
-													</SelectItem>
-												)
-											)}
+											{[
+												WAIVER_STATUS.approved,
+												WAIVER_STATUS.cancelled,
+												WAIVER_STATUS.declined,
+												WAIVER_STATUS.pending,
+											].map((status, key) => (
+												<SelectItem
+													key={key}
+													value={status}
+													className='uppercase'
+												>
+													{status}
+												</SelectItem>
+											))}
 										</SelectGroup>
 									</SelectContent>
 								</Select>
@@ -396,27 +327,6 @@ export function UpdateWaiverForm({ waiver }: { waiver: IWaiver }) {
 							</FormItem>
 						)}
 					/>
-					{isOthers && (
-						<FormField
-							control={form.control}
-							name='additional_info'
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>
-										Additional Information
-									</FormLabel>
-									<FormControl>
-										<Textarea
-											placeholder='Tell us why you need a waiver'
-											className='resize-none'
-											{...field}
-										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-					)}
 				</div>
 				<div className='grid'>
 					<Button
@@ -424,7 +334,7 @@ export function UpdateWaiverForm({ waiver }: { waiver: IWaiver }) {
 						type='submit'
 						// disabled
 					>
-						{isLoading ? loadingSpinner : 'Add waiver'}
+						{isLoading ? loadingSpinner : 'Update Waiver'}
 					</Button>
 				</div>
 			</form>

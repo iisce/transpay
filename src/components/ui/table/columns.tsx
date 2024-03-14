@@ -944,13 +944,7 @@ export const viewWebAgentDriversColumns: ColumnDef<DriverPayment>[] = [
 		},
 	},
 ];
-//Waiver History
-//  start_date: string;
-//  end_date: string;
-//  reason: string;
-//  status: string;
-//  generated_by: string;
-//  approved: boolean;
+
 export const viewWaiverColumns: ColumnDef<IWaiver>[] = [
 	{
 		accessorKey: 'start_date',
@@ -1010,6 +1004,78 @@ export const viewWaiverColumns: ColumnDef<IWaiver>[] = [
 							align='end'
 						>
 							<DeleteWaiverButton id={waiver.vehicle_id} />
+						</DropdownMenuContent>
+					</DropdownMenu>
+				);
+		},
+	},
+];
+export const viewWaiverColumnsAdmin: ColumnDef<IWaiver>[] = [
+	{
+		accessorKey: 'start_date',
+		header: 'Timeline',
+		cell: ({ row }) => {
+			const startDate = row.original.start_date;
+			const endDate = row.original.end_date;
+			return (
+				<div className='font-medium'>{`${format(
+					new Date(startDate),
+					'MMM dd'
+				)} - ${
+					endDate === '9999-01-01T00:00:00.000Z'
+						? 'FOREVER'
+						: format(new Date(endDate), 'MMM dd')
+				}`}</div>
+			);
+		},
+	},
+	{
+		accessorKey: 'reason',
+		header: () => <div className=''>Reason</div>,
+		cell: ({ row }) => {
+			const reason = row.original.reason;
+			return <div className='font-medium'>{`${reason}`}</div>;
+		},
+	},
+	{
+		accessorKey: 'status',
+		header: () => <div className=''>Status</div>,
+		cell: ({ row }) => {
+			const status = row.original.status;
+
+			return <div className={`uppercase`}>{status}</div>;
+		},
+	},
+	{
+		id: 'actions',
+		cell: ({ row }) => {
+			const waiver = row.original;
+			if (waiver.status !== WAIVER_STATUS.cancelled)
+				return (
+					<DropdownMenu>
+						<DropdownMenuTrigger asChild>
+							<Button
+								variant='ghost'
+								className='h-8 w-8 p-0'
+							>
+								<span className='sr-only'>
+									Open menu
+								</span>
+								<MoreVertical className='h-4 w-4' />
+							</Button>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent
+							className='border border-black'
+							align='end'
+						>
+							<DropdownMenuItem asChild>
+								<UpdateWaiverButton waiver={waiver} />
+							</DropdownMenuItem>
+							<DropdownMenuItem asChild>
+								<DeleteWaiverButton
+									id={waiver.vehicle_id}
+								/>
+							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
 				);

@@ -15,7 +15,7 @@ import {
 	DrawerTitle,
 	DrawerTrigger,
 } from '@/components/ui/drawer';
-import { PlusIcon } from 'lucide-react';
+import { PlusIcon, UploadCloudIcon } from 'lucide-react';
 import React from 'react';
 import { useMediaQuery } from 'usehooks-ts';
 
@@ -30,12 +30,12 @@ export default function UpdateWaiverButton({ waiver }: { waiver: IWaiver }) {
 						className='justify-start rounded-xl'
 						variant={'default'}
 					>
-						<PlusIcon className='mr-1 h-4 w-4 shrink-0' />
-						New Waiver
+						<UploadCloudIcon className='mr-1 h-4 w-4 shrink-0' />
+						Update Waiver
 					</Button>
 				</DialogTrigger>
 				<DialogContent className='sm:max-w-[425px]'>
-					<DialogTitle>Request New Waiver</DialogTitle>
+					<DialogTitle>Request Update Waiver</DialogTitle>
 					<UpdateWaiverForm waiver={waiver} />
 				</DialogContent>
 			</Dialog>
@@ -47,13 +47,13 @@ export default function UpdateWaiverButton({ waiver }: { waiver: IWaiver }) {
 					className='justify-start rounded-xl'
 					variant={'default'}
 				>
-					<PlusIcon className='mr-1 h-4 w-4 shrink-0' />
-					New Waiver
+					<UploadCloudIcon className='mr-1 h-4 w-4 shrink-0' />
+					Update Waiver
 				</Button>
 			</DrawerTrigger>
 			<DrawerContent>
 				<DrawerHeader className='gap-5'>
-					<DrawerTitle>Request New Waiver</DrawerTitle>
+					<DrawerTitle>Request Update Waiver</DrawerTitle>
 					<UpdateWaiverForm waiver={waiver} />
 				</DrawerHeader>
 			</DrawerContent>

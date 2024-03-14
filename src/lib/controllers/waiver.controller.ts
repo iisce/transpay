@@ -1,10 +1,14 @@
 import { API, URLS } from '../consts';
+import { getSSession } from '../get-data';
 import { isBarcodeId, isUUID } from '../utils';
 import { getVehicleSummary } from './vehicle-controller';
 
 export const getVehicleWaiverProtected = async (plate_number: string) => {
+	const session = await getSSession();
 	const headers = {
 		'Content-Type': 'application/json',
+		'api-secret': process.env.API_SECRET || '',
+		Authorization: `Bearer ${session.access_token}`,
 	};
 
 	let url;
@@ -14,6 +18,7 @@ export const getVehicleWaiverProtected = async (plate_number: string) => {
 		id = vehicle?.vehicle_id;
 	}
 	url = `${API}${URLS.vehicle.all}/${id}/waiver?page=1&limit=10`;
+	console.log({ url });
 
 	const res = await fetch(url, { headers, cache: 'no-store' });
 	const result = await res.json();

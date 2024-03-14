@@ -21,7 +21,7 @@ export default async function ViewVehicleDetails({ id }: { id: string }) {
 		new Date()
 	);
 	return (
-		<div className='h-full w-full p-6 flex flex-col gap-6 '>
+		<div className='h-full w-full py-6 flex flex-col gap-6 '>
 			<div className='flex items-center justify-between'>
 				<div className='text-title1Bold'>
 					Vehicle Owner: Mr. {vehicle.owners_name}
@@ -111,12 +111,12 @@ export default async function ViewVehicleDetails({ id }: { id: string }) {
 								description={'View Vehicle information'}
 							/>
 
-							<DashboardCard
+							{/* <DashboardCard
 								name='Drivers'
 								href={`${id}/drivers`}
 								image={'/fineandpenal.png'}
 								description='Fine Driver & Check Fine Payment'
-							/>
+							/> */}
 							{role?.toLowerCase() !== 'agent' && (
 								<>
 									<DashboardCard
@@ -136,12 +136,12 @@ export default async function ViewVehicleDetails({ id }: { id: string }) {
 									/> */}
 								</>
 							)}
-							{/* <DashboardCard
+							<DashboardCard
 								name='Waiver Form'
 								href={`${id}/waiver`}
 								image={'/fineandpenal.png'}
 								description='Fill waiver form to process driver grace period'
-							/> */}
+							/>
 						</>
 					)}
 				</div>

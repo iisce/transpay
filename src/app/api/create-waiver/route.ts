@@ -40,37 +40,37 @@ export async function POST(req: NextRequest) {
 	}
 }
 
-// export async function PUT(req: NextRequest) {
-// 	const { access_token } = await getSSession();
-// 	const body: ICreateVehicleForm = await req.json();
-// 	const headers = {
-// 		'Content-Type': 'application/json',
-// 		'api-secret': process.env.API_SECRET || '',
-// 		Authorization: `Bearer ${access_token}`,
-// 	};
+export async function PUT(req: NextRequest) {
+	const { access_token } = await getSSession();
+	const body: waiverFormValues = await req.json();
+	const headers = {
+		'Content-Type': 'application/json',
+		'api-secret': process.env.API_SECRET || '',
+		Authorization: `Bearer ${access_token}`,
+	};
 
-// 	try {
-// 		const url = `${API}${URLS.vehicle.all}/${body.vehicle_id}`;
-// 		const response = await fetch(url, {
-// 			method: 'PUT',
-// 			headers,
-// 			body: JSON.stringify(body),
-// 		});
-// 		const result = await response.json();
-// 		// console.log({
-// 		// 	RESULT: result,
-// 		// 	URL: url,
-// 		// 	BODY: body,
-// 		// });
-// 		if (!response.ok) {
-// 			throw new Error(`Something Went wrong ${response.statusText}`);
-// 		} else {
-// 			return NextResponse.json(result);
-// 		}
-// 	} catch (error: any) {
-// 		return error?.message;
-// 	}
-// }
+	try {
+		const url = API + URLS.vehicle.all + '/' + body.id + '/waiver';
+		const response = await fetch(url, {
+			method: 'PUT',
+			headers,
+			body: JSON.stringify(body),
+		});
+		const result = await response.json();
+		console.log({
+			RESULT: result,
+			URL: url,
+			BODY: body,
+		});
+		if (!response.ok) {
+			throw new Error(`Something Went wrong ${response.statusText}`);
+		} else {
+			return NextResponse.json(result);
+		}
+	} catch (error: any) {
+		return error?.message;
+	}
+}
 
 export async function DELETE(req: NextRequest) {
 	const body: any = await req.json();
