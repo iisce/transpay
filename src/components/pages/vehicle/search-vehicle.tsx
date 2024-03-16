@@ -208,13 +208,13 @@ export default async function SearchVehicle({ id }: { id: string }) {
 											Vehicle is Owing!
 										</div>
 										<div className='text-destructive-foreground font-bold text-4xl'>
-											{`₦${
+											{/* {`₦${
 												totalPendingAmount +
 												daysOwed.length * 20
-											}`}
-											{/* {`₦${-vehicle
+											}`} */}
+											{`₦${-vehicle
 												.VehicleBalance
-												.deficit_balance}`} */}
+												.deficit_balance}`}
 										</div>
 									</div>
 								</div>
