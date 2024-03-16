@@ -17,8 +17,26 @@ import { Separator } from '@/components/ui/separator';
 import { DashboardVehicleSummary } from './dashboard-vehicle-summary';
 import { DashboardDriverSummary } from './dashboard-driver-summary';
 import { DashboardAgentSummary } from './dashboard-agent-summary';
+import {
+	getAgentsOverview,
+	getDriversOverview,
+	getVehiclesOverview,
+} from '@/lib/controllers/overview.controller';
 
-export default function DashboardSuperAdmin(user: { user: IUser }) {
+export default async function DashboardSuperAdmin(user: { user: IUser }) {
+	const vehicleOverview = await getVehiclesOverview();
+	const DriverOverview = await getDriversOverview();
+	const AgentOverview = await getAgentsOverview();
+
+	const sampleVehicle = {
+		total: 0,
+		active: 0,
+		owing: 0,
+		cleared: 0,
+		onWaivers: 0,
+	};
+	const sampleDriver = { total: 0, active: 0, inactive: 0 };
+	const sampleAgent = { total: 0, active: 0, inactive: 0 };
 	return (
 		<div className='w-full'>
 			<div className='grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5'>
@@ -81,9 +99,15 @@ export default function DashboardSuperAdmin(user: { user: IUser }) {
 			</div>
 			<Separator className='my-5' />
 			<div className='w-full gap-5 grid md:grid-cols-2 lg:grid-cols-3'>
-				<DashboardVehicleSummary />
-				<DashboardAgentSummary />
-				<DashboardDriverSummary />
+				<DashboardVehicleSummary
+					info={vehicleOverview ?? sampleVehicle}
+				/>
+				<DashboardAgentSummary
+					info={AgentOverview ?? sampleAgent}
+				/>
+				<DashboardDriverSummary
+					info={DriverOverview ?? sampleDriver}
+				/>
 			</div>
 		</div>
 	);

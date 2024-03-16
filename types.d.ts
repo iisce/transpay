@@ -390,6 +390,25 @@ interface IResSettings {
 		settings: ISettings[];
 	};
 }
+
+interface StatusItem {
+	title: string;
+	description: number;
+}
+
+interface IInfo {
+	total: number;
+	active: number;
+	owing: number;
+	cleared: number;
+	onWaivers: number;
+}
+
+interface IOthers {
+	total: number;
+	active: number;
+	inactive: number;
+}
 interface ISettings {
 	id: number;
 	setting_id: string;

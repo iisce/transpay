@@ -13,6 +13,15 @@ import { DashboardAgentSummary } from '@/components/role/super-admin/dashboard-a
 import { DashboardDriverSummary } from '@/components/role/super-admin/dashboard-driver-summary';
 import { RevenueCharts } from '@/components/shared/chats/revenue-chart';
 
+const sampleVehicle = {
+	total: 0,
+	active: 0,
+	owing: 0,
+	cleared: 0,
+	onWaivers: 0,
+};
+const sampleDriver = { total: 0, active: 0, inactive: 0 };
+const sampleAgent = { total: 0, active: 0, inactive: 0 };
 interface ProtectedPageProps {}
 
 const ProtectedPage: React.FC<ProtectedPageProps> = () => {
@@ -150,9 +159,13 @@ const ProtectedPage: React.FC<ProtectedPageProps> = () => {
 						</div>
 						<Separator className='my-5' />
 						<div className='w-full gap-5 grid md:grid-cols-2 lg:grid-cols-3'>
-							<DashboardVehicleSummary />
-							<DashboardAgentSummary />
-							<DashboardDriverSummary />
+							<DashboardVehicleSummary
+								info={sampleVehicle}
+							/>
+							<DashboardAgentSummary info={sampleAgent} />
+							<DashboardDriverSummary
+								info={sampleDriver}
+							/>
 						</div>
 						<Separator className='my-5' />
 						<div className='bg-secondary p-2 rounded-xl'>

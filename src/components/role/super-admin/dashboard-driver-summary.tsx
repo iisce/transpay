@@ -13,28 +13,18 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { useState } from 'react';
 
-const infos = [
-	{
-		title: 'Total',
-		description: '16',
-	},
-	{
-		title: 'Active',
-		description: '16',
-	},
-	{
-		title: 'Cleared',
-		description: '16',
-	},
-	{
-		title: 'Owing',
-		description: '16',
-	},
-];
-
-type CardProps = React.ComponentProps<typeof Card>;
-
-export function DashboardDriverSummary({ className, ...props }: CardProps) {
+export function DashboardDriverSummary({
+	className,
+	info,
+}: {
+	className?: string;
+	info: IOthers;
+}) {
+	const statusArray: StatusItem[] = Object.keys(info).map((title) => ({
+		title,
+		// @ts-ignore
+		description: info[title],
+	}));
 	let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 	return (
 		<Card
@@ -42,7 +32,6 @@ export function DashboardDriverSummary({ className, ...props }: CardProps) {
 				'w-full bg-secondary flex flex-col justify-between',
 				className
 			)}
-			{...props}
 		>
 			<div className=''>
 				<CardHeader>
@@ -52,7 +41,7 @@ export function DashboardDriverSummary({ className, ...props }: CardProps) {
 					</CardDescription>
 				</CardHeader>
 				<CardContent className='grid grid-cols-3 p-2'>
-					{infos.map((info, index) => (
+					{statusArray.map((info, index) => (
 						<div
 							key={index}
 							className='relative p-2 h-full w-full'
