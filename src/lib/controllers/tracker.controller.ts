@@ -1,4 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
 import { TRACKER_BASE_URL, URLS } from '../consts';
 
 export const revalidate = 600;
@@ -31,11 +30,4 @@ export const getAllTrackerLocation = async (imei: string[]) => {
 		})
 	);
 	return modifiedTrackerDetails;
-};
-
-export const useTrackerLocations = (imei: string[]) => {
-	return useQuery({
-		queryKey: imei, // Unique query key, include 'imei' for dynamic updates
-		queryFn: () => getAllTrackerLocation(imei),
-	});
 };

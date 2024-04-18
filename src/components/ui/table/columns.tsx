@@ -1,5 +1,9 @@
 'use client';
 import { UpdateSettingsForm } from '@/components/forms/update-settings-form';
+import UpdateWaiverButton from '@/components/role/rider/update-waiver-button';
+import DeleteAdminButton from '@/components/shared/delete-buttons/delete-admin-button';
+import DeleteAgentButton from '@/components/shared/delete-buttons/delete-agent-button';
+import DeleteWaiverButton from '@/components/shared/delete-buttons/delete-waiver-button';
 import Receipt from '@/components/shared/receipt/vehicle-transaction';
 import { Button } from '@/components/ui/button';
 import {
@@ -8,6 +12,7 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
+import { WAIVER_STATUS } from '@/lib/consts';
 import { deleteIcon, editIcon, paymentIcon, printIcon } from '@/lib/icons';
 import { formatDate } from '@/lib/utils';
 import {
@@ -27,11 +32,6 @@ import Cbadge from '../category-badge';
 import { Dialog, DialogContent, DialogFooter, DialogTrigger } from '../dialog';
 import Pill from '../pill';
 import { DataTableColumnHeader } from './data-column-table-header';
-import UpdateWaiverButton from '@/components/role/rider/update-waiver-button';
-import DeleteWaiverButton from '@/components/shared/delete-buttons/delete-waiver-button';
-import { WAIVER_STATUS } from '@/lib/consts';
-import DeleteAdminButton from '@/components/shared/delete-buttons/delete-admin-button';
-import DeleteAgentButton from '@/components/shared/delete-buttons/delete-agent-button';
 
 export const debtColumns: ColumnDef<IVehiclePayment>[] = [
 	{

@@ -1,10 +1,8 @@
 'use client';
 
 import { ALL_IMEIS } from '@/lib/consts';
-import { useTrackerLocations } from '@/lib/controllers/tracker.controller';
-import { useQuery } from '@tanstack/react-query';
 import { APIProvider, AdvancedMarker, Map } from '@vis.gl/react-google-maps';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export default function MapPreview({
 	trackers,
