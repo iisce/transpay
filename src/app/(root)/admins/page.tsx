@@ -1,14 +1,28 @@
+import { PaginationISCE } from '@/components/shared/pagination-isce';
 import { Button } from '@/components/ui/button';
 import { adminsColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { getAdmins } from '@/lib/controllers/admin-controller';
+import { getUsers } from '@/lib/controllers/users.controller';
 import { addIcon } from '@/lib/icons';
 import Link from 'next/link';
-import React from 'react';
 
-export default async function Admins() {
-	const admins = await getAdmins();
+export default async function Admins({
+	searchParams,
+}: {
+	searchParams: { [key: string]: string | undefined };
+}) {
+	const page = searchParams['page'] ?? '1';
+	const limit = searchParams['limit'] ?? '15';
+	const admins = await getUsers({
+		page,
+		limit,
+		blacklisted: false,
+		type: 'admins',
+	});
+
+	const start = (Number(page) - 1) * Number(limit);
+	const end = start + Number(limit);
 	return (
 		<div className='p-5 w-full h-full flex flex-col'>
 			<div className='flex justify-between items-center uppercase font-bold'>
@@ -56,8 +70,18 @@ export default async function Admins() {
 							showColumns
 							showPagination
 							columns={adminsColumns}
-							data={admins || []}
+							data={admins?.rows ?? []}
 						/>
+						{admins && admins.rows && (
+							<PaginationISCE
+								hasNextPage={end < admins.meta.total}
+								hasPrevPage={start > 0}
+								page={Number(page)}
+								limit={Number(limit)}
+								total={admins.meta.total}
+								hrefPrefix='/admins'
+							/>
+						)}
 					</TabsContent>
 					<TabsContent value='active'>
 						<DataTable
@@ -67,10 +91,14 @@ export default async function Admins() {
 							showColumns
 							columns={adminsColumns}
 							data={
-								admins?.filter(
-									(admin) =>
-										admin.blacklisted === false
-								) || []
+								(admins &&
+									admins.rows.length > 0 &&
+									admins.rows?.filter(
+										(admin) =>
+											admin.blacklisted ===
+											false
+									)) ||
+								[]
 							}
 						/>
 					</TabsContent>
@@ -82,10 +110,14 @@ export default async function Admins() {
 							showColumns
 							columns={adminsColumns}
 							data={
-								admins?.filter(
-									(admin) =>
-										admin.blacklisted === true
-								) || []
+								(admins &&
+									admins.rows.length > 0 &&
+									admins.rows?.filter(
+										(admin) =>
+											admin.blacklisted ===
+											true
+									)) ||
+								[]
 							}
 						/>
 					</TabsContent>

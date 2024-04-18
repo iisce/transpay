@@ -25,7 +25,7 @@ export default function Searchbar({
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 		setIsLoading(true);
-		router.push(`/search/${searchValue.toLowerCase()}`);
+		router.push(`/search/${searchValue}`);
 	};
 
 	return (

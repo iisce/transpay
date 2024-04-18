@@ -12,13 +12,6 @@ import {
 	FormMessage,
 } from '../ui/form';
 import { Input } from '../ui/input';
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from '../ui/select';
 import { Button } from '../ui/button';
 import Link from 'next/link';
 import {
@@ -30,65 +23,66 @@ import {
 import React from 'react';
 import { loadingSpinner, successIcon } from '@/lib/icons';
 import { NextResponse } from 'next/server';
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from '../ui/select';
 
-const agentFormSchema = z.object({
-	city: z
-		.string({
-			required_error: 'Please enter city.',
-		})
-		.min(3, {
-			message: 'City must be at least 3 characters.',
+export const agentFormSchema = z.object({
+	name: z
+		.string()
+		.min(2, {
+			message: 'Username must be at least 2 characters.',
 		})
 		.max(30, {
-			message: 'City must not be longer than 30 characters.',
-		}),
-	confirmPassword: z.string().min(8),
-	country: z
-		.string({
-			required_error: 'Please enter country.',
-		})
-		.min(3, {
-			message: 'Country must be at least 3 characters.',
-		})
-		.max(30, {
-			message: 'Country must not be longer than 30 characters.',
+			message: 'Username must not be longer than 30 characters.',
 		}),
 	email: z
 		.string({
 			required_error: 'Please enter an email.',
 		})
 		.email(),
-	identification_number: z
-		.string({
-			required_error: 'Please enter identification number.',
-		})
-		.min(8, {
-			message: 'ID number must be at least 8 characters.',
-		})
-		.max(50, {
-			message: 'ID Number must not be longer than 50 characters.',
-		}),
-	identification_type: z.string({
+	id_type: z.string({
 		required_error: 'Please select a mode of identification',
 	}),
-	location: z
-		.string({
-			required_error: 'Please enter location.',
-		})
-		.min(3, {
-			message: 'Location must be at least 3 characters.',
-		})
-		.max(50, {
-			message: 'Location must not be longer than 50 characters.',
-		}),
-	name: z
+	id_number: z.string({
+		required_error: 'Please select a mode of identification',
+	}),
+	address: z
 		.string()
 		.min(2, {
-			message: 'Name must be at least 2 characters.',
+			message: 'Address must be at least 2 characters.',
 		})
 		.max(30, {
-			message: 'Name must not be longer than 30 characters.',
+			message: 'Address must not be longer than 30 characters.',
 		}),
+	lga: z.string({
+		required_error: 'Please enter LGA.',
+	}),
+	city: z.string({
+		required_error: 'Please enter city.',
+	}),
+	state: z.string({
+		required_error: 'Please enter state.',
+	}),
+	unit: z.string({
+		required_error: 'Please enter unit.',
+	}),
+	country: z.string({
+		required_error: 'Please enter country.',
+	}),
+	postal_code: z.string(),
+	phone: z
+		.string({
+			required_error: 'Please enter phone number.',
+		})
+		.regex(/^\+234[789][01]\d{8}$/, 'Phone format (+2348012345678)'),
+	role: z.string({
+		required_error: 'Please choose role.',
+	}),
 	password: z.string().refine((password) => {
 		return (
 			password.length >= 8
@@ -97,42 +91,18 @@ const agentFormSchema = z.object({
 			// /\d/.test(password)
 		);
 	}, 'The password must contain at least one uppercase letter and one number and be at least 8 characters long.'),
-	phone: z.string({
-		required_error: 'Please enter phone number.',
-	}),
-	postcode: z
-		.string()
-		.min(5, {
-			message: 'postcode must be at least 5 characters.',
-		})
-		.max(7, {
-			message: 'postcode must not be longer than 7 characters.',
-		}),
-	role: z
-		.string({
-			required_error: 'Please enter role.',
-		})
-		.refine((value) => ['agent', 'greenengine_agent'].includes(value), {
-			message: 'Invalid means of identification.',
-		}),
+	confirmPassword: z.string().min(8),
 });
 
 type AgentFormValues = z.infer<typeof agentFormSchema>;
 
 // This can come from your database or API.
 const defaultValues: Partial<AgentFormValues> = {
-	name: '',
-	password: '',
-	phone: '',
-	email: '',
-	identification_type: 'nin',
-	identification_number: '',
-	location: '',
-	city: '',
-	country: 'nigeria',
-	postcode: '',
+	role: 'AGENT',
+	state: 'Anambra',
+	country: 'Nigeria',
+	id_type: 'NIN',
 };
-
 export function AgentForm() {
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const [open, setOpen] = React.useState(false);
@@ -144,23 +114,32 @@ export function AgentForm() {
 	});
 
 	async function onSubmit(data: AgentFormValues) {
+		const createAgentPayload = {
+			name: data.name,
+			email: data.email,
+			password: data.password,
+			phone: data.phone,
+			role: data.role,
+			address: {
+				text: data.address,
+				lga: data.lga,
+				city: data.city,
+				state: data.state,
+				unit: data.unit,
+				country: data.country,
+				postal_code: data.postal_code,
+			},
+			identification: {
+				type: data.id_type,
+				number: data.id_number,
+			},
+		};
+		console.log({ createAgentPayload });
 		setIsLoading(true);
 		try {
 			const createAgentResponse = await fetch('/api/create-agent', {
 				method: 'POST',
-				body: JSON.stringify({
-					name: data.name,
-					password: data.password,
-					phone: data.phone,
-					email: data.email,
-					identification_type: data.identification_type,
-					identification_number: data.identification_number,
-					role: data.role,
-					location: data.location,
-					city: data.city,
-					country: data.country,
-					postcode: data.postcode,
-				}),
+				body: JSON.stringify(createAgentPayload),
 			});
 			const result = await createAgentResponse.json();
 			if (
@@ -172,7 +151,6 @@ export function AgentForm() {
 				});
 				setIsLoading(false);
 				setOpen(true);
-				form.reset();
 				return NextResponse.json(result);
 			} else {
 				setIsLoading(false);
@@ -192,10 +170,10 @@ export function AgentForm() {
 				onSubmit={form.handleSubmit(onSubmit)}
 				className='mb-20 flex flex-col gap-5'
 			>
-				<div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
+				<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
 					<FormField
-						control={form.control}
 						name='name'
+						control={form.control}
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel>Name</FormLabel>
@@ -210,8 +188,68 @@ export function AgentForm() {
 						)}
 					/>
 					<FormField
+						name='phone'
 						control={form.control}
-						name='identification_type'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Phone Number</FormLabel>
+								<FormControl>
+									<Input
+										placeholder='Enter phone number'
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						name='email'
+						control={form.control}
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Email Address</FormLabel>
+								<FormControl>
+									<Input
+										placeholder='Email'
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						name='role'
+						control={form.control}
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Agent Role</FormLabel>
+								<Select
+									onValueChange={field.onChange}
+									defaultValue={field.value}
+								>
+									<FormControl>
+										<SelectTrigger className='h-12'>
+											<SelectValue placeholder='Select a mean of Identification' />
+										</SelectTrigger>
+									</FormControl>
+									<SelectContent>
+										<SelectItem value='AGENT'>
+											AGENT
+										</SelectItem>
+										<SelectItem value='GREEN_ENGINE'>
+											GREEN ENGINE
+										</SelectItem>
+									</SelectContent>
+								</Select>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						name='id_type'
+						control={form.control}
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel>
@@ -227,13 +265,13 @@ export function AgentForm() {
 										</SelectTrigger>
 									</FormControl>
 									<SelectContent>
-										<SelectItem value='nin'>
+										<SelectItem value='NIN'>
 											NIN
 										</SelectItem>
-										<SelectItem value='bvn'>
+										<SelectItem value='BVN'>
 											BVN
 										</SelectItem>
-										<SelectItem value='pvc'>
+										<SelectItem value='PVC'>
 											Voters Card
 										</SelectItem>
 									</SelectContent>
@@ -243,52 +281,8 @@ export function AgentForm() {
 						)}
 					/>
 					<FormField
+						name='id_number'
 						control={form.control}
-						name='role'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Agent Type</FormLabel>
-								<Select
-									onValueChange={field.onChange}
-									defaultValue={field.value}
-								>
-									<FormControl>
-										<SelectTrigger className='h-12'>
-											<SelectValue placeholder='Choose Agent Type' />
-										</SelectTrigger>
-									</FormControl>
-									<SelectContent>
-										<SelectItem value='agent'>
-											Transpay Agent
-										</SelectItem>
-										<SelectItem value='greenengine_agent'>
-											Green Engine Agent
-										</SelectItem>
-									</SelectContent>
-								</Select>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name='phone'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Phone Number</FormLabel>
-								<FormControl>
-									<Input
-										placeholder='Enter phone number'
-										{...field}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name='identification_number'
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel>
@@ -305,14 +299,14 @@ export function AgentForm() {
 						)}
 					/>
 					<FormField
+						name='address'
 						control={form.control}
-						name='email'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Email Address</FormLabel>
+								<FormLabel>Address</FormLabel>
 								<FormControl>
 									<Input
-										placeholder='Email'
+										placeholder='Street'
 										{...field}
 									/>
 								</FormControl>
@@ -321,14 +315,14 @@ export function AgentForm() {
 						)}
 					/>
 					<FormField
+						name='unit'
 						control={form.control}
-						name='location'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Location</FormLabel>
+								<FormLabel>Unit</FormLabel>
 								<FormControl>
 									<Input
-										placeholder='Location'
+										placeholder='Unit'
 										{...field}
 									/>
 								</FormControl>
@@ -337,8 +331,8 @@ export function AgentForm() {
 						)}
 					/>
 					<FormField
-						control={form.control}
 						name='city'
+						control={form.control}
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel>City</FormLabel>
@@ -353,39 +347,14 @@ export function AgentForm() {
 						)}
 					/>
 					<FormField
+						name='postal_code'
 						control={form.control}
-						name='country'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Country</FormLabel>
-								<Select
-									onValueChange={field.onChange}
-									defaultValue={field.value}
-								>
-									<FormControl>
-										<SelectTrigger className='h-12'>
-											<SelectValue placeholder='Select a mean of Identification' />
-										</SelectTrigger>
-									</FormControl>
-									<SelectContent>
-										<SelectItem value='nigeria'>
-											Nigeria
-										</SelectItem>
-									</SelectContent>
-								</Select>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name='postcode'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Postcode</FormLabel>
+								<FormLabel>Postal Code</FormLabel>
 								<FormControl>
 									<Input
-										placeholder='Postcode'
+										placeholder='Postal Code'
 										{...field}
 									/>
 								</FormControl>
@@ -394,8 +363,24 @@ export function AgentForm() {
 						)}
 					/>
 					<FormField
+						name='lga'
 						control={form.control}
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>LGA</FormLabel>
+								<FormControl>
+									<Input
+										placeholder='LGA'
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
 						name='password'
+						control={form.control}
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel>Password</FormLabel>
@@ -411,8 +396,8 @@ export function AgentForm() {
 						)}
 					/>
 					<FormField
-						control={form.control}
 						name='confirmPassword'
+						control={form.control}
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel>Password</FormLabel>
@@ -457,13 +442,22 @@ export function AgentForm() {
 									Agent Account Created
 								</div>
 							</div>
+							<div className='flex flex-col text-center mb-5'>
+								<div>
+									E-mail: {form.getValues('email')}
+								</div>
+								<div>
+									Password:{' '}
+									{form.getValues('password')}
+								</div>
+							</div>
 							<div className='flex flex-col gap-3'>
 								<AlertDialogAction
 									asChild
 									className='rounded-xl'
 								>
 									<Link href={`/agents`}>
-										View Agents
+										View Agent
 									</Link>
 								</AlertDialogAction>
 								<AlertDialogCancel className='rounded-xl'>

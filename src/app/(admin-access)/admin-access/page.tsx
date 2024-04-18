@@ -95,31 +95,23 @@ const ProtectedPage: React.FC<ProtectedPageProps> = () => {
 						</div>
 						<div className='grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5'>
 							<DashboardCard
-								type='positive'
 								title='Yearly Total Revenue'
 								amount={52050}
-								percent={0}
 								desc='Year Till Date'
 							/>
 							<DashboardCard
-								type='positive'
 								title='Monthly Total Revenue'
 								amount={52050}
-								percent={0}
 								desc='Year Till Date'
 							/>
 							<DashboardCard
-								type='positive'
 								title='Weekly Total Revenue'
 								amount={43050}
-								percent={0}
 								desc='Year Till Date'
 							/>
 							<DashboardCard
-								type='positive'
 								title='Daily Total Revenue'
 								amount={0}
-								percent={0}
 								desc='Year Till Date'
 							/>
 						</div>
@@ -129,31 +121,23 @@ const ProtectedPage: React.FC<ProtectedPageProps> = () => {
 						</div>
 						<div className='grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5'>
 							<DashboardCard
-								type='positive'
 								title='Yearly Total Tracker'
 								amount={11100}
-								percent={0}
 								desc='Year Till Date'
 							/>
 							<DashboardCard
-								type='positive'
 								title='Monthly Total Tracker'
 								amount={11100}
-								percent={0}
 								desc='Year Till Date'
 							/>
 							<DashboardCard
-								type='positive'
 								title='Weekly Total Tracker'
 								amount={7800}
-								percent={0}
 								desc='Year Till Date'
 							/>
 							<DashboardCard
-								type='positive'
 								title='Daily Total Tracker'
 								amount={0}
-								percent={0}
 								desc='Year Till Date'
 							/>
 						</div>

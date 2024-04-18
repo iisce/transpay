@@ -1,13 +1,9 @@
-import { Card } from '@/components/ui/card';
-import React from 'react';
-import ActivityCard from '@/components/shared/activity-card';
-import { getAllActivities } from '@/lib/controllers/activity-controller';
 import ActivityList from '@/components/pages/activities/activity-list';
-import { notFound } from 'next/navigation';
+import { Card } from '@/components/ui/card';
+import { getAllActivities } from '@/lib/controllers/activity.controller';
 
 export default async function Activity() {
 	const all_activities = await getAllActivities();
-	if (!all_activities) return notFound();
 	return (
 		<div className='w-full h-[90svh] flex flex-col gap-3 mb-8 p-2 xs:p-5 '>
 			<div className='flex flex-col gap-2 mb-20'>

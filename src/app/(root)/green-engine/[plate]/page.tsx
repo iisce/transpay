@@ -12,14 +12,15 @@ export default async function GreenVehicleInfoPage({
 	const vehicle = await getVehicleSummary(params.plate);
 	if (!vehicle) return notFound();
 	const hasTracker =
-		vehicle.tracker_id !== null || vehicle.tracker_id === '';
+		vehicle.tracker.terminal_id !== null ||
+		vehicle.tracker.terminal_id === '';
 	return (
 		<div>
 			<div className='flex flex-col text-center justify-between w-full gap-1'>
 				<div className='text-sm'>
 					<div className='uppercase'>{`Vehicle Owner`}</div>
 					<div className='text-xl font-bold'>
-						{vehicle.owners_name}
+						{vehicle.owner.name}
 					</div>
 				</div>
 				<div className='text-sm uppercase mb-10'>
@@ -32,7 +33,7 @@ export default async function GreenVehicleInfoPage({
 					<div className='text-sm uppercase'>
 						<div className='mb-2'>Tracker ID</div>
 						<div className='text-xl font-bold'>
-							{vehicle.tracker_id}
+							{vehicle.tracker.terminal_id}
 						</div>
 					</div>
 				) : (

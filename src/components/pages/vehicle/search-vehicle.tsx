@@ -7,7 +7,10 @@ import { debtColumns, viewWaiverColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { WAIVER_STATUS } from '@/lib/consts';
-import { getVehicleSummary } from '@/lib/controllers/vehicle-controller';
+import {
+	getVehicleById,
+	getVehicleByPlateNumber,
+} from '@/lib/controllers/vehicle-controller';
 import { getVehicleWaiver } from '@/lib/controllers/waiver.controller';
 import { getSSession } from '@/lib/get-data';
 import { failureIcon, successIcon } from '@/lib/icons';
@@ -19,7 +22,8 @@ import { notFound } from 'next/navigation';
 
 export default async function SearchVehicle({ id }: { id: string }) {
 	const { role } = await getSSession();
-	const vehicle = await getVehicleSummary(id);
+	const vehicle = await getVehicleByPlateNumber(id);
+	console.log({ id, vehicle });
 	const waivers = await getVehicleWaiver(id);
 	const onWaiver = waivers?.waivers.some(
 		(waiver) => waiver.status === WAIVER_STATUS.approved
@@ -29,14 +33,13 @@ export default async function SearchVehicle({ id }: { id: string }) {
 	}
 
 	const isOwing = isBefore(
-		addDays(new Date(vehicle.VehicleBalance.next_transaction_date), 1),
+		addDays(new Date(vehicle.wallet.next_transaction_date), 1),
 		new Date()
 	);
 	const hasTracker =
-		vehicle.tracker_id === '' || vehicle.tracker_id !== null;
-	const dateSupplied = new Date(
-		vehicle.VehicleBalance.next_transaction_date
-	);
+		vehicle.tracker.terminal_id !== '' ||
+		vehicle.tracker.terminal_id !== null;
+	const dateSupplied = new Date(vehicle.wallet.next_transaction_date);
 	dateSupplied.setUTCHours(dateSupplied.getUTCHours() + 2);
 
 	// Access only the date portion and format as desired
@@ -65,7 +68,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 				<div className='text-sm'>
 					<div className='uppercase'>{`Vehicle Owner`}</div>
 					<div className='text-xl font-bold'>
-						{vehicle.owners_name}
+						{vehicle.owner.name}
 					</div>
 				</div>
 				<div className='text-sm uppercase'>
@@ -74,7 +77,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 						{vehicle.plate_number}
 					</div>
 				</div>
-				{vehicle.VehicleBalance && (
+				{vehicle.wallet.wallet_balance && (
 					<div
 						className={`text-sm uppercase ${
 							isOwing
@@ -91,30 +94,26 @@ export default async function SearchVehicle({ id }: { id: string }) {
 						</div>
 					</div>
 				)}
-				{vehicle.VehicleBalance && (
+				{vehicle.wallet.wallet_balance && (
 					<div className='text-sm uppercase'>
 						<div className=''>Total Payment</div>
 						<div className='text-xl font-bold text-awesome-foreground'>
-							₦
-							{vehicle.VehicleBalance.net_total.toFixed(2)}
+							₦{vehicle.wallet.net_total}
 						</div>
 					</div>
 				)}
-				{vehicle.VehicleBalance && (
+				{vehicle.wallet.wallet_balance && (
 					<div className='text-sm uppercase'>
 						<div className=''>Wallet Balance</div>
 						<div className='text-xl font-bold text-awesome-foreground'>
-							₦
-							{vehicle.VehicleBalance.wallet_balance.toFixed(
-								2
-							)}
+							₦{vehicle.wallet.wallet_balance}
 						</div>
 					</div>
 				)}
 
 				{role &&
-					vehicle.tracker_id &&
-					vehicle.tracker_id !== '' && (
+					vehicle.tracker.terminal_id &&
+					vehicle.tracker.terminal_id !== '' && (
 						<Button
 							className='w-full max-w-xl mx-auto text-white rounded-xl bg-primary-800'
 							asChild
@@ -161,20 +160,20 @@ export default async function SearchVehicle({ id }: { id: string }) {
 						<div className=''>
 							<div className='flex justify-between items-center gap-5'>
 								<div className=''>Bank Name</div>
-								{vehicle.VehicleWallet.bank_name}
+								{vehicle.wallet.meta.bank_name}
 							</div>
 							<div className='flex justify-between items-center gap-5'>
 								<div className=''>Account Name</div>
-								{vehicle.VehicleWallet.account_name}
+								{vehicle.wallet.meta.account_name}
 							</div>
 							<div className='flex justify-between items-center gap-5'>
 								<div className=''>Account Number</div>
-								{vehicle.VehicleWallet.nuban}
+								{vehicle.wallet.meta.nuban}
 							</div>
 						</div>
 						<CopyButton
 							label='Copy Account Details'
-							text={`${vehicle.VehicleWallet.bank_name} ${vehicle.VehicleWallet.nuban} ${vehicle.VehicleWallet.account_name}`}
+							text={`${vehicle.wallet.meta.bank_name} ${vehicle.wallet.meta.nuban} ${vehicle.wallet.meta.account_name}`}
 						/>
 					</Card>
 					<div className='w-full'>
@@ -212,9 +211,8 @@ export default async function SearchVehicle({ id }: { id: string }) {
 												totalPendingAmount +
 												daysOwed.length * 20
 											}`} */}
-											{`₦${-vehicle
-												.VehicleBalance
-												.deficit_balance}`}
+											{`₦${-vehicle.wallet
+												.amount_owed}`}
 										</div>
 									</div>
 								</div>
@@ -267,7 +265,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 						<>
 							<DashboardCard
 								name='Vehicle Information'
-								href={`/vehicles/${vehicle.vehicle_id}/vehicle-info`}
+								href={`/vehicles/${vehicle.id}/vehicle-info`}
 								image={'/personalinfo.png'}
 								description={'View Vehicle information'}
 							/>
@@ -276,7 +274,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 								<>
 									<DashboardCard
 										name='Payment'
-										href={`/vehicles/${vehicle.vehicle_id}/payments`}
+										href={`/vehicles/${vehicle.id}/payments`}
 										image={'/payment.png'}
 										description={
 											'Make Payment & Check Payment History'
@@ -285,7 +283,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 
 									{/* <DashboardCard
 										name='Fines & Penalties'
-										href={`/vehicles/${vehicle.vehicle_id}/fines`}
+										href={`/vehicles/${vehicle.id}/fines`}
 										image={'/fineandpenal.png'}
 										description='Fine Driver & Check Fine Payment'
 									/> */}
@@ -293,7 +291,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 							)}
 							<DashboardCard
 								name='Waiver Form'
-								href={`/vehicles/${vehicle.vehicle_id}/waiver`}
+								href={`/vehicles/${vehicle.id}/waiver`}
 								image={'/fineandpenal.png'}
 								description='Fill waiver form to process driver grace period'
 							/>
@@ -315,7 +313,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 												variant='link'
 											>
 												<Link
-													href={`/vehicles/${vehicle.vehicle_id}/fines`}
+													href={`/vehicles/${vehicle.id}/fines`}
 												>
 													See all
 												</Link>
@@ -345,7 +343,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 												variant='link'
 											>
 												<Link
-													href={`/vehicles/${vehicle.vehicle_id}/payments`}
+													href={`/vehicles/${vehicle.id}/payments`}
 												>
 													See all
 												</Link>
@@ -378,7 +376,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 												variant='link'
 											>
 												<Link
-													href={`/vehicles/${vehicle.vehicle_id}/drivers`}
+													href={`/vehicles/${vehicle.id}/drivers`}
 												>
 													See all
 												</Link>

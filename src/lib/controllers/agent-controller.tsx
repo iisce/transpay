@@ -1,12 +1,13 @@
+import { getServerSession } from 'next-auth';
 import { API, URLS } from '../consts';
-import { getSSession } from '../get-data';
+import { options } from '@/app/api/auth/options';
 
 export const getAgentMe = async () => {
-	const session = await getSSession();
+	const session = await getServerSession(options);
 	const headers = {
 		'Content-Type': 'application/json',
 		'api-secret': process.env.API_SECRET || '',
-		Authorization: `Bearer ${session.access_token}`,
+		Authorization: `Bearer ${session?.user.access_token}`,
 	};
 	const url = API + URLS.agent.me;
 	const res = await fetch(url, { headers, cache: 'no-store' });
@@ -22,7 +23,7 @@ export const getAgentMe = async () => {
 // 	const headers = {
 // 		'Content-Type': 'application/json',
 // 		'api-secret': process.env.API_SECRET || '',
-// 		Authorization: `Bearer ${session.access_token}`,
+// 		Authorization: `Bearer ${session?.user.access_token}`,
 // 	};
 // 	const url = API + URLS.green.me;
 // 	const res = await fetch(url, { headers, cache: 'no-store' });
@@ -52,11 +53,11 @@ export const getGreenAgent = async () => {
 };
 
 export const getAgents = async () => {
-	const session = await getSSession();
+	const session = await getServerSession(options);
 	const headers = {
 		'Content-Type': 'application/json',
 		'api-secret': process.env.API_SECRET || '',
-		Authorization: `Bearer ${session.access_token}`,
+		Authorization: `Bearer ${session?.user.access_token}`,
 	};
 	const url = API + URLS.agent.all;
 	const res = await fetch(url, { headers, next: { revalidate: 0 } });
@@ -67,11 +68,11 @@ export const getAgents = async () => {
 };
 
 export const getAgentById = async (id: string) => {
-	const session = await getSSession();
+	const session = await getServerSession(options);
 	const headers = {
 		'Content-Type': 'application/json',
 		'api-secret': process.env.API_SECRET || '',
-		Authorization: `Bearer ${session.access_token}`,
+		Authorization: `Bearer ${session?.user.access_token}`,
 	};
 	const url = `${API}${URLS.agent.all}/${id}`;
 	const res = await fetch(url, { headers, cache: 'no-store' });
@@ -82,11 +83,11 @@ export const getAgentById = async (id: string) => {
 };
 
 export const deleteAgentById = async (id: string) => {
-	const session = await getSSession();
+	const session = await getServerSession(options);
 	const headers = {
 		'Content-Type': 'application/json',
 		'api-secret': process.env.API_SECRET || '',
-		Authorization: `Bearer ${session.access_token}`,
+		Authorization: `Bearer ${session?.user.access_token}`,
 	};
 	const url = `${API}${URLS.agent.all}/${id}`;
 	const res = await fetch(url, {

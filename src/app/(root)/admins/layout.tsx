@@ -1,7 +1,6 @@
-import { getAdminMe } from '@/lib/controllers/admin-controller';
-import { getAgentMe } from '@/lib/controllers/agent-controller';
-import { getSSession, getUserMe } from '@/lib/get-data';
+import { options } from '@/app/api/auth/options';
 import type { Metadata } from 'next';
+import { getServerSession } from 'next-auth';
 import { notFound } from 'next/navigation';
 export const metadata: Metadata = {
 	title: 'Transpay - Admins',
@@ -13,11 +12,7 @@ export default async function DashboardLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	const { role } = await getSSession();
-	const user =
-		role?.toLowerCase() === 'agent'
-			? await getAgentMe()
-			: await getAdminMe();
-	if (user?.role.toLowerCase() !== 'superadmin') return notFound();
+	const session = await getServerSession(options);
+	if (session?.user.role.toLowerCase() !== 'superadmin') return notFound();
 	return <>{children}</>;
 }

@@ -7,19 +7,22 @@ declare module 'next-auth' {
 			access_token: string;
 			email: string;
 			role: string;
+			id: string;
 		} & DefaultSession;
 	}
 	interface User extends DefaultUser {
-		token_type: string;
+		id: string;
 		email: string;
+		role: string;
+		token_type: string;
 		expires_in: string;
 		access_token: string;
-		role: string;
 	}
 }
 declare module 'next-auth' {
 	interface JWT extends DefaultJWT {
 		access_token: string;
 		email: string;
+		id: string;
 	}
 }

@@ -30,6 +30,8 @@ import { DataTableColumnHeader } from './data-column-table-header';
 import UpdateWaiverButton from '@/components/role/rider/update-waiver-button';
 import DeleteWaiverButton from '@/components/shared/delete-buttons/delete-waiver-button';
 import { WAIVER_STATUS } from '@/lib/consts';
+import DeleteAdminButton from '@/components/shared/delete-buttons/delete-admin-button';
+import DeleteAgentButton from '@/components/shared/delete-buttons/delete-agent-button';
 
 export const debtColumns: ColumnDef<IVehiclePayment>[] = [
 	{
@@ -167,7 +169,7 @@ export const paymentColumns: ColumnDef<IVehiclePayment>[] = [
 		},
 	},
 ];
-export const adminsColumns: ColumnDef<IAdmin>[] = [
+export const adminsColumns: ColumnDef<IUserExtended>[] = [
 	{
 		accessorKey: 'name',
 		header: ({ column }) => (
@@ -178,7 +180,7 @@ export const adminsColumns: ColumnDef<IAdmin>[] = [
 		),
 		cell: ({ row }) => (
 			<Link
-				href={`/admins/${row.original.admin_id}`}
+				href={`/admins/${row.original.id}`}
 				className=''
 			>
 				{row.original.name}
@@ -232,18 +234,18 @@ export const adminsColumns: ColumnDef<IAdmin>[] = [
 			return (
 				<div className='flex gap-2 justify-start items-center'>
 					<Link
-						href={`/admins/${row.original.admin_id}`}
+						href={`/admins/${row.original.id}`}
 						className='h-5 w-5 items-center shrink-0'
 					>
 						{editIcon}
 					</Link>
-					{/* <DeleteAdminButton id={row.original.admin_id} /> */}
+					<DeleteAdminButton id={row.original.id} />
 				</div>
 			);
 		},
 	},
 ];
-export const agentsColumns: ColumnDef<IAgent>[] = [
+export const agentsColumns: ColumnDef<IUserExtended>[] = [
 	{
 		accessorKey: 'name',
 		header: ({ column }) => (
@@ -254,20 +256,11 @@ export const agentsColumns: ColumnDef<IAgent>[] = [
 		),
 		cell: ({ row }) => (
 			<Link
-				href={`/agents/${row.original.agent_id}`}
+				href={`/agents/${row.original.id}`}
 				className=''
 			>
 				{row.original.name}
 			</Link>
-		),
-	},
-	{
-		accessorKey: 'role',
-		header: ({ column }) => (
-			<DataTableColumnHeader
-				column={column}
-				title='Type'
-			/>
 		),
 	},
 	{
@@ -281,71 +274,69 @@ export const agentsColumns: ColumnDef<IAgent>[] = [
 		cell: ({ row }) => <div>{row.original.email}</div>,
 	},
 	{
-		accessorKey: 'is_active',
+		accessorKey: 'phone',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Phone'
+			/>
+		),
+		cell: ({ row }) => <div>{row.original.phone}</div>,
+	},
+	{
+		accessorKey: 'blacklisted',
 		header: 'Status',
 		cell: ({ row }) => {
-			if (row.getValue('is_active') === true)
-				return (
-					<Pill
-						status={'active'}
-						text={'active'}
-					/>
-				);
-			else
+			if (row.getValue('blacklisted') === true)
 				return (
 					<Pill
 						status={'inactive'}
 						text={'inactive'}
 					/>
 				);
+			else
+				return (
+					<Pill
+						status={'active'}
+						text={'active'}
+					/>
+				);
 		},
 	},
 	{
 		id: 'actions',
+		header: 'Action',
 		cell: ({ row }) => {
 			return (
-				<DropdownMenu>
-					<DropdownMenuTrigger>
-						<MoreVertical className='h-4 w-4' />
-					</DropdownMenuTrigger>
-					<DropdownMenuContent align='end'>
-						<DropdownMenuItem asChild>
-							<Link
-								href={`/agents/${row.original.agent_id}`}
-							>
-								<span className='h-4 w-4 mr-3'>
-									{editIcon}
-								</span>
-								View Agent
-							</Link>
-						</DropdownMenuItem>
-						<DropdownMenuItem className=' text-destructive-foreground'>
-							<span className='h-4 w-4 mr-3'>
-								{deleteIcon}
-							</span>
-							Delete Agent
-						</DropdownMenuItem>
-					</DropdownMenuContent>
-				</DropdownMenu>
+				<div className='flex gap-2 justify-start items-center'>
+					<Link
+						href={`/agents/${row.original.id}`}
+						className='h-5 w-5 items-center shrink-0'
+					>
+						{editIcon}
+					</Link>
+					<DeleteAgentButton id={row.original.id} />
+				</div>
 			);
 		},
 	},
 ];
+
 export const vehiclesColumns: ColumnDef<IVehicle>[] = [
 	{
 		accessorKey: 'Drivers',
 		header: ({ column }) => (
 			<DataTableColumnHeader
 				column={column}
-				title='Driver'
+				title='Owner'
 			/>
 		),
 		cell: ({ row }) => (
 			<Link
-				href={`/vehicles/${row.original.vehicle_id}`}
+				href={`/vehicles/${row.original.id}`}
 				className=''
 			>
-				{row.original.owners_name}
+				{row.original.owner.name}
 			</Link>
 		),
 	},
@@ -402,9 +393,7 @@ export const vehiclesColumns: ColumnDef<IVehicle>[] = [
 							className='border-b border-black rounded-none'
 							asChild
 						>
-							<Link
-								href={`/vehicles/${vehicle.vehicle_id}`}
-							>
+							<Link href={`/vehicles/${vehicle.id}`}>
 								<span className='h-4 w-4 mr-3'>
 									{editIcon}
 								</span>
@@ -416,7 +405,7 @@ export const vehiclesColumns: ColumnDef<IVehicle>[] = [
 							asChild
 						>
 							<Link
-								href={`/vehicles/${vehicle.vehicle_id}/location`}
+								href={`/vehicles/${vehicle.id}/location`}
 							>
 								<MapPinIcon className='h-4 w-4 mr-3' />
 								View Location
@@ -455,7 +444,7 @@ export const vehiclesColumns: ColumnDef<IVehicle>[] = [
 							className=''
 							onClick={() =>
 								navigator.clipboard.writeText(
-									vehicle.vehicle_id
+									vehicle.id
 								)
 							}
 						>

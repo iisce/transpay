@@ -72,8 +72,8 @@ export function AuthLoginForm() {
 				callbackUrl: '/dashboard',
 			});
 
-			// const result = signInResponse;
-			// console.log(result);
+			const result = signInResponse;
+			console.log(result);
 
 			if (signInResponse?.ok === false) {
 				toast({

@@ -23,8 +23,15 @@ import {
 import React from 'react';
 import { loadingSpinner, successIcon } from '@/lib/icons';
 import { NextResponse } from 'next/server';
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from '../ui/select';
 
-const adminFormSchema = z.object({
+export const adminFormSchema = z.object({
 	name: z
 		.string()
 		.min(2, {
@@ -38,26 +45,44 @@ const adminFormSchema = z.object({
 			required_error: 'Please enter an email.',
 		})
 		.email(),
-	// moi: z.string({
-	// 	required_error: 'Please select a mode of identification',
-	// }),
-	phone: z.string({
-		required_error: 'Please enter phone number.',
+	id_type: z.string({
+		required_error: 'Please select a mode of identification',
 	}),
+	id_number: z.string({
+		required_error: 'Please select a mode of identification',
+	}),
+	address: z
+		.string()
+		.min(2, {
+			message: 'Address must be at least 2 characters.',
+		})
+		.max(30, {
+			message: 'Address must not be longer than 30 characters.',
+		}),
+	lga: z.string({
+		required_error: 'Please enter LGA.',
+	}),
+	city: z.string({
+		required_error: 'Please enter city.',
+	}),
+	state: z.string({
+		required_error: 'Please enter state.',
+	}),
+	unit: z.string({
+		required_error: 'Please enter unit.',
+	}),
+	country: z.string({
+		required_error: 'Please enter country.',
+	}),
+	postal_code: z.string(),
+	phone: z
+		.string({
+			required_error: 'Please enter phone number.',
+		})
+		.regex(/^\+234[789][01]\d{8}$/, 'Phone format (+2348012345678)'),
 	role: z.string({
 		required_error: 'Please choose role.',
 	}),
-	// idNumber: z
-	// 	.string({
-	// 		required_error: 'Please enter identification number.',
-	// 	})
-	// 	.min(8, {
-	// 		message: 'ID number must be at least 8 characters.',
-	// 	})
-	// 	.max(20, {
-	// 		message: 'Username must not be longer than 20 characters.',
-	// 	}),
-	// address: z.string().max(160).min(15),
 	password: z.string().refine((password) => {
 		return (
 			password.length >= 8
@@ -73,12 +98,10 @@ type AdminFormValues = z.infer<typeof adminFormSchema>;
 
 // This can come from your database or API.
 const defaultValues: Partial<AdminFormValues> = {
-	name: '',
-	email: '',
-	phone: '',
-	role: 'admin',
-	password: '',
-	confirmPassword: '',
+	role: 'ADMIN',
+	state: 'Anambra',
+	country: 'Nigeria',
+	id_type: 'NIN',
 };
 export function AdminForm() {
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -91,17 +114,32 @@ export function AdminForm() {
 	});
 
 	async function onSubmit(data: AdminFormValues) {
+		const createAdminPayload = {
+			name: data.name,
+			email: data.email,
+			password: data.password,
+			phone: data.phone,
+			role: data.role,
+			address: {
+				text: data.address,
+				lga: data.lga,
+				city: data.city,
+				state: data.state,
+				unit: data.unit,
+				country: data.country,
+				postal_code: data.postal_code,
+			},
+			identification: {
+				type: data.id_type,
+				number: data.id_number,
+			},
+		};
+		console.log({ createAdminPayload });
 		setIsLoading(true);
 		try {
 			const createAdminResponse = await fetch('/api/create-admin', {
 				method: 'POST',
-				body: JSON.stringify({
-					name: data.name,
-					email: data.email,
-					password: data.password,
-					phone: data.phone,
-					role: data.role,
-				}),
+				body: JSON.stringify(createAdminPayload),
 			});
 			const result = await createAdminResponse.json();
 			if (
@@ -132,10 +170,10 @@ export function AdminForm() {
 				onSubmit={form.handleSubmit(onSubmit)}
 				className='mb-20 flex flex-col gap-5'
 			>
-				<div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
+				<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
 					<FormField
-						control={form.control}
 						name='name'
+						control={form.control}
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel>Name</FormLabel>
@@ -149,9 +187,41 @@ export function AdminForm() {
 							</FormItem>
 						)}
 					/>
-					{/* <FormField
+					<FormField
+						name='phone'
 						control={form.control}
-						name='moi'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Phone Number</FormLabel>
+								<FormControl>
+									<Input
+										placeholder='Enter phone number'
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						name='email'
+						control={form.control}
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Email Address</FormLabel>
+								<FormControl>
+									<Input
+										placeholder='Email'
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						name='id_type'
+						control={form.control}
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel>
@@ -167,13 +237,13 @@ export function AdminForm() {
 										</SelectTrigger>
 									</FormControl>
 									<SelectContent>
-										<SelectItem value='nin'>
+										<SelectItem value='NIN'>
 											NIN
 										</SelectItem>
-										<SelectItem value='bvn'>
+										<SelectItem value='BVN'>
 											BVN
 										</SelectItem>
-										<SelectItem value='pvc'>
+										<SelectItem value='PVC'>
 											Voters Card
 										</SelectItem>
 									</SelectContent>
@@ -181,26 +251,10 @@ export function AdminForm() {
 								<FormMessage />
 							</FormItem>
 						)}
-					/> */}
-					<FormField
-						control={form.control}
-						name='phone'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Phone Number</FormLabel>
-								<FormControl>
-									<Input
-										placeholder='Enter phone number'
-										{...field}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
 					/>
-					{/* <FormField
+					<FormField
+						name='id_number'
 						control={form.control}
-						name='idNumber'
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel>
@@ -215,16 +269,16 @@ export function AdminForm() {
 								<FormMessage />
 							</FormItem>
 						)}
-					/> */}
+					/>
 					<FormField
+						name='address'
 						control={form.control}
-						name='email'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Email Address</FormLabel>
+								<FormLabel>Address</FormLabel>
 								<FormControl>
 									<Input
-										placeholder='Email'
+										placeholder='Street'
 										{...field}
 									/>
 								</FormControl>
@@ -232,26 +286,73 @@ export function AdminForm() {
 							</FormItem>
 						)}
 					/>
-					{/* <FormField
+					<FormField
+						name='unit'
 						control={form.control}
-						name='address'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Address</FormLabel>
+								<FormLabel>Unit</FormLabel>
 								<FormControl>
-									<Textarea
-										placeholder='Address'
-										className='resize-none'
+									<Input
+										placeholder='Unit'
 										{...field}
 									/>
 								</FormControl>
 								<FormMessage />
 							</FormItem>
 						)}
-					/> */}
+					/>
 					<FormField
+						name='city'
 						control={form.control}
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>City</FormLabel>
+								<FormControl>
+									<Input
+										placeholder='City'
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						name='postal_code'
+						control={form.control}
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Postal Code</FormLabel>
+								<FormControl>
+									<Input
+										placeholder='Postal Code'
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						name='lga'
+						control={form.control}
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>LGA</FormLabel>
+								<FormControl>
+									<Input
+										placeholder='LGA'
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
 						name='password'
+						control={form.control}
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel>Password</FormLabel>
@@ -267,8 +368,8 @@ export function AdminForm() {
 						)}
 					/>
 					<FormField
-						control={form.control}
 						name='confirmPassword'
+						control={form.control}
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel>Password</FormLabel>

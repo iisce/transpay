@@ -5,19 +5,18 @@ import { UserNav } from '@/components/shared/user-nav-bar';
 import { Button } from '@/components/ui/button';
 import Searchbar from '@/components/ui/searchbar';
 import { BUS_IMAGE_SAMPLE } from '@/lib/consts';
-import { getAdminMe } from '@/lib/controllers/admin-controller';
 import { getAgentMe } from '@/lib/controllers/agent-controller';
+import { getUser } from '@/lib/controllers/users.controller';
 import { getSSession } from '@/lib/get-data';
 import { NigeriaIcon } from '@/lib/icons';
+import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
+import { options } from './api/auth/options';
 
 export default async function Home() {
-	const { role } = await getSSession();
-	const user =
-		role?.toLowerCase() === 'agent'
-			? await getAgentMe()
-			: await getAdminMe();
+	const session = await getServerSession(options);
+	const user = await getUser(session?.user.id!);
 	return (
 		<main className=''>
 			<div className='h-20 w-full shrink-0 fixed bg-white/50 backdrop-blur z-50'>
@@ -43,7 +42,7 @@ export default async function Home() {
 							<Link href={'/scan'}>Scan QR</Link>
 						</Button>
 						<div className='flex gap-3 items-center text-primary-700'>
-							{user ? (
+							{session ? (
 								<>
 									<Button
 										asChild
@@ -53,7 +52,7 @@ export default async function Home() {
 											Dashboard
 										</Link>
 									</Button>
-									<UserNav user={user} />
+									{user && <UserNav user={user} />}
 								</>
 							) : (
 								<Button

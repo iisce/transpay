@@ -12,15 +12,23 @@ export const getVehicles = async (page?: string, limit?: string) => {
 		'api-secret': process.env.API_SECRET || '',
 		Authorization: `Bearer ${session.access_token}`,
 	};
-	const url = `${API}${URLS.vehicle.all}?page=${page ?? 1}&limit=${
-		limit ?? 10
-	}`;
+	try {
+		const url = `${API}${URLS.vehicle.all}?page=${page ?? 1}&limit=${
+			limit ?? 10
+		}`;
 
-	const res = await fetch(url, { headers, cache: 'no-store' });
-	const data: Promise<IVehicles> = await res.json();
-	if (!res.ok) return undefined;
-	const vehicles = (await data).data;
-	return vehicles;
+		const res = await fetch(url, { headers, cache: 'no-store' });
+		if (!res.ok) return undefined;
+		const result = await res.json();
+		const vehicles: {
+			rows: IVehicle[];
+			meta: { total: number; total_pages: number; page: number };
+		} = result.data;
+		return vehicles;
+	} catch (error: any) {
+		console.log(error);
+		return undefined;
+	}
 };
 
 export const getVehicleById = async (id: string) => {
@@ -30,11 +38,30 @@ export const getVehicleById = async (id: string) => {
 		'api-secret': process.env.API_SECRET || '',
 		Authorization: `Bearer ${session.access_token}`,
 	};
-	const url = `${API}${URLS.vehicle.all}/${id}`;
+	const url = isUUID(id)
+		? `${API}${URLS.vehicle.all}/${id}`
+		: isBarcodeId(id)
+		? `${API}${URLS.vehicle.all}/barcode/${id}`
+		: `${API}${URLS.vehicle.all}/plate-number/${id}`;
 	const res = await fetch(url, { headers, cache: 'no-store' });
-	if (!res.ok) return undefined;
-
 	const result = await res.json();
+	if (!result.status) return undefined;
+
+	const vehicle: IVehicle = result.data;
+	return vehicle;
+};
+export const getVehicleByPlateNumber = async (plate_number: string) => {
+	const session = await getSSession();
+	const headers = {
+		'Content-Type': 'application/json',
+		'api-secret': process.env.API_SECRET || '',
+		Authorization: `Bearer ${session.access_token}`,
+	};
+	const url = `${API}${URLS.vehicle.all}/plate-number/${plate_number}`;
+	const res = await fetch(url, { headers, cache: 'no-store' });
+	const result = await res.json();
+	if (!result.status) return undefined;
+
 	const vehicle: IVehicle = result.data;
 	return vehicle;
 };

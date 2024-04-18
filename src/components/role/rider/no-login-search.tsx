@@ -6,6 +6,7 @@ import { DataTable } from '@/components/ui/table/data-table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { getVehicleSummary } from '@/lib/controllers/vehicle-controller';
 import { failureIcon, successIcon } from '@/lib/icons';
+import { isBefore } from 'date-fns';
 import { MapPin } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -17,20 +18,25 @@ export default async function NoLoginSearch({
 	plate_number: string;
 }) {
 	const vehicle = await getVehicleSummary(plate_number);
-	// console.log('TEST......', vehicle);
+	// sonsole.log('TEST......', vehicle);
 	if (!vehicle) {
 		notFound();
 	}
 	const onWaiver = vehicle.status === 'inactive';
 
-	const pendingPayments = vehicle.VehicleTransactions.filter(
-		(transaction) => transaction.payment_status === 'pending'
+	// const pendingPayments = vehicle.VehicleTransactions.filter(
+	// 	(transaction) => transaction.payment_status === 'pending'
+	// );
+
+	// const totalPendingAmount = pendingPayments.reduce(
+	// 	(acc, order) => acc + order.amount,
+	// 	0
+	// );
+
+	const isOwing = isBefore(
+		new Date(vehicle.wallet.next_transaction_date),
+		new Date()
 	);
-	const totalPendingAmount = pendingPayments.reduce(
-		(acc, order) => acc + order.amount,
-		0
-	);
-	const isOwing = pendingPayments.length > 0;
 
 	return (
 		<div className='h-full w-full max-w-xl mx-auto pb-3 px-3 flex flex-col gap-2'>
@@ -38,7 +44,7 @@ export default async function NoLoginSearch({
 				<div className='text-sm'>
 					<div className='uppercase'>{`Vehicle Owner`}</div>
 					<div className='text-xl font-bold'>
-						{vehicle.owners_name}
+						{vehicle.owner.name}
 					</div>
 				</div>
 				<div className='text-sm uppercase'>
@@ -47,14 +53,14 @@ export default async function NoLoginSearch({
 						{vehicle.plate_number}
 					</div>
 				</div>
-				{vehicle.tracker_id && vehicle.tracker_id !== '' && (
+				{vehicle.id && vehicle.id !== '' && (
 					<Button
 						className='w-full max-w-xl mx-auto text-white rounded-xl bg-primary-800'
 						asChild
 						variant={'default'}
 					>
 						<Link
-							href={`/vehicles/${vehicle.vehicle_id}/location`}
+							href={`/vehicles/${vehicle.id}/location`}
 							className='shrink-0 whitespace-nowrap'
 						>
 							<MapPin className='mr-2 h-4 w-4 shrink-0' />
@@ -79,20 +85,20 @@ export default async function NoLoginSearch({
 						<div className=''>
 							<div className='flex justify-between items-center gap-5'>
 								<div className=''>Bank Name</div>
-								{vehicle.VehicleWallet.bank_name}
+								{vehicle.wallet.meta.bank_name}
 							</div>
 							<div className='flex justify-between items-center gap-5'>
 								<div className=''>Account Name</div>
-								{vehicle.VehicleWallet.account_name}
+								{vehicle.wallet.meta.account_name}
 							</div>
 							<div className='flex justify-between items-center gap-5'>
 								<div className=''>Account Number</div>
-								{vehicle.VehicleWallet.nuban}
+								{vehicle.wallet.meta.nuban}
 							</div>
 						</div>
 						<CopyButton
 							label='Copy Account Details'
-							text={`${vehicle.VehicleWallet.bank_name} ${vehicle.VehicleWallet.nuban} ${vehicle.VehicleWallet.account_name}`}
+							text={`${vehicle.wallet.meta.bank_name} ${vehicle.wallet.meta.nuban} ${vehicle.wallet.meta.account_name}`}
 						/>
 					</Card>
 					<div className='w-full'>
@@ -126,7 +132,7 @@ export default async function NoLoginSearch({
 											Vehicle is Owing!
 										</div>
 										<div className='text-destructive-foreground font-bold text-4xl'>
-											{`₦${totalPendingAmount}`}
+											{`₦${vehicle.wallet.amount_owed}`}
 										</div>
 									</div>
 								</div>
@@ -150,10 +156,11 @@ export default async function NoLoginSearch({
 						<DataTable
 							showPagination
 							columns={debtColumns}
-							data={vehicle.VehicleTransactions.slice(
-								0,
-								10
-							)}
+							// data={vehicle.VehicleTransactions.slice(
+							// 	0,
+							// 	10
+							// )}
+							data={[]}
 						/>
 					</div>
 				</TabsContent>

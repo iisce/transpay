@@ -15,7 +15,7 @@ export const getVehicleWaiverProtected = async (plate_number: string) => {
 	let id;
 	if (isUUID(plate_number) || isBarcodeId(plate_number)) {
 		const vehicle = await getVehicleSummary(plate_number);
-		id = vehicle?.vehicle_id;
+		id = vehicle?.id;
 	}
 	url = `${API}${URLS.vehicle.all}/${id}/waiver?page=1&limit=10`;
 	console.log({ url });
@@ -39,7 +39,7 @@ export const getVehicleWaiver = async (plate_number: string) => {
 	let id;
 	if (isUUID(plate_number) || isBarcodeId(plate_number)) {
 		const vehicle = await getVehicleSummary(plate_number);
-		id = vehicle?.vehicle_id;
+		id = vehicle?.id;
 	}
 	url = `${API}${URLS.vehicle.all}/${id}/waiver/recent`;
 

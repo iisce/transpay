@@ -1,12 +1,33 @@
+import { getServerSession } from 'next-auth';
 import { API, URLS } from '../consts';
-import { getSSession } from '../get-data';
+
+// export const getUser = async () => {
+// 	const session = await getServerSession();
+// 	const headers = {
+// 		'Content-Type': 'application/json',
+// 		'api-secret': process.env.API_SECRET || '',
+// 		Authorization: `Bearer ${session?.user.access_token}`,
+// 	};
+// 	try {
+// 		const url = `${API}${URLS.user}/${session?.user.id}`;
+// 		const res = await fetch(url, { headers, cache: 'no-store' });
+// 		const userRes = await res.json();
+// 		if (!res.status) return undefined;
+// 		const user: IUserMod = userRes.data;
+// 		console.log({ userRes });
+// 		return user;
+// 	} catch (error: any) {
+// 		console.log({ error });
+// 		return undefined;
+// 	}
+// };
 
 export const getAdminMe = async () => {
-	const session = await getSSession();
+	const session = await getServerSession();
 	const headers = {
 		'Content-Type': 'application/json',
 		'api-secret': process.env.API_SECRET || '',
-		Authorization: `Bearer ${session.access_token}`,
+		Authorization: `Bearer ${session?.user.access_token}`,
 	};
 	const url = API + URLS.admin.me;
 	const res = await fetch(url, { headers, cache: 'no-store' });
@@ -18,26 +39,27 @@ export const getAdminMe = async () => {
 };
 
 export const getAdmins = async () => {
-	const session = await getSSession();
+	const session = await getServerSession();
 	const headers = {
 		'Content-Type': 'application/json',
 		'api-secret': process.env.API_SECRET || '',
-		Authorization: `Bearer ${session.access_token}`,
+		Authorization: `Bearer ${session?.user.access_token}`,
 	};
-	const url = API + URLS.admin.all;
+	// const url = API + URLS.admin.all;
+	const url = API + URLS.user;
 	const res = await fetch(url, { headers, next: { revalidate: 0 } });
-	if (!res.ok) return undefined;
-	const data: Promise<IAdmins> = await res.json();
-	const admins = (await data).data.admins;
+	if (!res.status) return undefined;
+	const data = await res.json();
+	const admins: IAdmin[] = (await data).data;
 	return admins;
 };
 
 export const getAdminById = async (id: string) => {
-	const session = await getSSession();
+	const session = await getServerSession();
 	const headers = {
 		'Content-Type': 'application/json',
 		'api-secret': process.env.API_SECRET || '',
-		Authorization: `Bearer ${session.access_token}`,
+		Authorization: `Bearer ${session?.user.access_token}`,
 	};
 	const url = `${API}${URLS.admin.all}/${id}`;
 	const res = await fetch(url, { headers, cache: 'no-store' });
@@ -48,11 +70,11 @@ export const getAdminById = async (id: string) => {
 };
 
 export const deleteAdminById = async (id: string) => {
-	const session = await getSSession();
+	const session = await getServerSession();
 	const headers = {
 		'Content-Type': 'application/json',
 		'api-secret': process.env.API_SECRET || '',
-		Authorization: `Bearer ${session.access_token}`,
+		Authorization: `Bearer ${session?.user.access_token}`,
 	};
 	const url = `${API}${URLS.admin.all}/${id}`;
 	const res = await fetch(url, {

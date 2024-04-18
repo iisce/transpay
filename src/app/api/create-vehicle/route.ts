@@ -10,32 +10,19 @@ export async function POST(req: NextRequest) {
 		'api-secret': process.env.API_SECRET || '',
 		Authorization: `Bearer ${access_token}`,
 	};
-	const payload = {
-		category: body.category,
-		color: body.color,
-		image: body.image,
-		plate_number: body.plate_number,
-		status: body.status,
-		vehicle_type: body.vehicle_type,
-		owners_phone_number: body.owners_phone_number,
-		owners_name: body.owners_name,
-		with_wallet: body.with_wallet,
-		vin: body.vin,
-		barcode_string: body.barcode_string,
-		tracker_id: body.tracker_id,
-	};
+	const payload = body;
+	const url = API + URLS.vehicle.all;
+	const response = await fetch(url, {
+		method: 'POST',
+		headers,
+		body: JSON.stringify(payload),
+	});
+
+	const result = await response.json();
 
 	try {
-		const url = API + URLS.vehicle.all;
-		const response = await fetch(url, {
-			method: 'POST',
-			headers,
-			body: JSON.stringify(payload),
-		});
-
-		const result = await response.json();
-		if (!response.ok) {
-			throw new Error(`Something Went wrong ${response.statusText}`);
+		if (!result.status) {
+			throw new Error(`Something Went wrong ${result}`);
 		} else {
 			return NextResponse.json(result);
 		}
@@ -46,28 +33,57 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
 	const { access_token } = await getSSession();
-	const body: ICreateVehicleForm = await req.json();
+	const body = await req.json();
 	const headers = {
 		'Content-Type': 'application/json',
 		'api-secret': process.env.API_SECRET || '',
 		Authorization: `Bearer ${access_token}`,
 	};
+	const payload = {
+		category: body.category,
+		plate_number: body.plate_number,
+		asin_number:
+			body.asin_number?.trim() !== '' ? body.asin_number : 'NULL',
+		t_code: body.t_code?.trim() !== '' ? body.t_code : 'NULL',
+		color: body.color,
+		image: body.image,
+		status: body.status,
+		type: body.type,
+		vin: body.vin,
+		barcode: body.barcode,
+		tracker_id: body.tracker_id,
+		blacklisted: body.blacklisted,
+		owner: {
+			name: body.owner.name,
+			phone: body.owner.phone,
+			address: body.owner.address,
+			gender: body.owner.gender,
+			marital_status: body.owner.marital_status,
+			whatsapp: body.owner.whatsapp,
+			email: body.owner.email,
+			valid_id: body.owner.valid_id,
+			nok_name: body.owner.nok_name,
+			nok_phone: body.owner.nok_phone,
+			nok_relationship: body.owner.nok_relationship,
+		},
+	};
 
 	try {
-		const url = `${API}${URLS.vehicle.all}/${body.vehicle_id}`;
+		const url = `${API}${URLS.vehicle.all}/${body.id}`;
 		const response = await fetch(url, {
 			method: 'PUT',
 			headers,
-			body: JSON.stringify(body),
+			body: JSON.stringify(payload),
 		});
 		const result = await response.json();
-		if (!response.ok) {
-			throw new Error(`Something Went wrong ${response.statusText}`);
+		if (!result.status) {
+			throw new Error(`Something Went wrong ${result.status}`);
 		} else {
 			return NextResponse.json(result);
 		}
 	} catch (error: any) {
-		return error?.message;
+		console.log({ error });
+		return error;
 	}
 }
 

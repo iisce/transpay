@@ -120,23 +120,30 @@ type IRole = 'superadmin' | 'admin' | 'agent';
 interface IDashboardCard {
 	title: string;
 	amount: number;
-	type: 'positive' | 'negative' | 'neutral';
-	percent: number;
 	desc?: string;
 }
 interface IActivity {
-	id: number;
-	activity_id: string;
-	user_role: string;
-	user_id: string;
+	id: string;
+	created_at: string;
+	updated_at: string;
+	deleted_at: string;
 	name: string;
 	description: string;
-	createdAt: string;
-	updatedAt: string;
+	meta: {
+		user: {
+			id: string;
+			name: string;
+			role: string;
+			email: string;
+			expires_in: string;
+			token_type: string;
+			access_token: string;
+		};
+	};
 }
 
 interface IActivityCard {
-	id: number;
+	id: string;
 	activity_id: string;
 	user_role?: string;
 	user_id?: string;
@@ -205,84 +212,77 @@ interface IDriver {
 	>;
 }
 
-interface IVehicle extends IWallet {
-	id: number;
-	vehicle_id: string;
+interface IWallet {
+	id: string;
+	created_at: string;
+	updated_at: string;
+	deleted_at: string;
+	meta: {
+		id: number;
+		email: string;
+		nuban: string;
+		status: string;
+		country: string;
+		bank_code: string;
+		bank_name: string;
+		barter_id: string;
+		created_at: string;
+		account_name: string;
+		mobilenumber: string;
+		account_reference: string;
+	};
+	wallet_balance: string;
+	amount_owed: string;
+	net_total: string;
+	next_transaction_date: string;
+}
+
+interface IOwner {
+	name: string;
+	email: string;
+	phone: string;
+	whatsapp: string;
+	gender: string;
+	address: string;
+	marital_status: string;
+	valid_id: string;
+	nok_name: string;
+	nok_phone: string;
+	nok_relationship: string;
+}
+interface IVehicle {
+	id: string;
+	created_at: string;
+	updated_at: string;
+	deleted_at: string;
 	color: string;
 	category: string;
 	plate_number: string;
 	image: string;
-	user_role: string;
-	user_id: string;
 	blacklisted: boolean;
-	current_driver: string;
 	status: string;
-	deleted: boolean;
-	vehicle_type: string;
+	type: string;
 	vin: string;
-	barcode_string: string;
-	owners_phone_number: string;
-	owners_name: string;
-	tracker_id: string;
-	createdAt: string;
-	updatedAt: string;
-	Drivers: IDriver[];
-	VehicleTransactions: {
-		id: number;
-		vehicle_transaction_id: string;
-		vehicle_id: string;
-		transaction_date: string;
-		description: string;
-		payment_gateway_name: string;
-		transaction_type: string;
-		amount: number;
-		currency: string;
-		invoice_number: string;
-		invoice_prefix: string;
-		invoice_details: string;
-		payment_type: string;
-		user_role: string;
-		user_id: string;
-		payment_status: string;
-		status: boolean;
-		transfer_id: string;
-		last_message: string;
-		deficit: number;
-		createdAt: string;
-		updatedAt: string;
-	}[];
-	VehicleFines: [];
-	VehicleWaivers: [];
-	VehicleWallet: {
-		vehicle_id: string;
-		nuban: string;
-		account_name: string;
-		bank_name: string;
-	};
-	VehicleBalance: {
-		id: number;
-		vehicle_balance_id: string;
-		vehicle_id: string;
-		wallet_balance: number;
-		deficit_balance: number;
-		net_total: number;
-		next_transaction_date: string;
-		createdAt: string;
-		updatedAt: string;
-	};
-	VehicleTracker: null;
-	wallet_balance: {
-		currency: string;
-		available_balance: number;
-		ledger_balance: number;
-	};
+	barcode: string;
+	owner: IOwner;
+	asin_number: string;
+	t_code: string;
+	wallet: IWallet;
+	tracker: ITrackerMin;
 }
 
-interface IWallet {
-	vehicle_id: string;
-	nuban: number;
-	account_name: string;
-	bank_name: string;
+interface ITrackerMin {
+	id: string;
+	created_at: string;
+	updated_at: string;
+	deleted_at: string;
+	terminal_id: string;
+	info: string;
+	stats: string;
+	url: string;
+	fee: string;
+	unpaid: string;
+	total: string;
 }
 
 interface IVehicleTransaction {
@@ -483,6 +483,80 @@ interface IRevenue {
 		revenue: number;
 	};
 }
+
+interface ITracker {
+	address: string;
+	ancestors: string;
+	carNumber: string;
+	createTime: string;
+	device: string;
+	enableTime: number;
+	expire: boolean;
+	hasChildren: boolean;
+	id: number;
+	idCard: string;
+	linkman: string;
+	location: ILocation;
+	newPassword: string;
+	nickname: string;
+	password: string;
+	performance: string;
+	permission: string;
+	picture: string;
+	powerOnly: boolean;
+	powerOnlyStartTime: number;
+	realname: string;
+	remark: string;
+	role: number;
+	salt: string;
+	state: number;
+	telephone: string;
+	terminalID: string;
+	token: string;
+	user_id: number;
+	username: string;
+}
+
+interface ILocation {
+	acc: boolean;
+	bdLat: number;
+	bdLon: number;
+	course: number;
+	deviceNumber: string;
+	deviceProtocol: number;
+	deviceType: string;
+	electric: number;
+	gcjLat: number;
+	gcjLon: number;
+	gsm: number;
+	humidity: number;
+	iccid: string;
+	id: string;
+	lat: number;
+	lbs: null;
+	levelPercent: number;
+	locationType: string;
+	lon: number;
+	networkProtocol: string;
+	speed: number;
+	state: number;
+	stateTime: number;
+	temperature: number;
+	terminalID: string;
+	utcTime: number;
+	voltage: number;
+}
+
+interface IModifiedTrackerDetails {
+	carNumber: string;
+	createTime: string;
+	lat: number;
+	lon: number;
+	nickname: string;
+	terminalID: string;
+	speed: number;
+}
+
 interface ICreateVehicleForm {
 	image: string;
 	category: string;
@@ -616,3 +690,27 @@ interface ILGARevenueSummary {
 	trackerRev: number;
 }
 type ITotalDashboard = 'DAILY_FEES' | 'TOTAL' | 'TRACKER_FEES';
+
+/////////////////////////////////////////
+interface IUserExtended {
+	id: string;
+	created_at: string;
+	updated_at: string;
+	deleted_at: string;
+	name: string;
+	phone: string;
+	password: string;
+	email: string;
+	role: string;
+	blacklisted: boolean;
+	address: {
+		lga: string;
+		city: string;
+		text: string;
+		unit: string;
+		state: string;
+		country: string;
+		postal_code: string;
+	};
+	identification: { type: string; number: string };
+}

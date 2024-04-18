@@ -1,14 +1,28 @@
+import { PaginationISCE } from '@/components/shared/pagination-isce';
 import { Button } from '@/components/ui/button';
 import { agentsColumns } from '@/components/ui/table/columns';
 import { DataTable } from '@/components/ui/table/data-table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { getAgents } from '@/lib/controllers/agent-controller';
+import { getUsers } from '@/lib/controllers/users.controller';
 import { addIcon } from '@/lib/icons';
 import Link from 'next/link';
-import React from 'react';
 
-export default async function Agents() {
-	const agents = await getAgents();
+export default async function Agents({
+	searchParams,
+}: {
+	searchParams: { [key: string]: string | undefined };
+}) {
+	const page = searchParams['page'] ?? '1';
+	const limit = searchParams['limit'] ?? '15';
+	const agents = await getUsers({
+		page,
+		limit,
+		blacklisted: false,
+		type: 'agents',
+	});
+
+	const start = (Number(page) - 1) * Number(limit);
+	const end = start + Number(limit);
 	return (
 		<div className='p-5 w-full h-full flex flex-col'>
 			<div className='flex justify-between items-center uppercase font-bold'>
@@ -26,7 +40,7 @@ export default async function Agents() {
 							<div className='mr-2 h-4 w-4 shrink-0'>
 								{addIcon}
 							</div>
-							New Agent
+							New Admin
 						</Link>
 					</Button>
 				</div>
@@ -47,9 +61,6 @@ export default async function Agents() {
 						<TabsTrigger value='inactive'>
 							Inactive
 						</TabsTrigger>
-						<TabsTrigger value='blacklisted'>
-							Blacklisted
-						</TabsTrigger>
 					</TabsList>
 					<TabsContent value='all'>
 						<DataTable
@@ -59,8 +70,18 @@ export default async function Agents() {
 							showColumns
 							showPagination
 							columns={agentsColumns}
-							data={agents || []}
+							data={agents?.rows ?? []}
 						/>
+						{agents && agents.rows && (
+							<PaginationISCE
+								hasNextPage={end < agents.meta.total}
+								hasPrevPage={start > 0}
+								page={Number(page)}
+								limit={Number(limit)}
+								total={agents.meta.total}
+								hrefPrefix='/agents'
+							/>
+						)}
 					</TabsContent>
 					<TabsContent value='active'>
 						<DataTable
@@ -68,12 +89,16 @@ export default async function Agents() {
 							searchWith='name'
 							searchWithPlaceholder='Search with name'
 							showColumns
-							showPagination
 							columns={agentsColumns}
 							data={
-								agents?.filter(
-									(agent) => agent.is_active === true
-								) || []
+								(agents &&
+									agents.rows.length > 0 &&
+									agents.rows?.filter(
+										(agent) =>
+											agent.blacklisted ===
+											false
+									)) ||
+								[]
 							}
 						/>
 					</TabsContent>
@@ -83,29 +108,16 @@ export default async function Agents() {
 							searchWith='name'
 							searchWithPlaceholder='Search with name'
 							showColumns
-							showPagination
 							columns={agentsColumns}
 							data={
-								agents?.filter(
-									(agent) =>
-										agent.is_active === false
-								) || []
-							}
-						/>
-					</TabsContent>
-					<TabsContent value='blacklisted'>
-						<DataTable
-							showSearch
-							searchWith='name'
-							searchWithPlaceholder='Search with name'
-							showColumns
-							showPagination
-							columns={agentsColumns}
-							data={
-								agents?.filter(
-									(agent) =>
-										agent.blacklisted === true
-								) || []
+								(agents &&
+									agents.rows.length > 0 &&
+									agents.rows?.filter(
+										(agent) =>
+											agent.blacklisted ===
+											true
+									)) ||
+								[]
 							}
 						/>
 					</TabsContent>

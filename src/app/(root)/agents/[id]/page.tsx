@@ -2,14 +2,15 @@ import { UpdateAgentForm } from '@/components/forms/update-agent-form';
 import ActivityList from '@/components/pages/activities/activity-list';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { getAllActivities } from '@/lib/controllers/activity-controller';
+import { getAllActivities } from '@/lib/controllers/activity.controller';
 import { getAgentById } from '@/lib/controllers/agent-controller';
+import { getUser } from '@/lib/controllers/users.controller';
 import { addIcon } from '@/lib/icons';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
-	const agent = await getAgentById(params.id);
+	const agent = await getUser(params.id);
 	return {
 		title: `Transpay Agent - ${agent?.name.toLocaleUpperCase()}`,
 	};
@@ -20,7 +21,7 @@ export default async function SingularAgent({
 }: {
 	params: { id: string };
 }) {
-	const agent = await getAgentById(params.id);
+	const agent = await getUser(params.id);
 	if (!agent) return notFound();
 
 	const all_activities = await getAllActivities();
@@ -52,7 +53,7 @@ export default async function SingularAgent({
 							variant='link'
 						>
 							<Link
-								href={`/admins/${agent.agent_id}/activities`}
+								href={`/agents/${agent.id}/activities`}
 							>
 								See all
 							</Link>
@@ -61,10 +62,7 @@ export default async function SingularAgent({
 					<div>
 						<Card className='bg-secondary'>
 							<ActivityList
-								allActivities={all_activities.slice(
-									0,
-									3
-								)}
+								allActivities={all_activities}
 							/>
 						</Card>
 					</div>

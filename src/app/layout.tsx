@@ -1,11 +1,12 @@
 import { ThemeProvider } from '@/components/ui/theme-provider';
-import './globals.css';
-import type { Metadata } from 'next';
-import { Lato } from 'next/font/google';
 import { Toaster } from '@/components/ui/toaster';
-import NextTopLoader from 'nextjs-toploader';
+import NextAuthProvider from '@/lib/providers/nextauth-provider';
 import Provider from '@/lib/session-provider';
 import { Analytics } from '@vercel/analytics/react';
+import type { Metadata } from 'next';
+import { Lato } from 'next/font/google';
+import NextTopLoader from 'nextjs-toploader';
+import './globals.css';
 
 const lato = Lato({
 	weight: ['100', '300', '400', '700', '900'],
@@ -35,21 +36,23 @@ export default function RootLayout({
 		>
 			<Provider>
 				<body className={`${lato.className}`}>
-					<ThemeProvider
-						attribute='class'
-						defaultTheme='light'
-						enableSystem
-					>
-						<div className=''>
-							<NextTopLoader
-								color='#7F7433'
-								showSpinner={false}
-							/>
-							{children}
-							<Toaster />
-						</div>
-					</ThemeProvider>
-					<Analytics />
+					<NextAuthProvider>
+						<ThemeProvider
+							attribute='class'
+							defaultTheme='light'
+							enableSystem
+						>
+							<div className=''>
+								<NextTopLoader
+									color='#7F7433'
+									showSpinner={false}
+								/>
+								{children}
+								<Toaster />
+							</div>
+						</ThemeProvider>
+						<Analytics />
+					</NextAuthProvider>
 				</body>
 			</Provider>
 		</html>

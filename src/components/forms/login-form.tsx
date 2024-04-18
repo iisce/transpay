@@ -1,9 +1,21 @@
 'use client';
 
+import { loadingSpinner, successIcon } from '@/lib/icons';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { signIn } from 'next-auth/react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { useToast } from '../ui/use-toast';
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+} from '../ui/alert-dialog';
+import { Button } from '../ui/button';
+import { Checkbox } from '../ui/checkbox';
 import {
 	Form,
 	FormControl,
@@ -13,26 +25,7 @@ import {
 	FormMessage,
 } from '../ui/form';
 import { Input } from '../ui/input';
-import { Button } from '../ui/button';
-import Link from 'next/link';
-import {
-	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
-	AlertDialogContent,
-} from '../ui/alert-dialog';
-import React from 'react';
-import { loadingSpinner, successIcon } from '@/lib/icons';
-import { Checkbox } from '../ui/checkbox';
-import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from '../ui/select';
+import { useToast } from '../ui/use-toast';
 
 const agentFormSchema = z.object({
 	email: z
@@ -69,11 +62,9 @@ export function LoginForm({ error }: { error?: string }) {
 			const signInResponse = await signIn('credentials', {
 				email: data.email,
 				password: data.password,
-				role: 'agent',
 				redirect: true,
 				callbackUrl: '/dashboard',
 			});
-			router.push('/dashboard');
 			return signInResponse;
 		} catch (error: any) {
 			console.log(error);
@@ -94,7 +85,7 @@ export function LoginForm({ error }: { error?: string }) {
 				<div className='grid gap-5'>
 					{error && (
 						<div className='text-destructive-foreground text-center text-xs'>
-							Incorrect email or password
+							Something went wrong!!!
 						</div>
 					)}
 					<FormField

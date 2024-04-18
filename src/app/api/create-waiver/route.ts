@@ -19,7 +19,6 @@ export async function POST(req: NextRequest) {
 		end_date: body.end_date,
 	};
 	const url = API + URLS.vehicle.all + '/' + body.id + '/waiver';
-	console.log('create-waiver api endpoint... ', { payload, url });
 	try {
 		const response = await fetch(url, {
 			method: 'POST',
@@ -28,7 +27,6 @@ export async function POST(req: NextRequest) {
 		});
 
 		const result = await response.json();
-		console.log('result from create-waiver api endpoint...', result);
 		if (!response.ok) {
 			// throw new Error(`Something Went wrong ${response.statusText}`);
 			return NextResponse.json({ error: result }, { status: 409 });
@@ -57,11 +55,6 @@ export async function PUT(req: NextRequest) {
 			body: JSON.stringify(body),
 		});
 		const result = await response.json();
-		console.log({
-			RESULT: result,
-			URL: url,
-			BODY: body,
-		});
 		if (!response.ok) {
 			throw new Error(`Something Went wrong ${response.statusText}`);
 		} else {
@@ -86,7 +79,6 @@ export async function DELETE(req: NextRequest) {
 			headers,
 		});
 		const result = await response.json();
-		console.log({ result, url });
 		if (!result.success) {
 			return NextResponse.json(response.statusText);
 		} else {

@@ -1,17 +1,15 @@
 import { UpdateAdminForm } from '@/components/forms/update-admin-form';
-import { Button } from '@/components/ui/button';
-import { getAdminById } from '@/lib/controllers/admin-controller';
-import { addIcon } from '@/lib/icons';
-import { notFound } from 'next/navigation';
-import React from 'react';
-import Link from 'next/link';
-import ActivityCard from '@/components/shared/activity-card';
-import { Card } from '@/components/ui/card';
-import { getAllActivities } from '@/lib/controllers/activity-controller';
 import ActivityList from '@/components/pages/activities/activity-list';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { getAllActivities } from '@/lib/controllers/activity.controller';
+import { getUser } from '@/lib/controllers/users.controller';
+import { addIcon } from '@/lib/icons';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
-	const admin = await getAdminById(params.id);
+	const admin = await getUser(params.id);
 	return {
 		title: `Transpay Admin - ${admin?.name.toLocaleUpperCase()}`,
 	};
@@ -23,8 +21,8 @@ export default async function SingularAdmin({
 	params: { id: string };
 }) {
 	const all_activities = await getAllActivities();
-	if (!all_activities) return notFound();
-	const admin = await getAdminById(params.id);
+	const admin = await getUser(params.id);
+
 	if (!admin) return notFound();
 	else
 		return (
@@ -51,7 +49,7 @@ export default async function SingularAdmin({
 								variant='link'
 							>
 								<Link
-									href={`/admins/${admin.admin_id}/activities`}
+									href={`/admins/${admin.id}/activities`}
 								>
 									See all
 								</Link>
@@ -60,10 +58,7 @@ export default async function SingularAdmin({
 						<div>
 							<Card className='bg-secondary'>
 								<ActivityList
-									allActivities={all_activities.slice(
-										0,
-										3
-									)}
+									allActivities={all_activities}
 								/>
 							</Card>
 						</div>

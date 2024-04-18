@@ -2,6 +2,7 @@ import {
 	ActivitySquareIcon,
 	CarTaxiFront,
 	HomeIcon,
+	Map,
 	SettingsIcon,
 } from 'lucide-react';
 import {
@@ -47,11 +48,11 @@ export const SIDEBAR_LINKS = [
 		href: '/vehicles?page=1&limit=15',
 		icon: <CarTaxiFront className='h-5 w-5' />,
 	},
-	{
-		title: 'Drivers',
-		href: '/drivers',
-		icon: driverIcon,
-	},
+	// {
+	// 	title: 'Drivers',
+	// 	href: '/drivers',
+	// 	icon: driverIcon,
+	// },
 	// {
 	// 	title: 'Fines & Penalties',
 	// 	href: '/fines',
@@ -71,6 +72,11 @@ export const SIDEBAR_LINKS = [
 		title: 'Revenue',
 		href: '/revenue',
 		icon: revenueIcon,
+	},
+	{
+		title: 'Map',
+		href: '/map',
+		icon: <Map className='h-5 w-5' />,
 	},
 	// {
 	// 	title: 'Property',
@@ -897,14 +903,14 @@ export const WEB_AGENT_CARD = [
 		image: '/scanplate.png',
 	},
 
-	{
-		name: 'Drivers',
-		description: 'Drivers list & Update',
-		icon: peopleIcon,
-		number: '2,500',
-		href: '/web-agent/driver',
-		image: '/drivers.png',
-	},
+	// {
+	// 	name: 'Drivers',
+	// 	description: 'Drivers list & Update',
+	// 	icon: peopleIcon,
+	// 	number: '2,500',
+	// 	href: '/web-agent/driver',
+	// 	image: '/drivers.png',
+	// },
 ];
 export const WEB_AGENT_DRIVER_CARD = [
 	{
@@ -1685,10 +1691,17 @@ export const LGA = [
 // export const API = 'https://squid-app-ruxoz.ondigitalocean.app';
 // export const API = 'http://localhost:5000';
 // export const API = 'https://guided-adequately-hare.ngrok-free.app'; // Abdullah PC
-export const API = 'https://pig-crisp-logically.ngrok-free.app'; // Rex PC
+export const API =
+	process.env.TEST_BACKEND_URL ||
+	'https://pig-crisp-logically.ngrok-free.app'; // Rex PC
 export const URLS = {
 	activity: {
 		all: '/api/v1/activities',
+	},
+	'audit-trails': {
+		all: '/api/v1/audit-trails',
+		vehicle: '/api/v1/audit-trails/vehicles',
+		user: '/api/v1/audit-trails/users',
 	},
 	admin: {
 		all: '/api/v1/admins',
@@ -1705,8 +1718,8 @@ export const URLS = {
 	},
 	auth: {
 		signin: {
-			admin: '/api/v1/admins/login',
-			agent: '/api/v1/agents/login',
+			admin: '/api/v1/users/login',
+			agent: '/api/v1/users/login',
 		},
 	},
 	dashboard: {
@@ -1735,7 +1748,21 @@ export const URLS = {
 		search: '/api/v1/vehicles/search', // add vehicle to blacklist
 	},
 	settings: '/api/v1/settings', // for add ${id} for single.
+	tracker: {
+		location: '/location/find',
+		stat: '/stat/find',
+	},
+	transactions: {
+		all: '/api/v1/transaction',
+		'net-total': '/api/v1/transaction/total-net',
+		'total-revenue': '/api/v1/transaction/total-revenue',
+		'total-tracker': '/api/v1/transaction/total-tracker',
+	},
+	user: '/api/v1/users',
 };
+
+export const TRACKER_BASE_URL =
+	'https://api.gwgps12580.com/v1/Ch_manage_controller/api';
 export const BUS_IMAGE_SAMPLE =
 	'https://images.unsplash.com/photo-1616792577902-f1d86383a21b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2803&q=80';
 export const SLIDES = [
@@ -2108,3 +2135,16 @@ export enum WAIVER_STATUS {
 	pending = 'PENDING',
 	cancelled = 'CANCELLED',
 }
+
+export const ALL_IMEIS = [
+	'867111060130538',
+	'867111060130801',
+	'867111060133243',
+	'867111060133268',
+	'867111060133391',
+	'867111060318976',
+	'867111060320394',
+	'867111060320451',
+	'867111060320642',
+	'867111060320659',
+];

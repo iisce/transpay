@@ -27,11 +27,12 @@ type VehicleFormValues = z.infer<typeof vehicleTrackerFormSchema>;
 export function AddTrackerForm({ vehicle }: { vehicle: IVehicleSummary }) {
 	const router = useRouter();
 	const hasTracker =
-		vehicle.tracker_id !== null || vehicle.tracker_id === '';
+		vehicle.tracker.terminal_id !== null ||
+		vehicle.tracker.terminal_id === '';
 	hasTracker &&
 		router.push(`/green-engine/${vehicle.plate_number.toLowerCase()}`);
 	const defaultValues: Partial<VehicleFormValues> = {
-		tracker_id: vehicle.tracker_id,
+		tracker_id: vehicle.tracker.terminal_id,
 	};
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const { toast } = useToast();
@@ -48,7 +49,7 @@ export function AddTrackerForm({ vehicle }: { vehicle: IVehicleSummary }) {
 				method: 'PUT',
 				body: JSON.stringify({
 					tracker_id: data.tracker_id,
-					vehicle_id: vehicle.vehicle_id,
+					vehicle_id: vehicle.id,
 				}),
 			});
 			const result = await addTrackerResponse.json();

@@ -1,9 +1,9 @@
 'use client';
-import { deleteIcon, loadingSpinner } from '@/lib/icons';
-import React from 'react';
-import { NextResponse } from 'next/server';
-import { useRouter } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
+import { LoaderIcon, Trash } from 'lucide-react';
+import { revalidatePath } from 'next/cache';
+import { useRouter } from 'next/navigation';
+import React from 'react';
 
 export default function DeleteAdminButton({ id }: { id: string }) {
 	const router = useRouter();
@@ -15,26 +15,24 @@ export default function DeleteAdminButton({ id }: { id: string }) {
 			const createAdminResponse = await fetch('/api/create-admin', {
 				method: 'DELETE',
 				body: JSON.stringify({
-					admin_id: id,
+					id: id,
 				}),
 			});
 			const result = await createAdminResponse.json();
-			if (result.success) {
+			if (result.status) {
 				toast({
 					title: 'Deleted Successfully',
 				});
 				setIsLoading(false);
 				console.log({ result });
+				revalidatePath('/admins', 'page');
 				router.push(`/admins`);
-				return NextResponse.json(result);
 			} else {
 				setIsLoading(false);
 				toast({
 					title: result.message,
 				});
-				throw new Error(
-					`Something Went wrong ${result.statusText}`
-				);
+				throw new Error(`Something Went wrong ${result.error}`);
 			}
 		} catch (error) {
 			setIsLoading(false);
@@ -45,15 +43,11 @@ export default function DeleteAdminButton({ id }: { id: string }) {
 			className='items-center cursor-pointer'
 			onClick={() => handleDelete(id)}
 		>
-			<span className='h-4 w-4'>
-				{isLoading ? (
-					<div className='h-4 w-4 object-contain'>
-						{loadingSpinner}
-					</div>
-				) : (
-					deleteIcon
-				)}
-			</span>
+			{isLoading ? (
+				<LoaderIcon className='h-4 w-4 animate-spin' />
+			) : (
+				<Trash className='h-4 w-4' />
+			)}
 		</div>
 	);
 }

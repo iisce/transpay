@@ -1,6 +1,6 @@
 import { RevenueCharts } from '@/components/shared/chats/revenue-chart';
 import { TRANSACTION_TYPE } from '@/lib/consts';
-import { getRevenueStats } from '@/lib/controllers/revenue-controller';
+import { getRevenueStats } from '@/lib/controllers/revenue.controller';
 import {
 	compareDates,
 	transformTransactionsToDaysData,
@@ -46,7 +46,5 @@ export default async function RevenueChartContainer({
 			: transformTransactionsToYearsData(
 					revenueData?.transactions ?? []
 			  );
-
-	console.log({ scope, formattedData });
 	return <RevenueCharts data={formattedData} />;
 }

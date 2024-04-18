@@ -1,16 +1,19 @@
-import { getDashboardTotalYearlyRevenue } from '@/lib/get-data';
+import { getDashboardTotalRevenue } from '@/lib/get-data';
 import DashboardCard from './dashboard-card';
+import { format, subYears } from 'date-fns';
 
 export default async function YearlyTotalRevenue() {
-	const yearlyRevenueTotal = await getDashboardTotalYearlyRevenue(
-		'DAILY_FEES'
+	const today = new Date();
+	const one_year_ago = subYears(today, 1);
+	const yearlyRevenueTotal = await getDashboardTotalRevenue(
+		format(one_year_ago, 'yyyy-MM-dd'),
+		format(today, 'yyyy-MM-dd')
 	);
+	console.log({ yearlyRevenueTotal });
 	return (
 		<DashboardCard
-			type='positive'
 			title='Yearly Total Revenue'
 			amount={yearlyRevenueTotal || 0}
-			percent={0}
 			desc='Year Till Date'
 		/>
 	);

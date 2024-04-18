@@ -18,20 +18,10 @@ export default async function VehicleInformationPage({
 		<>
 			<div className='w-full flex flex-col gap-3 mb-8 p-2 xs:p-5  '>
 				<div className=''>
-					<h1 className='text-title1Bold py-2'>
-						Vehicle Owner: Mr. {vehicle.owners_name}
-					</h1>
+					<h1 className='text-title1Bold py-2'>Edit Vehicle</h1>
 				</div>
 
-				{/* Vehicle Plate Information */}
-				<div className='h-12 shrink-0 bg-primary w-full rounded-2xl flex overflow-hidden text-white items-center'>
-					<div className='h-12 w-12 bg-black p-3'>{addIcon}</div>
-					<div className='p-3'>Vehicle Information</div>
-				</div>
-
-				<div>
-					<UpdateVehicleForm vehicle={vehicle} />
-				</div>
+				<UpdateVehicleForm vehicle={vehicle} />
 			</div>
 		</>
 	);

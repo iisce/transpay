@@ -13,7 +13,7 @@ export default async function DashboardActivities() {
 							key={k}
 							id={activity.id}
 							name={activity.name}
-							activity_id={activity.activity_id}
+							activity_id={activity.id}
 							description={activity.description}
 							// time={format(
 							// 	new Date(activity.createdAt),

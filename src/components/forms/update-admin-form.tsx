@@ -18,8 +18,16 @@ import { loadingSpinner } from '@/lib/icons';
 import { NextResponse } from 'next/server';
 import DeleteAdminButton from '../shared/delete-buttons/delete-admin-button';
 import { Checkbox } from '../ui/checkbox';
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from '../ui/select';
+import { useRouter } from 'next/navigation';
 
-const adminFormSchema = z.object({
+export const updateAdminFormSchema = z.object({
 	name: z
 		.string()
 		.min(2, {
@@ -33,51 +41,109 @@ const adminFormSchema = z.object({
 			required_error: 'Please enter an email.',
 		})
 		.email(),
-	blacklisted: z.boolean().optional(),
-	phone: z.string({
-		required_error: 'Please enter phone number.',
+	id_type: z.string({
+		required_error: 'Please select a mode of identification',
 	}),
+	blacklisted: z.boolean().optional(),
+	id_number: z.string({
+		required_error: 'Please select a mode of identification',
+	}),
+	address: z
+		.string()
+		.min(2, {
+			message: 'Address must be at least 2 characters.',
+		})
+		.max(30, {
+			message: 'Address must not be longer than 30 characters.',
+		}),
+	lga: z.string({
+		required_error: 'Please enter LGA.',
+	}),
+	city: z.string({
+		required_error: 'Please enter city.',
+	}),
+	state: z.string({
+		required_error: 'Please enter state.',
+	}),
+	unit: z.string({
+		required_error: 'Please enter unit.',
+	}),
+	country: z.string({
+		required_error: 'Please enter country.',
+	}),
+	postal_code: z.string(),
+	id: z.string(),
+	phone: z
+		.string({
+			required_error: 'Please enter phone number.',
+		})
+		.regex(/^\+234[789][01]\d{8}$/, 'Phone format (+2348012345678)'),
 	role: z.string({
 		required_error: 'Please choose role.',
 	}),
 });
 
-type AdminFormValues = z.infer<typeof adminFormSchema>;
+export type UpdateAdminFormValues = z.infer<typeof updateAdminFormSchema>;
 
-export function UpdateAdminForm({ admin }: { admin: IAdmin }) {
+export function UpdateAdminForm({ admin }: { admin: IUserExtended }) {
 	const [disabled, setDisabled] = React.useState<boolean>(true);
-	const defaultValues: Partial<AdminFormValues> = {
-		name: admin.name,
-		email: admin.email,
-		phone: admin.phone,
-		role: admin.role,
-		blacklisted: admin.blacklisted,
+	const router = useRouter();
+	const defaultValues: Partial<UpdateAdminFormValues> = {
+		name: admin.name ?? '',
+		email: admin.email ?? '',
+		phone: admin.phone ?? '',
+		role: admin.role ?? '',
+		blacklisted: admin.blacklisted ?? '',
+		city: admin.address.city ?? '',
+		country: admin.address.country ?? '',
+		id_number: admin.identification.number ?? '',
+		id_type: admin.identification.type ?? '',
+		lga: admin.address.lga ?? '' ?? '',
+		postal_code: admin.address.postal_code ?? '',
+		state: admin.address.state ?? '',
+		unit: admin.address.unit ?? '',
+		address: admin.address.text ?? '',
+		id: admin.id ?? '',
 	};
 
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const { toast } = useToast();
-	const form = useForm<AdminFormValues>({
-		resolver: zodResolver(adminFormSchema),
+	const form = useForm<UpdateAdminFormValues>({
+		resolver: zodResolver(updateAdminFormSchema),
 		defaultValues,
 		mode: 'onChange',
 	});
 
-	async function onSubmit(data: AdminFormValues) {
+	async function onSubmit(data: UpdateAdminFormValues) {
 		setIsLoading(true);
 		const payload = {
-			admin_id: admin.admin_id,
 			name: data.name,
 			email: data.email,
 			phone: data.phone,
 			role: data.role,
 			blacklisted: data.blacklisted,
+			address: {
+				text: data.address,
+				lga: data.lga,
+				city: data.city,
+				state: data.state,
+				unit: data.unit,
+				country: data.country,
+				postal_code: data.postal_code,
+			},
+			identification: {
+				type: data.id_type,
+				number: data.id_number,
+			},
+			id: data.id,
 		};
 		try {
 			const createAdminResponse = await fetch('/api/create-admin', {
-				method: 'PUT',
+				method: 'PATCH',
 				body: JSON.stringify(payload),
 			});
 			const result = await createAdminResponse.json();
+			console.log(result);
 			if (
 				createAdminResponse.status > 199 &&
 				createAdminResponse.status < 299
@@ -87,6 +153,7 @@ export function UpdateAdminForm({ admin }: { admin: IAdmin }) {
 				});
 				setIsLoading(false);
 				setDisabled(true);
+				router.refresh();
 				return NextResponse.json(result);
 			} else {
 				setIsLoading(false);
@@ -107,10 +174,10 @@ export function UpdateAdminForm({ admin }: { admin: IAdmin }) {
 					onSubmit={form.handleSubmit(onSubmit)}
 					className='mb-20 flex flex-col gap-5'
 				>
-					<div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
+					<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
 						<FormField
-							control={form.control}
 							name='name'
+							control={form.control}
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>Name</FormLabel>
@@ -126,8 +193,8 @@ export function UpdateAdminForm({ admin }: { admin: IAdmin }) {
 							)}
 						/>
 						<FormField
-							control={form.control}
 							name='phone'
+							control={form.control}
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>Phone Number</FormLabel>
@@ -143,8 +210,8 @@ export function UpdateAdminForm({ admin }: { admin: IAdmin }) {
 							)}
 						/>
 						<FormField
-							control={form.control}
 							name='email'
+							control={form.control}
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>
@@ -152,8 +219,146 @@ export function UpdateAdminForm({ admin }: { admin: IAdmin }) {
 									</FormLabel>
 									<FormControl>
 										<Input
-											disabled={disabled}
+											disabled
 											placeholder='Email'
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							name='id_type'
+							control={form.control}
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>
+										Means of Identification
+									</FormLabel>
+									<Select
+										onValueChange={field.onChange}
+										defaultValue={field.value}
+										disabled={disabled}
+									>
+										<FormControl>
+											<SelectTrigger className='h-12'>
+												<SelectValue placeholder='Select a mean of Identification' />
+											</SelectTrigger>
+										</FormControl>
+										<SelectContent>
+											<SelectItem value='NIN'>
+												NIN
+											</SelectItem>
+											<SelectItem value='BVN'>
+												BVN
+											</SelectItem>
+											<SelectItem value='PVC'>
+												Voters Card
+											</SelectItem>
+										</SelectContent>
+									</Select>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							name='id_number'
+							control={form.control}
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>
+										Identification Number
+									</FormLabel>
+									<FormControl>
+										<Input
+											disabled={disabled}
+											placeholder='Enter identification number'
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							name='address'
+							control={form.control}
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Address</FormLabel>
+									<FormControl>
+										<Input
+											disabled={disabled}
+											placeholder='Street'
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							name='unit'
+							control={form.control}
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Unit</FormLabel>
+									<FormControl>
+										<Input
+											disabled={disabled}
+											placeholder='Unit'
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							name='city'
+							control={form.control}
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>City</FormLabel>
+									<FormControl>
+										<Input
+											disabled={disabled}
+											placeholder='City'
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							name='postal_code'
+							control={form.control}
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Postal Code</FormLabel>
+									<FormControl>
+										<Input
+											disabled={disabled}
+											placeholder='Postal Code'
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							name='lga'
+							control={form.control}
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>LGA</FormLabel>
+									<FormControl>
+										<Input
+											disabled={disabled}
+											placeholder='LGA'
 											{...field}
 										/>
 									</FormControl>
@@ -163,8 +368,8 @@ export function UpdateAdminForm({ admin }: { admin: IAdmin }) {
 						/>
 					</div>
 					<FormField
-						control={form.control}
 						name='blacklisted'
+						control={form.control}
 						render={({ field }) => (
 							<FormItem className='flex flex-row items-start space-x-3 space-y-0 '>
 								<FormControl>
@@ -209,7 +414,7 @@ export function UpdateAdminForm({ admin }: { admin: IAdmin }) {
 						Edit
 					</Button>
 					<Button className='w-32'>
-						<DeleteAdminButton id={admin.admin_id} />
+						<DeleteAdminButton id={admin.id} />
 					</Button>
 				</div>
 			)}

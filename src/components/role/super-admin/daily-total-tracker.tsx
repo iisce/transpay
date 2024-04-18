@@ -8,10 +8,8 @@ export default async function DailyTotalTracker() {
 	);
 	return (
 		<DashboardCard
-			type='positive'
 			title='Daily Total Tracker'
 			amount={dailyRevenueTotal || 0}
-			percent={0}
 			desc='Today'
 		/>
 	);

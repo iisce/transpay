@@ -3,15 +3,13 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { unslugify } from '@/lib/utils';
 import { notFound } from 'next/navigation';
-import { getAllActivities } from '@/lib/controllers/activity-controller';
+import { getAllActivities } from '@/lib/controllers/activity.controller';
 
 export default async function Activity({ params }: { params: { id: string } }) {
 	const all_activities = await getAllActivities();
 
 	const activity = all_activities
-		? all_activities.find(
-				(activity) => activity.activity_id === params.id
-		  )
+		? all_activities.rows.find((activity) => activity.id === params.id)
 		: undefined;
 	if (!activity) return notFound();
 	return (
@@ -22,22 +20,20 @@ export default async function Activity({ params }: { params: { id: string } }) {
 				</div>
 				<div className=''>
 					<div className=''>Activity: {activity?.name}</div>
-					<div className=''>
-						Activity ID: {activity?.activity_id}
-					</div>
+					<div className=''>Activity ID: {activity?.id}</div>
 					<div className=''>
 						Activity Description: {activity?.description}
 					</div>
 					<div className=''>
 						Activity Date:{' '}
 						{new Date(
-							activity.createdAt
+							activity.created_at
 						).toLocaleDateString()}
 					</div>
 					<div className=''>
 						Activity Time:{' '}
 						{new Date(
-							activity.createdAt
+							activity.created_at
 						).toLocaleTimeString()}
 					</div>
 				</div>

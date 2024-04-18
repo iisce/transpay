@@ -119,7 +119,7 @@ export type waiverFormValues = z.infer<typeof waiverFormSchema>;
 export function NewWaiverForm({ vehicle }: { vehicle: IVehicleSummary }) {
 	const defaultValues: Partial<waiverFormValues> = {
 		reason: 'Vehicle Maintenance',
-		id: vehicle.vehicle_id,
+		id: vehicle.id,
 		indefinite: false,
 		additional_info: '',
 		start_date: addDays(new Date(), 1),

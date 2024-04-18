@@ -1,5 +1,5 @@
 import StatsCard from '@/components/shared/statistics-card';
-import { getRevenueStats } from '@/lib/controllers/revenue-controller';
+import { getRevenueStats } from '@/lib/controllers/revenue.controller';
 import React from 'react';
 
 export default async function RevenueSummary({

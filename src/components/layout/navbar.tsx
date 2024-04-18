@@ -1,24 +1,19 @@
-import { getAdminMe } from '@/lib/controllers/admin-controller';
-import { getAgentMe, getGreenAgent } from '@/lib/controllers/agent-controller';
-import { getSSession } from '@/lib/get-data';
+import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Notification } from '../shared/notification';
 import { UserNav } from '../shared/user-nav-bar';
 import { Button } from '../ui/button';
+import { getUser } from '@/lib/controllers/users.controller';
+import { redirect } from 'next/navigation';
+import { options } from '@/app/api/auth/options';
 
 export default async function NavBar() {
-	const { role } = await getSSession();
-	const user =
-		role?.toLowerCase() === 'agent'
-			? await getAgentMe()
-			: role?.toLowerCase() === 'greenengine_agent'
-			? await getGreenAgent()
-			: await getAdminMe();
+	const session = await getServerSession(options);
+	if (!session) return redirect('/sign-in');
+	const user = await getUser(session?.user.id!);
 
-	const isAgent =
-		user?.role.toLowerCase() !== 'admin' ||
-		user?.role.toLowerCase() !== 'superadmin';
+	const isAgent = session?.user.id === 'AGENT';
 	return (
 		<div className='h-16 w-full bg-secondary/60 backdrop-blur-sm pr-5 shrink-0 fixed z-50 '>
 			<div className='flex items-center justify-between h-full'>
@@ -37,7 +32,7 @@ export default async function NavBar() {
 				<div className='flex gap-3 items-center text-primary-700'>
 					{user ? (
 						<>
-							{!isAgent && <Notification />}
+							{/* {!isAgent && <Notification />} */}
 							<UserNav user={user} />
 						</>
 					) : (

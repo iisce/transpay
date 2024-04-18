@@ -8,7 +8,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 	if (!vehicle) return notFound();
 	return {
 		title: `${
-			vehicle?.owners_name
+			vehicle?.owner.name
 		} - ${vehicle?.category.toLocaleUpperCase()}`,
 	};
 }

@@ -12,10 +12,8 @@ export default async function WeeklyTotalRevenue() {
 	);
 	return (
 		<DashboardCard
-			type='positive'
 			title='Weekly Total Revenue'
 			amount={weeklyTotalRevenue || 0}
-			percent={0}
 			desc='Today'
 		/>
 	);

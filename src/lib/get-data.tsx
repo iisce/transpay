@@ -1,6 +1,7 @@
 import { getServerSession } from 'next-auth';
 import { API, URLS } from './consts';
 import { options } from '@/app/api/auth/options';
+import { cookies } from 'next/headers';
 
 export const getSSession = async () => {
 	const session = await getServerSession(options);
@@ -112,6 +113,83 @@ export const getDashboardTotalYearlyRevenue = async (
 		return undefined;
 	}
 };
+
+export const getDashboardTotalRevenue = async (
+	start_date: string,
+	end_date: string
+) => {
+	try {
+		const session = await getSSession();
+		const headers = {
+			'Content-Type': 'application/json',
+			'api-secret': process.env.API_SECRET || '',
+			Authorization: `Bearer ${session.access_token}`,
+		};
+		const url = `${API}${URLS.transactions['total-revenue']}?start_date=${start_date}&end_date=${end_date}`;
+		const res = await fetch(url, { headers, cache: 'no-store' });
+		const result = await res.json();
+		console.log({
+			start_date,
+			end_date,
+			url,
+			result: result.data,
+			error: result.errors,
+		});
+
+		if (!result.status || !result.data) {
+			console.error(`HTTP error! Status: ${res.status}`);
+			return undefined;
+		}
+
+		const revenueYearlyTotal = result.data;
+		return revenueYearlyTotal;
+	} catch (error: any) {
+		// Handle other errors (e.g., network issues, JSON parsing errors)
+		console.error('An error occurred:', error.message);
+		return undefined;
+	}
+};
+
+// export const getDashboardTotalYearlyRevenue = async (
+// 	type?: ITotalDashboard
+// ) => {
+// 	const session = await getSSession();
+// 	const headers = {
+// 		'Content-Type': 'application/json',
+// 		'api-secret': process.env.API_SECRET || '',
+// 		Authorization: `Bearer ${session.access_token}`,
+// 	};
+// 	const url = `${API}${URLS.dashboard.total_revenue_yearly}${
+// 		type ? '?type=' + type : ''
+// 	}`;
+
+// 	const res = await fetch(url, { headers, cache: 'no-store' });
+
+// 	console.log({ session, headers, url, response: await res.json() });
+// 	try {
+// 		if (!res.ok) {
+// 			if (res.status === 429) {
+// 				// Handle 429 (Too Many Requests) error
+// 				console.error(
+// 					'Too Many Requests. Please retry after a while.'
+// 				);
+// 			} else {
+// 				console.error(`HTTP error! Status: ${res.status}`);
+// 			}
+
+// 			return undefined;
+// 		}
+
+// 		const { data } = await res.json();
+// 		const revenueYearlyTotal: number = data.total;
+// 		return revenueYearlyTotal;
+// 	} catch (error: any) {
+// 		// Handle other errors (e.g., network issues, JSON parsing errors)
+// 		console.error('An error occurred:', error.message);
+// 		return undefined;
+// 	}
+// };
+
 export const getDashboardTotalMonthlyRevenue = async (
 	type?: ITotalDashboard
 ) => {

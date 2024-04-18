@@ -1,11 +1,11 @@
 const { sql } = require('@vercel/postgres');
 import { vehicles } from '../src/lib/data.js';
 
-console.log({
-  POSTGRES_URL: process.env.POSTGRES_URL,
-  POSTGRES_URL_NON_POOLING: process.env.POSTGRES_URL_NON_POOLING,
-  VEHICLE: vehicles
-});
+// sonsole.log({
+//   POSTGRES_URL: process.env.POSTGRES_URL,
+//   POSTGRES_URL_NON_POOLING: process.env.POSTGRES_URL_NON_POOLING,
+//   VEHICLE: vehicles
+// });
 
 
 async function seedVehicles() {
@@ -24,7 +24,7 @@ async function seedVehicles() {
       );
     `;
 
-    console.log(`Created "vehicles" table`);
+    // sonsole.log(`Created "vehicles" table`);
 
     // Insert data into the "users" table
     const insertedVehicles = await Promise.all(
@@ -45,14 +45,14 @@ async function seedVehicles() {
       })
     );
 
-    console.log(`Seeded ${insertedVehicles.length} vehicles`);
+    // sonsole.log(`Seeded ${insertedVehicles.length} vehicles`);
 
     return {
       createTable,
       vehicles: insertedVehicles,
     };
   } catch (error) {
-    console.error('Error seeding vehicles:', error);
+    // sonsole.error('Error seeding vehicles:', error);
     throw error;
   }
 }

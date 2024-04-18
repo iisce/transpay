@@ -1,4 +1,6 @@
 'use client';
+import { API } from '@/lib/consts';
+import { getAllTrackerLocation } from '@/lib/controllers/tracker.controller';
 import { generateRandomLocation } from '@/lib/utils';
 import {
 	APIProvider,
@@ -9,31 +11,66 @@ import {
 	useAdvancedMarkerRef,
 } from '@vis.gl/react-google-maps';
 import React, { useEffect, useState } from 'react';
+import { io } from 'socket.io-client';
 
-export default function MapView({ vehicle }: { vehicle?: IVehicleSummary }) {
+export default function MapView({
+	vehicle,
+	tracker,
+}: {
+	vehicle?: IVehicleSummary;
+	tracker: IModifiedTrackerDetails;
+}) {
 	const LOCATION_MAPS = generateRandomLocation();
-	const [position, setPosition] =
-		useState<google.maps.LatLngLiteral>(LOCATION_MAPS);
+	const [position, setPosition] = useState<google.maps.LatLngLiteral>({
+		lat: tracker?.lat,
+		lng: tracker?.lon,
+	});
+	useEffect(() => {
+		// Create a socket connection
+		const socket = io('http://localhost:5000');
+
+		socket.on('connect', function () {
+			console.log('Connected to socket');
+
+			socket.emit('stopTracking', {
+				apiKey: '3vyqhmV0wUGLGSCoLwhKSQ1QfD8j6sFr',
+			});
+			socket.emit(
+				'getTrackerLocation',
+				{
+					vehicleId: vehicle?.id,
+					apiKey: '3vyqhmV0wUGLGSCoLwhKSQ1QfD8j6sFr',
+				},
+				(response: any) =>
+					console.log('userLocation:', { response })
+			);
+		});
+
+		// Listen for incoming tracker locations
+		socket.on('location', (fullLocation: any) => {
+			const locationData = JSON.parse(fullLocation);
+			console.log('hello', { locationData });
+			setPosition({
+				lat: locationData.location.bdLat,
+				lng: locationData.location.bdLon,
+			});
+		});
+
+		// Clean up the socket connection on unmount
+		return () => {
+			socket.disconnect();
+		};
+	}, []);
+
+	const [loading, setLoading] = useState<boolean>(false);
 	const [markerRef, marker] = useAdvancedMarkerRef();
 	const [infowindowOpen, setInfowindowOpen] = useState(true);
 
-	useEffect(() => {
-		const interval = setInterval(() => {
-			const speed = 0.0001;
-			const randomDirection = Math.random() * 1;
-			const lat = position.lat + speed * Math.cos(randomDirection);
-			const lng = position.lng + speed * Math.sin(randomDirection);
-
-			setPosition({ lat, lng });
-		}, 1000);
-
-		return () => clearInterval(interval);
-	});
 	return (
 		<APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}>
 			<Map
-				className='w-full rounded-2xl overflow-clip border h-[90svh]'
-				zoom={14}
+				className='w-full rounded-2xl overflow-clip border h-[85svh]'
+				zoom={18}
 				center={position}
 				gestureHandling={'greedy'}
 				onClick={() => setInfowindowOpen(true)}
@@ -71,7 +108,7 @@ export default function MapView({ vehicle }: { vehicle?: IVehicleSummary }) {
 									Vehicle Owner:
 								</div>{' '}
 								<div className=''>
-									{vehicle?.owners_name}
+									{vehicle?.owner.name}
 								</div>
 							</div>
 							<div className='flex justify-between gap-2'>

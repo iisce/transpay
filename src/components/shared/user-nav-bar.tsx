@@ -22,7 +22,7 @@ import { ModeToggle } from '../dark-mode-toggle';
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 
-export function UserNav({ user }: { user: IUser }) {
+export function UserNav({ user }: { user: IUserExtended }) {
 	const pathName = usePathname();
 
 	return (
@@ -35,8 +35,8 @@ export function UserNav({ user }: { user: IUser }) {
 					>
 						<Avatar className='h-9 w-9'>
 							<AvatarImage
-								src={user.image || '/anambara.png'}
-								alt={user.name || 'Agent User'}
+								src={'/anambara.png'}
+								alt={user.name || 'Default User'}
 							/>
 							<AvatarFallback>
 								{getInitials(user.name || 'Agent User')}
@@ -63,7 +63,7 @@ export function UserNav({ user }: { user: IUser }) {
 						<div className=''>
 							<Avatar className='h-14 w-14'>
 								<AvatarImage
-									src={user.image || '/anambara.png'}
+									src={'/anambara.png'}
 									alt={user.name || 'Agent User'}
 								/>
 								<AvatarFallback>

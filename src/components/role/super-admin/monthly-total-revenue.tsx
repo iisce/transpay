@@ -7,10 +7,8 @@ export default async function MonthlyTotalRevenue() {
 	);
 	return (
 		<DashboardCard
-			type='positive'
 			title='Monthly Total Revenue'
 			amount={monthlyRevenueTotal || 0}
-			percent={0}
 			desc='Month Till Date'
 		/>
 	);

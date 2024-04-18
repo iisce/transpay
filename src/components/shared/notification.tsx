@@ -1,4 +1,4 @@
-import { getAllActivities } from '@/lib/controllers/activity-controller';
+import { getAllActivities } from '@/lib/controllers/activity.controller';
 import { notificationIcon } from '@/lib/icons';
 import Link from 'next/link';
 import ActivityList from '../pages/activities/activity-list';
@@ -34,7 +34,7 @@ export async function Notification() {
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
-					<ActivityList allActivities={all_activities || []} />
+					<ActivityList allActivities={all_activities} />
 				</DropdownMenuGroup>
 			</DropdownMenuContent>
 		</DropdownMenu>

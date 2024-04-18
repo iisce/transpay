@@ -92,17 +92,32 @@ export function cNTA(number: number): number[] {
 	return array;
 }
 
+/**
+ * Checks if a string is a valid UUID
+ * @param {string} input
+ * @returns {boolean}
+ */
 export function isUUID(input: string): boolean {
 	const uuidPattern =
 		/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 	return uuidPattern.test(input);
 }
 
+/**
+ * Description
+ * @param {string} str
+ * @returns {boolean}
+ */
 export function isBarcodeId(str: string): boolean {
 	const formatRegex = /^\d{13}$/;
 	return formatRegex.test(str);
 }
 
+/**
+ * Description
+ * @param {string} text
+ * @returns {any}
+ */
 export function slugify(text: string): string {
 	return text
 		.toLowerCase()
@@ -537,5 +552,17 @@ export function compareDates(
 		return 'monthly';
 	} else {
 		return 'yearly';
+	}
+}
+
+export function isEmpty(value: string | any[] | object): boolean {
+	if (typeof value === 'string') {
+		return value.trim() === '';
+	} else if (Array.isArray(value)) {
+		return value.length === 0;
+	} else if (typeof value === 'object' && value !== null) {
+		return Object.keys(value).length === 0;
+	} else {
+		throw new Error('Unsupported type for isEmpty check');
 	}
 }

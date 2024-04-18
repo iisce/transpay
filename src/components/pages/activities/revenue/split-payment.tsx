@@ -1,6 +1,6 @@
 import { Separator } from '@/components/ui/separator';
 import { AIRS, BANK_RATE, FNTC, TRANSPAY } from '@/lib/consts';
-import { getRevenueStats } from '@/lib/controllers/revenue-controller';
+import { getRevenueStats } from '@/lib/controllers/revenue.controller';
 import React from 'react';
 
 export default async function SplitPayment() {
