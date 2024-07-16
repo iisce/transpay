@@ -19,7 +19,7 @@ export default function ActivityCardGS({
 				{description}
 			</div>
 			<div className='flex text-xs justify-between items-center'>
-				<div className=''>{time}</div>
+				<div className=''>{`${date} ${time}`}</div>
 				<Link
 					className={cn(
 						buttonVariants({ variant: 'link' }),

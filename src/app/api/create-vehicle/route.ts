@@ -67,6 +67,7 @@ export async function PUT(req: NextRequest) {
 			nok_relationship: body.owner.nok_relationship,
 		},
 	};
+	console.log({ payload });
 
 	try {
 		const url = `${API}${URLS.vehicle.all}/${body.id}`;

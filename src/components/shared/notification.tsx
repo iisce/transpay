@@ -34,7 +34,11 @@ export async function Notification() {
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
-					<ActivityList allActivities={all_activities} />
+					<ActivityList
+						limit='20'
+						page='1'
+						allActivities={all_activities}
+					/>
 				</DropdownMenuGroup>
 			</DropdownMenuContent>
 		</DropdownMenu>

@@ -1,16 +1,13 @@
+import { options } from '@/app/api/auth/options';
+import { getUser } from '@/lib/controllers/users.controller';
 import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Notification } from '../shared/notification';
 import { UserNav } from '../shared/user-nav-bar';
 import { Button } from '../ui/button';
-import { getUser } from '@/lib/controllers/users.controller';
-import { redirect } from 'next/navigation';
-import { options } from '@/app/api/auth/options';
 
 export default async function NavBar() {
 	const session = await getServerSession(options);
-	if (!session) return redirect('/sign-in');
 	const user = await getUser(session?.user.id!);
 
 	const isAgent = session?.user.id === 'AGENT';

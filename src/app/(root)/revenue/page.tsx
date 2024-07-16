@@ -1,7 +1,5 @@
-import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { TRANSACTION_TYPE } from '@/lib/consts';
-import { downIcon } from '@/lib/icons';
 import { format, subMonths } from 'date-fns';
 import { Suspense } from 'react';
 import RevenueChartContainer from './revenue-chart-container';
@@ -19,12 +17,12 @@ export default function Revenue({
 	const start =
 		searchParams['start_date'] ?? format(oneMonthAgo, 'yyyy-MM-dd');
 	const end = searchParams['end_date'] ?? format(today, 'yyyy-MM-dd');
-	const type = searchParams['type'] ?? '';
-	const duration = searchParams['d'] ?? '';
+	// const type = searchParams['type'] ?? '';
+	const duration = searchParams['d'] ?? '1M';
 
 	const revenueDetails = [
 		{
-			type: '',
+			type: TRANSACTION_TYPE.all,
 			title: 'Total Revenue',
 			description: '(Tracker and Vehicle revenue)',
 		},

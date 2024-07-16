@@ -13,10 +13,12 @@ import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
 import { options } from './api/auth/options';
+import { redirect } from 'next/navigation';
 
 export default async function Home() {
 	const session = await getServerSession(options);
 	const user = await getUser(session?.user.id!);
+	// if (!session?.user) return redirect('/sign-in');
 	return (
 		<main className=''>
 			<div className='h-20 w-full shrink-0 fixed bg-white/50 backdrop-blur z-50'>

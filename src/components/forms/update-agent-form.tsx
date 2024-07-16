@@ -26,6 +26,15 @@ import {
 	SelectValue,
 } from '../ui/select';
 import { useRouter } from 'next/navigation';
+import { PenLine } from 'lucide-react';
+import {
+	Dialog,
+	DialogContent,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from '../ui/dialog';
 
 export const updateAgentFormSchema = z.object({
 	name: z
@@ -153,7 +162,7 @@ export function UpdateAgentForm({ agent }: { agent: IUserExtended }) {
 				});
 				setIsLoading(false);
 				setDisabled(true);
-				router.refresh();
+				router.push('/agents');
 				return NextResponse.json(result);
 			} else {
 				setIsLoading(false);
@@ -436,15 +445,37 @@ export function UpdateAgentForm({ agent }: { agent: IUserExtended }) {
 			{disabled && (
 				<div className='flex items-center justify-between gap-5'>
 					<Button
-						className='w-32'
+						className='w-32 flex items-center gap-1.5'
 						onClick={() => setDisabled(false)}
 						type='button'
 					>
+						<PenLine className='h-4 w4' />
 						Edit
 					</Button>
-					<Button className='w-32'>
-						<DeleteAgentButton id={agent.id} />
-					</Button>
+					<Dialog>
+						<DialogTrigger asChild>
+							<Button className='w-32 flex items-center gap-1.5'>
+								Delete
+							</Button>
+						</DialogTrigger>
+						<DialogContent className='space-y-2'>
+							<DialogHeader className='items-center mx-auto justify-center'>
+								<DialogTitle>
+									Do you wish to continue with this:
+								</DialogTitle>
+							</DialogHeader>
+							<>
+								<div className='grid  gap-2'>
+									<Button className='w-full flex items-center gap-1.5'>
+										<DeleteAgentButton
+											id={agent.id}
+										/>
+										Yes
+									</Button>
+								</div>
+							</>
+						</DialogContent>
+					</Dialog>
 				</div>
 			)}
 		</>

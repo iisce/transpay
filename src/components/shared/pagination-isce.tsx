@@ -1,20 +1,12 @@
 'use client';
-import {
-	Pagination,
-	PaginationContent,
-	PaginationEllipsis,
-	PaginationItem,
-	PaginationLink,
-	PaginationNext,
-	PaginationPrevious,
-} from '@/components/ui/pagination';
+import { Pagination, PaginationContent } from '@/components/ui/pagination';
 import {
 	DoubleArrowLeftIcon,
 	DoubleArrowRightIcon,
 } from '@radix-ui/react-icons';
+import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '../ui/button';
-import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 
 interface PaginationControlsProps {
 	hasNextPage: boolean;
@@ -35,7 +27,7 @@ export function PaginationISCE({
 	const router = useRouter();
 	const totalPages = Math.ceil(total / Number(limit));
 	return (
-		<Pagination>
+		<Pagination className='py-5'>
 			<PaginationContent>
 				<div className='mr-2'>
 					Page {page} / {totalPages}

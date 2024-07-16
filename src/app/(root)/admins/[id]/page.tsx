@@ -59,6 +59,8 @@ export default async function SingularAdmin({
 							<Card className='bg-secondary'>
 								<ActivityList
 									allActivities={all_activities}
+									page={'1'}
+									limit={'5'}
 								/>
 							</Card>
 						</div>

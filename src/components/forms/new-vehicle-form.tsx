@@ -27,6 +27,7 @@ import {
 } from '../ui/select';
 import { Separator } from '../ui/separator';
 import { useToast } from '../ui/use-toast';
+import { useRouter } from 'next/navigation';
 
 const vehicleFormSchema = z.object({
 	category: z
@@ -103,6 +104,7 @@ const defaultValues: Partial<vehicleFormValues> = {
 };
 
 export default function CreateVehicleForm() {
+	const router = useRouter();
 	const [newVehicleId, setNewVehicleId] = React.useState<string>('');
 	const { toast } = useToast();
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -164,7 +166,7 @@ export default function CreateVehicleForm() {
 				});
 				setIsLoading(false);
 				setOpen(true);
-				window.location.href = '/vehicles?page=1&limit=15';
+				router.push('/vehicles?page=1&limit=15');
 				return NextResponse.json(result);
 			} else {
 				setIsLoading(false);

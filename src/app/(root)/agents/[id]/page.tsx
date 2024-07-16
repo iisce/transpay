@@ -2,8 +2,7 @@ import { UpdateAgentForm } from '@/components/forms/update-agent-form';
 import ActivityList from '@/components/pages/activities/activity-list';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { getAllActivities } from '@/lib/controllers/activity.controller';
-import { getAgentById } from '@/lib/controllers/agent-controller';
+import { getActivitiesByUser } from '@/lib/controllers/activity.controller';
 import { getUser } from '@/lib/controllers/users.controller';
 import { addIcon } from '@/lib/icons';
 import Link from 'next/link';
@@ -22,10 +21,10 @@ export default async function SingularAgent({
 	params: { id: string };
 }) {
 	const agent = await getUser(params.id);
+	console.log({ agent });
 	if (!agent) return notFound();
 
-	const all_activities = await getAllActivities();
-	if (!all_activities) return notFound();
+	const all_activities = await getActivitiesByUser({ user_id: agent.id });
 	return (
 		<div className='p-3 xs:p-5 gap-5 w-full h-full flex flex-col'>
 			<div className='flex justify-between items-center'>
@@ -63,6 +62,10 @@ export default async function SingularAgent({
 						<Card className='bg-secondary'>
 							<ActivityList
 								allActivities={all_activities}
+								page={String(
+									all_activities?.meta?.page ?? 1
+								)}
+								limit={'5'}
 							/>
 						</Card>
 					</div>

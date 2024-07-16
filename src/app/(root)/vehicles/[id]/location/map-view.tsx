@@ -11,7 +11,7 @@ import {
 	useAdvancedMarkerRef,
 } from '@vis.gl/react-google-maps';
 import React, { useEffect, useState } from 'react';
-import { io } from 'socket.io-client';
+// import { io } from 'socket.io-client';
 
 export default function MapView({
 	vehicle,
@@ -25,42 +25,42 @@ export default function MapView({
 		lat: tracker?.lat,
 		lng: tracker?.lon,
 	});
-	useEffect(() => {
-		// Create a socket connection
-		const socket = io('http://localhost:5000');
+	// useEffect(() => {
+	// 	// Create a socket connection
+	// 	const socket = io('http://localhost:5000');
 
-		socket.on('connect', function () {
-			console.log('Connected to socket');
+	// 	socket.on('connect', function () {
+	// 		console.log('Connected to socket');
 
-			socket.emit('stopTracking', {
-				apiKey: '3vyqhmV0wUGLGSCoLwhKSQ1QfD8j6sFr',
-			});
-			socket.emit(
-				'getTrackerLocation',
-				{
-					vehicleId: vehicle?.id,
-					apiKey: '3vyqhmV0wUGLGSCoLwhKSQ1QfD8j6sFr',
-				},
-				(response: any) =>
-					console.log('userLocation:', { response })
-			);
-		});
+	// 		socket.emit('stopTracking', {
+	// 			apiKey: '3vyqhmV0wUGLGSCoLwhKSQ1QfD8j6sFr',
+	// 		});
+	// 		socket.emit(
+	// 			'getTrackerLocation',
+	// 			{
+	// 				vehicleId: vehicle?.id,
+	// 				apiKey: '3vyqhmV0wUGLGSCoLwhKSQ1QfD8j6sFr',
+	// 			},
+	// 			(response: any) =>
+	// 				console.log('userLocation:', { response })
+	// 		);
+	// 	});
 
-		// Listen for incoming tracker locations
-		socket.on('location', (fullLocation: any) => {
-			const locationData = JSON.parse(fullLocation);
-			console.log('hello', { locationData });
-			setPosition({
-				lat: locationData.location.bdLat,
-				lng: locationData.location.bdLon,
-			});
-		});
+	// 	// Listen for incoming tracker locations
+	// 	socket.on('location', (fullLocation: any) => {
+	// 		const locationData = JSON.parse(fullLocation);
+	// 		console.log('hello', { locationData });
+	// 		setPosition({
+	// 			lat: locationData.location.bdLat,
+	// 			lng: locationData.location.bdLon,
+	// 		});
+	// 	});
 
-		// Clean up the socket connection on unmount
-		return () => {
-			socket.disconnect();
-		};
-	}, []);
+	// 	// Clean up the socket connection on unmount
+	// 	return () => {
+	// 		socket.disconnect();
+	// 	};
+	// }, []);
 
 	const [loading, setLoading] = useState<boolean>(false);
 	const [markerRef, marker] = useAdvancedMarkerRef();

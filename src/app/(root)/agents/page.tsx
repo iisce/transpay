@@ -40,7 +40,7 @@ export default async function Agents({
 							<div className='mr-2 h-4 w-4 shrink-0'>
 								{addIcon}
 							</div>
-							New Admin
+							New Agent
 						</Link>
 					</Button>
 				</div>
@@ -57,10 +57,6 @@ export default async function Agents({
 						>
 							All Agents
 						</TabsTrigger>
-						<TabsTrigger value='active'>Active</TabsTrigger>
-						<TabsTrigger value='inactive'>
-							Inactive
-						</TabsTrigger>
 					</TabsList>
 					<TabsContent value='all'>
 						<DataTable
@@ -68,7 +64,6 @@ export default async function Agents({
 							searchWith='name'
 							searchWithPlaceholder='Search with name'
 							showColumns
-							showPagination
 							columns={agentsColumns}
 							data={agents?.rows ?? []}
 						/>
@@ -82,44 +77,6 @@ export default async function Agents({
 								hrefPrefix='/agents'
 							/>
 						)}
-					</TabsContent>
-					<TabsContent value='active'>
-						<DataTable
-							showSearch
-							searchWith='name'
-							searchWithPlaceholder='Search with name'
-							showColumns
-							columns={agentsColumns}
-							data={
-								(agents &&
-									agents.rows.length > 0 &&
-									agents.rows?.filter(
-										(agent) =>
-											agent.blacklisted ===
-											false
-									)) ||
-								[]
-							}
-						/>
-					</TabsContent>
-					<TabsContent value='inactive'>
-						<DataTable
-							showSearch
-							searchWith='name'
-							searchWithPlaceholder='Search with name'
-							showColumns
-							columns={agentsColumns}
-							data={
-								(agents &&
-									agents.rows.length > 0 &&
-									agents.rows?.filter(
-										(agent) =>
-											agent.blacklisted ===
-											true
-									)) ||
-								[]
-							}
-						/>
 					</TabsContent>
 				</Tabs>
 			</div>

@@ -160,6 +160,18 @@ export const SIDEBAR_LINKS_GREEN = [
 		icon: scanIcon,
 	},
 ];
+export const SIDEBAR_NO_USER = [
+	{
+		title: 'Scan',
+		href: '/scan',
+		icon: scanIcon,
+	},
+	{
+		title: 'Search',
+		href: '/search',
+		icon: searchIcon,
+	},
+];
 export const MANAGE_SIDEBAR_LINKS = [
 	{
 		name: 'Home',
@@ -2126,6 +2138,7 @@ export const BASE_URL =
 		: 'http://localhost:8726';
 
 export enum TRANSACTION_TYPE {
+	all = 'ALL',
 	daily = 'DAILY_FEES',
 	tracker = 'TRACKER_FEES',
 }

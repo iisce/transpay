@@ -13,7 +13,11 @@ export default async function Activity() {
 					</div>
 				</div>
 				<Card className='bg-secondary'>
-					<ActivityList allActivities={all_activities} />
+					<ActivityList
+						limit='20'
+						page='1'
+						allActivities={all_activities}
+					/>
 				</Card>
 			</div>
 		</div>

@@ -84,7 +84,7 @@ export function DashboardDriverSummary({
 			</div>
 			<CardFooter>
 				<Link
-					href='/vehicles?page=1&limit=15'
+					href='/drivers?page=1&limit=15'
 					className={cn(buttonVariants(), 'w-full')}
 				>
 					{' '}

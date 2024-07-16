@@ -1,6 +1,7 @@
 import { RevenueCharts } from '@/components/shared/chats/revenue-chart';
 import { TRANSACTION_TYPE } from '@/lib/consts';
 import { getRevenueStats } from '@/lib/controllers/revenue.controller';
+import { getAllTransactions } from '@/lib/controllers/transactions.controller';
 import {
 	compareDates,
 	transformTransactionsToDaysData,
@@ -19,32 +20,20 @@ export default async function RevenueChartContainer({
 	end: string;
 	title: string;
 }) {
-	const revenueData = await getRevenueStats(
-		start,
-		end,
-		TRANSACTION_TYPE.daily
-	);
+	const allTransactions = await getAllTransactions(start, end);
 	const scope = compareDates(start, end);
 
 	const formattedData =
 		scope === 'hourly'
-			? transformTransactionsToHoursData(
-					revenueData?.transactions ?? []
-			  )
+			? transformTransactionsToHoursData(allTransactions?.rows ?? [])
 			: scope === 'daily'
-			? transformTransactionsToDaysData(
-					revenueData?.transactions ?? []
-			  )
+			? transformTransactionsToDaysData(allTransactions?.rows ?? [])
 			: scope === 'weekly'
-			? transformTransactionsToWeeksData(
-					revenueData?.transactions ?? []
-			  )
+			? transformTransactionsToWeeksData(allTransactions?.rows ?? [])
 			: scope === 'monthly'
-			? transformTransactionsToMonthsData(
-					revenueData?.transactions ?? []
-			  )
-			: transformTransactionsToYearsData(
-					revenueData?.transactions ?? []
-			  );
+			? transformTransactionsToMonthsData(allTransactions?.rows ?? [])
+			: transformTransactionsToYearsData(allTransactions?.rows ?? []);
+
+	console.log({ formattedData });
 	return <RevenueCharts data={formattedData} />;
 }

@@ -55,11 +55,7 @@ export default async function Admins({
 							className=''
 							value='all'
 						>
-							All Agents
-						</TabsTrigger>
-						<TabsTrigger value='active'>Active</TabsTrigger>
-						<TabsTrigger value='inactive'>
-							Inactive
+							All Admins
 						</TabsTrigger>
 					</TabsList>
 					<TabsContent value='all'>
@@ -68,7 +64,6 @@ export default async function Admins({
 							searchWith='name'
 							searchWithPlaceholder='Search with name'
 							showColumns
-							showPagination
 							columns={adminsColumns}
 							data={admins?.rows ?? []}
 						/>
@@ -82,44 +77,6 @@ export default async function Admins({
 								hrefPrefix='/admins'
 							/>
 						)}
-					</TabsContent>
-					<TabsContent value='active'>
-						<DataTable
-							showSearch
-							searchWith='name'
-							searchWithPlaceholder='Search with name'
-							showColumns
-							columns={adminsColumns}
-							data={
-								(admins &&
-									admins.rows.length > 0 &&
-									admins.rows?.filter(
-										(admin) =>
-											admin.blacklisted ===
-											false
-									)) ||
-								[]
-							}
-						/>
-					</TabsContent>
-					<TabsContent value='inactive'>
-						<DataTable
-							showSearch
-							searchWith='name'
-							searchWithPlaceholder='Search with name'
-							showColumns
-							columns={adminsColumns}
-							data={
-								(admins &&
-									admins.rows.length > 0 &&
-									admins.rows?.filter(
-										(admin) =>
-											admin.blacklisted ===
-											true
-									)) ||
-								[]
-							}
-						/>
 					</TabsContent>
 				</Tabs>
 			</div>

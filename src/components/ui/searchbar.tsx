@@ -47,7 +47,7 @@ export default function Searchbar({
 				value={searchValue}
 				required
 				onChange={(e) => setSearchValue(e.target.value)} // Update searchValue when the input changes
-				className={`bg-white focus:outline-0 pl-16 py-4 h-14 w-full rounded-2xl absolute`}
+				className={`bg-secondary focus:outline-0 pl-16 py-4 h-14 w-full rounded-2xl absolute`}
 			/>
 		</form>
 	);

@@ -25,7 +25,7 @@ export default function AgentSearchBar({
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 		setIsLoading(true);
-		router.push(`/vehicles/search/${searchValue.toLowerCase()}`);
+		router.push(`/vehicles/search/${searchValue}`);
 	};
 
 	return (

@@ -1,19 +1,11 @@
-import React from 'react';
-import ActivityCard from '@/components/shared/activity-card';
-import { getAllActivities } from '@/lib/controllers/activity.controller';
 import ActivityCardGS from '@/components/pages/activities/activity-card-google-style';
+import { PaginationISCE } from '@/components/shared/pagination-isce';
 import { format } from 'date-fns';
-import { notFound } from 'next/navigation';
-import {
-	Accordion,
-	AccordionContent,
-	AccordionItem,
-	AccordionTrigger,
-} from '@/components/ui/accordion';
-import { isEmpty } from '@/lib/utils';
 
 export default function ActivityList({
 	allActivities,
+	page,
+	limit,
 }: {
 	allActivities:
 		| {
@@ -25,85 +17,67 @@ export default function ActivityList({
 				};
 		  }
 		| undefined;
+	page: string;
+	limit: string;
 }) {
-	const empty = !allActivities || allActivities.meta.total < 1;
+	const start = (Number(page) - 1) * Number(limit);
+	const end = start + Number(limit);
 
-	const activitiesByDate: Record<string, IActivity[]> | undefined =
-		allActivities?.rows.reduce((acc, activity) => {
-			const date = new Date(activity.created_at);
-			const dateString = format(date, 'yyyy-MM-dd');
+	// const activitiesByDate: Record<string, IActivity[]> | undefined =
+	// 	allActivities?.rows.reduce((acc, activity) => {
+	// 		const date = new Date(activity.created_at);
+	// 		const dateString = format(date, 'yyyy-MM-dd');
 
-			if (!acc[dateString]) {
-				acc[dateString] = [];
-			}
+	// 		if (!acc[dateString]) {
+	// 			acc[dateString] = [];
+	// 		}
 
-			acc[dateString].push(activity);
-			return acc;
-		}, {} as Record<string, IActivity[]>);
+	// 		acc[dateString].push(activity);
+	// 		return acc;
+	// 	}, {} as Record<string, IActivity[]>);
 
 	// Convert the organized data into an array for rendering
-	const activityGroups = activitiesByDate
-		? Object.entries(activitiesByDate).map(([date, activities]) => ({
-				date,
-				activities,
-		  }))
-		: [];
+	// const activityGroups = activitiesByDate
+	// 	? Object.entries(activitiesByDate).map(([date, activities]) => ({
+	// 			date,
+	// 			activities,
+	// 	  }))
+	// 	: [];
 
-	activityGroups.sort(
-		(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-	);
+	// activityGroups.sort(
+	// 	(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+	// );
 	return (
 		<div className='px-3 lg:px-5 flex flex-col gap-2'>
-			<Accordion
-				type='single'
-				collapsible
-				className='w-full'
-			>
-				{!empty &&
-					activityGroups.map((group) => (
-						<AccordionItem
-							value={group.date}
-							key={group.date}
-							className='max-w-3xl'
-						>
-							<AccordionTrigger>
-								{format(
-									new Date(group.date),
-									'MMMM d, yyyy'
-								)}
-							</AccordionTrigger>
-							<AccordionContent>
-								{group.activities.map((activity) => (
-									<ActivityCardGS
-										key={activity.id}
-										id={activity.id}
-										name={activity.name}
-										activity_id={activity.id}
-										time={format(
-											new Date(
-												activity.created_at
-											),
-											'h:mm a'
-										)}
-										date={new Date(
-											activity.created_at
-										).toLocaleDateString()}
-										description={
-											activity.description
-										}
-										user_id={
-											activity.meta.user.id
-										}
-										user_role={
-											activity.meta.user.role
-										}
-									/>
-								))}
-							</AccordionContent>
-						</AccordionItem>
-					))}
-				{empty && <div>No Activities yet</div>}
-			</Accordion>
+			{allActivities?.rows ? (
+				allActivities?.rows.map((a, b) => (
+					<ActivityCardGS
+						key={b}
+						id={a.id}
+						name={a.name}
+						activity_id={a.id}
+						time={format(new Date(a.created_at), 'h:mm a')}
+						date={format(new Date(a.created_at), 'MMM dd,')}
+						description={a.description}
+						user_id={a.meta ? a.meta.user.id : ''}
+						user_role={a.meta ? a.meta.user.role : ''}
+					/>
+				))
+			) : (
+				<div className='p-4 flex items-center justify-center'>
+					No Activities Found
+				</div>
+			)}
+			{allActivities && allActivities.rows && (
+				<PaginationISCE
+					hasNextPage={end < allActivities.meta.total}
+					hasPrevPage={start > 0}
+					page={Number(page)}
+					limit={Number(limit)}
+					total={allActivities.meta.total}
+					hrefPrefix='/activities'
+				/>
+			)}
 		</div>
 	);
 }

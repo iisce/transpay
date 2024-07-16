@@ -1,11 +1,11 @@
 import { format, subMonths } from 'date-fns';
-import { API, URLS } from '../consts';
+import { API, TRANSACTION_TYPE, URLS } from '../consts';
 import { getSSession } from '../get-data';
 
 export const getRevenueStats = async (
 	start?: string,
 	end?: string,
-	type?: string
+	type?: 'DAILY_FEES' | 'ALL' | 'TRACKER_FEES'
 ) => {
 	const session = await getSSession();
 	const headers = {
@@ -16,18 +16,22 @@ export const getRevenueStats = async (
 	const today = new Date();
 	const oneMonthAgo = subMonths(today, 1);
 
-	const url = `${API}${URLS.revenue.stats}?start_date=${
-		start ?? format(oneMonthAgo, 'yyyy-MM-dd')
-	}&end_date=${end ?? format(today, 'yyyy-MM-dd')}${
-		type ? '&type=' + type : ''
+	const url = `${API}${
+		type === 'ALL'
+			? URLS.transactions['net-total']
+			: type === 'DAILY_FEES'
+			? URLS.transactions['total-revenue']
+			: URLS.transactions['total-tracker']
+	}?start_date=${start ?? format(oneMonthAgo, 'yyyy-MM-dd')}&end_date=${
+		end ?? format(today, 'yyyy-MM-dd')
 	}`;
 	const res = await fetch(url, { headers, cache: 'no-store' });
 	const result = await res.json();
-	console.log({ url, type, result });
+	console.log({ result, type });
 	if (!res.ok) return undefined;
 
-	const chart: IRevenue = result.data;
-	return chart;
+	const total: number = result.data;
+	return total;
 };
 
 export const getDashboardTotalRevenue = async (
@@ -44,14 +48,6 @@ export const getDashboardTotalRevenue = async (
 		const url = `${API}${URLS.transactions['total-revenue']}?start_date=${start_date}&end_date=${end_date}`;
 		const res = await fetch(url, { headers, cache: 'no-store' });
 		const result = await res.json();
-		console.log({
-			start_date,
-			end_date,
-			url,
-			result: result.data,
-			error: result.errors,
-		});
-
 		if (!result.status || !result.data) {
 			console.error(`HTTP error! Status: ${res.status}`);
 			return undefined;

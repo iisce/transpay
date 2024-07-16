@@ -52,16 +52,16 @@ export default async function SearchVehicle({ id }: { id: string }) {
 			? '250'
 			: '300';
 
-	const daysOwed = generateDaysOwedArray(dateSupplied, fee);
-	daysOwed.sort(
-		(a, b) =>
-			new Date(b.transaction_date).getTime() -
-			new Date(a.transaction_date).getTime()
-	);
-	const totalPendingAmount = daysOwed.reduce(
-		(a, b) => a + parseFloat(b.amount),
-		0
-	);
+	// const daysOwed = generateDaysOwedArray(dateSupplied, fee);
+	// daysOwed.sort(
+	// 	(a, b) =>
+	// 		new Date(b.transaction_date).getTime() -
+	// 		new Date(a.transaction_date).getTime()
+	// );
+	// const totalPendingAmount = daysOwed.reduce(
+	// 	(a, b) => a + parseFloat(b.amount),
+	// 	0
+	// );
 	return (
 		<div className='h-full w-full p-6 flex flex-col gap-6 '>
 			<div className='flex flex-col text-center justify-between w-full gap-1'>
@@ -135,11 +135,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 			>
 				<TabsList
 					className={`grid ${
-						isOwing && hasTracker
-							? 'grid-cols-3'
-							: isOwing || hasTracker
-							? 'grid-cols-2'
-							: 'grid-cols-1'
+						isOwing ? 'grid-cols-2' : 'grid-cols-1'
 					}`}
 				>
 					<TabsTrigger value='overview'>OVERVIEW</TabsTrigger>
@@ -147,9 +143,6 @@ export default async function SearchVehicle({ id }: { id: string }) {
 						<TabsTrigger value='days-owed'>
 							DAYS OWED
 						</TabsTrigger>
-					)}
-					{hasTracker && (
-						<TabsTrigger value='waiver'>WAIVER</TabsTrigger>
 					)}
 				</TabsList>
 				<TabsContent value='overview'>
@@ -231,7 +224,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 						)}
 					</div>
 				</TabsContent>
-				{isOwing && (
+				{/* {isOwing && (
 					<TabsContent value='days-owed'>
 						<div className='w-full grid'>
 							<DataTable
@@ -241,23 +234,7 @@ export default async function SearchVehicle({ id }: { id: string }) {
 							/>
 						</div>
 					</TabsContent>
-				)}
-				{hasTracker && (
-					<TabsContent value='waiver'>
-						<div className='flex justify-between items-end mb-3'>
-							<div className=''>
-								<p className=' text-title2Bold'>
-									Waiver History
-								</p>
-							</div>
-							<WaiverButton vehicle={vehicle} />
-						</div>
-						<DataTable
-							columns={viewWaiverColumns}
-							data={waivers?.waivers || []}
-						/>
-					</TabsContent>
-				)}
+				)} */}
 			</Tabs>
 			<div className='  w-full'>
 				<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 w-full'>
@@ -289,12 +266,6 @@ export default async function SearchVehicle({ id }: { id: string }) {
 									/> */}
 								</>
 							)}
-							<DashboardCard
-								name='Waiver Form'
-								href={`/vehicles/${vehicle.id}/waiver`}
-								image={'/fineandpenal.png'}
-								description='Fill waiver form to process driver grace period'
-							/>
 						</>
 					)}
 				</div>

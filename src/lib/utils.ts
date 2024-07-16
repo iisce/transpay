@@ -12,6 +12,7 @@ import {
 	addHours,
 	addDays,
 	isEqual,
+	isBefore,
 } from 'date-fns';
 import { twMerge } from 'tailwind-merge';
 
@@ -104,7 +105,7 @@ export function isUUID(input: string): boolean {
 }
 
 /**
- * Description
+ * if string is 13 digits number, then its a barcode id
  * @param {string} str
  * @returns {boolean}
  */
@@ -136,12 +137,12 @@ export function unslugify(slug: string): string {
 	return final.join(' ');
 }
 export function transformTransactionsToMonthsData(
-	transactions: IVehicleTransaction[]
+	transactions: ITransaction[]
 ): { name: string; total: number }[] {
 	const totalByMonth: { [month: string]: number } = {};
 
-	transactions.forEach((transaction: IVehicleTransaction) => {
-		const transactionDate = new Date(transaction.transaction_date);
+	transactions.forEach((transaction: ITransaction) => {
+		const transactionDate = new Date(transaction.created_at);
 		const monthName = transactionDate.toLocaleString('en-US', {
 			month: 'short',
 		});
@@ -152,7 +153,7 @@ export function transformTransactionsToMonthsData(
 		}
 
 		// Add transaction amount to the total for the month
-		totalByMonth[monthName] += transaction.amount;
+		totalByMonth[monthName] += Number(transaction.amount);
 	});
 
 	// Convert totalByMonth object to the required format
@@ -166,12 +167,12 @@ export function transformTransactionsToMonthsData(
 	return transformedData;
 }
 export function transformTransactionsToYearsData(
-	transactions: IVehicleTransaction[]
+	transactions: ITransaction[]
 ): { name: string; total: number }[] {
 	const totalByYear: { [year: string]: number } = {};
 
-	transactions.forEach((transaction: IVehicleTransaction) => {
-		const transactionDate = new Date(transaction.transaction_date);
+	transactions.forEach((transaction: ITransaction) => {
+		const transactionDate = new Date(transaction.created_at);
 		const year = transactionDate.getFullYear().toString(); // Get the full year
 
 		// Initialize total for the year if not present
@@ -180,7 +181,7 @@ export function transformTransactionsToYearsData(
 		}
 
 		// Add transaction amount to the total for the year
-		totalByYear[year] += transaction.amount;
+		totalByYear[year] += Number(transaction.amount);
 	});
 
 	// Convert totalByYear object to the required format
@@ -203,12 +204,12 @@ function getWeekNumber(date: Date): number {
 	return weekNumber;
 }
 // export function transformTransactionsToWeeksData(
-// 	transactions: IVehicleTransaction[]
+// 	transactions: ITransaction[]
 // ): { name: string; total: number }[] {
 // 	const totalByWeek: { [week: string]: number } = {};
 
-// 	transactions.forEach((transaction: IVehicleTransaction) => {
-// 		const transactionDate = new Date(transaction.transaction_date);
+// 	transactions.forEach((transaction: ITransaction) => {
+// 		const transactionDate = new Date(transaction.created_at);
 // 		const weekNumber = getWeekNumber(transactionDate);
 // 		const weekKey = `Week ${weekNumber}`;
 // 		if (!totalByWeek[weekKey]) {
@@ -226,12 +227,12 @@ function getWeekNumber(date: Date): number {
 // }
 
 export function transformTransactionsToWeeksData(
-	transactions: IVehicleTransaction[]
+	transactions: ITransaction[]
 ): { name: string; total: number }[] {
 	const totalByWeek: { [weekKey: string]: number } = {};
 
 	transactions.forEach((transaction) => {
-		const transactionDate = new Date(transaction.transaction_date);
+		const transactionDate = new Date(transaction.created_at);
 
 		// Get the ISO week number (1-52/53) considering year rollover
 		const weekNumber = getWeekNumber(transactionDate);
@@ -246,7 +247,7 @@ export function transformTransactionsToWeeksData(
 		}
 
 		// Add transaction amount to the total for the week
-		totalByWeek[weekKey] += transaction.amount;
+		totalByWeek[weekKey] += Number(transaction.amount);
 	});
 
 	// Convert totalByWeek object to the required format
@@ -261,19 +262,19 @@ export function transformTransactionsToWeeksData(
 }
 
 // export function transformTransactionsToDaysData(
-// 	transactions: IVehicleTransaction[]
+// 	transactions: ITransaction[]
 // ): { name: string; total: number }[] {
 // 	const totalByDay: { [day: string]: number } = {};
 
-// 	transactions.forEach((transaction: IVehicleTransaction) => {
+// 	transactions.forEach((transaction: ITransaction) => {
 // 		console.log({
 // 			date: format(
-// 				new Date(transaction.transaction_date),
+// 				new Date(transaction.created_at),
 // 				'yyyy-MM-dd'
 // 			),
 // 			amount: transaction.amount,
 // 		});
-// 		const transactionDate = new Date(transaction.transaction_date);
+// 		const transactionDate = new Date(transaction.created_at);
 // 		// Using the transaction date directly as the key
 // 		const dayKey = format(new Date(transactionDate), 'dd-mm');
 
@@ -294,24 +295,18 @@ export function transformTransactionsToWeeksData(
 // }
 
 export function transformTransactionsToDaysData(
-	transactions: IVehicleTransaction[]
+	transactions: ITransaction[]
 ): { name: string; total: number }[] {
 	// 1. Get the range of days
 	const earliestTransaction = transactions.reduce((min, t) =>
-		new Date(t.transaction_date) < new Date(min.transaction_date)
-			? t
-			: min
+		new Date(t.created_at) < new Date(min.created_at) ? t : min
 	);
 	const latestTransaction = transactions.reduce((max, t) =>
-		new Date(t.transaction_date) > new Date(max.transaction_date)
-			? t
-			: max
+		new Date(t.created_at) > new Date(max.created_at) ? t : max
 	);
 
-	let currentDate = startOfDay(
-		new Date(earliestTransaction.transaction_date)
-	);
-	const endDate = startOfDay(new Date(latestTransaction.transaction_date));
+	let currentDate = startOfDay(new Date(earliestTransaction.created_at));
+	const endDate = startOfDay(new Date(latestTransaction.created_at));
 
 	// 2. Initialize the daily data
 	const dailyData: { name: string; total: number }[] = [];
@@ -325,12 +320,14 @@ export function transformTransactionsToDaysData(
 
 	// 3. Aggregate transactions into daily buckets
 	transactions.forEach((t) => {
-		const transactionDate = startOfDay(new Date(t.transaction_date));
-		const matchingDay = dailyData.find((d) =>
-			isEqual(transactionDate, new Date(d.name))
+		const transactionDate = startOfDay(new Date(t.created_at));
+		const transactionDateStr = format(transactionDate, 'MMM d');
+		const matchingDay = dailyData.find(
+			(d) => d.name === transactionDateStr
 		);
 		if (matchingDay) {
-			matchingDay.total += t.amount;
+			matchingDay.total += Number(t.amount);
+			// console.log(`Added ${t.amount} to ${matchingDay.name}`);
 		}
 	});
 
@@ -338,18 +335,16 @@ export function transformTransactionsToDaysData(
 }
 
 export function transformTransactionsToHoursData(
-	transactions: IVehicleTransaction[]
+	transactions: ITransaction[]
 ): { name: string; total: number }[] {
 	let hourlyData: { name: string; total: number }[] = [];
 	// 1. Get the start of the day from the earliest transaction
 	if (transactions.length !== 0) {
 		const earliestTransaction = transactions.reduce((min, t) =>
-			new Date(t.transaction_date) < new Date(min.transaction_date)
-				? t
-				: min
+			new Date(t.created_at) < new Date(min.created_at) ? t : min
 		);
 		const startOfChartDay = startOfDay(
-			new Date(earliestTransaction.transaction_date)
+			new Date(earliestTransaction.created_at)
 		);
 
 		// 2. Initialize the hourly data
@@ -363,8 +358,8 @@ export function transformTransactionsToHoursData(
 
 		// 3. Aggregate transactions into hourly buckets
 		transactions.forEach((t) => {
-			const transactionHour = getHours(new Date(t.transaction_date));
-			hourlyData[transactionHour].total += t.amount;
+			const transactionHour = getHours(new Date(t.created_at));
+			hourlyData[transactionHour].total += Number(t.amount);
 		});
 
 		return hourlyData;
@@ -418,9 +413,7 @@ export function generateRandomInteger(min: number, max: number): number {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-export function calculateTransactionTotals(
-	transactions: IVehicleTransaction[]
-): {
+export function calculateTransactionTotals(transactions: ITransaction[]): {
 	totalRevenue: number;
 	totalDailyFees: number;
 	totalTrackerFees: number;
@@ -429,13 +422,13 @@ export function calculateTransactionTotals(
 	let totalDailyFees = 0;
 	let totalTrackerFees = 0;
 
-	transactions.forEach((transaction: IVehicleTransaction) => {
-		totalRevenue += transaction.amount;
+	transactions.forEach((transaction: ITransaction) => {
+		totalRevenue += Number(transaction.amount);
 
 		if (transaction.transaction_type === 'DAILY_FEES') {
-			totalDailyFees += transaction.amount;
+			totalDailyFees += Number(transaction.amount);
 		} else if (transaction.transaction_type === 'TRACKER_FEES') {
-			totalTrackerFees += transaction.amount;
+			totalTrackerFees += Number(transaction.amount);
 		}
 	});
 
@@ -458,12 +451,12 @@ export function calculatePercentageDifference(
 }
 
 export function filterTransactionsByDateRange(
-	transactions: IVehicleTransaction[],
+	transactions: ITransaction[],
 	startDate: Date,
 	endDate: Date
-): IVehicleTransaction[] {
+): ITransaction[] {
 	return transactions.filter((transaction) => {
-		const transactionDate = new Date(transaction.transaction_date);
+		const transactionDate = new Date(transaction.created_at);
 		return transactionDate >= startDate && transactionDate <= endDate;
 	});
 }
@@ -475,18 +468,18 @@ export const LAST_YEAR_END_DATE = new Date(
 );
 export const NEW_YEAR_START_DATE = startOfYear(new Date()); // Start of current year
 
-export const createDataForTable = (transactions: IVehicleTransaction[]) => {
+export const createDataForTable = (transactions: ITransaction[]) => {
 	const yearlyTotals: { [year: string]: number } = {};
 
-	transactions.forEach((transaction: IVehicleTransaction) => {
-		const transactionDate = new Date(transaction.transaction_date);
+	transactions.forEach((transaction: ITransaction) => {
+		const transactionDate = new Date(transaction.created_at);
 		const transactionYear = transactionDate.getFullYear().toString();
 
 		if (!yearlyTotals[transactionYear]) {
 			yearlyTotals[transactionYear] = 0;
 		}
 
-		yearlyTotals[transactionYear] += transaction.amount;
+		yearlyTotals[transactionYear] += Number(transaction.amount);
 	});
 
 	const dataForTable = Object.entries(yearlyTotals).map(([year, total]) => ({
@@ -497,7 +490,7 @@ export const createDataForTable = (transactions: IVehicleTransaction[]) => {
 	return dataForTable;
 };
 interface DaysOwedObject {
-	transaction_date: string;
+	created_at: string;
 	amount: string;
 	transaction_type: string;
 }
@@ -519,7 +512,7 @@ export function generateDaysOwedArray(
 		transactionDate.setDate(presentDate.getDate() + timeDiff + i);
 
 		const daysOwedObject: DaysOwedObject = {
-			transaction_date: transactionDate.toISOString().split('T')[0],
+			created_at: transactionDate.toISOString().split('T')[0],
 			amount: fee, // Replace with the actual amount
 			transaction_type: 'DAILY_FEES',
 		};
@@ -566,3 +559,6 @@ export function isEmpty(value: string | any[] | object): boolean {
 		throw new Error('Unsupported type for isEmpty check');
 	}
 }
+
+export const isOwing = (date: string) =>
+	isBefore(addDays(new Date(date), 1), new Date());

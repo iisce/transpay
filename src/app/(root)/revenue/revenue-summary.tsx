@@ -11,7 +11,7 @@ export default async function RevenueSummary({
 }: {
 	start: string;
 	end: string;
-	type: string;
+	type: 'DAILY_FEES' | 'ALL' | 'TRACKER_FEES';
 	title: string;
 	description?: string;
 }) {
@@ -22,7 +22,7 @@ export default async function RevenueSummary({
 			percentage={100}
 			type='up'
 			title={title}
-			amount={String(revenueData!.total)}
+			amount={String(revenueData !== null ? revenueData : 0)}
 		/>
 	);
 }

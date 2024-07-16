@@ -285,6 +285,36 @@ interface ITrackerMin {
 	total: string;
 }
 
+interface ITransaction {
+	id: string;
+	created_at: string;
+	updated_at: string;
+	deleted_at: string;
+	transaction_reference: string;
+	in_reference: string;
+	out_reference: string;
+	description: string;
+	payment_gateway: string;
+	transaction_type: string;
+	transaction_category: string;
+	sender: {
+		bank_code: string;
+		bank_name: string;
+		account_number: string;
+	};
+	recipient: null;
+	amount: string;
+	currency: string;
+	revenue_amount: string;
+	tracker_amount: string;
+	wallet_charges: string;
+	gateway_fee_in: string;
+	gateway_fee_out: string;
+	wallet_before: string;
+	wallet_after: string;
+	status: string;
+	meta: null;
+}
 interface IVehicleTransaction {
 	id?: number;
 	vehicle_transaction_id?: string;

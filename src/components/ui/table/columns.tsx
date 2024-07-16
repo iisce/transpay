@@ -237,9 +237,8 @@ export const adminsColumns: ColumnDef<IUserExtended>[] = [
 						href={`/admins/${row.original.id}`}
 						className='h-5 w-5 items-center shrink-0'
 					>
-						{editIcon}
+						<EyeIcon className='w-4 h-4' />
 					</Link>
-					<DeleteAdminButton id={row.original.id} />
 				</div>
 			);
 		},
@@ -313,9 +312,9 @@ export const agentsColumns: ColumnDef<IUserExtended>[] = [
 						href={`/agents/${row.original.id}`}
 						className='h-5 w-5 items-center shrink-0'
 					>
-						{editIcon}
+						<EyeIcon className='w-4 h-4' />
 					</Link>
-					<DeleteAgentButton id={row.original.id} />
+					{/* <DeleteAgentButton id={row.original.id} /> */}
 				</div>
 			);
 		},
@@ -400,17 +399,20 @@ export const vehiclesColumns: ColumnDef<IVehicle>[] = [
 								View Vehicle
 							</Link>
 						</DropdownMenuItem>
-						<DropdownMenuItem
-							className='border-b border-black rounded-none'
-							asChild
-						>
-							<Link
-								href={`/vehicles/${vehicle.id}/location`}
-							>
-								<MapPinIcon className='h-4 w-4 mr-3' />
-								View Location
-							</Link>
-						</DropdownMenuItem>
+						{vehicle.tracker &&
+							vehicle.tracker.terminal_id && (
+								<DropdownMenuItem
+									className='border-b border-black rounded-none'
+									asChild
+								>
+									<Link
+										href={`/vehicles/${vehicle.id}/location`}
+									>
+										<MapPinIcon className='h-4 w-4 mr-3' />
+										View Location
+									</Link>
+								</DropdownMenuItem>
+							)}
 						{/* <DropdownMenuItem
 							className='border-b border-black rounded-none'
 							asChild
@@ -440,7 +442,7 @@ export const vehiclesColumns: ColumnDef<IVehicle>[] = [
 						<DropdownMenuItem className='text-destructive'>
 							Delete Vehicle
 						</DropdownMenuItem>
-						<DropdownMenuItem
+						{/* <DropdownMenuItem
 							className=''
 							onClick={() =>
 								navigator.clipboard.writeText(
@@ -449,7 +451,7 @@ export const vehiclesColumns: ColumnDef<IVehicle>[] = [
 							}
 						>
 							Copy vehicle ID
-						</DropdownMenuItem>
+						</DropdownMenuItem> */}
 					</DropdownMenuContent>
 				</DropdownMenu>
 			);

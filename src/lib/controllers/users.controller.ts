@@ -30,17 +30,21 @@ export const getUsers = async (o: {
 	return admins;
 };
 export const getUser = async (id: string) => {
-	const session = await getServerSession(options);
-	const headers = {
-		'Content-Type': 'application/json',
-		'api-secret': process.env.API_SECRET || '',
-		Authorization: `Bearer ${session?.user.access_token}`,
-	};
-	const url = `${API}${URLS.user}/${id}`;
-	const res = await fetch(url, { headers, next: { revalidate: 0 } });
-	const result = await res.json();
-	// console.log({ url, result: result.data, error: result.error });
-	if (!result.status) return undefined;
-	const user: IUserExtended = result.data;
-	return user;
+	try {
+		const session = await getServerSession(options);
+		const headers = {
+			'Content-Type': 'application/json',
+			'api-secret': process.env.API_SECRET || '',
+			Authorization: `Bearer ${session?.user.access_token}`,
+		};
+		const url = `${API}${URLS.user}/${id}`;
+		const res = await fetch(url, { headers, next: { revalidate: 0 } });
+		const result = await res.json();
+		// console.log({ url, result: result.data, error: result.error });
+		if (!result.status) return undefined;
+		const user: IUserExtended = result.data;
+		return user;
+	} catch {
+		return null;
+	}
 };

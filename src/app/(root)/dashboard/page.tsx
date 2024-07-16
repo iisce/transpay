@@ -21,7 +21,8 @@ export default async function DashboardPage() {
 				{ROLE?.toLowerCase() === 'superadmin' ? (
 					<DashboardSuperAdmin />
 				) : ROLE?.toLowerCase() === 'admin' ? (
-					<DashboardAdmin />
+					// <DashboardAdmin />
+					<DashboardSuperAdmin />
 				) : ROLE?.toLowerCase() === 'greenengine_agent' ? (
 					<DashboardGreen />
 				) : (

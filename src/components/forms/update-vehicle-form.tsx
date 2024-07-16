@@ -25,7 +25,8 @@ import { loadingSpinner } from '@/lib/icons';
 import { NextResponse } from 'next/server';
 import Link from 'next/link';
 import { Separator } from '../ui/separator';
-import { Plus } from 'lucide-react';
+import { ArrowLeft, Plus } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const vehicleFormSchema = z.object({
 	category: z
@@ -95,6 +96,7 @@ const vehicleFormSchema = z.object({
 export type VehicleFormValues = z.infer<typeof vehicleFormSchema>;
 
 export function UpdateVehicleForm({ vehicle }: { vehicle: IVehicle }) {
+	const router = useRouter();
 	const [disabled, setDisabled] = React.useState<boolean>(true);
 	const defaultValues: Partial<VehicleFormValues> = {
 		id: vehicle.id,
@@ -181,6 +183,7 @@ export function UpdateVehicleForm({ vehicle }: { vehicle: IVehicle }) {
 				});
 				setIsLoading(false);
 				setDisabled(true);
+				router.push('/vehicles?page=1&limit=15');
 				return NextResponse.json(result);
 			} else {
 				setIsLoading(false);
@@ -697,9 +700,16 @@ export function UpdateVehicleForm({ vehicle }: { vehicle: IVehicle }) {
 					>
 						Edit
 					</Button>
-					{/* <Button className='w-32'>
-						<DeleteVehicleButton id={vehicle.vehicle_id} />
-					</Button> */}
+					<Button
+						className='px-0 gap-1.5'
+						variant='link'
+						asChild
+					>
+						<Link href={`/vehicles/${vehicle.id}`}>
+							<ArrowLeft className='h-4 w-4' />
+							Go Back
+						</Link>
+					</Button>
 				</div>
 			)}
 		</div>

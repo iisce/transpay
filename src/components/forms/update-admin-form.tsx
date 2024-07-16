@@ -26,6 +26,14 @@ import {
 	SelectValue,
 } from '../ui/select';
 import { useRouter } from 'next/navigation';
+import { PenLine } from 'lucide-react';
+import {
+	Dialog,
+	DialogContent,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from '../ui/dialog';
 
 export const updateAdminFormSchema = z.object({
 	name: z
@@ -153,7 +161,7 @@ export function UpdateAdminForm({ admin }: { admin: IUserExtended }) {
 				});
 				setIsLoading(false);
 				setDisabled(true);
-				router.refresh();
+				router.push('/admins');
 				return NextResponse.json(result);
 			} else {
 				setIsLoading(false);
@@ -407,15 +415,37 @@ export function UpdateAdminForm({ admin }: { admin: IUserExtended }) {
 			{disabled && (
 				<div className='flex items-center justify-between gap-5'>
 					<Button
-						className='w-32'
+						className='w-32 flex items-center gap-1.5'
 						onClick={() => setDisabled(false)}
 						type='button'
 					>
+						<PenLine className='h-4 w4' />
 						Edit
 					</Button>
-					<Button className='w-32'>
-						<DeleteAdminButton id={admin.id} />
-					</Button>
+					<Dialog>
+						<DialogTrigger asChild>
+							<Button className='w-32 flex items-center gap-1.5'>
+								Delete
+							</Button>
+						</DialogTrigger>
+						<DialogContent className='space-y-2'>
+							<DialogHeader className='items-center mx-auto justify-center'>
+								<DialogTitle>
+									Do you wish to continue with this:
+								</DialogTitle>
+							</DialogHeader>
+							<>
+								<div className='grid'>
+									<Button className='w-full flex items-center gap-1.5'>
+										<DeleteAdminButton
+											id={admin.id}
+										/>
+										Yes
+									</Button>
+								</div>
+							</>
+						</DialogContent>
+					</Dialog>
 				</div>
 			)}
 		</>

@@ -38,16 +38,6 @@ export default async function SuperAdminSettingsPage() {
 						</DialogFooter> */}
 					</DialogContent>
 				</Dialog>
-				<div className='flex gap-2'>
-					<Button className='gap-1'>
-						<span className='hidden md:block'>Enable</span>{' '}
-						All <span className='hidden md:block'>Jobs</span>
-					</Button>
-					<Button className='gap-1'>
-						<span className='hidden md:block'>Enable</span>{' '}
-						Main <span className='hidden md:block'>Jobs</span>
-					</Button>
-				</div>
 			</div>
 			<Separator className='my-4' />
 
