@@ -1703,9 +1703,13 @@ export const LGA = [
 // export const API = 'https://squid-app-ruxoz.ondigitalocean.app';
 // export const API = 'http://localhost:5000';
 // export const API = 'https://guided-adequately-hare.ngrok-free.app'; // Abdullah PC
+// export const API =
+// 	process.env.TEST_BACKEND_URL ||
+// 	'https://pig-crisp-logically.ngrok-free.app'; // Rex PC
+
 export const API =
 	process.env.TEST_BACKEND_URL ||
-	'https://pig-crisp-logically.ngrok-free.app'; // Rex PC
+	'https://generally-equal-elephant.ngrok-free.app';
 export const URLS = {
 	activity: {
 		all: '/api/v1/activities',
