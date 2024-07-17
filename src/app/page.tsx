@@ -4,7 +4,7 @@ import CarouselCard from '@/components/pages/home/carousel-card';
 import { UserNav } from '@/components/shared/user-nav-bar';
 import { Button } from '@/components/ui/button';
 import Searchbar from '@/components/ui/searchbar';
-import { BUS_IMAGE_SAMPLE } from '@/lib/consts';
+import { BUS_IMAGE_SAMPLE, HOW_IT_WORKS, LANDING_CARD_CONTENTS } from '@/lib/consts';
 import { getAgentMe } from '@/lib/controllers/agent-controller';
 import { getUser } from '@/lib/controllers/users.controller';
 import { getSSession } from '@/lib/get-data';
@@ -14,6 +14,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { options } from './api/auth/options';
 import { redirect } from 'next/navigation';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default async function Home() {
 	const session = await getServerSession(options);
@@ -75,18 +76,14 @@ export default async function Home() {
 					<div className='shrink-0 flex flex-col items-center gap-2 lg:gap-5'>
 						<div className='flex flex-col items-center'>
 							<div className='text-2xl lg:text-5xl font-bold'>
-								Your All-In-One Solution;
+							Simplifying Levy Collection 
 							</div>
 							<div className='text-2xl lg:text-5xl font-bold'>
-								Streamline, Track and Pay.
+							for Commercial Vehicles
 							</div>
 						</div>
 						<p className='text-center text-sm'>
-							Transpay is a smart app that helps manage
-							fees from bus and keke drivers, making
-							everything easy for administrators with tools
-							to check info, register drivers, and handle
-							payments.
+							{`Ensuring safe and easy collection of levies using simple and secure payment systems`}
 						</p>
 					</div>
 					<Searchbar
@@ -98,96 +95,77 @@ export default async function Home() {
 					<CarouselContainer />
 				</div>
 			</div>
-			<div className='h-[100svh] flex flex-col items-start justify-between relative pt-24 gap-10'>
-				<NigeriaIcon className='absolute top-0 left-1/2 -translate-x-1/2 w-[50svw] h-full object-contain ' />
-				<div className='w-full h-full max-w-lg lg:max-w-3xl mx-auto flex flex-col items-center justify-between px-5 lg:px-20 gap-3 relative overflow-clip'>
-					<div className='flex flex-col items-center justify-center gap-5'>
-						<h1 className=' font-bold text-2xl lg:text-4xl'>
-							Download Transpay
-						</h1>
-						<p className='text-center'>
-							Experience the future of transportation fee
-							management at your fingertips! Download the
-							Transpay mobile application now to streamline
-							administrative tasks, check driver
-							information, process payments, and
-							revolutionize your daily fee management.
-							Don&apos;t miss out on the seamless and
-							transformative tools – download the app and
-							elevate your transport management journey
-							today
-						</p>
-						<div className='flex gap-5 justify-between'>
-							<Image
-								src='/app-store.png'
-								alt='transpay app '
-								height={600}
-								width={600}
-								className=' object-contain object-top h-14 w-fit '
-							/>
-							<Image
-								src='/play-store.png'
-								alt='transpay app'
-								height={600}
-								width={600}
-								className=' object-contain object-top h-14 w-fit '
-							/>
-						</div>
-					</div>
-					<div className='w-full h-[65svh] relative flex gap-3'>
-						<Image
-							src='/hand.png'
-							alt='transpay app'
-							height={600}
-							width={600}
-							className=' object-cover object-top'
-						/>
-					</div>
+
+			<div className='h-[100svh] flex flex-col items-start justify-between mt-10  relative pt-24 gap-10'>
+				<NigeriaIcon className='absolute top-0 left-1/2 -translate-x-1/2 -z-30 w-[50svw] h-full object-contain ' />
+				<div className="mx-auto space-y-10">
+				<h2 className='font-extrabold text-4xl '>{`Why Transpay?`}</h2>
+				<div className="mx-auto lg:max-w-7xl grid grid-cols-1 md:grid-cols-4 gap-8">
+				{LANDING_CARD_CONTENTS.map((card, i) => (
+			<Card className="bg-[#B9AB05] p-6 pt-10 rounded-xl" key={i}>
+				<CardHeader>
+					<CardTitle className="text-background ">{card.title}</CardTitle>
+				</CardHeader>
+				<CardContent>
+				<CardDescription className="text-background">
+					{card.description}
+					</CardDescription>
+				</CardContent>
+				</Card>
+				))}
+
 				</div>
+</div>
+</div>
+	<div className='h-[70svh] bg-primary flex flex-col items-start justify-between mt-10  relative pt-24 gap-10'>
+	<div className="mx-auto space-y-10 ">
+		<h2 className='font-extrabold text-4xl text-background'>{`How it works`}</h2>
+		<div className="mx-auto lg:max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-8">
+		{HOW_IT_WORKS.map((card, i) => (
+	<div className=" py-6 pt-10  border-t-2 border-background text-start" key={i}>
+
+		<div className="text-background flex flex-col space-y-1.5 py-6 text-2xl font-semibold leading-none tracking-tight ">{card.title}</div>
+
+		<div className="text-background text-sm  py-6 pt-0">
+			{card.description}
 			</div>
-			<div className='bg-secondary w-full shrink-0 relative '>
-				<div className='w-full h-10 bg-primary/20 flex justify-between items-center px-3 lg:px-9 '>
-					<div className=''>Anambra</div>
-					<div className=''>Nigeria</div>
-				</div>
-				<div className='flex lg:flex-row items-center justify-between gap-1 px-5'>
-					<div className='flex justify-between'>
-						<Button
-							asChild
-							className='rounded'
-							variant={'link'}
-						>
-							<Link href={'/about'}>About</Link>
-						</Button>
-						<Button
-							asChild
-							className='rounded'
-							variant={'link'}
-						>
-							<Link href={'/faq'}>FAQ</Link>
-						</Button>
-					</div>
-					<div className='text-sm hidden lg:flex'>
-						Solution is here!!!
-					</div>
-					<div className='flex'>
-						<Button
-							asChild
-							className='rounded'
-							variant={'link'}
-						>
-							<Link href={'/privacy'}>Privacy</Link>
-						</Button>
-						<Button
-							asChild
-							className='rounded'
-							variant={'link'}
-						>
-							<Link href={'/terms'}>Terms</Link>
-						</Button>
-					</div>
-				</div>
-			</div>
-		</main>
+		</div>
+		))}
+
+		</div>
+</div>
+</div>
+
+
+
+
+	<div className='bg-secondary h-full bottom-0 w-full shrink-0 relative '>
+		<div className='w-full h-10 bg-primary/20 flex justify-between items-center px-3 lg:px-9 '>
+			<div className=''>Contact Us
+</div>
+	<div className=''>Get Started Today!</div>
+	</div>
+	<div className='flex lg:flex-row  items-center justify-between gap-1 px-5'>
+		<div className='flex flex-col my-3 gap-2 '>
+
+
+			<p className='w-96'>
+			{`For more information or to schedule a demo, please contact us at
+			support@transpaytms.com or call us at (+234) 816 345 3826.`}
+			</p>
+		</div>
+
+		<div className='flex text-end flex-col my-3 gap-2 '>
+
+
+
+			<p className='w-96'>
+			{`Powered By ISCE Digital Concept`}
+			</p>
+		</div>
+
+	</div>
+	</div>
+	</main>
 	);
 }
