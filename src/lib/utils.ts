@@ -294,42 +294,96 @@ export function transformTransactionsToWeeksData(
 // 	return transformedData;
 // }
 
+// export function transformTransactionsToDaysData(
+// 	transactions: ITransaction[]
+// ): { name: string; total: number }[] {
+// 	// 1. Get the range of days
+// 	const earliestTransaction = transactions.reduce((min, t) =>
+// 		new Date(t.created_at) < new Date(min.created_at) ? t : min
+// 	);
+// 	const latestTransaction = transactions.reduce((max, t) =>
+// 		new Date(t.created_at) > new Date(max.created_at) ? t : max
+// 	);
+
+// 	let currentDate = startOfDay(new Date(earliestTransaction.created_at));
+// 	const endDate = startOfDay(new Date(latestTransaction.created_at));
+
+// 	// 2. Initialize the daily data
+// 	const dailyData: { name: string; total: number }[] = [];
+// 	while (currentDate <= endDate) {
+// 		dailyData.push({
+// 			name: format(currentDate, 'MMM d'), // Format like 'Mar 10'
+// 			total: 0,
+// 		});
+// 		currentDate = addDays(currentDate, 1);
+// 	}
+
+// 	// 3. Aggregate transactions into daily buckets
+// 	transactions.forEach((t) => {
+// 		const transactionDate = startOfDay(new Date(t.created_at));
+// 		const transactionDateStr = format(transactionDate, 'MMM d');
+// 		const matchingDay = dailyData.find(
+// 			(d) => d.name === transactionDateStr
+// 		);
+// 		if (matchingDay) {
+// 			matchingDay.total += Number(t.amount);
+// 			// console.log(`Added ${t.amount} to ${matchingDay.name}`);
+// 		}
+// 	});
+
+// 	return dailyData;
+// }
+
 export function transformTransactionsToDaysData(
 	transactions: ITransaction[]
 ): { name: string; total: number }[] {
-	// 1. Get the range of days
-	const earliestTransaction = transactions.reduce((min, t) =>
-		new Date(t.created_at) < new Date(min.created_at) ? t : min
-	);
-	const latestTransaction = transactions.reduce((max, t) =>
-		new Date(t.created_at) > new Date(max.created_at) ? t : max
-	);
+	// 1. Get the range of days (handle empty transactions)
+	const earliestTransaction =
+		transactions.length > 0
+			? transactions.reduce((min, t) =>
+					new Date(t.created_at) < new Date(min.created_at)
+						? t
+						: min
+			  )
+			: new Date(); // Use today's date if no transactions
 
-	let currentDate = startOfDay(new Date(earliestTransaction.created_at));
-	const endDate = startOfDay(new Date(latestTransaction.created_at));
+	const latestTransaction =
+		transactions.length > 0
+			? transactions.reduce((max, t) =>
+					new Date(t.created_at) > new Date(max.created_at)
+						? t
+						: max
+			  )
+			: new Date(); // Use today's date if no transactions
 
-	// 2. Initialize the daily data
-	const dailyData: { name: string; total: number }[] = [];
+	//@ts-ignore
+	let currentDate = startOfDay(earliestTransaction);
+	//@ts-ignore
+	const endDate = startOfDay(latestTransaction);
+
+	// 2. Initialize the daily data (ensure at least one day)
+	const dailyData: { name: string; total: number }[] = [
+		{ name: format(currentDate, 'MMM d'), total: 0 },
+	];
+
 	while (currentDate <= endDate) {
-		dailyData.push({
-			name: format(currentDate, 'MMM d'), // Format like 'Mar 10'
-			total: 0,
-		});
 		currentDate = addDays(currentDate, 1);
+		dailyData.push({ name: format(currentDate, 'MMM d'), total: 0 });
 	}
 
-	// 3. Aggregate transactions into daily buckets
-	transactions.forEach((t) => {
-		const transactionDate = startOfDay(new Date(t.created_at));
-		const transactionDateStr = format(transactionDate, 'MMM d');
-		const matchingDay = dailyData.find(
-			(d) => d.name === transactionDateStr
-		);
-		if (matchingDay) {
-			matchingDay.total += Number(t.amount);
-			// console.log(`Added ${t.amount} to ${matchingDay.name}`);
-		}
-	});
+	// 3. Aggregate transactions into daily buckets (handle empty transactions)
+	if (transactions.length > 0) {
+		transactions.forEach((t) => {
+			const transactionDate = startOfDay(new Date(t.created_at));
+			const transactionDateStr = format(transactionDate, 'MMM d');
+			const matchingDay = dailyData.find(
+				(d) => d.name === transactionDateStr
+			);
+			if (matchingDay) {
+				matchingDay.total += Number(t.amount);
+			}
+		});
+	}
 
 	return dailyData;
 }
