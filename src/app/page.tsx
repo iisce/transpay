@@ -139,9 +139,9 @@ export default async function Home() {
           <div className="font-bold">Contact Us</div>
           <div className="font-bold">Get Started Today!</div>
         </div>
-        <div className="flex md:flex-row px-4 flex-col w-full  items-center justify-center ">
+        <div className="flex md:flex-row px-4 flex-col w-full  items-center md:justify-center xl:justify-between ">
           <div className="flex flex-col my-3 ">
-            <p className="w-full text-md ">
+            <p className="w-full text-md xl:w-96  md:w-full">
               {`For more information or to schedule a demo, please contact us at
 			          support@transpaytms.com or call us at (+234) 816 345 3826.`}
             </p>
