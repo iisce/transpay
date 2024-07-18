@@ -452,6 +452,19 @@ interface ISettings {
 	createdAt: string;
 	updatedAt: string;
 }
+interface IBits {
+	id: number;
+	bit_id: string;
+	name: string;
+	description: string;
+	value: string;
+	user_id: string;
+	user_role: string;
+	updated_by_id: string;
+	updated_by_role: string;
+	createdAt: string;
+	updatedAt: string;
+}
 interface IUser {
 	admin_id: string;
 	blacklisted: boolean;

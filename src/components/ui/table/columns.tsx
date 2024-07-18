@@ -32,6 +32,7 @@ import Cbadge from '../category-badge';
 import { Dialog, DialogContent, DialogFooter, DialogTrigger } from '../dialog';
 import Pill from '../pill';
 import { DataTableColumnHeader } from './data-column-table-header';
+import { UpdateBitsForm } from '@/components/forms/update-bits-form';
 
 export const debtColumns: ColumnDef<IVehiclePayment>[] = [
 	{
@@ -783,6 +784,43 @@ export const settingsColumns: ColumnDef<ISettings>[] = [
 					</DialogTrigger>
 					<DialogContent>
 						<UpdateSettingsForm settings={setting} />
+					</DialogContent>
+				</Dialog>
+			);
+		},
+	},
+];
+
+export const bitsColumns: ColumnDef<IBits>[] = [
+	{
+		accessorKey: 'name',
+		header: ({ column }) => (
+			<DataTableColumnHeader
+				column={column}
+				title='Name'
+			/>
+		),
+		cell: ({ row }) => <div className=''>{row.original.name}</div>,
+	},
+	{
+		accessorKey: 'value',
+		header: 'Value',
+	},
+	{
+		id: 'actions',
+		header: 'Actions',
+		cell: ({ row }) => {
+			const bit = row.original;
+			return (
+				<Dialog>
+					<DialogTrigger asChild>
+						<Button className='gap-1'>
+							<EyeIcon className='h-4 w-4' />
+							<span className='hidden md:block'>View</span>
+						</Button>
+					</DialogTrigger>
+					<DialogContent>
+						<UpdateBitsForm bit={bit} />
 					</DialogContent>
 				</Dialog>
 			);
