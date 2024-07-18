@@ -34,7 +34,7 @@ export default async function Home() {
     <main className="">
       <div className="h-20 w-full mx-auto  shrink-0 fixed bg-white/50 backdrop-blur z-50">
         <MaxWidthWrapper className="flex px-2 xl:px-0 items-center justify-between h-full w-full gap-1">
-          <Link href={"/"} className="w-52 shrink-0 px-5">
+          <Link href={"/"} className="md:w-52 w-32 shrink-0 px-5">
             <Image
               src={"/logo.png"}
               height={30}
@@ -43,10 +43,10 @@ export default async function Home() {
               alt="Transpay Logo"
             />
           </Link>
-          <div className="flex xl:w-0 w-full md:mr-32 items-center justify-center h-full gap-3">
+          <div className="flex xl:w-0 w-full items-center justify-end h-full gap-3">
             <Button
               asChild
-              className="rounded-lg w-full items-center lg:w-32 bg-transparent"
+              className="rounded-lg w-10 items-center md:w-32 bg-transparent"
               variant={"outline"}>
               <Link href={"/scan"}>Scan</Link>
             </Button>
@@ -91,13 +91,13 @@ export default async function Home() {
         </div>
       </div>
 
-      <div className="h-full px-4 md:px-0 md:h-[100svh] flex flex-col items-start justify-between mt-10  relative pt-24 gap-10">
+      <div className="h-full px-4 md:px-4 md:h-[70svh] xl:h-[100svh] flex flex-col items-start justify-between mt-10  relative pt-24 gap-10">
         <NigeriaIcon className="absolute top-0 left-1/2 -translate-x-1/2 -z-30 w-[50svw] h-full object-contain " />
         <div className="mx-auto space-y-10">
           <h2 className="font-extrabold text-4xl ">{`Why Transpay?`}</h2>
-          <div className="mx-auto lg:max-w-7xl grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="mx-auto md:max-w-7xl grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-2 ">
             {LANDING_CARD_CONTENTS.map((card, i) => (
-              <Card className="bg-[#B9AB05] p-6 pt-10 rounded-xl" key={i}>
+              <Card className="bg-[#B9AB05] md:p-0 p-6 pt-10 rounded-xl" key={i}>
                 <CardHeader>
                   <CardTitle className="text-background ">
                     {card.title}
@@ -113,10 +113,10 @@ export default async function Home() {
           </div>
         </div>
       </div>
-      <div className="h-full md:h-[70svh] bg-primary flex flex-col items-start justify-between mt-10  relative pt-24 gap-10">
-        <div className="px-4 md:px-0 mx-auto space-y-10 ">
+      <div className="h-full xl:h-[70svh] md:h-[50svh]  bg-primary flex flex-col items-start justify-between mt-10  relative pt-24 gap-10">
+        <div className="px-4 md:px-4 mx-auto space-y-10 ">
           <h2 className="font-extrabold text-4xl text-background">{`How it works`}</h2>
-          <div className="mx-auto  w-full lg:max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="mx-auto  w-full md:max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-8">
             {HOW_IT_WORKS.map((card, i) => (
               <div
                 className=" py-6 pt-10  border-t-2 border-background text-start"
@@ -134,20 +134,20 @@ export default async function Home() {
         </div>
       </div>
 
-      <div className="bg-secondary h-full bottom-0 w-full shrink-0 relative ">
+      <div className="bg-secondary h-full bottom-0 w-full shrink-0 relative  ">
         <div className="w-full h-10 bg-primary/20 flex justify-between items-center px-3 lg:px-9 ">
           <div className="font-bold">Contact Us</div>
           <div className="font-bold">Get Started Today!</div>
         </div>
-        <div className="flex w-full flex-col mx-auto  lg:flex-row  items-center justify-between gap-1 px-5">
-          <div className="flex flex-col my-3 gap-2 ">
-            <p className="w-full text-md md:w-96">
+        <div className="flex md:flex-row px-4 flex-col w-full  items-center justify-center ">
+          <div className="flex flex-col my-3 ">
+            <p className="w-full text-md ">
               {`For more information or to schedule a demo, please contact us at
-			support@transpaytms.com or call us at (+234) 816 345 3826.`}
+			          support@transpaytms.com or call us at (+234) 816 345 3826.`}
             </p>
           </div>
 
-          <div className="flex   flex-col my-3 gap-2 ">
+          <div className="flex flex-col my-3 ">
             <p className="w-full  text-start  md:text-end font-bold xl:font-normal text-base md:w-96">{`Powered By ISCE Digital Concept`}</p>
           </div>
         </div>
