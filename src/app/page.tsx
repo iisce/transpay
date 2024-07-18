@@ -48,7 +48,7 @@ export default async function Home() {
               asChild
               className="rounded-lg w-full items-center lg:w-32 bg-transparent"
               variant={"outline"}>
-              <Link href={"/scan"}>Scan QR</Link>
+              <Link href={"/scan"}>Scan</Link>
             </Button>
             <div className="flex  gap-3 items-center justify-center text-primary-700">
               {session ? (
