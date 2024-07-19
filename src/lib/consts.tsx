@@ -2108,3 +2108,48 @@ export enum WAIVER_STATUS {
 	pending = 'PENDING',
 	cancelled = 'CANCELLED',
 }
+export const LANDING_CARD_CONTENTS: {
+	title: string;
+	description: string;
+}[] = [
+	{
+		title: 'Efficient Revenue Collection',
+		description:
+			'Our advanced system automates the revenue collection process, reducing human error and ensuring accurate data recording.',
+	},
+	{
+		title: 'On and Off Activities',
+		description:
+			'We detect on and off-road activities using Fare Flex devices.',
+	},
+	{
+		title: 'User-Friendly Interface',
+		description:
+			'Transpay offers an interactive interface for both government officials and vehicle operators, making it easy to manage and monitor transactions.',
+	},
+	{
+		title: 'Secure Transactions',
+		description:
+			'Transpay ensures that all transactions are safe and secure, using security protocols to protect sensitive information.',
+	},
+];
+export const HOW_IT_WORKS: {
+	title: string;
+	description: string;
+}[] = [
+	{
+		title: ' Fare Flex Device Installation',
+		description:
+			'Each commercial vehicle is equipped with a state-of-the-art Fare Flex Device.',
+	},
+	{
+		title: 'Revenue Generation',
+		description:
+			'Transpay processes the data, calculates the revenue, and facilitates  payment processing.',
+	},
+	{
+		title: 'Monitoring and Reporting',
+		description:
+			'Authorities can monitor the entire process and generate detailed reports for auditing and analysis.',
+	},
+];

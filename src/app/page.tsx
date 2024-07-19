@@ -1,16 +1,25 @@
 import MaxWidthWrapper from '@/components/layout/max-width-wrapper';
 import CarouselContainer from '@/components/pages/home/carousel';
-import CarouselCard from '@/components/pages/home/carousel-card';
 import { UserNav } from '@/components/shared/user-nav-bar';
 import { Button } from '@/components/ui/button';
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from '@/components/ui/card';
 import Searchbar from '@/components/ui/searchbar';
+import { HOW_IT_WORKS, LANDING_CARD_CONTENTS } from '@/lib/consts';
 import { BUS_IMAGE_SAMPLE } from '@/lib/consts';
 import { getAdminMe } from '@/lib/controllers/admin-controller';
 import { getAgentMe } from '@/lib/controllers/agent-controller';
 import { getSSession } from '@/lib/get-data';
 import { NigeriaIcon } from '@/lib/icons';
+import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
+import { options } from './api/auth/options';
 
 export default async function Home() {
 	const { role } = await getSSession();
@@ -20,11 +29,11 @@ export default async function Home() {
 			: await getAdminMe();
 	return (
 		<main className=''>
-			<div className='h-20 w-full shrink-0 fixed bg-white/50 backdrop-blur z-50'>
-				<MaxWidthWrapper className='flex items-center justify-between h-full w-full gap-1'>
+			<div className='fixed z-50 mx-auto h-20 w-full shrink-0 bg-white/50 backdrop-blur'>
+				<MaxWidthWrapper className='flex h-full w-full items-center justify-between gap-1 px-2 xl:px-0'>
 					<Link
 						href={'/'}
-						className='w-52 shrink-0 px-5'
+						className='w-32 shrink-0 px-5 md:w-52'
 					>
 						<Image
 							src={'/logo.png'}
@@ -34,31 +43,31 @@ export default async function Home() {
 							alt='Transpay Logo'
 						/>
 					</Link>
-					<div className='flex items-center h-full gap-3'>
+					<div className='flex h-full w-full items-center justify-end gap-3 xl:w-0'>
 						<Button
 							asChild
-							className='rounded-lg w-24 lg:w-32 bg-transparent'
+							className='w-10 items-center rounded-lg bg-transparent md:w-32'
 							variant={'outline'}
 						>
-							<Link href={'/scan'}>Scan QR</Link>
+							<Link href={'/scan'}>Scan</Link>
 						</Button>
-						<div className='flex gap-3 items-center text-primary-700'>
+						<div className='flex items-center justify-center gap-3 text-primary-700'>
 							{user ? (
 								<>
 									<Button
 										asChild
-										className='rounded-lg w-24 lg:w-32'
+										className='w-full rounded-lg lg:w-32'
 									>
 										<Link href={'/dashboard'}>
 											Dashboard
 										</Link>
 									</Button>
-									<UserNav user={user} />
+									{user && <UserNav user={user} />}
 								</>
 							) : (
 								<Button
 									asChild
-									className='rounded-lg w-24 lg:w-32'
+									className='w-full rounded-lg lg:w-32'
 								>
 									<Link href='/sign-in'>Login</Link>
 								</Button>
@@ -68,24 +77,20 @@ export default async function Home() {
 				</MaxWidthWrapper>
 			</div>
 
-			<div className='h-[100svh] flex flex-col items-start justify-between relative pt-24 gap-10'>
-				<NigeriaIcon className='absolute top-0 w-[50svw] h-full object-contain ' />
-				<div className='w-full max-w-lg lg:max-w-3xl mx-auto flex flex-col items-center px-5 lg:px-20 pt-5 gap-10 relative'>
-					<div className='shrink-0 flex flex-col items-center gap-2 lg:gap-5'>
+			<div className='relative flex h-[100svh] flex-col items-start justify-between gap-10 pt-24'>
+				<NigeriaIcon className='absolute top-0 h-full w-[50svw] object-contain' />
+				<div className='relative mx-auto flex w-full max-w-lg flex-col items-center gap-10 px-5 pt-5 lg:max-w-3xl lg:px-20'>
+					<div className='flex shrink-0 flex-col items-center gap-2 lg:gap-5'>
 						<div className='flex flex-col items-center'>
-							<div className='text-2xl lg:text-5xl font-bold'>
-								Your All-In-One Solution;
+							<div className='text-2xl font-bold lg:text-5xl'>
+								Simplifying Levy Collection
 							</div>
-							<div className='text-2xl lg:text-5xl font-bold'>
-								Streamline, Track and Pay.
+							<div className='text-2xl font-bold lg:text-5xl'>
+								for Commercial Vehicles
 							</div>
 						</div>
 						<p className='text-center text-sm'>
-							Transpay is a smart app that helps manage
-							fees from bus and keke drivers, making
-							everything easy for administrators with tools
-							to check info, register drivers, and handle
-							payments.
+							{`Ensuring safe and easy collection of levies using simple and secure payment systems`}
 						</p>
 					</div>
 					<Searchbar
@@ -93,97 +98,73 @@ export default async function Home() {
 						variant='secondary'
 					/>
 				</div>
-				<div className='w-full h-[50svh] relative flex gap-3'>
+				<div className='relative flex h-[50svh] w-full gap-3'>
 					<CarouselContainer />
 				</div>
 			</div>
-			<div className='h-[100svh] flex flex-col items-start justify-between relative pt-24 gap-10'>
-				<NigeriaIcon className='absolute top-0 left-1/2 -translate-x-1/2 w-[50svw] h-full object-contain ' />
-				<div className='w-full h-full max-w-lg lg:max-w-3xl mx-auto flex flex-col items-center justify-between px-5 lg:px-20 gap-3 relative overflow-clip'>
-					<div className='flex flex-col items-center justify-center gap-5'>
-						<h1 className=' font-bold text-2xl lg:text-4xl'>
-							Download Transpay
-						</h1>
-						<p className='text-center'>
-							Experience the future of transportation fee
-							management at your fingertips! Download the
-							Transpay mobile application now to streamline
-							administrative tasks, check driver
-							information, process payments, and
-							revolutionize your daily fee management.
-							Don&apos;t miss out on the seamless and
-							transformative tools – download the app and
-							elevate your transport management journey
-							today
-						</p>
-						<div className='flex gap-5 justify-between'>
-							<Image
-								src='/app-store.png'
-								alt='transpay app '
-								height={600}
-								width={600}
-								className=' object-contain object-top h-14 w-fit '
-							/>
-							<Image
-								src='/play-store.png'
-								alt='transpay app'
-								height={600}
-								width={600}
-								className=' object-contain object-top h-14 w-fit '
-							/>
-						</div>
-					</div>
-					<div className='w-full h-[65svh] relative flex gap-3'>
-						<Image
-							src='/hand.png'
-							alt='transpay app'
-							height={600}
-							width={600}
-							className=' object-cover object-top'
-						/>
+
+			<div className='relative mt-10 flex h-full flex-col items-start justify-between gap-10 px-4 py-24 md:px-4'>
+				<NigeriaIcon className='absolute left-1/2 top-0 -z-30 h-full w-[50svw] -translate-x-1/2 object-contain' />
+				<div className='mx-auto space-y-10'>
+					<h2 className='text-4xl font-extrabold'>{`Why Transpay?`}</h2>
+					<div className='mx-auto grid grid-cols-1 gap-2 md:max-w-7xl md:grid-cols-3 xl:grid-cols-4'>
+						{LANDING_CARD_CONTENTS.map((card, i) => (
+							<Card
+								className='rounded-xl bg-[#B9AB05] p-6 pt-10 md:p-0'
+								key={i}
+							>
+								<CardHeader>
+									<CardTitle className='text-background'>
+										{card.title}
+									</CardTitle>
+								</CardHeader>
+								<CardContent>
+									<CardDescription className='text-background'>
+										{card.description}
+									</CardDescription>
+								</CardContent>
+							</Card>
+						))}
 					</div>
 				</div>
 			</div>
-			<div className='bg-secondary w-full shrink-0 relative '>
-				<div className='w-full h-10 bg-primary/20 flex justify-between items-center px-3 lg:px-9 '>
-					<div className=''>Anambra</div>
-					<div className=''>Nigeria</div>
+			<div className='relative mt-10 flex h-full flex-col items-start justify-between gap-10 bg-primary pt-24 md:h-[50svh] xl:h-[70svh]'>
+				<div className='mx-auto space-y-10 px-4 md:px-4'>
+					<h2 className='text-4xl font-extrabold text-background'>{`How it works`}</h2>
+					<div className='mx-auto grid w-full grid-cols-1 gap-8 md:max-w-7xl md:grid-cols-3'>
+						{HOW_IT_WORKS.map((card, i) => (
+							<div
+								className='border-t-2 border-background py-6 pt-10 text-start'
+								key={i}
+							>
+								<div className='flex flex-col space-y-1.5 py-6 text-2xl font-semibold leading-none tracking-tight text-background'>
+									{card.title}
+								</div>
+
+								<div className='py-6 pt-0 text-sm text-background'>
+									{card.description}
+								</div>
+							</div>
+						))}
+					</div>
 				</div>
-				<div className='flex lg:flex-row items-center justify-between gap-1 px-5'>
-					<div className='flex justify-between'>
-						<Button
-							asChild
-							className='rounded'
-							variant={'link'}
-						>
-							<Link href={'/about'}>About</Link>
-						</Button>
-						<Button
-							asChild
-							className='rounded'
-							variant={'link'}
-						>
-							<Link href={'/faq'}>FAQ</Link>
-						</Button>
+			</div>
+
+			<div className='relative bottom-0 h-full w-full shrink-0 bg-secondary'>
+				<div className='flex h-10 w-full items-center justify-between bg-primary/20 px-3 lg:px-9'>
+					<div className='font-bold'>Contact Us</div>
+					<div className='font-bold'>Get Started Today!</div>
+				</div>
+				<div className='flex w-full flex-col items-center px-4 md:flex-row md:justify-center xl:justify-between'>
+					<div className='my-3 flex flex-col'>
+						<p className='text-md w-full md:w-full xl:w-96'>
+							{`For more information or to schedule a demo, please contact us at
+			          support@transpaytms.com or call us at (+234) 816 345 3826.`}
+						</p>
 					</div>
-					<div className='text-sm hidden lg:flex'>
-						Solution is here!!!
-					</div>
-					<div className='flex'>
-						<Button
-							asChild
-							className='rounded'
-							variant={'link'}
-						>
-							<Link href={'/privacy'}>Privacy</Link>
-						</Button>
-						<Button
-							asChild
-							className='rounded'
-							variant={'link'}
-						>
-							<Link href={'/terms'}>Terms</Link>
-						</Button>
+
+					<div className='my-3 flex flex-col'>
+						<p className='w-full text-start text-base font-bold md:w-96 md:text-end xl:font-normal'>{`Powered By ISCE Digital Concept`}</p>
 					</div>
 				</div>
 			</div>
