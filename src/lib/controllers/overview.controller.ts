@@ -1,51 +1,52 @@
-import { API, URLS } from '../consts';
-import { getSSession } from '../get-data';
+import { API, URLS } from "../consts";
+import { getSSession } from "../get-data";
 
 export const getVehiclesOverview = async () => {
-	const session = await getSSession();
-	const headers = {
-		'Content-Type': 'application/json',
-		'api-secret': process.env.API_SECRET || '',
-		Authorization: `Bearer ${session.access_token}`,
-	};
+     const session = await getSSession();
+     const headers = {
+          "Content-Type": "application/json",
+          "api-secret": process.env.API_SECRET || "",
+          Authorization: `Bearer ${session.access_token}`,
+     };
 
-	const url = `${API}${URLS.vehicle.all}/overview`;
-	const res = await fetch(url, { headers, cache: 'no-store' });
-	const result = await res.json();
-	if (!res.ok) return undefined;
+     const url = `${API}${URLS.vehicle.all}/overview`;
+     const res = await fetch(url, { headers, cache: "no-store" });
+     const result = await res.json();
+     if (!res.ok) return undefined;
 
-	const overview: IInfo = result.data;
-	return overview;
+     const overview: IInfo = result.data;
+     return overview;
 };
 export const getDriversOverview = async () => {
-	const session = await getSSession();
-	const headers = {
-		'Content-Type': 'application/json',
-		'api-secret': process.env.API_SECRET || '',
-		Authorization: `Bearer ${session.access_token}`,
-	};
+     const session = await getSSession();
+     const headers = {
+          "Content-Type": "application/json",
+          "api-secret": process.env.API_SECRET || "",
+          Authorization: `Bearer ${session.access_token}`,
+     };
 
-	const url = `${API}${URLS.driver.all}/overview`;
-	const res = await fetch(url, { headers, cache: 'no-store' });
-	const result = await res.json();
-	if (!res.ok) return undefined;
+     const url = `${API}${URLS.driver.all}/overview`;
+     const res = await fetch(url, { headers, cache: "no-store" });
+     const result = await res.json();
+     if (!res.ok) return undefined;
 
-	const overview: IOthers = result.data;
-	return overview;
+     const overview: IOthers = result.data;
+     return overview;
 };
 export const getAgentsOverview = async () => {
-	const session = await getSSession();
-	const headers = {
-		'Content-Type': 'application/json',
-		'api-secret': process.env.API_SECRET || '',
-		Authorization: `Bearer ${session.access_token}`,
-	};
+     const session = await getSSession();
+     const headers = {
+          "Content-Type": "application/json",
+          "api-secret": process.env.API_SECRET || "",
+          Authorization: `Bearer ${session.access_token}`,
+     };
 
-	const url = `${API}${URLS.agent.all}/overview`;
-	const res = await fetch(url, { headers, cache: 'no-store' });
-	const result = await res.json();
-	if (!res.ok) return undefined;
+     const url = `${API}${URLS.agent.all}/overview`;
+     const res = await fetch(url, { headers, cache: "no-store" });
+     const result = await res.json();
+     console.log({ result });
+     if (!res.ok) return undefined;
 
-	const overview: IOthers = result.data;
-	return overview;
+     const overview: IOthers = result.data;
+     return overview;
 };
